@@ -6,9 +6,17 @@ mysql:
   username: 'root'
   password: ''
 
+# Physical form of sky mine:
+token:
+  type: TRIPWIRE_HOOK
+  name: '&c&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
+  lore:
+    - '&7Left Click - &eOpens Upgrade Panel'
+    - '&7Right Click - &ePlaces Structure'
+
 # Options for mine upgrades...
 #
-# Upgrade types: block-varity, mine-size, reset-cooldown, amount-per-island
+# Upgrade types: block-varity, reset-cooldown, amount-per-island
 # By default, all upgrades are available to players.
 #
 # Want to require permission to upgrade a mine? Simply negative the permission.
@@ -48,13 +56,6 @@ upgrades:
       - LAPIS_ORE 10%
       - DIAMOND_ORE 5%
       - EMERALD_ORE 5%
-  # Alter the size of a mine.
-  mine-size:
-    # Format: x y z
-    1: 10x5x10
-    2: 15x10x15
-    3: 20x10x20
-    4: 25x15x25
   # Alter the cooldown until a mine can be reset.
   reset-cooldown:
     # You can put [seconds/minutes] if you want. Default: seconds
@@ -68,14 +69,3 @@ upgrades:
     2: 2
     3: 3
     4: 4
-
-messages:
-  skymines:
-    list: '&7[&a%id%&7] &eClick to teleport.'
-  # Error messages:
-  invalid:
-    permission: '&cYou do not have permission to perform this command.'
-    sender: '&cYou must be a player to perform this command.'
-  # Admin messages:
-  admin:
-    reloaded: '&aSkyMines has been reloaded!'
