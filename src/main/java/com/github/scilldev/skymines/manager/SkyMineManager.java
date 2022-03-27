@@ -22,7 +22,12 @@ public class SkyMineManager {
 	}
 
 	public void createSkyMine(Player player, Location location) {
-		addSkyMine(player, factory.createSkyMine(player, location));
+		// TODO get default values from config
+		createSkyMine(player, location, 10, 10, 10);
+	}
+
+	public void createSkyMine(Player player, Location location, int length, int width, int height) {
+		addSkyMine(player, factory.createSkyMine(player, location, length, width, height));
 	}
 
 	public List<SkyMine> getSkyMines(Player player) {

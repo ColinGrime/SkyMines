@@ -1,10 +1,9 @@
 package com.github.scilldev.skymines;
 
+import com.github.scilldev.skymines.structure.MineStructure;
 import com.github.scilldev.skymines.upgrades.Upgrades;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface SkyMine {
@@ -20,14 +19,14 @@ public interface SkyMine {
 	UUID getOwner();
 
 	/**
+	 * @return structure of the sky mine
+	 */
+	MineStructure getStructure();
+
+	/**
 	 * @return home of the sky mine
 	 */
 	Location getHome();
-
-	/**
-	 * @return blocks that make up the sky mine
-	 */
-	List<Block> getBlocks();
 
 	/**
 	 * @return upgrades of the sky mine
