@@ -13,7 +13,10 @@ public interface SkyMineFactory {
 	 *
 	 * @param owner player who placed the sky mine down
 	 * @param location location of the sky mine
+	 * @param length length of the sky mine
+	 * @param width width of the ksy mine
+	 * @param height height of the sky mine
 	 * @return created SkyMine
 	 */
-	SkyMine createSkyMine(Player owner, Location location);
+	SkyMine createSkyMine(Player owner, Location location, int length, int width, int height);
 }

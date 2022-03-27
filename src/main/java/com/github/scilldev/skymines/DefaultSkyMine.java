@@ -1,30 +1,28 @@
 package com.github.scilldev.skymines;
 
+import com.github.scilldev.skymines.structure.MineStructure;
 import com.github.scilldev.skymines.upgrades.Upgrades;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
-import java.util.List;
 import java.util.UUID;
 
 public class DefaultSkyMine implements SkyMine {
 
 	private final UUID uuid;
 	private final UUID owner;
+	private final MineStructure structure;
 	private final Location home;
-	private final List<Block> blocks;
 	private final Upgrades upgrades;
 
-	public DefaultSkyMine(UUID owner, Location home, List<Block> blocks, Upgrades upgrades) {
-		this(UUID.randomUUID(), owner, home, blocks, upgrades);
+	public DefaultSkyMine(UUID owner, MineStructure structure, Location home, Upgrades upgrades) {
+		this(UUID.randomUUID(), owner, structure, home, upgrades);
 	}
 
-	public DefaultSkyMine(UUID uuid, UUID owner, Location home, List<Block> blocks, Upgrades upgrades) {
+	public DefaultSkyMine(UUID uuid, UUID owner, MineStructure structure, Location home, Upgrades upgrades) {
 		this.uuid = uuid;
 		this.owner = owner;
+		this.structure = structure;
 		this.home = home;
-		this.blocks = blocks;
 		this.upgrades = upgrades;
 
 		reset();
@@ -41,13 +39,13 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
-	public Location getHome() {
-		return home;
+	public MineStructure getStructure() {
+		return null;
 	}
 
 	@Override
-	public List<Block> getBlocks() {
-		return blocks;
+	public Location getHome() {
+		return home;
 	}
 
 	@Override
@@ -57,8 +55,6 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public void reset() {
-		for (Block block : blocks) {
-			block.setType(Material.STONE);
-		}
+		structure.buildInside();
 	}
 }
