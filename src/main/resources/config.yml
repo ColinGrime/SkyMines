@@ -1,0 +1,81 @@
+# Save your player data:
+mysql:
+  host: 'localhost'
+  port: 3306
+  database: 'minecraft'
+  username: 'root'
+  password: ''
+
+# Options for mine upgrades...
+#
+# Upgrade types: block-varity, mine-size, reset-cooldown, amount-per-island
+# By default, all upgrades are available to players.
+#
+# Want to require permission to upgrade a mine? Simply negative the permission.
+# -> ex. the whole type: "-skymines.upgrades.block-varity"
+# -> ex. a specific level: "-skymines.upgrades.block-varity.2"
+#
+# ^ After negating permission, the player can no longer upgrade the mine until
+# you remove the negation or add the "skymines.upgrades.block-varity.2" permission.
+upgrades:
+  # Alter the composition of a mine.
+  block-variety:
+    # Level of the upgrade.
+    1:
+      # Format: %block-id% %percentage%
+      # No, it doesn't have to add up to 100%.
+      - STONE 90%
+      - IRON_ORE 10%
+      - GOLD_ORE 5%
+    2:
+      - STONE 70%
+      - IRON_ORE 15%
+      - GOLD_ORE 10%
+      - REDSTONE_ORE 5%
+      - LAPIS_ORE 5%
+    3:
+      - STONE 50%
+      - IRON_ORE 20%
+      - GOLD_ORE 15%
+      - REDSTONE_ORE 7.5%
+      - LAPIS_ORE 7.5%
+      - DIAMOND_ORE 2%
+    4:
+      - STONE 30%
+      - IRON_ORE 25%
+      - GOLD_ORE 25%
+      - REDSOTNE_ORE 10%
+      - LAPIS_ORE 10%
+      - DIAMOND_ORE 5%
+      - EMERALD_ORE 5%
+  # Alter the size of a mine.
+  mine-size:
+    # Format: x y z
+    1: 10x5x10
+    2: 15x10x15
+    3: 20x10x20
+    4: 25x15x25
+  # Alter the cooldown until a mine can be reset.
+  reset-cooldown:
+    # You can put [seconds/minutes] if you want. Default: seconds
+    1: 5 minutes
+    2: 2 minutes
+    3: 1 minute
+    4: 30 seconds
+  # Alter the amount of mines you can have each island.
+  amount-per-island:
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+
+messages:
+  skymines:
+    list: '&7[&a%id%&7] &eClick to teleport.'
+  # Error messages:
+  invalid:
+    permission: '&cYou do not have permission to perform this command.'
+    sender: '&cYou must be a player to perform this command.'
+  # Admin messages:
+  admin:
+    reloaded: '&aSkyMines has been reloaded!'

@@ -1,0 +1,13 @@
+name: SkyMines
+main: com.github.scilldev.SkyMines
+version: @version@
+
+authors: [Scill]
+description: Place mines... IN THE SKY!!
+api-version: 1.18
+depend: [Vault]
+
+commands:
+  skymines:
+    description: Main command for skymines.
+    aliases: [mines, sm]

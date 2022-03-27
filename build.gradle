@@ -1,0 +1,61 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+group 'com.github.scilldev'
+version '1.0.0-alpha'
+
+repositories {
+    mavenCentral()
+
+    // Both are needed for the Spigot API
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+
+    // Vault is located on Github
+    maven { url 'https://jitpack.io' }
+
+    // NBT API
+    maven { url 'https://repo.codemc.org/repository/maven-public/' }
+}
+
+dependencies {
+    // Spigot 1.18
+    implementation 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+
+    // Vault
+    implementation 'com.github.MilkBowl:VaultAPI:1.7'
+
+    // NBT API
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.9.2'
+
+    // SQL stuff
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+}
+
+shadowJar {
+    dependencies {
+        // Shades NBT API
+        include dependency('de.tr7zw:item-nbt-api-plugin:2.9.2')
+
+        // Shades the SQL dependencies
+        include dependency('mysql:mysql-connector-java:8.0.28')
+        include dependency('com.zaxxer:HikariCP:4.0.3')
+    }
+
+    archiveFileName = "${project.name}-${project.version}.jar"
+}
+
+// Allows @version@ placeholder in plugin.yml
+processResources {
+    filter ReplaceTokens, tokens: ['version': version]
+}
