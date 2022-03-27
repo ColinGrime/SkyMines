@@ -1,6 +1,6 @@
 package com.github.scilldev.storage.database;
 
-import com.github.scilldev.Settings;
+import com.github.scilldev.config.Settings;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;

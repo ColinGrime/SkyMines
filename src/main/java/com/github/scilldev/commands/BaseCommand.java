@@ -1,6 +1,6 @@
 package com.github.scilldev.commands;
 
-import com.github.scilldev.Messages;
+import com.github.scilldev.locale.Messages;
 import com.github.scilldev.utils.Logger;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;

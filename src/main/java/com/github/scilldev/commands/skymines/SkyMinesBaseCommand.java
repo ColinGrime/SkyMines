@@ -1,7 +1,7 @@
 package com.github.scilldev.commands.skymines;
 
 import com.github.scilldev.commands.BaseCommand;
-import com.github.scilldev.Messages;
+import com.github.scilldev.locale.Messages;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyMinesBaseCommand extends BaseCommand {

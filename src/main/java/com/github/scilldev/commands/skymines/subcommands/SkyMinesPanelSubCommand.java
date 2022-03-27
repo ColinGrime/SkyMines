@@ -1,6 +1,6 @@
 package com.github.scilldev.commands.skymines.subcommands;
 
-import com.github.scilldev.Messages;
+import com.github.scilldev.locale.Messages;
 import com.github.scilldev.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 

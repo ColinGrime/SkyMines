@@ -1,6 +1,6 @@
 package com.github.scilldev.commands;
 
-import com.github.scilldev.Messages;
+import com.github.scilldev.locale.Messages;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;

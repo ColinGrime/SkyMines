@@ -1,7 +1,7 @@
 package com.github.scilldev.storage.database.mysql;
 
 import com.github.scilldev.storage.database.DataSourceProvider;
-import com.github.scilldev.Settings;
+import com.github.scilldev.config.Settings;
 import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
