@@ -2,7 +2,9 @@ package com.github.scilldev;
 
 import com.github.scilldev.commands.skymines.SkyMinesBaseCommand;
 import com.github.scilldev.commands.skymines.subcommands.*;
+import com.github.scilldev.config.Settings;
 import com.github.scilldev.listeners.PlayerListeners;
+import com.github.scilldev.locale.Messages;
 import com.github.scilldev.storage.database.DataSourceProvider;
 import com.github.scilldev.storage.database.Database;
 import com.github.scilldev.storage.database.mysql.MySqlDatabase;
@@ -34,6 +36,7 @@ public class SkyMines extends JavaPlugin {
 
 		skyMineManager = new SkyMineManager();
 		loadData();
+		reload();
 
 		try {
 			// initialize data provider and test connection
@@ -69,18 +72,16 @@ public class SkyMines extends JavaPlugin {
 	 * Initializes the yaml data.
 	 */
 	private void loadData() {
-		saveDefaultConfig();
 		settings = new Settings(this);
-		reload();
+		Messages.init(this);
 	}
 
 	/**
 	 * Reloads the yaml data.
 	 */
 	public void reload() {
-		reloadConfig();
 		settings.reload();
-		Messages.init(this);
+		Messages.reload();
 	}
 
 	private void registerCommands() {

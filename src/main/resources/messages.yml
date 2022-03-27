@@ -1,0 +1,12 @@
+# General commands:
+skymines:
+  list: '&7[%id%&7] &eClick to teleport.'
+
+# Something went wrong...
+invalid:
+  permission: '&cYou do not have permission to perform this command.'
+  sender: '&cYou must be a player to perform this command.'
+
+# Only Admins should have access...
+admin:
+  reloaded: '&aSkyMines has been reloaded!'
