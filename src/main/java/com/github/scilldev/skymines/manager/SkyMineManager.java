@@ -1,10 +1,13 @@
 package com.github.scilldev.skymines.manager;
 
+import com.github.scilldev.SkyMines;
 import com.github.scilldev.skymines.SkyMine;
 import com.github.scilldev.skymines.factory.DefaultSkyMineFactory;
 import com.github.scilldev.skymines.factory.SkyMineFactory;
+import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.token.DefaultSkyMineToken;
 import com.github.scilldev.skymines.token.SkyMineToken;
+import com.github.scilldev.skymines.upgrades.Upgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -13,21 +16,26 @@ import java.util.*;
 public class SkyMineManager {
 
 	private final SkyMineFactory factory = new DefaultSkyMineFactory();
-	private final SkyMineToken token = new DefaultSkyMineToken();
+	private final SkyMineToken token;
 
 	private final Map<UUID, List<SkyMine>> skyMines = new HashMap<>();
+
+	public SkyMineManager(SkyMines plugin) {
+		this.token = new DefaultSkyMineToken(plugin);
+	}
 
 	public SkyMineToken getToken() {
 		return token;
 	}
 
-	public void createSkyMine(Player player, Location location) {
-		// TODO get default values from config
-		createSkyMine(player, location, 10, 10, 10);
-	}
+	public boolean createSkyMine(Player player, Location location, MineSize size, Upgrades upgrades) {
+		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades);
+		if (!skyMine.isPresent()) {
+			return false;
+		}
 
-	public void createSkyMine(Player player, Location location, int length, int width, int height) {
-		addSkyMine(player, factory.createSkyMine(player, location, length, width, height));
+		addSkyMine(player, skyMine.get());
+		return true;
 	}
 
 	public List<SkyMine> getSkyMines(Player player) {

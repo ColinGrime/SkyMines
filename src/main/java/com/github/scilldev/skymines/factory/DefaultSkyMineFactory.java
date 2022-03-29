@@ -1,34 +1,29 @@
 package com.github.scilldev.skymines.factory;
 
 import com.github.scilldev.skymines.DefaultSkyMine;
-import com.github.scilldev.skymines.structure.MineStructure;
-import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.SkyMine;
-import com.github.scilldev.skymines.upgrades.StandardUpgrades;
+import com.github.scilldev.skymines.structure.MineSize;
+import com.github.scilldev.skymines.structure.MineStructure;
 import com.github.scilldev.skymines.upgrades.Upgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
+
 public class DefaultSkyMineFactory implements SkyMineFactory {
 
-	private final Upgrades upgradeOptions;
-
-	public DefaultSkyMineFactory() {
-		this.upgradeOptions = new StandardUpgrades();
-	}
-
-	public DefaultSkyMineFactory(Upgrades upgradeOptions) {
-		this.upgradeOptions = upgradeOptions;
-	}
-
 	@Override
-	public SkyMine createSkyMine(Player owner, Location location, int length, int width, int height) {
+	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, Upgrades upgrades) {
 		float yaw = owner.getLocation().getYaw();
 		if (yaw < 0) {
 			yaw += 360;
 		}
 
+		int length = size.getLength();
+		int height = size.getHeight();
+		int width = size.getWidth();
 		Location endLoc;
+
 		if (yaw >= 0 && yaw <= 35)
 			endLoc = location.clone().add(-width, -height, length);
 		else if (yaw >= 35 && yaw <= 90)
@@ -47,7 +42,11 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			endLoc = location.clone().add(width, -height, length);
 
 		// creates and builds structure
-		MineStructure structure = new MineStructure(location, endLoc, new MineSize(length, width, height));
+		MineStructure structure = new MineStructure(location, endLoc, size);
+		if (!structure.setup()) {
+			return Optional.empty();
+		}
+
 		structure.buildParameter();
 		structure.buildInside();
 
@@ -56,6 +55,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new sky mine
-		return new DefaultSkyMine(owner.getUniqueId(), structure, home, upgradeOptions);
+		return Optional.of(new DefaultSkyMine(owner.getUniqueId(), structure, home, upgrades));
 	}
 }
