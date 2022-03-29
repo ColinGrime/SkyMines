@@ -1,27 +1,85 @@
 package com.github.scilldev.skymines.token;
 
+import com.github.scilldev.SkyMines;
+import com.github.scilldev.skymines.structure.MineSize;
+import com.github.scilldev.skymines.upgrades.StandardUpgrades;
+import com.github.scilldev.skymines.upgrades.Upgrades;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Optional;
 
 public class DefaultSkyMineToken implements SkyMineToken {
 
-	private final Material testType = Material.TRIPWIRE_HOOK;
+	private final SkyMines plugin;
+
+	public DefaultSkyMineToken(SkyMines plugin) {
+		this.plugin = plugin;
+	}
 
 	@Override
 	public ItemStack getToken() {
-		NBTItem nbtItem = new NBTItem(new ItemStack(testType));
+		return getToken(new MineSize(10, 10, 10));
+	}
+
+	@Override
+	public ItemStack getToken(MineSize size) {
+		return getToken(size, new StandardUpgrades());
+	}
+
+	@Override
+	public ItemStack getToken(MineSize size, Upgrades upgrades) {
+		ItemStack item = new ItemStack(plugin.getSettings().getTokenType());
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(plugin.getSettings().getTokenName());
+		meta.setLore(plugin.getSettings().getTokenLore());
+		item.setItemMeta(meta);
+
+		NBTItem nbtItem = new NBTItem(item);
 		nbtItem.setBoolean("skymine", true);
+		nbtItem.setObject("skymine-size", size);
+		nbtItem.setObject("skymine-upgrades", upgrades);
 		return nbtItem.getItem();
+	}
+
+	private String replacePlaceholders(String string) {
+		// TODO placeholders stuff too tired right now
+		return null;
 	}
 
 	@Override
 	public boolean isToken(ItemStack item) {
-		if (item == null || item.getType() == Material.AIR) {
+		if (isInvalidItem(item)) {
 			return false;
 		}
 
 		NBTItem nbtItem = new NBTItem(item);
 		return nbtItem.getBoolean("skymine");
+	}
+
+	@Override
+	public Optional<MineSize> getMineSize(ItemStack item) {
+		if (isInvalidItem(item)) {
+			return Optional.empty();
+		}
+
+		NBTItem nbtItem = new NBTItem(item);
+		return Optional.ofNullable(nbtItem.getObject("skymine-size", MineSize.class));
+	}
+
+	@Override
+	public Optional<Upgrades> getUpgrades(ItemStack item) {
+		if (isInvalidItem(item)) {
+			return Optional.empty();
+		}
+
+		NBTItem nbtItem = new NBTItem(item);
+		return Optional.ofNullable(nbtItem.getObject("skymine-upgrades", StandardUpgrades.class));
+	}
+
+	private boolean isInvalidItem(ItemStack item) {
+		return item == null || item.getType() == Material.AIR;
 	}
 }
