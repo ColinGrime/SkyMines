@@ -121,7 +121,7 @@ public class MySqlDatabase implements Database {
 	@Override
 	public void startTimers() {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
-			Timer.time("Saving mine data...", mineData::saveMines, "Mines saved in %s ms");
+			Timer.time(mineData::saveMines, "Mines saved in %s ms");
 		}, 2 * 60 * 20L, 2 * 60 * 20L);
 	}
 }

@@ -34,7 +34,7 @@ public class SkyMines extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
-		skyMineManager = new SkyMineManager();
+		skyMineManager = new SkyMineManager(this);
 		loadData();
 		reload();
 
@@ -49,10 +49,10 @@ public class SkyMines extends JavaPlugin {
 
 		if (isDatabaseEnabled) {
 			// set up the database (build needed tables / perform updates)
-			Timer.time("Setting up database...", () -> database = new MySqlDatabase(this, sourceProvider.getSource()), "Database set up in %s ms");
+			Timer.time(() -> database = new MySqlDatabase(this, sourceProvider.getSource()), "Database set up in %s ms");
 
 			// load mine data and starts the timers
-			Timer.time("Loading in user data...", () -> database.getMineData().loadMines(), "Users loaded in %s ms");
+			Timer.time(() -> database.getMineData().loadMines(), "Users loaded in %s ms");
 			database.startTimers();
 		}
 
