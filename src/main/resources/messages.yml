@@ -1,6 +1,32 @@
-# General commands:
-skymines:
-  list: '&7[%id%&7] &eClick to teleport.'
+# General messages:
+general:
+  skymines-list: '&7[%id%&7] &eClick to teleport.'
+
+# Success messages:
+success:
+  skymines-give: "&7You've given &a%amount%x %token% &7to &a%player%&7!"
+  skymines-receive: "&7You've received &a%amount%x %token%&7!"
+
+# Failure messages:
+failure:
+  too-small: '&cThe SkyMine you are trying to create is too small.'
+  no-space: '&cThere is no space for the SkyMine to be placed there.'
+
+# Usage messages (for commands):
+usage:
+  skymines-command:
+    - '&7SkyMines Command:'
+    - '&a/skymines &7- &eOpens up the main panel for accessing your skymines.'
+    - '&a/skymines [id] &7- &eOpens up the panel of the specified skymine.'
+    - '&a/skymines list &7- &eLists the IDs of your skymines, and gives you a fast way to teleport to them.'
+    - '&a/skymines home [id] &7- &eTeleports to the specified skymine.'
+    - '&a/skymines sethome [id] &7- &eSets the home of the specified skymine.'
+    - '&a/skymines reset [id] &7- &eResets the specified skymine.'
+  skymines-panel: '&a/skymines [id] &7- &eOpens up the panel of the specified skymine.'
+  skymines-list: '&a/skymines list &7- &eLists the IDs of your skymines, and gives you a fast way to teleport to them.'
+  skymines-home: '&a/skymines home [id] &7- &eTeleports to the specified skymine.'
+  skymines-reset: '&a/skymines reset [id] &7- &eResets the specified skymine.'
+  skymines-give: '&a/skymines give [name] {LxHxW} {amount} &7- &eGives a skymine token to the specified player.'
 
 # Something went wrong...
 invalid:
