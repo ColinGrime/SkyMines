@@ -19,6 +19,11 @@ public interface SkyMine {
 	UUID getOwner();
 
 	/**
+	 * @return gets the ID of the skymine
+	 */
+	int getId();
+
+	/**
 	 * @return structure of the sky mine
 	 */
 	MineStructure getStructure();
