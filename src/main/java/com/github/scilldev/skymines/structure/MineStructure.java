@@ -39,7 +39,7 @@ public class MineStructure {
 	 *
 	 * @return true if there were no blocks in the way of the structure
 	 */
-	public boolean getStructure() {
+	public boolean setup() {
 		// all major points around the mine
 		int x1 = startCorner.getBlockX();
 		int y1 = startCorner.getBlockY();
@@ -91,7 +91,11 @@ public class MineStructure {
 	}
 
 	public void buildInside() {
-		// TODO do this
+		Map<Block, Material> blocksToChange = new HashMap<>();
+		for (Block block : blocksInside) {
+			blocksToChange.put(block, Material.STONE);
+		}
+		buildBehavior.build(blocksToChange);
 	}
 
 	public List<Block> getParameter() {

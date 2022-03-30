@@ -15,26 +15,16 @@ version '1.0.0-alpha'
 
 repositories {
     mavenCentral()
-
-    // Both are needed for the Spigot API
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-
-    // Vault is located on Github
     maven { url 'https://jitpack.io' }
-
-    // NBT API
     maven { url 'https://repo.codemc.org/repository/maven-public/' }
 }
 
 dependencies {
-    // Spigot 1.18
+    // Spigot stuff
     implementation 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-
-    // Vault
     implementation 'com.github.MilkBowl:VaultAPI:1.7'
-
-    // NBT API
     implementation 'de.tr7zw:item-nbt-api-plugin:2.9.2'
 
     // SQL stuff

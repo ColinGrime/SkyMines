@@ -1,5 +1,6 @@
 package com.github.scilldev.skymines.factory;
 
+import com.github.scilldev.SkyMines;
 import com.github.scilldev.skymines.DefaultSkyMine;
 import com.github.scilldev.skymines.SkyMine;
 import com.github.scilldev.skymines.structure.MineSize;
@@ -11,6 +12,12 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 
 public class DefaultSkyMineFactory implements SkyMineFactory {
+
+	private final SkyMines plugin;
+
+	public DefaultSkyMineFactory(SkyMines plugin) {
+		this.plugin = plugin;
+	}
 
 	@Override
 	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, Upgrades upgrades) {
@@ -55,6 +62,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new sky mine
-		return Optional.of(new DefaultSkyMine(owner.getUniqueId(), structure, home, upgrades));
+		return Optional.of(new DefaultSkyMine(plugin, owner.getUniqueId(), structure, home, upgrades));
 	}
 }

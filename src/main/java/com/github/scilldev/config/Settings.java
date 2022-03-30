@@ -99,7 +99,7 @@ public class Settings {
 		return mysqlPassword;
 	}
 
-	public Material _getTokenType() {
+	private Material _getTokenType() {
 		Material material = Material.getMaterial(config.getString("token.type"));
 		if (material == null) {
 			return Material.TRIPWIRE_HOOK;
@@ -111,7 +111,7 @@ public class Settings {
 		return tokenType;
 	}
 
-	public String _getTokenName() {
+	private String _getTokenName() {
 		return Utils.color(config.getString("token.name"));
 	}
 
@@ -119,7 +119,7 @@ public class Settings {
 		return tokenName;
 	}
 
-	public List<String> _getTokenLore() {
+	private List<String> _getTokenLore() {
 		return Utils.color(config.getStringList("token.lore"));
 	}
 
@@ -127,7 +127,7 @@ public class Settings {
 		return tokenLore;
 	}
 
-	public Map<Integer, BlockVariety> _getUpgradesBlockVariety() {
+	private Map<Integer, BlockVariety> _getUpgradesBlockVariety() {
 		Map<Integer, BlockVariety> upgradesBlockVariety = new HashMap<>();
 		ConfigurationSection section = config.getConfigurationSection("upgrades.block-variety");
 
@@ -154,7 +154,7 @@ public class Settings {
 		return upgradesBlockVariety;
 	}
 
-	public Map<Integer, Double> _getUpgradesResetCooldown() {
+	private Map<Integer, Double> _getUpgradesResetCooldown() {
 		Map<Integer, Double> upgradesResetCooldown = new HashMap<>();
 		ConfigurationSection section = config.getConfigurationSection("upgrades.reset-cooldown");
 
@@ -186,7 +186,7 @@ public class Settings {
 		return upgradesResetCooldown;
 	}
 
-	public Map<Integer, Integer> _getUpgradesIslandLimit() {
+	private Map<Integer, Integer> _getUpgradesIslandLimit() {
 		Map<Integer, Integer> upgradesIslandLimit = new HashMap<>();
 		ConfigurationSection section = config.getConfigurationSection("upgrades.amount-per-island");
 
