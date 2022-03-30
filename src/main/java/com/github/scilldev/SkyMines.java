@@ -91,6 +91,7 @@ public class SkyMines extends JavaPlugin {
 		skyMines.registerSubCommand(new SkyMinesPanelSubCommand());
 		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesGiveSubCommand(this));
+		skyMines.registerSubCommand(new SkyMinesReloadSubCommand(this));
 	}
 
 	private void registerListeners() {
