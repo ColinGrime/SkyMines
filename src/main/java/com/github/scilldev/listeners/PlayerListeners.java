@@ -1,6 +1,7 @@
 package com.github.scilldev.listeners;
 
 import com.github.scilldev.SkyMines;
+import com.github.scilldev.locale.Messages;
 import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.token.SkyMineToken;
 import com.github.scilldev.skymines.upgrades.StandardUpgrades;
@@ -39,7 +40,7 @@ public class PlayerListeners implements Listener {
 			if (plugin.getSkyMineManager().createSkyMine(player, player.getLocation(), size, upgrades)) {
 				Utils.removeOneItemFromHand(player);
 			} else {
-				player.sendMessage("YOU CAN'T PLACE IT THERE!");
+				Messages.FAILURE_NO_SPACE.sendTo(player);
 			}
 		}
 	}

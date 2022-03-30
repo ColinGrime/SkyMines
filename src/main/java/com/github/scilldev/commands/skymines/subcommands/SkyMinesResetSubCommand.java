@@ -40,7 +40,12 @@ public class SkyMinesResetSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_RESET;
+	}
+
+	@Override
+	public String getPermission() {
+		return "skymines.reset";
 	}
 
 	@Override

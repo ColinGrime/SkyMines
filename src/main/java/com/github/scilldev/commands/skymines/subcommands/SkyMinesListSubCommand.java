@@ -41,7 +41,7 @@ public class SkyMinesListSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_LIST;
 	}
 
 	@Override

@@ -18,6 +18,6 @@ public class SkyMinesPanelSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_PANEL;
 	}
 }

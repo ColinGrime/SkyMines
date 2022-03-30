@@ -60,7 +60,12 @@ public class SkyMinesHomeSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_HOME;
+	}
+
+	@Override
+	public String getPermission() {
+		return "skymines.home";
 	}
 
 	@Override

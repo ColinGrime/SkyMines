@@ -26,8 +26,8 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 		}
 
 		MineSize size = new MineSize(10, 10, 10);
-		if (args.length >= 3) {
-			String sizeString = args[2];
+		if (args.length >= 2) {
+			String sizeString = args[1];
 			String[] sizeStringArray = sizeString.split("x");
 			if (!isSizeValid(sizeStringArray)) {
 				getUsage().sendTo(sender);
@@ -38,7 +38,7 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 			int height = Integer.parseInt(sizeStringArray[1]);
 			int width = Integer.parseInt(sizeStringArray[2]);
 			if (length <= 1 || height <= 1 || width <= 1) {
-				sender.sendMessage("WAY TOO SMALL");
+				Messages.FAILURE_TOO_SMALL.sendTo(sender);
 				return;
 			}
 
@@ -46,16 +46,16 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 		}
 
 		int amount = 1;
-		if (args.length > 1 && isInt(args[1])) {
-			amount = Integer.parseInt(args[1]);
+		if (args.length >= 3 && isInt(args[2])) {
+			amount = Integer.parseInt(args[2]);
 		}
 
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
-		for (int i=0; i<amount; i++) {
-			receiver.getInventory().addItem(item);
-		}
+		item.setAmount(amount);
 
-		receiver.sendMessage("HERE'S THE " + amount + " OF TOKENS");
+		receiver.getInventory().addItem(item);
+		Messages.SUCCESS_SKYMINES_GIVE.sendTo(sender, item, receiver);
+		Messages.SUCCESS_SKYMINES_RECEIVE.sendTo(receiver, item, sender);
 	}
 
 	private boolean isSizeValid(String[] sizeStringArray) {
@@ -76,7 +76,7 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_GIVE;
 	}
 
 	@Override
