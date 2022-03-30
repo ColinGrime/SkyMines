@@ -1,6 +1,7 @@
 package com.github.scilldev.skymines.token;
 
 import com.github.scilldev.SkyMines;
+import com.github.scilldev.locale.Placeholders;
 import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.upgrades.StandardUpgrades;
 import com.github.scilldev.skymines.upgrades.Upgrades;
@@ -33,8 +34,8 @@ public class DefaultSkyMineToken implements SkyMineToken {
 	public ItemStack getToken(MineSize size, Upgrades upgrades) {
 		ItemStack item = new ItemStack(plugin.getSettings().getTokenType());
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(plugin.getSettings().getTokenName());
-		meta.setLore(plugin.getSettings().getTokenLore());
+		meta.setDisplayName(Placeholders.replaceAll(plugin.getSettings().getTokenName(), size));
+		meta.setLore(Placeholders.replaceAll(plugin.getSettings().getTokenLore(), size));
 		item.setItemMeta(meta);
 
 		NBTItem nbtItem = new NBTItem(item);
@@ -42,11 +43,6 @@ public class DefaultSkyMineToken implements SkyMineToken {
 		nbtItem.setObject("skymine-size", size);
 		nbtItem.setObject("skymine-upgrades", upgrades);
 		return nbtItem.getItem();
-	}
-
-	private String replacePlaceholders(String string) {
-		// TODO placeholders stuff too tired right now
-		return null;
 	}
 
 	@Override
