@@ -20,11 +20,11 @@ public class MySqlProvider implements DataSourceProvider {
 	@Override
 	public void init(Settings settings) {
 		source.setJdbcUrl("jdbc:mysql://"
-				+ settings.getMysqlHost() + ":"
-				+ settings.getMysqlPort() + "/"
-				+ settings.getMysqlDatabase());
-		source.setUsername(settings.getMysqlUsername());
-		source.setPassword(settings.getMysqlPassword());
+				+ settings.getHost() + ":"
+				+ settings.getPort() + "/"
+				+ settings.getDatabase());
+		source.setUsername(settings.getUsername());
+		source.setPassword(settings.getPassword());
 		source.setMaximumPoolSize(10);
 	}
 

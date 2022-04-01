@@ -1,5 +1,7 @@
-# Save your player data:
-mysql:
+# Save your skymines:
+skymines-save:
+  # Options: FlatFile, MySql, None
+  storage-type: None
   host: 'localhost'
   port: 3306
   database: 'minecraft'
@@ -30,7 +32,7 @@ upgrades:
   block-variety:
     # Level of the upgrade.
     1:
-      # Format: %block-id% %percentage%
+      # Format: %type% %percentage%
       # No, it doesn't have to add up to 100%.
       - STONE 90%
       - IRON_ORE 10%

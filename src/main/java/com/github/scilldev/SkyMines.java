@@ -5,6 +5,8 @@ import com.github.scilldev.commands.skymines.subcommands.*;
 import com.github.scilldev.config.Settings;
 import com.github.scilldev.listeners.PlayerListeners;
 import com.github.scilldev.locale.Messages;
+import com.github.scilldev.panel.PanelSettings;
+import com.github.scilldev.storage.StorageType;
 import com.github.scilldev.storage.database.DataSourceProvider;
 import com.github.scilldev.storage.database.Database;
 import com.github.scilldev.storage.database.mysql.MySqlDatabase;
@@ -22,10 +24,11 @@ public class SkyMines extends JavaPlugin {
 
 	private SkyMineManager skyMineManager;
 	private Settings settings;
+	private PanelSettings panelSettings;
 	private DataSourceProvider sourceProvider;
 	private Database database;
 	private Economy econ = null;
-	private boolean isDatabaseEnabled = true;
+	private boolean isDatabaseEnabled = false;
 
 	@Override
 	public void onEnable() {
@@ -38,13 +41,21 @@ public class SkyMines extends JavaPlugin {
 		loadData();
 		reload();
 
-		try {
-			// initialize data provider and test connection
-			sourceProvider = new MySqlProvider(settings);
-			sourceProvider.testConection();
-		} catch (SQLException ex) {
-			Logger.severe("Could not establish database connection. Defaulting to YAML (database is recommended).");
-			isDatabaseEnabled = false;
+		StorageType type = settings.getStorageType();
+		if (type == StorageType.None) {
+			Logger.log("Your SkyMines aren't currently being saved. Pick a storage option in the config.");
+		}
+
+		// TODO make a database manager class
+		if (type == StorageType.MySql) {
+			try {
+				// initialize data provider and test connection
+				sourceProvider = new MySqlProvider(settings);
+				sourceProvider.testConection();
+				isDatabaseEnabled = true;
+			} catch (SQLException ex) {
+				Logger.severe("Could not establish database connection. Defaulting to YAML (database is recommended).");
+			}
 		}
 
 		if (isDatabaseEnabled) {
@@ -73,6 +84,7 @@ public class SkyMines extends JavaPlugin {
 	 */
 	private void loadData() {
 		settings = new Settings(this);
+		panelSettings = new PanelSettings(this);
 		Messages.init(this);
 	}
 
@@ -81,6 +93,7 @@ public class SkyMines extends JavaPlugin {
 	 */
 	public void reload() {
 		settings.reload();
+		panelSettings.reload();
 		Messages.reload();
 	}
 
@@ -115,6 +128,10 @@ public class SkyMines extends JavaPlugin {
 
 	public Settings getSettings() {
 		return settings;
+	}
+
+	public PanelSettings getPanelSettings() {
+		return panelSettings;
 	}
 
 	public SkyMineManager getSkyMineManager() {

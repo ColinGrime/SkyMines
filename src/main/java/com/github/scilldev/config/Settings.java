@@ -1,5 +1,6 @@
 package com.github.scilldev.config;
 
+import com.github.scilldev.storage.StorageType;
 import com.github.scilldev.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,12 +16,13 @@ public class Settings {
 	private JavaPlugin plugin;
 	private FileConfiguration config;
 
-	// mysql stuff
-	private String mysqlHost;
-	private int mysqlPort;
-	private String mysqlDatabase;
-	private String mysqlUsername;
-	private String mysqlPassword;
+	// database stuff
+	private StorageType storageType;
+	private String host;
+	private int port;
+	private String database;
+	private String username;
+	private String password;
 
 	// token stuff
 	private Material tokenType;
@@ -41,12 +43,13 @@ public class Settings {
 		plugin.reloadConfig();
 		config = plugin.getConfig();
 
-		// mysql
-		mysqlHost = _getMysqlHost();
-		mysqlPort = _getMysqlPort();
-		mysqlDatabase = _getMysqlDatabase();
-		mysqlUsername = _getMysqlUsername();
-		mysqlPassword = _getMysqlPassword();
+		// database stuff
+		storageType = _getStorageType();
+		host = _getHost();
+		port = _getPort();
+		database = _getDatabase();
+		username = _getUsername();
+		password = _getPassword();
 
 		// token stuff
 		tokenType = _getTokenType();
@@ -59,44 +62,59 @@ public class Settings {
 		upgradesIslandLimit = _getUpgradesIslandLimit();
 	}
 
-	private String _getMysqlHost() {
-		return config.getString("mysql.host");
+	private StorageType _getStorageType() {
+		String type = config.getString("skymines-save.storage-type");
+		for (StorageType storageType : StorageType.values()) {
+			if (storageType.name().equalsIgnoreCase(type)) {
+				return storageType;
+			}
+		}
+
+		return StorageType.None;
 	}
 
-	public String getMysqlHost() {
-		return mysqlHost;
+	public StorageType getStorageType() {
+		return storageType;
 	}
 
-	private int _getMysqlPort() {
-		return config.getInt("mysql.port");
+	private String _getHost() {
+		return config.getString("skymines-save.host");
 	}
 
-	public int getMysqlPort() {
-		return mysqlPort;
+	public String getHost() {
+		return host;
 	}
 
-	private String _getMysqlDatabase() {
-		return config.getString("mysql.database");
+	private int _getPort() {
+		return config.getInt("skymines-save.port");
 	}
 
-	public String getMysqlDatabase() {
-		return mysqlDatabase;
+	public int getPort() {
+		return port;
 	}
 
-	private String _getMysqlUsername() {
-		return config.getString("mysql.username");
+	private String _getDatabase() {
+		return config.getString("skymines-save.database");
 	}
 
-	public String getMysqlUsername() {
-		return mysqlUsername;
+	public String getDatabase() {
+		return database;
 	}
 
-	private String _getMysqlPassword() {
-		return config.getString("mysql.password");
+	private String _getUsername() {
+		return config.getString("skymines-save.username");
 	}
 
-	public String getMysqlPassword() {
-		return mysqlPassword;
+	public String getUsername() {
+		return username;
+	}
+
+	private String _getPassword() {
+		return config.getString("skymines-save.password");
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	private Material _getTokenType() {
