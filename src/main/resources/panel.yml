@@ -1,0 +1,39 @@
+# Upgrade panel for the skymines.
+upgrade-panel:
+  # Amount of rows in the GUI.
+  rows: 3
+  # Optionally fill the GUI after all other items are placed.
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    # Slot number:
+    12:
+      upgrade: block-variety
+    14:
+      upgrade: reset-cooldown
+    16:
+      upgrade: amount-per-island
+
+# Quick way to easily create names/lores for the above panel.
+upgrades:
+  block-variety:
+    type: AMETHYST_CLUSTER
+    name: '&bBlock Variety &7(&e%level% &7→ &e%next-level%&7)'
+  reset-cooldown:
+    type: CLOCK
+    name: '&cReset Cooldown &7(&e%level% &7→ &e%next-level%&7)'
+  amount-per-island:
+    type: GRASS_BLOCK
+    name: '&aIsland Limit &7(&e%level% &7→ &e%next-level%&7)'
+  # Lore generator:
+  lore:
+    # Placeholders available: %item%, %percent%
+    add: '&7(&a+&7) &a%item% %percent%'
+    # Placeholders available: %item%, %percent%, %next-item%, %next-percent%
+    change: '&7(&d*&7) &d%item% %percent% → &d%next-item% %next-percent%'
+    # Placeholders available: %item%, %percent%
+    remove: '&7(&c-&7) &c%item%'
+
+# Placeholders will be replaced if they exist, else they will be removed.
+placeholders:
+  percent: '&7(&e%percent%%&7)'
+  next-percent: '&7(&e%next-percent%%&7)'
