@@ -2,19 +2,21 @@ package com.github.scilldev.config;
 
 import org.bukkit.Material;
 
-import java.util.NavigableMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 public class BlockVariety {
 
-	private final NavigableMap<Double, Material> types = new TreeMap<>();
+	// used to get the chance of each material
+	private final Map<Material, Double> typeChances = new HashMap<>();
+
+	// used to get random materials
+	private final NavigableMap<Double, Material> typeRandomizer = new TreeMap<>();
+
 	private final Random random = new Random();
 	private double totalPercentages = 0;
 
 	public boolean addType(String materialString, String chanceString) {
-		Material material = Material.getMaterial(materialString);
+		Material material = Material.matchMaterial(materialString);
 		chanceString = chanceString.replaceAll("%", "");
 
 		if (material != null && chanceString.matches("\\d+(\\.\\d+)?")) {
@@ -35,10 +37,16 @@ public class BlockVariety {
 		}
 
 		totalPercentages += chance;
-		types.put(totalPercentages, material);
+
+		typeChances.put(material, (int) (chance * 10) / 10.0);
+		typeRandomizer.put(totalPercentages, material);
+	}
+
+	public Map<Material, Double> getTypeChances() {
+		return typeChances;
 	}
 
 	public Optional<Material> getRandom() {
-		return Optional.ofNullable(types.higherEntry(random.nextDouble() * totalPercentages).getValue());
+		return Optional.ofNullable(typeRandomizer.higherEntry(random.nextDouble() * totalPercentages).getValue());
 	}
 }
