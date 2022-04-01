@@ -2,7 +2,7 @@ package com.github.scilldev.skymines;
 
 import com.github.scilldev.SkyMines;
 import com.github.scilldev.skymines.structure.MineStructure;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,13 +17,13 @@ public class DefaultSkyMine implements SkyMine {
 	private final UUID owner;
 	private final MineStructure structure;
 	private final Location home;
-	private final Upgrades upgrades;
+	private final SkyMineUpgrades upgrades;
 
-	public DefaultSkyMine(SkyMines plugin, UUID owner, MineStructure structure, Location home, Upgrades upgrades) {
+	public DefaultSkyMine(SkyMines plugin, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
 		this(plugin, UUID.randomUUID(), owner, structure, home, upgrades);
 	}
 
-	public DefaultSkyMine(SkyMines plugin, UUID uuid, UUID owner, MineStructure structure, Location home, Upgrades upgrades) {
+	public DefaultSkyMine(SkyMines plugin, UUID uuid, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.owner = owner;
@@ -72,12 +72,12 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
-	public Upgrades getUpgrades() {
+	public SkyMineUpgrades getUpgrades() {
 		return upgrades;
 	}
 
 	@Override
 	public void reset() {
-		structure.buildInside();
+		structure.buildInside(plugin.getSettings().getUpgradesBlockVariety().get(upgrades.getBlockVarietyLevel()));
 	}
 }

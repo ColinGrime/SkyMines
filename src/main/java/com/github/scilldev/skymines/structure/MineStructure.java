@@ -1,5 +1,6 @@
 package com.github.scilldev.skymines.structure;
 
+import com.github.scilldev.config.BlockVariety;
 import com.github.scilldev.skymines.structure.behavior.BuildBehavior;
 import com.github.scilldev.skymines.structure.behavior.DefaultBuildBehavior;
 import org.bukkit.Location;
@@ -90,10 +91,10 @@ public class MineStructure {
 		buildBehavior.build(blocksToChange);
 	}
 
-	public void buildInside() {
+	public void buildInside(BlockVariety blockVariety) {
 		Map<Block, Material> blocksToChange = new HashMap<>();
 		for (Block block : blocksInside) {
-			blocksToChange.put(block, Material.STONE);
+			blocksToChange.put(block, blockVariety.getRandom().orElse(Material.STONE));
 		}
 		buildBehavior.build(blocksToChange);
 	}
