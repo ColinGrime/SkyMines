@@ -41,6 +41,14 @@ public final class Utils {
 
 	/**
 	 * @param message any message
+	 * @return new message with first letter capitalized and the rest lowercase
+	 */
+	public static String capitalization(String message) {
+		return message.substring(0, 1).toUpperCase() + message.substring(1).toLowerCase();
+	}
+
+	/**
+	 * @param message any message
 	 * @param command any command
 	 * @return TextComponent of a command message
 	 */
@@ -55,15 +63,15 @@ public final class Utils {
 	 * @param player any player
 	 */
 	public static void removeOneItemFromHand(Player player) {
-		ItemStack item = player.getItemInHand();
-		if (item == null) {
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if (item.getType() == Material.AIR) {
 			return;
 		}
 
 		if (item.getAmount() > 1) {
 			item.setAmount(item.getAmount() - 1);
 		} else {
-			player.setItemInHand(new ItemStack(Material.AIR));
+			player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 		}
 	}
 }
