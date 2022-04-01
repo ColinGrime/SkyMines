@@ -4,8 +4,7 @@ import com.github.scilldev.SkyMines;
 import com.github.scilldev.locale.Messages;
 import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.token.SkyMineToken;
-import com.github.scilldev.skymines.upgrades.StandardUpgrades;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import com.github.scilldev.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,12 +29,12 @@ public class PlayerListeners implements Listener {
 		}
 
 		Player player = event.getPlayer();
-		ItemStack item = player.getItemInHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		SkyMineToken token = plugin.getSkyMineManager().getToken();
 
 		if (token.isToken(item)) {
 			MineSize size = token.getMineSize(item).orElseGet(() -> new MineSize(10, 10, 10));
-			Upgrades upgrades = token.getUpgrades(item).orElseGet(StandardUpgrades::new);
+			SkyMineUpgrades upgrades = token.getUpgrades(item).orElseGet(SkyMineUpgrades::new);
 
 			if (plugin.getSkyMineManager().createSkyMine(player, player.getLocation(), size, upgrades)) {
 				Utils.removeOneItemFromHand(player);

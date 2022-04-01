@@ -3,8 +3,7 @@ package com.github.scilldev.skymines.token;
 import com.github.scilldev.SkyMines;
 import com.github.scilldev.locale.Placeholders;
 import com.github.scilldev.skymines.structure.MineSize;
-import com.github.scilldev.skymines.upgrades.StandardUpgrades;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -27,11 +26,11 @@ public class DefaultSkyMineToken implements SkyMineToken {
 
 	@Override
 	public ItemStack getToken(MineSize size) {
-		return getToken(size, new StandardUpgrades());
+		return getToken(size, new SkyMineUpgrades());
 	}
 
 	@Override
-	public ItemStack getToken(MineSize size, Upgrades upgrades) {
+	public ItemStack getToken(MineSize size, SkyMineUpgrades upgrades) {
 		ItemStack item = new ItemStack(plugin.getSettings().getTokenType());
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(Placeholders.replaceAll(plugin.getSettings().getTokenName(), size));
@@ -66,13 +65,13 @@ public class DefaultSkyMineToken implements SkyMineToken {
 	}
 
 	@Override
-	public Optional<Upgrades> getUpgrades(ItemStack item) {
+	public Optional<SkyMineUpgrades> getUpgrades(ItemStack item) {
 		if (isInvalidItem(item)) {
 			return Optional.empty();
 		}
 
 		NBTItem nbtItem = new NBTItem(item);
-		return Optional.ofNullable(nbtItem.getObject("skymine-upgrades", StandardUpgrades.class));
+		return Optional.ofNullable(nbtItem.getObject("skymine-upgrades", SkyMineUpgrades.class));
 	}
 
 	private boolean isInvalidItem(ItemStack item) {

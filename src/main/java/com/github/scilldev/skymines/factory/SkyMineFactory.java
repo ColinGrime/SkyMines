@@ -2,7 +2,7 @@ package com.github.scilldev.skymines.factory;
 
 import com.github.scilldev.skymines.SkyMine;
 import com.github.scilldev.skymines.structure.MineSize;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -19,5 +19,5 @@ public interface SkyMineFactory {
 	 * @param upgrades upgrades of the skymine
 	 * @return created SkyMine if one can be placed
 	 */
-	Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, Upgrades upgrades);
+	Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades);
 }

@@ -7,7 +7,7 @@ import com.github.scilldev.skymines.factory.SkyMineFactory;
 import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.token.DefaultSkyMineToken;
 import com.github.scilldev.skymines.token.SkyMineToken;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -38,7 +38,7 @@ public class SkyMineManager {
 	 * @param upgrades upgrades of the skymine
 	 * @return true if the skymine was successfully created
 	 */
-	public boolean createSkyMine(Player player, Location location, MineSize size, Upgrades upgrades) {
+	public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades) {
 		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades);
 		if (!skyMine.isPresent()) {
 			return false;

@@ -1,7 +1,7 @@
 package com.github.scilldev.skymines;
 
 import com.github.scilldev.skymines.structure.MineStructure;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
 
 import java.util.UUID;
@@ -36,7 +36,7 @@ public interface SkyMine {
 	/**
 	 * @return upgrades of the sky mine
 	 */
-	Upgrades getUpgrades();
+	SkyMineUpgrades getUpgrades();
 
 	void reset();
 }

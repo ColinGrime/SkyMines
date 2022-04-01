@@ -5,7 +5,7 @@ import com.github.scilldev.skymines.DefaultSkyMine;
 import com.github.scilldev.skymines.SkyMine;
 import com.github.scilldev.skymines.structure.MineSize;
 import com.github.scilldev.skymines.structure.MineStructure;
-import com.github.scilldev.skymines.upgrades.Upgrades;
+import com.github.scilldev.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -20,7 +20,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 	}
 
 	@Override
-	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, Upgrades upgrades) {
+	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades) {
 		float yaw = owner.getLocation().getYaw();
 		if (yaw < 0) {
 			yaw += 360;
@@ -55,7 +55,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		}
 
 		structure.buildParameter();
-		structure.buildInside();
+		structure.buildInside(plugin.getSettings().getUpgradesBlockVariety().get(upgrades.getBlockVarietyLevel()));
 
 		// creates the home of the mine
 		Location home = location.clone().add(0, 1, 0);
