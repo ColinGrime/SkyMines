@@ -30,6 +30,9 @@ dependencies {
     // SQL stuff
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'com.zaxxer:HikariCP:4.0.3'
+
+    // Annotations
+    implementation 'org.jetbrains:annotations:16.0.2'
 }
 
 shadowJar {
