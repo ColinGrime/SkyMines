@@ -39,4 +39,6 @@ public interface SkyMine {
 	SkyMineUpgrades getUpgrades();
 
 	void reset();
+
+	boolean canBeUpgraded(SkyMineUpgrades.UpgradeType upgradeType);
 }

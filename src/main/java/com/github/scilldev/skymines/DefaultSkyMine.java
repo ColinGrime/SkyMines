@@ -63,7 +63,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public MineStructure getStructure() {
-		return null;
+		return structure;
 	}
 
 	@Override
@@ -79,5 +79,17 @@ public class DefaultSkyMine implements SkyMine {
 	@Override
 	public void reset() {
 		structure.buildInside(plugin.getSettings().getUpgradesBlockVariety().get(upgrades.getBlockVarietyLevel()));
+	}
+
+	@Override
+	public boolean canBeUpgraded(SkyMineUpgrades.UpgradeType upgradeType) {
+		switch (upgradeType) {
+			case BlockVariety:
+				return plugin.getSettings().getMaxBlockVariety() > upgrades.getBlockVarietyLevel();
+			case ResetCooldown:
+				return plugin.getSettings().getMaxResetCooldown() > upgrades.getResetCooldownLevel();
+		}
+
+		return false;
 	}
 }
