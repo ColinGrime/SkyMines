@@ -2,6 +2,7 @@ package com.github.scilldev.utils;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,10 +42,21 @@ public final class Utils {
 
 	/**
 	 * @param message any message
-	 * @return new message with first letter capitalized and the rest lowercase
+	 * @return new message with spaces, dashes, and colons removed
 	 */
-	public static String capitalization(String message) {
-		return message.substring(0, 1).toUpperCase() + message.substring(1).toLowerCase();
+	public static String strip(String message) {
+		return message.replaceAll("\\s+", "")
+				.replaceAll("-", "")
+				.replaceAll(":", "");
+	}
+
+	/**
+	 * @param message any message
+	 * @return new message that is formatted
+	 */
+	public static String format(String message) {
+		message = message.replaceAll("_", " ").replaceAll("-", " ");
+		return WordUtils.capitalizeFully(message);
 	}
 
 	/**
