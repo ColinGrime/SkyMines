@@ -1,7 +1,8 @@
-package com.github.scilldev.panel.slot;
+package com.github.scilldev.panel.setup.slot.meta;
 
 import org.bukkit.Material;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PanelSlotMeta {
@@ -9,6 +10,10 @@ public class PanelSlotMeta {
 	private final Material type;
 	private final String name;
 	private final List<String> lore;
+
+	public PanelSlotMeta(Material type, String name) {
+		this(type, name, new ArrayList<>());
+	}
 
 	public PanelSlotMeta(Material type, String name, List<String> lore) {
 		this.type = type;

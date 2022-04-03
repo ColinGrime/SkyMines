@@ -6,34 +6,75 @@ upgrade-panel:
   fill: GRAY_STAINED_GLASS_PANE
   slots:
     # Slot number:
-    12:
+    13:
       upgrade: block-variety
-    14:
+    15:
       upgrade: reset-cooldown
-    16:
-      upgrade: amount-per-island
 
-# Quick way to easily create names/lores for the above panel.
+# Use this for the upgrade slots:
 upgrades:
   block-variety:
     type: AMETHYST_CLUSTER
     name: '&bBlock Variety &7(&e%level% &7→ &e%next-level%&7)'
+    lore:
+      # Level you are upgrading to:
+      2:
+        - '&7(&d*&7) &dStone&7: &e90% &7→ &e70%'
+        - '&7(&d*&7) &dIron Ore&7: &e10% &7→ &e15%'
+        - '&7(&d*&7) &dGold Ore&7: &e5% &7→ &e10%'
+        - '&7(&a+&7) &aRedstone Ore &7→ &e5%'
+        - '&7(&a+&7) &aLapis Ore &7→ &e5%'
+      3:
+        - '&7(&d*&7) &dStone&7: &e70% &7→ &e50%'
+        - '&7(&d*&7) &dIron Ore&7: &e15% &7→ &e20%'
+        - '&7(&d*&7) &dGold Ore&7: &e10% &7→ &e15%'
+        - '&7(&d*&7) &dRedstone Ore&7: &e5% &7→ &e7.5%'
+        - '&7(&d*&7) &dLapis Ore&7: &e5% &7→ &e7.5%'
+        - '&7(&a+&7) &aDiamond Ore &7→ &e2%'
+      4:
+        - '&7(&d*&7) &dStone&7: &e50% &7→ &e30%'
+        - '&7(&d*&7) &dIron Ore&7: &e20% &7→ &e25%'
+        - '&7(&d*&7) &dGold Ore&7: &e15% &7→ &e25%'
+        - '&7(&d*&7) &dRedstone Ore&7: &e7.5% &7→ &e10%'
+        - '&7(&d*&7) &dLapis Ore&7: &e7.5% &7→ &e10%'
+        - '&7(&d*&7) &dDiamond Ore&7: &e2% &7→ &e5%'
+        - '&7(&a+&7) &aEmerald Ore &7→ &e5%'
+    # Shown when the upgrade is maxed out:
+    max:
+      type: AMETHYST_CLUSTER
+      name: '&bBlock Variety &7(&eMAXED&7)'
+      lore:
+        - '&7(&c✯&7) &cStone &7→ &e30%'
+        - '&7(&c✯&7) &cIron Ore &7→ &e25%'
+        - '&7(&c✯&7) &cGold Ore &7→ &e25%'
+        - '&7(&c✯&7) &cRedstone Ore &7→ &e10%'
+        - '&7(&c✯&7) &cLapis Ore &7→ &e10%'
+        - '&7(&c✯&7) &cDiamond Ore &7→ &e2%'
+        - '&7(&c✯&7) &cEmerald Ore &7→ &e5%'
   reset-cooldown:
     type: CLOCK
     name: '&cReset Cooldown &7(&e%level% &7→ &e%next-level%&7)'
-  amount-per-island:
-    type: GRASS_BLOCK
-    name: '&aIsland Limit &7(&e%level% &7→ &e%next-level%&7)'
-  # Lore generator:
-  lore:
-    # Placeholders available: %item%, %percent%
-    add: '&7(&a+&7) &a%item% %percent%'
-    # Placeholders available: %item%, %percent%, %next-item%, %next-percent%
-    change: '&7(&d*&7) &d%item% %percent% → &d%next-item% %next-percent%'
-    # Placeholders available: %item%, %percent%
-    remove: '&7(&c-&7) &c%item%'
-
-# Placeholders will be replaced if they exist, else they will be removed.
-placeholders:
-  percent: '&7(&e%percent%%&7)'
-  next-percent: '&7(&e%next-percent%%&7)'
+    lore:
+      2:
+        - '&7(1) 5 minutes'
+        - '&d→ &7(&e2&7) &e2 minutes'
+        - '&7(3) 1 minute'
+        - '&7(4) 30 seconds'
+      3:
+        - '&7(1) 5 minutes'
+        - '&7(2) 2 minutes'
+        - '&d→ &7(&e3&7) &e1 minute'
+        - '&7(4) 30 seconds'
+      4:
+        - '&7(1) 5 minutes'
+        - '&7(2) 2 minutes'
+        - '&7(3) 1 minute'
+        - '&d→ &7(&e4&7) &e30 seconds'
+    max:
+      type: CLOCK
+      name: '&cReset Cooldown &7(&eMAXED&7)'
+      lore:
+        - '&7(1) 5 minutes'
+        - '&7(2) 2 minutes'
+        - '&7(3) 1 minute'
+        - '&c→ &7(&e4&7) &e30 seconds'
