@@ -1,13 +1,15 @@
 package com.github.scilldev.skymines.upgrades;
 
+import com.github.scilldev.utils.Utils;
+
 public class SkyMineUpgrades {
 
 	public enum UpgradeType {
 		BlockVariety,
-		ResetCooldown,
-		IslandLimit;
+		ResetCooldown;
 
 		public static UpgradeType getUpgradeType(String name) {
+			name = Utils.strip(name);
 			for (UpgradeType type : UpgradeType.values()) {
 				if (type.name().equalsIgnoreCase(name)) {
 					return type;
@@ -19,16 +21,14 @@ public class SkyMineUpgrades {
 
 	private int blockVarietyLevel;
 	private int resetCooldownLevel;
-	private int islandLimitLevel;
 
 	public SkyMineUpgrades() {
-		this(1, 1, 1);
+		this(1, 1);
 	}
 
-	public SkyMineUpgrades(int blockVarietyLevel, int resetCooldownLevel, int islandLimitLevel) {
+	public SkyMineUpgrades(int blockVarietyLevel, int resetCooldownLevel) {
 		this.blockVarietyLevel = blockVarietyLevel;
 		this.resetCooldownLevel = resetCooldownLevel;
-		this.islandLimitLevel = islandLimitLevel;
 	}
 
 	public int getLevel(UpgradeType upgradeType) {
@@ -37,8 +37,6 @@ public class SkyMineUpgrades {
 				return blockVarietyLevel;
 			case ResetCooldown:
 				return resetCooldownLevel;
-			case IslandLimit:
-				return islandLimitLevel;
 		}
 
 		return -1;
@@ -52,7 +50,14 @@ public class SkyMineUpgrades {
 		return resetCooldownLevel;
 	}
 
-	public int getIslandLimitLevel() {
-		return islandLimitLevel;
+	public void increaseLevel(UpgradeType upgradeType) {
+		switch (upgradeType) {
+			case BlockVariety:
+				blockVarietyLevel++;
+				break;
+			case ResetCooldown:
+				resetCooldownLevel++;
+				break;
+		}
 	}
 }
