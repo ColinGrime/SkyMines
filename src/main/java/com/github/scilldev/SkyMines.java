@@ -3,9 +3,10 @@ package com.github.scilldev;
 import com.github.scilldev.commands.skymines.SkyMinesBaseCommand;
 import com.github.scilldev.commands.skymines.subcommands.*;
 import com.github.scilldev.config.Settings;
+import com.github.scilldev.listeners.PanelListeners;
 import com.github.scilldev.listeners.PlayerListeners;
 import com.github.scilldev.locale.Messages;
-import com.github.scilldev.panel.PanelSettings;
+import com.github.scilldev.panel.setup.PanelSettings;
 import com.github.scilldev.storage.StorageType;
 import com.github.scilldev.storage.database.DataSourceProvider;
 import com.github.scilldev.storage.database.Database;
@@ -101,7 +102,7 @@ public class SkyMines extends JavaPlugin {
 		SkyMinesBaseCommand skyMines = new SkyMinesBaseCommand(this);
 		skyMines.registerSubCommand(new SkyMinesListSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesHomeSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesPanelSubCommand());
+		skyMines.registerSubCommand(new SkyMinesPanelSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesGiveSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesReloadSubCommand(this));
@@ -109,6 +110,7 @@ public class SkyMines extends JavaPlugin {
 
 	private void registerListeners() {
 		new PlayerListeners(this);
+		new PanelListeners(this);
 	}
 
 	/**
