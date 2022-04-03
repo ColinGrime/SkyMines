@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,10 @@ public class Settings {
 	// upgrade stuff
 	private Map<Integer, BlockVariety> upgradesBlockVariety;
 	private Map<Integer, Double> upgradesResetCooldown;
-	private Map<Integer, Integer> upgradesIslandLimit;
+
+	// max levels
+	private int maxBlockVariety;
+	private int maxResetCooldown;
 
 	public Settings(JavaPlugin plugin) {
 		this.plugin = plugin;
@@ -59,7 +63,10 @@ public class Settings {
 		// upgrade stuff
 		upgradesBlockVariety = _getUpgradesBlockVariety();
 		upgradesResetCooldown = _getUpgradesResetCooldown();
-		upgradesIslandLimit = _getUpgradesIslandLimit();
+
+		// max levels
+		maxBlockVariety = Collections.max(upgradesBlockVariety.keySet());
+		maxResetCooldown = Collections.max(upgradesResetCooldown.keySet());
 	}
 
 	private StorageType _getStorageType() {
@@ -204,29 +211,11 @@ public class Settings {
 		return upgradesResetCooldown;
 	}
 
-	private Map<Integer, Integer> _getUpgradesIslandLimit() {
-		Map<Integer, Integer> upgradesIslandLimit = new HashMap<>();
-		ConfigurationSection section = config.getConfigurationSection("upgrades.amount-per-island");
-
-		// goes over each level in the island limit section
-		for (String level : section.getKeys(false)) {
-			if (!level.matches("\\d+")) {
-				continue;
-			}
-
-			// checks to make sure limit is valid
-			String limit = section.getString(level);
-			if (!limit.matches("\\d+")) {
-				continue;
-			}
-
-			upgradesIslandLimit.put(Integer.parseInt(level), Integer.parseInt(limit));
-		}
-
-		return upgradesIslandLimit;
+	public int getMaxBlockVariety() {
+		return maxBlockVariety;
 	}
 
-	public Map<Integer, Integer> getUpgradesIslandLimit() {
-		return upgradesIslandLimit;
+	public int getMaxResetCooldown() {
+		return maxResetCooldown;
 	}
 }
