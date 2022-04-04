@@ -8,7 +8,7 @@ skymines-save:
   username: 'root'
   password: ''
 
-# Physical form of sky mine:
+# Physical form of a skymine:
 token:
   type: TRIPWIRE_HOOK
   name: '&c&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
@@ -34,34 +34,49 @@ upgrades:
     1:
       # Format: %type% %percentage%
       # No, it doesn't have to add up to 100%.
-      - STONE 90%
-      - IRON_ORE 10%
-      - GOLD_ORE 5%
+      upgrade:
+        - STONE 90%
+        - IRON_ORE 10%
+        - GOLD_ORE 5%
     2:
-      - STONE 70%
-      - IRON_ORE 15%
-      - GOLD_ORE 10%
-      - REDSTONE_ORE 5%
-      - LAPIS_ORE 5%
+      # Cost to buy the upgrade, or -1 for free.
+      cost: 100000
+      upgrade:
+        - STONE 70%
+        - IRON_ORE 15%
+        - GOLD_ORE 10%
+        - REDSTONE_ORE 5%
+        - LAPIS_ORE 5%
     3:
-      - STONE 50%
-      - IRON_ORE 20%
-      - GOLD_ORE 15%
-      - REDSTONE_ORE 7.5%
-      - LAPIS_ORE 7.5%
-      - DIAMOND_ORE 2%
+      cost: 250000
+      upgrade:
+        - STONE 50%
+        - IRON_ORE 20%
+        - GOLD_ORE 15%
+        - REDSTONE_ORE 7.5%
+        - LAPIS_ORE 7.5%
+        - DIAMOND_ORE 2%
     4:
-      - STONE 30%
-      - IRON_ORE 25%
-      - GOLD_ORE 25%
-      - REDSOTNE_ORE 10%
-      - LAPIS_ORE 10%
-      - DIAMOND_ORE 5%
-      - EMERALD_ORE 5%
+      cost: 750000
+      upgrade:
+        - STONE 30%
+        - IRON_ORE 25%
+        - GOLD_ORE 25%
+        - REDSOTNE_ORE 10%
+        - LAPIS_ORE 10%
+        - DIAMOND_ORE 5%
+        - EMERALD_ORE 5%
   # Alter the cooldown until a mine can be reset.
   reset-cooldown:
-    # You can put [seconds/minutes] if you want. Default: seconds
-    1: 5 minutes
-    2: 2 minutes
-    3: 1 minute
-    4: 30 seconds
+    1:
+      # You can put [seconds/minutes] if you want. Default: seconds
+      upgrade: 5 minutes
+    2:
+      cost: 50000
+      upgrade: 2 minutes
+    3:
+      cost: 100000
+      upgrade: 1 minute
+    4:
+      cost: 150000
+      upgrade: 30 seconds

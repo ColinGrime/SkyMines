@@ -1,5 +1,5 @@
 name: SkyMines
-main: com.github.scilldev.SkyMines
+main: com.github.colingrime.SkyMines
 version: @version@
 
 authors: [Scill]

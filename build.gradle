@@ -10,7 +10,7 @@ java {
     targetCompatibility JavaVersion.VERSION_1_8
 }
 
-group 'com.github.scilldev'
+group 'com.github.colingrime'
 version '1.0.0-alpha'
 
 repositories {
