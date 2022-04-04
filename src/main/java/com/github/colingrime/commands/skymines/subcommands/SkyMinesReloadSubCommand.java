@@ -16,6 +16,7 @@ public class SkyMinesReloadSubCommand implements SubCommand {
 	@Override
 	public void onCommand(CommandSender sender, String subCommand, String[] args) {
 		plugin.reload();
+		Messages.RELOADED.sendTo(sender);
 	}
 
 	@Override
