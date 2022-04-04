@@ -55,7 +55,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		}
 
 		structure.buildParameter();
-		structure.buildInside(plugin.getSettings().getUpgradesBlockVariety().get(upgrades.getBlockVarietyLevel()));
+		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 
 		// creates the home of the mine
 		Location home = location.clone().add(0, 1, 0);

@@ -2,6 +2,7 @@ package com.github.colingrime.skymines;
 
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.skymines.upgrades.types.BlockVarietyUpgrade;
 import org.bukkit.Location;
 
 import java.util.UUID;
@@ -38,7 +39,8 @@ public interface SkyMine {
 	 */
 	SkyMineUpgrades getUpgrades();
 
+	/**
+	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 */
 	void reset();
-
-	boolean canBeUpgraded(SkyMineUpgrades.UpgradeType upgradeType);
 }

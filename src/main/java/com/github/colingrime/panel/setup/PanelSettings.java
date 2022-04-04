@@ -5,7 +5,7 @@ import com.github.colingrime.panel.setup.slot.PanelSlot;
 import com.github.colingrime.panel.setup.slot.StandardPanelSlot;
 import com.github.colingrime.panel.setup.slot.meta.PanelSlotMeta;
 import com.github.colingrime.panel.setup.slot.UpgradePanelSlot;
-import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.skymines.upgrades.UpgradeType;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,7 +19,6 @@ import java.util.Map;
 
 public class PanelSettings {
 
-	private final SkyMines plugin;
 	private final File file;
 	private FileConfiguration config;
 
@@ -28,9 +27,7 @@ public class PanelSettings {
 	private Map<Integer, PanelSlot> upgradePanel;
 
 	public PanelSettings(SkyMines plugin) {
-		this.plugin = plugin;
 		this.file = new File(plugin.getDataFolder(), "panel.yml");
-
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 			plugin.saveResource("panel.yml", false);
@@ -108,7 +105,7 @@ public class PanelSettings {
 	}
 
 	private UpgradePanelSlot getUpgradeSlot(String upgradeName) {
-		SkyMineUpgrades.UpgradeType upgradeType = SkyMineUpgrades.UpgradeType.getUpgradeType(upgradeName);
+		UpgradeType upgradeType = UpgradeType.getUpgradeType(upgradeName);
 		if (upgradeType == null) {
 			return null;
 		}

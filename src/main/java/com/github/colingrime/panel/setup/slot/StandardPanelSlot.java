@@ -1,7 +1,7 @@
 package com.github.colingrime.panel.setup.slot;
 
 import com.github.colingrime.panel.setup.slot.meta.PanelSlotMeta;
-import com.github.colingrime.skymines.SkyMine;
+import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Material;
 
 import java.util.List;
@@ -15,17 +15,17 @@ public class StandardPanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public Material getType(SkyMine skyMine) {
+	public Material getType(SkyMineUpgrades upgrades) {
 		return slotMeta.getType();
 	}
 
 	@Override
-	public String getName(SkyMine skyMine) {
+	public String getName(SkyMineUpgrades upgrades) {
 		return slotMeta.getName();
 	}
 
 	@Override
-	public List<String> getLore(SkyMine skyMine) {
+	public List<String> getLore(SkyMineUpgrades upgrades) {
 		return slotMeta.getLore();
 	}
 }

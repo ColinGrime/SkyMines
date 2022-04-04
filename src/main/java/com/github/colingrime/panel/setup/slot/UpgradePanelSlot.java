@@ -1,8 +1,9 @@
 package com.github.colingrime.panel.setup.slot;
 
 import com.github.colingrime.panel.setup.slot.meta.PanelSlotMeta;
-import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.skymines.upgrades.UpgradeType;
+import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Material;
 
@@ -13,16 +14,16 @@ import java.util.Map;
 
 public class UpgradePanelSlot extends PanelSlot {
 
-	private final SkyMineUpgrades.UpgradeType upgradeType;
+	private final UpgradeType upgradeType;
 	private final PanelSlotMeta slotMeta;
 	private final PanelSlotMeta maxSlotMeta;
 	private final Map<Integer, List<String>> lores;
 
-	public UpgradePanelSlot(SkyMineUpgrades.UpgradeType upgradeType, PanelSlotMeta slotMeta, PanelSlotMeta maxSlotMeta) {
+	public UpgradePanelSlot(UpgradeType upgradeType, PanelSlotMeta slotMeta, PanelSlotMeta maxSlotMeta) {
 		this(upgradeType, slotMeta, maxSlotMeta, new HashMap<>());
 	}
 
-	public UpgradePanelSlot(SkyMineUpgrades.UpgradeType upgradeType, PanelSlotMeta slotMeta, PanelSlotMeta maxSlotMeta, Map<Integer, List<String>> levelLores) {
+	public UpgradePanelSlot(UpgradeType upgradeType, PanelSlotMeta slotMeta, PanelSlotMeta maxSlotMeta, Map<Integer, List<String>> levelLores) {
 		this.upgradeType = upgradeType;
 		this.slotMeta = slotMeta;
 		this.maxSlotMeta = maxSlotMeta;
@@ -30,8 +31,8 @@ public class UpgradePanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public Material getType(SkyMine skyMine) {
-		if (skyMine.canBeUpgraded(upgradeType)) {
+	public Material getType(SkyMineUpgrades upgrades) {
+		if (upgrades.getUpgrade(upgradeType).canBeUpgraded()) {
 			return slotMeta.getType();
 		} else {
 			return maxSlotMeta.getType();
@@ -39,9 +40,11 @@ public class UpgradePanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public String getName(SkyMine skyMine) {
-		int level = skyMine.getUpgrades().getLevel(upgradeType);
-		if (skyMine.canBeUpgraded(upgradeType)) {
+	public String getName(SkyMineUpgrades upgrades) {
+		SkyMineUpgrade upgrade = upgrades.getUpgrade(upgradeType);
+		int level = upgrade.getLevel();
+
+		if (upgrade.canBeUpgraded()) {
 			return replaceLevels(slotMeta.getName(), level);
 		} else {
 			return replaceLevels(maxSlotMeta.getName(), level);
@@ -49,12 +52,13 @@ public class UpgradePanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public List<String> getLore(SkyMine skyMine) {
-		if (!skyMine.canBeUpgraded(upgradeType)) {
+	public List<String> getLore(SkyMineUpgrades upgrades) {
+		SkyMineUpgrade upgrade = upgrades.getUpgrade(upgradeType);
+		if (!upgrade.canBeUpgraded()) {
 			return maxSlotMeta.getLore();
 		}
 
-		List<String> lore = lores.get(skyMine.getUpgrades().getLevel(upgradeType) + 1);
+		List<String> lore = lores.get(upgrade.getLevel() + 1);
 		if (lore == null || lore.isEmpty()) {
 			return Collections.singletonList(Utils.color("&cFailed to retrieve lore values."));
 		} else {
@@ -62,7 +66,7 @@ public class UpgradePanelSlot extends PanelSlot {
 		}
 	}
 
-	public SkyMineUpgrades.UpgradeType getUpgradeType() {
+	public UpgradeType getUpgradeType() {
 		return upgradeType;
 	}
 

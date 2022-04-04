@@ -37,7 +37,7 @@ public class PlayerListeners implements Listener {
 
 		if (token.isToken(item)) {
 			MineSize size = token.getMineSize(item).orElseGet(() -> new MineSize(10, 10, 10));
-			SkyMineUpgrades upgrades = token.getUpgrades(item).orElseGet(SkyMineUpgrades::new);
+			SkyMineUpgrades upgrades = token.getUpgrades(item).orElseGet(() -> new SkyMineUpgrades(plugin));
 
 			if (plugin.getSkyMineManager().createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades)) {
 				Utils.removeOneItemFromHand(player);
