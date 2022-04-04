@@ -1,63 +1,40 @@
 package com.github.colingrime.skymines.upgrades;
 
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.SkyMines;
+import com.github.colingrime.skymines.upgrades.types.BlockVarietyUpgrade;
+import com.github.colingrime.skymines.upgrades.types.ResetCooldownUpgrade;
+import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
 
 public class SkyMineUpgrades {
 
-	public enum UpgradeType {
-		BlockVariety,
-		ResetCooldown;
+	private final BlockVarietyUpgrade blockVarietyUpgrade;
+	private final ResetCooldownUpgrade resetCooldownUpgrade;
 
-		public static UpgradeType getUpgradeType(String name) {
-			name = Utils.strip(name);
-			for (UpgradeType type : UpgradeType.values()) {
-				if (type.name().equalsIgnoreCase(name)) {
-					return type;
-				}
-			}
-			return null;
-		}
+	public SkyMineUpgrades(SkyMines plugin) {
+		this(plugin, 1, 1);
 	}
 
-	private int blockVarietyLevel;
-	private int resetCooldownLevel;
-
-	public SkyMineUpgrades() {
-		this(1, 1);
+	public SkyMineUpgrades(SkyMines plugin, int blockVarietyLevel, int resetCooldownLevel) {
+		this.blockVarietyUpgrade = new BlockVarietyUpgrade(plugin, blockVarietyLevel);
+		this.resetCooldownUpgrade = new ResetCooldownUpgrade(plugin, resetCooldownLevel);
 	}
 
-	public SkyMineUpgrades(int blockVarietyLevel, int resetCooldownLevel) {
-		this.blockVarietyLevel = blockVarietyLevel;
-		this.resetCooldownLevel = resetCooldownLevel;
-	}
-
-	public int getLevel(UpgradeType upgradeType) {
+	public SkyMineUpgrade getUpgrade(UpgradeType upgradeType) {
 		switch (upgradeType) {
 			case BlockVariety:
-				return blockVarietyLevel;
+				return blockVarietyUpgrade;
 			case ResetCooldown:
-				return resetCooldownLevel;
+				return resetCooldownUpgrade;
 		}
 
-		return -1;
+		return null;
 	}
 
-	public int getBlockVarietyLevel() {
-		return blockVarietyLevel;
+	public BlockVarietyUpgrade getBlockVarietyUpgrade() {
+		return blockVarietyUpgrade;
 	}
 
-	public int getResetCooldownLevel() {
-		return resetCooldownLevel;
-	}
-
-	public void increaseLevel(UpgradeType upgradeType) {
-		switch (upgradeType) {
-			case BlockVariety:
-				blockVarietyLevel++;
-				break;
-			case ResetCooldown:
-				resetCooldownLevel++;
-				break;
-		}
+	public ResetCooldownUpgrade getResetCooldownUpgrade() {
+		return resetCooldownUpgrade;
 	}
 }
