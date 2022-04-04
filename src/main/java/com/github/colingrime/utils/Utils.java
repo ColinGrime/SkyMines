@@ -55,7 +55,7 @@ public final class Utils {
 	 * @return new message that is formatted
 	 */
 	public static String format(String message) {
-		message = message.replaceAll("_", " ").replaceAll("-", " ");
+		message = message.replaceAll("_", " ").replaceAll("-", " ").replaceAll("(.)([A-Z])", "$1 $2");
 		return WordUtils.capitalizeFully(message);
 	}
 
