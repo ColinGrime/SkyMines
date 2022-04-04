@@ -40,13 +40,13 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 
 		// if the console is both disabled and the sender, it's invalid
 		if (subCommand.requirePlayer() && !(sender instanceof Player)) {
-			Messages.INVALID_SENDER.sendTo(sender);
+			Messages.FAILURE_INVALID_SENDER.sendTo(sender);
 			return true;
 		}
 
 		// sender doesn't have permission
 		if (permission != null && !sender.hasPermission(permission)) {
-			Messages.INVALID_PERMISSION.sendTo(sender);
+			Messages.FAILURE_NO_PERMISSION.sendTo(sender);
 			return true;
 		}
 

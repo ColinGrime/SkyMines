@@ -1,6 +1,7 @@
 package com.github.colingrime.locale;
 
 import com.github.colingrime.utils.Logger;
+import com.github.colingrime.utils.Replacer;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,15 +16,19 @@ import java.util.List;
 public enum Messages {
 
 	// general messages
-	SKYMINES_LIST("general.skymines-list", "&7[&a%id%&7] &eClick to teleport."),
+	LIST_SKYMINES("general.list-skymines", "&7[&a%id%&7] &eClick to teleport."),
 
 	// success messages
-	SUCCESS_SKYMINES_GIVE("success.skymines-give", "&7You've given &a%amount%x %token% &7to &a%player%&7!"),
-	SUCCESS_SKYMINES_RECEIVE("success.skymines-receive", "&7You've received &a%amount%x %token%&7!"),
+	SUCCESS_GIVE("success.give", "&7You've given &a%amount%x %token% &7to &a%player%&7!"),
+	SUCCESS_RECEIVE("success.receive", "&7You've received &a%amount%x %token%&7!"),
+	SUCCESS_UPGRADE("success.upgrade", "&aYou've upgraded &e%upgrade% &ato level &e%level%&a!"),
 
 	// failure messages
 	FAILURE_TOO_SMALL("failure.too-small", "&cThe SkyMine you are trying to create is too small!"),
 	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the SkyMine to be placed there."),
+	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
+	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this command."),
+	FAILURE_INVALID_SENDER("failure.invalid-sender", "&cYou must be a player to perform this command."),
 
 	// usage messages
 	USAGE_SKYMINES_COMMAND("usage.skymines-command", "&7SkyMines Command:",
@@ -38,10 +43,6 @@ public enum Messages {
 	USAGE_SKYMINES_HOME("usage.skymines-home", "&a/skymines home [id] &7- &eTeleports to the specified skymine."),
 	USAGE_SKYMINES_RESET("usage.skymines-reset", "&a/skymines reset [id] &7- &eResets the specified skymine."),
 	USAGE_SKYMINES_GIVE("usage.skymines-give", "&a/skymines give [name] {LxHxW} {amount} &7- &eGives a skymine token to the specified player."),
-
-	// invalid messages
-	INVALID_PERMISSION("invalid.permission", "&cYou do not have permission to perform this command."),
-	INVALID_SENDER("invalid.sender", "&cYou must be a player to perform this command."),
 
 	// admin messages
 	RELOADED("admin.reloaded", "&aAutoSell has been reloaded!"),
@@ -90,12 +91,12 @@ public enum Messages {
 		messages.forEach(sender::sendMessage);
 	}
 
-	public void sendTo(CommandSender sender, Object...objects) {
+	public void sendTo(CommandSender sender, Replacer replacer) {
 		if (messages.isEmpty()) {
 			return;
 		}
 
-		messages.forEach(m -> sender.sendMessage(Placeholders.replaceAll(m, objects)));
+		replacer.replace(messages).forEach(sender::sendMessage);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class SkyMinesListSubCommand implements SubCommand {
 		}
 
 		for (int i=1; i<=skyMines.size(); i++) {
-			String message = Messages.SKYMINES_LIST.toString().replaceAll("%id%", String.valueOf(i));
+			String message = Messages.LIST_SKYMINES.toString().replaceAll("%id%", String.valueOf(i));
 			player.spigot().sendMessage(Utils.command(message, "/skymines home " + i));
 		}
 	}
