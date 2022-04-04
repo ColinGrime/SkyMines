@@ -30,9 +30,13 @@ public class Settings {
 	private String tokenName;
 	private List<String> tokenLore;
 
-	// upgrade stuff
+	// upgrade: block variety
 	private Map<Integer, BlockVariety> upgradesBlockVariety;
+	private Map<Integer, Double> costsBlockVariety;
+
+	// upgrade: reset cooldown
 	private Map<Integer, Double> upgradesResetCooldown;
+	private Map<Integer, Double> costsResetCooldown;
 
 	// max levels
 	private int maxBlockVariety;
@@ -60,9 +64,13 @@ public class Settings {
 		tokenName = _getTokenName();
 		tokenLore = _getTokenLore();
 
-		// upgrade stuff
+		// upgrade: block variety
 		upgradesBlockVariety = _getUpgradesBlockVariety();
+		costsBlockVariety = _getCostsBlockVariety();
+
+		// upgrade: reset cooldown
 		upgradesResetCooldown = _getUpgradesResetCooldown();
+		costsResetCooldown = _getCostsResetCooldown();
 
 		// max levels
 		maxBlockVariety = Collections.max(upgradesBlockVariety.keySet());
@@ -167,7 +175,7 @@ public class Settings {
 
 			// sets up collection of types with chances
 			BlockVariety blockVariety = new BlockVariety();
-			for (String types : sec.getStringList("upgrade." + level)) {
+			for (String types : sec.getStringList(level + ".upgrade")) {
 				String[] type = types.split(" ");
 				blockVariety.addType(type[0], type[1]);
 			}
@@ -180,6 +188,27 @@ public class Settings {
 
 	public Map<Integer, BlockVariety> getUpgradesBlockVariety() {
 		return upgradesBlockVariety;
+	}
+
+	private Map<Integer, Double> _getCostsBlockVariety() {
+		Map<Integer, Double> costsBlockVariety = new HashMap<>();
+		ConfigurationSection sec = config.getConfigurationSection("upgrades.block-variety");
+		if (sec == null) {
+			return costsBlockVariety;
+		}
+
+		// goes over each level in the block variety section
+		for (String level : sec.getKeys(false)) {
+			if (level.matches("\\d+")) {
+				costsBlockVariety.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
+			}
+		}
+
+		return costsBlockVariety;
+	}
+
+	public Map<Integer, Double> getCostsBlockVariety() {
+		return costsBlockVariety;
 	}
 
 	private Map<Integer, Double> _getUpgradesResetCooldown() {
@@ -196,7 +225,7 @@ public class Settings {
 			}
 
 			// checks to make sure time is valid
-			String cooldownString = sec.getString("upgrade." + level);
+			String cooldownString = sec.getString(level + ".upgrade.");
 			if (cooldownString == null || !cooldownString.split(" ")[0].matches("\\d+(\\.\\d+)?")) {
 				continue;
 			}
@@ -216,6 +245,27 @@ public class Settings {
 
 	public Map<Integer, Double> getUpgradesResetCooldown() {
 		return upgradesResetCooldown;
+	}
+
+	private Map<Integer, Double> _getCostsResetCooldown() {
+		Map<Integer, Double> costsResetCooldown = new HashMap<>();
+		ConfigurationSection sec = config.getConfigurationSection("upgrades.reset-cooldown");
+		if (sec == null) {
+			return costsResetCooldown;
+		}
+
+		// goes over each level in the block variety section
+		for (String level : sec.getKeys(false)) {
+			if (level.matches("\\d+")) {
+				costsResetCooldown.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
+			}
+		}
+
+		return costsResetCooldown;
+	}
+
+	public Map<Integer, Double> getCostsResetCooldown() {
+		return costsResetCooldown;
 	}
 
 	public int getMaxBlockVariety() {
