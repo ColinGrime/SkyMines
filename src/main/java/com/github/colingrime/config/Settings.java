@@ -225,7 +225,7 @@ public class Settings {
 			}
 
 			// checks to make sure time is valid
-			String cooldownString = sec.getString(level + ".upgrade.");
+			String cooldownString = sec.getString(level + ".upgrade");
 			if (cooldownString == null || !cooldownString.split(" ")[0].matches("\\d+(\\.\\d+)?")) {
 				continue;
 			}
