@@ -6,7 +6,10 @@ import com.github.colingrime.panel.setup.slot.PanelSlot;
 import com.github.colingrime.panel.setup.slot.UpgradePanelSlot;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.skymines.upgrades.UpgradeType;
 import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
+import com.github.colingrime.utils.Replacer;
+import com.github.colingrime.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,17 +39,17 @@ public class UpgradePanel extends Panel {
 
 			setItem(slotNum, panelSlot.getItem(upgrades), (player, clickType) -> {
 				if (clickType == ClickType.LEFT && upgradePanel.getValue() instanceof UpgradePanelSlot) {
-					SkyMineUpgrade upgrade = upgrades.getUpgrade(((UpgradePanelSlot) panelSlot).getUpgradeType());
-					
-					if (upgrade.levelUp(player)) {
-						String message = Messages.SUCCESS_UPGRADE.toString()
-								.replaceAll("%upgrade%", panelSlot.getName(upgrades))
-								.replaceAll("%level%", String.valueOf(upgrade.getLevel()));
+					UpgradeType type = ((UpgradePanelSlot) panelSlot).getUpgradeType();
+					SkyMineUpgrade upgrade = upgrades.getUpgrade(type);
 
-						player.sendMessage(message);
-						skyMine.reset();
-					} else {
-						Messages.FAILURE_NO_FUNDS.sendTo(player);
+					if (upgrade.canBeUpgraded()) {
+						if (upgrade.levelUp(player)) {
+							Replacer replacer = new Replacer("%upgrade%", Utils.format(type.name())).add("%level%", upgrade.getLevel());
+							Messages.SUCCESS_UPGRADE.sendTo(player, replacer);
+							skyMine.reset();
+						} else {
+							Messages.FAILURE_NO_FUNDS.sendTo(player);
+						}
 					}
 
 					getViewer().closeInventory();
