@@ -24,6 +24,8 @@ upgrades:
         - '&7(&d*&7) &dGold Ore&7: &e5% &7→ &e10%'
         - '&7(&a+&7) &aRedstone Ore &7→ &e5%'
         - '&7(&a+&7) &aLapis Ore &7→ &e5%'
+        - ''
+        - '&7Cost: &e$100,000'
       3:
         - '&7(&d*&7) &dStone&7: &e70% &7→ &e50%'
         - '&7(&d*&7) &dIron Ore&7: &e15% &7→ &e20%'
@@ -31,6 +33,8 @@ upgrades:
         - '&7(&d*&7) &dRedstone Ore&7: &e5% &7→ &e7.5%'
         - '&7(&d*&7) &dLapis Ore&7: &e5% &7→ &e7.5%'
         - '&7(&a+&7) &aDiamond Ore &7→ &e2%'
+        - ''
+        - '&7Cost: &e$250,000'
       4:
         - '&7(&d*&7) &dStone&7: &e50% &7→ &e30%'
         - '&7(&d*&7) &dIron Ore&7: &e20% &7→ &e25%'
@@ -39,6 +43,8 @@ upgrades:
         - '&7(&d*&7) &dLapis Ore&7: &e7.5% &7→ &e10%'
         - '&7(&d*&7) &dDiamond Ore&7: &e2% &7→ &e5%'
         - '&7(&a+&7) &aEmerald Ore &7→ &e5%'
+        - ''
+        - '&7Cost: &e$750,000'
     # Shown when the upgrade is maxed out:
     max:
       type: AMETHYST_CLUSTER
@@ -60,16 +66,22 @@ upgrades:
         - '&d→ &7(&e2&7) &e2 minutes'
         - '&7(3) 1 minute'
         - '&7(4) 30 seconds'
+        - ''
+        - '&7Cost: &e$50,000'
       3:
         - '&7(1) 5 minutes'
         - '&7(2) 2 minutes'
         - '&d→ &7(&e3&7) &e1 minute'
         - '&7(4) 30 seconds'
+        - ''
+        - '&7Cost: &e$100,000'
       4:
         - '&7(1) 5 minutes'
         - '&7(2) 2 minutes'
         - '&7(3) 1 minute'
         - '&d→ &7(&e4&7) &e30 seconds'
+        - ''
+        - '&7Cost: &e$150,000'
     max:
       type: CLOCK
       name: '&cReset Cooldown &7(&eMAXED&7)'
