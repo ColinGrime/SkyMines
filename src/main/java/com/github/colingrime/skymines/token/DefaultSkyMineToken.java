@@ -1,9 +1,9 @@
 package com.github.colingrime.skymines.token;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.locale.Placeholders;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.utils.Replacer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,22 +26,31 @@ public class DefaultSkyMineToken implements SkyMineToken {
 
 	@Override
 	public ItemStack getToken(MineSize size) {
-		return getToken(size, new SkyMineUpgrades());
+		return getToken(size, new SkyMineUpgrades(plugin));
 	}
 
 	@Override
 	public ItemStack getToken(MineSize size, SkyMineUpgrades upgrades) {
 		ItemStack item = new ItemStack(plugin.getSettings().getTokenType());
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(Placeholders.replaceAll(plugin.getSettings().getTokenName(), size));
-		meta.setLore(Placeholders.replaceAll(plugin.getSettings().getTokenLore(), size));
+		Replacer replacer = getReplacer(size);
+
+		meta.setDisplayName(replacer.replace(plugin.getSettings().getTokenName()));
+		meta.setLore(replacer.replace(plugin.getSettings().getTokenLore()));
 		item.setItemMeta(meta);
 
 		NBTItem nbtItem = new NBTItem(item);
 		nbtItem.setBoolean("skymine", true);
 		nbtItem.setObject("skymine-size", size);
-		nbtItem.setObject("skymine-upgrades", upgrades);
+		nbtItem.setInteger("skymine-blockvariety", upgrades.getBlockVarietyUpgrade().getLevel());
+		nbtItem.setInteger("skymine-resetcooldown", upgrades.getResetCooldownUpgrade().getLevel());
 		return nbtItem.getItem();
+	}
+
+	private Replacer getReplacer(MineSize size) {
+		return new Replacer("%length%", size.getLength())
+				.add("%height%", size.getHeight())
+				.add("%width%", size.getWidth());
 	}
 
 	@Override
@@ -71,7 +80,9 @@ public class DefaultSkyMineToken implements SkyMineToken {
 		}
 
 		NBTItem nbtItem = new NBTItem(item);
-		return Optional.ofNullable(nbtItem.getObject("skymine-upgrades", SkyMineUpgrades.class));
+		int blockVarietyLevel = nbtItem.getInteger("skymine-blockvariety");
+		int resetCooldown = nbtItem.getInteger("skymine-resetcooldown");
+		return Optional.of(new SkyMineUpgrades(plugin, blockVarietyLevel, resetCooldown));
 	}
 
 	private boolean isInvalidItem(ItemStack item) {

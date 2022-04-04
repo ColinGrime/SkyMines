@@ -4,10 +4,12 @@ import com.github.colingrime.locale.Messages;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.commands.SubCommand;
 import com.github.colingrime.skymines.structure.MineSize;
+import com.github.colingrime.utils.Replacer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class SkyMinesGiveSubCommand implements SubCommand {
 
@@ -50,12 +52,22 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 			amount = Integer.parseInt(args[2]);
 		}
 
+		// gets the specified amount of tokens and gives it to the player
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
 		item.setAmount(amount);
-
 		receiver.getInventory().addItem(item);
-		Messages.SUCCESS_SKYMINES_GIVE.sendTo(sender, item, receiver);
-		Messages.SUCCESS_SKYMINES_RECEIVE.sendTo(receiver, item, sender);
+
+		// gets the name of the item
+		ItemMeta meta = item.getItemMeta();
+		String name = "Name not loaded.";
+		if (meta != null) {
+			name = meta.getDisplayName();
+		}
+
+		// messages
+		Replacer replacer = new Replacer("%token%", name).add("%amount%", item.getAmount());
+		Messages.SUCCESS_GIVE.sendTo(sender, replacer.add("%player%", receiver.getName()));
+		Messages.SUCCESS_RECEIVE.sendTo(receiver, replacer);
 	}
 
 	private boolean isSizeValid(String[] sizeStringArray) {
