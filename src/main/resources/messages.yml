@@ -1,16 +1,20 @@
 # General messages:
 general:
-  skymines-list: '&7[%id%&7] &eClick to teleport.'
+  list-skymines: '&7[%id%&7] &eClick to teleport.'
 
 # Success messages:
 success:
-  skymines-give: "&7You've given &a%amount%x %token% &7to &a%player%&7!"
-  skymines-receive: "&7You've received &a%amount%x %token%&7!"
+  give: "&7You've given &a%amount%x %token% &7to &a%player%&7!"
+  receive: "&7You've received &a%amount%x %token%&7!"
+  upgrade: "&aYou've upgraded &e%upgrade% &ato level &e%level%&a!"
 
 # Failure messages:
 failure:
   too-small: '&cThe SkyMine you are trying to create is too small.'
   no-space: '&cThere is no space for the SkyMine to be placed there.'
+  no-funds: "&cYou don't have enough money to buy this upgrade."
+  no-permission: '&cYou do not have permission to perform this command.'
+  invalid-sender: '&cYou must be a player to perform this command.'
 
 # Usage messages (for commands):
 usage:
@@ -27,11 +31,6 @@ usage:
   skymines-home: '&a/skymines home [id] &7- &eTeleports to the specified skymine.'
   skymines-reset: '&a/skymines reset [id] &7- &eResets the specified skymine.'
   skymines-give: '&a/skymines give [name] {LxHxW} {amount} &7- &eGives a skymine token to the specified player.'
-
-# Something went wrong...
-invalid:
-  permission: '&cYou do not have permission to perform this command.'
-  sender: '&cYou must be a player to perform this command.'
 
 # Only Admins should have access...
 admin:
