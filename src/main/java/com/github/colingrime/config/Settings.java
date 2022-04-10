@@ -1,5 +1,6 @@
 package com.github.colingrime.config;
 
+import com.github.colingrime.storage.StorageCredentials;
 import com.github.colingrime.storage.StorageType;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Material;
@@ -19,11 +20,7 @@ public class Settings {
 
 	// database stuff
 	private StorageType storageType;
-	private String host;
-	private int port;
-	private String database;
-	private String username;
-	private String password;
+	private StorageCredentials credentials;
 
 	// token stuff
 	private Material tokenType;
@@ -53,11 +50,7 @@ public class Settings {
 
 		// database stuff
 		storageType = _getStorageType();
-		host = _getHost();
-		port = _getPort();
-		database = _getDatabase();
-		username = _getUsername();
-		password = _getPassword();
+		credentials = _getCredentials();
 
 		// token stuff
 		tokenType = _getTokenType();
@@ -78,58 +71,25 @@ public class Settings {
 	}
 
 	private StorageType _getStorageType() {
-		String type = config.getString("skymines-save.storage-type");
-		for (StorageType storageType : StorageType.values()) {
-			if (storageType.name().equalsIgnoreCase(type)) {
-				return storageType;
-			}
-		}
-
-		return StorageType.None;
+		return StorageType.parse(config.getString("skymines-save.storage-type"));
 	}
 
 	public StorageType getStorageType() {
 		return storageType;
 	}
 
-	private String _getHost() {
-		return config.getString("skymines-save.host");
+	private StorageCredentials _getCredentials() {
+		String host = config.getString("skymines-save.host");
+		int port = config.getInt("skymines-save.port");
+		String database = config.getString("skymines-save.database");
+		String username = config.getString("skymines-save.username");
+		String password = config.getString("skymines-save.password");
+
+		return new StorageCredentials(host, port, database, username, password);
 	}
 
-	public String getHost() {
-		return host;
-	}
-
-	private int _getPort() {
-		return config.getInt("skymines-save.port");
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	private String _getDatabase() {
-		return config.getString("skymines-save.database");
-	}
-
-	public String getDatabase() {
-		return database;
-	}
-
-	private String _getUsername() {
-		return config.getString("skymines-save.username");
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	private String _getPassword() {
-		return config.getString("skymines-save.password");
-	}
-
-	public String getPassword() {
-		return password;
+	public StorageCredentials getCredentials() {
+		return credentials;
 	}
 
 	private Material _getTokenType() {
