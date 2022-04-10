@@ -37,4 +37,24 @@ public class SkyMineUpgrades {
 	public ResetCooldownUpgrade getResetCooldownUpgrade() {
 		return resetCooldownUpgrade;
 	}
+
+	public static String parse(SkyMineUpgrades upgrades) {
+		return upgrades.getBlockVarietyUpgrade().getLevel() + ":" + upgrades.getResetCooldownUpgrade().getLevel();
+	}
+
+	public static SkyMineUpgrades parse(String text) {
+		String[] texts = text.split(":");
+
+		int blockVarietyLevel = 1;
+		int resetCooldownLevel = 1;
+
+		try {
+			blockVarietyLevel = Integer.parseInt(texts[0]);
+			resetCooldownLevel = Integer.parseInt(texts[1]);
+		} catch (NumberFormatException ex) {
+			// there's nothing to do
+		}
+
+		return new SkyMineUpgrades(SkyMines.getInstance(), blockVarietyLevel, resetCooldownLevel);
+	}
 }

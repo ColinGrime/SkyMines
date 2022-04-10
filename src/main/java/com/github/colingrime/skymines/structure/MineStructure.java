@@ -1,8 +1,8 @@
 package com.github.colingrime.skymines.structure;
 
+import com.github.colingrime.SkyMines;
 import com.github.colingrime.config.BlockVariety;
-import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
-import com.github.colingrime.skymines.structure.behavior.DefaultBuildBehavior;
+import com.github.colingrime.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -18,20 +18,14 @@ public class MineStructure {
 	private final Location startCorner;
 	private final Location endCorner;
 	private final MineSize size;
-	private final BuildBehavior buildBehavior;
 
 	private final List<Block> parameter = new ArrayList<>();
 	private final List<Block> blocksInside = new ArrayList<>();
 
 	public MineStructure(Location startCorner, Location endCorner, MineSize size) {
-		this(startCorner, endCorner, size, new DefaultBuildBehavior());
-	}
-
-	public MineStructure(Location startCorner, Location endCorner, MineSize size, BuildBehavior buildBehavior) {
 		this.startCorner = startCorner;
 		this.endCorner = endCorner;
 		this.size = size;
-		this.buildBehavior = buildBehavior;
 	}
 
 	/**
@@ -83,12 +77,17 @@ public class MineStructure {
 		return true;
 	}
 
+	public void build(Map<Block, Material> blocksToChange) {
+		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksToChange);
+	}
+
 	public void buildParameter() {
 		Map<Block, Material> blocksToChange = new HashMap<>();
 		for (Block block : parameter) {
 			blocksToChange.put(block, Material.BEDROCK);
 		}
-		buildBehavior.build(blocksToChange);
+
+		build(blocksToChange);
 	}
 
 	public void buildInside(BlockVariety blockVariety) {
@@ -96,7 +95,8 @@ public class MineStructure {
 		for (Block block : blocksInside) {
 			blocksToChange.put(block, blockVariety.getRandom().orElse(Material.STONE));
 		}
-		buildBehavior.build(blocksToChange);
+
+		build(blocksToChange);
 	}
 
 	public List<Block> getParameter() {
@@ -109,5 +109,31 @@ public class MineStructure {
 
 	public MineSize getSize() {
 		return size;
+	}
+
+	public static String parse(MineStructure structure) {
+		String startCorner = Utils.parseLocation(structure.startCorner);
+		String endCorner = Utils.parseLocation(structure.endCorner);
+		String size = MineSize.parse(structure.size);
+		return startCorner + '\n' + endCorner + '\n' + size;
+	}
+
+	public static MineStructure parse(String text) {
+		String[] texts = text.split("\n");
+		if (texts.length != 3) {
+			return null;
+		}
+
+		Location startCorner = Utils.parseLocation(texts[0]);
+		Location endCorner = Utils.parseLocation(texts[1]);
+		MineSize size = MineSize.parse(texts[2]);
+
+		if (startCorner == null || endCorner == null || size == null) {
+			return null;
+		}
+
+		MineStructure structure = new MineStructure(startCorner, endCorner, size);
+		structure.setup();
+		return structure;
 	}
 }
