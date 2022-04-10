@@ -2,12 +2,12 @@ package com.github.colingrime.skymines.manager;
 
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.SkyMine;
-import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.factory.SkyMineFactory;
 import com.github.colingrime.skymines.structure.MineSize;
-import com.github.colingrime.skymines.token.DefaultSkyMineToken;
+import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -15,18 +15,26 @@ import java.util.*;
 
 public class SkyMineManager {
 
-	private final SkyMineFactory factory;
-	private final SkyMineToken token;
-
 	private final Map<UUID, List<SkyMine>> skyMines = new HashMap<>();
 
-	public SkyMineManager(SkyMines plugin) {
-		this.factory = new DefaultSkyMineFactory(plugin);
-		this.token = new DefaultSkyMineToken(plugin);
+	private final SkyMines plugin;
+	private final SkyMineFactory factory;
+	private final SkyMineToken token;
+	private final BuildBehavior buildBehavior;
+
+	public SkyMineManager(SkyMines plugin, SkyMineFactory factory, SkyMineToken token, BuildBehavior buildBehavior) {
+		this.plugin = plugin;
+		this.factory = factory;
+		this.token = token;
+		this.buildBehavior = buildBehavior;
 	}
 
 	public SkyMineToken getToken() {
 		return token;
+	}
+
+	public BuildBehavior getBuildBehavior() {
+		return buildBehavior;
 	}
 
 	/**
@@ -98,6 +106,14 @@ public class SkyMineManager {
 	 */
 	public void addSkyMine(Player player, SkyMine skyMine) {
 		addSkyMine(player.getUniqueId(), skyMine);
+
+		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+			try {
+				plugin.getStorage().saveMine(skyMine);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**
