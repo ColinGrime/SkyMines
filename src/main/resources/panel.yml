@@ -1,12 +1,45 @@
-# Upgrade panel for the skymines.
-upgrade-panel:
+# Main menu for the skymines.
+main-panel:
   # Amount of rows in the GUI.
-  rows: 3
+  rows:
   # Optionally fill the GUI after all other items are placed.
   fill: GRAY_STAINED_GLASS_PANE
   slots:
     # Slot number:
+    11:
+      type: BLUE_BED
+      name: '&aSkymine Home'
+      lore:
+        - '&7On Click → &eteleport to this mine's home.'
+        - '&7&o(use /skymine sethome [id] to set its home)'
+      # Command to run, use %id% for the ID of the skymine.
+      command: '/skymine sethome %id%'
     13:
+      type: RESPAWN_ANCHOR
+      name: '&aSkymine Reset &7(%time% left)'
+      lore:
+        - '&7On Click → &ereset the current mine.'
+      command: '/skymine reset %id%'
+    15:
+      type: BUDDING_AMETHYST
+      name: '&aSkymine Upgrades'
+      lore:
+        - '&7On Click → &eopen the mine's upgrades.'
+      command: '/skymine upgrades %id%'
+    17:
+      type: BARRIER
+      name: '&cSkymine Pickup'
+      lore:
+        - '&7On Click → &epick up the current mine.'
+      command: '/skymine pickup %id%'
+
+# Upgrade panel for the skymines.
+upgrade-panel:
+  rows: 3
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    13:
+      # Instead of type/name/lore, you can refer to an entire upgrade below.
       upgrade: block-variety
     15:
       upgrade: reset-cooldown
