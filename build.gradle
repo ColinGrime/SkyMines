@@ -6,8 +6,8 @@ plugins {
 }
 
 java {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
 }
 
 group 'com.github.colingrime'
@@ -19,6 +19,8 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url 'https://mvn.intellectualsites.com/content/groups/public/' }
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
 }
 
 dependencies {
@@ -26,6 +28,7 @@ dependencies {
     implementation 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
     implementation 'com.github.MilkBowl:VaultAPI:1.7'
     implementation 'de.tr7zw:item-nbt-api-plugin:2.9.2'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.1.1'
 
     // SQL stuff
     implementation 'mysql:mysql-connector-java:8.0.28'
