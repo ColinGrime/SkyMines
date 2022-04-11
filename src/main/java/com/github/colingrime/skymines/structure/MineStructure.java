@@ -9,9 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MineStructure {
 
@@ -77,26 +75,18 @@ public class MineStructure {
 		return true;
 	}
 
-	public void build(Map<Block, Material> blocksToChange) {
-		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksToChange);
-	}
-
 	public void buildParameter() {
-		Map<Block, Material> blocksToChange = new HashMap<>();
-		for (Block block : parameter) {
-			blocksToChange.put(block, Material.BEDROCK);
-		}
-
-		build(blocksToChange);
+		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(parameter, Material.BEDROCK);
 	}
 
 	public void buildInside(BlockVariety blockVariety) {
-		Map<Block, Material> blocksToChange = new HashMap<>();
-		for (Block block : blocksInside) {
-			blocksToChange.put(block, blockVariety.getRandom().orElse(Material.STONE));
-		}
+		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksInside, blockVariety);
+	}
 
-		build(blocksToChange);
+	public void destroy() {
+		// TODO refactor class
+		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(parameter, Material.AIR);
+		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksInside, Material.AIR);
 	}
 
 	public List<Block> getParameter() {
