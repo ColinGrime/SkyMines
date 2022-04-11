@@ -24,6 +24,7 @@ public enum Messages {
 
 	// failure messages
 	FAILURE_TOO_SMALL("failure.too-small", "&cThe SkyMine you are trying to create is too small!"),
+	FAILURE_TOO_BIG("failure.too-big", "&cFor performance reasons, a side is not permitted to exceed 100 blocks."),
 	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the SkyMine to be placed there."),
 	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
 	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a skymine with the ID: %id%"),

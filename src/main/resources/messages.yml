@@ -12,6 +12,7 @@ success:
 # Failure messages:
 failure:
   too-small: '&cThe SkyMine you are trying to create is too small.'
+  too-big: '&cFor performance reasons, a side is not permitted to exceed 100 blocks.'
   no-space: '&cThere is no space for the SkyMine to be placed there.'
   no-funds: "&cYou don't have enough money to buy this upgrade."
   no-skymine: "&cYou don't have a skymine with the ID: %id%"

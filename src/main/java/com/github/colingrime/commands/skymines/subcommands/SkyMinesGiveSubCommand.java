@@ -44,6 +44,9 @@ public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 			if (length <= 1 || height <= 1 || width <= 1) {
 				Messages.FAILURE_TOO_SMALL.sendTo(sender);
 				return;
+			} else if (length > 100 || height > 100 || width > 100) {
+				Messages.FAILURE_TOO_BIG.sendTo(sender);
+				return;
 			}
 
 			size = new MineSize(length, height, width);
@@ -55,6 +58,7 @@ public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 		}
 
 		// gets the specified amount of tokens and gives it to the player
+		// TODO drop item if inv is full
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
 		item.setAmount(amount);
 		receiver.getInventory().addItem(item);
