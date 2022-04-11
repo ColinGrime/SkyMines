@@ -9,7 +9,7 @@ public final class Timer {
 	 * @param action any method you want timed
 	 * @param complete message sent on complete
 	 */
-	public static void time(Action action, String complete) {
+	public static void time(Action action, String complete) throws Exception {
 		long time = System.currentTimeMillis();
 		action.run();
 		Logger.log(String.format(complete, System.currentTimeMillis() - time));
@@ -17,6 +17,6 @@ public final class Timer {
 
 	@FunctionalInterface
 	public interface Action {
-		void run();
+		void run() throws Exception;
 	}
 }

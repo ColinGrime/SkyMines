@@ -1,15 +1,18 @@
 package com.github.colingrime.skymines.upgrades.types;
 
 import com.github.colingrime.SkyMines;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 
 public abstract class SkyMineUpgrade {
 
 	private final SkyMines plugin;
+	private final Economy econ;
 	private int level;
 
 	public SkyMineUpgrade(SkyMines plugin, int level) {
 		this.plugin = plugin;
+		this.econ = plugin.getDependencyManager().getEcon();
 		this.level = level;
 	}
 
@@ -35,8 +38,8 @@ public abstract class SkyMineUpgrade {
 	 */
 	public boolean levelUp(Player player) {
 		double cost = getCost(level + 1);
-		if (plugin.getEconomy().getBalance(player) >= cost) {
-			plugin.getEconomy().withdrawPlayer(player, cost);
+		if (econ.getBalance(player) >= cost) {
+			econ.withdrawPlayer(player, cost);
 			level++;
 			return true;
 		}
