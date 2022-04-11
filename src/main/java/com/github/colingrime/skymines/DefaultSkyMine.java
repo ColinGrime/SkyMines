@@ -6,6 +6,7 @@ import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.UUID;
@@ -77,5 +78,26 @@ public class DefaultSkyMine implements SkyMine {
 	@Override
 	public void reset() {
 		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
+	}
+
+	@Override
+	public boolean pickup(Player player) {
+		if (!owner.equals(player.getUniqueId())) {
+			return false;
+		}
+
+		ItemStack token = SkyMines.getInstance().getSkyMineManager().getToken().getToken(structure.getSize(), upgrades);
+		if (!player.getInventory().addItem(token).isEmpty()) {
+			return false;
+		}
+
+		try {
+			SkyMines.getInstance().getStorage().deleteMine(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		structure.destroy();
+		return true;
 	}
 }
