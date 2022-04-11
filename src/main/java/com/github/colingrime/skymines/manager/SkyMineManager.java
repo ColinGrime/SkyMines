@@ -4,7 +4,6 @@ import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.SkyMineFactory;
 import com.github.colingrime.skymines.structure.MineSize;
-import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Bukkit;
@@ -20,21 +19,15 @@ public class SkyMineManager {
 	private final SkyMines plugin;
 	private final SkyMineFactory factory;
 	private final SkyMineToken token;
-	private final BuildBehavior buildBehavior;
 
-	public SkyMineManager(SkyMines plugin, SkyMineFactory factory, SkyMineToken token, BuildBehavior buildBehavior) {
+	public SkyMineManager(SkyMines plugin, SkyMineFactory factory, SkyMineToken token) {
 		this.plugin = plugin;
 		this.factory = factory;
 		this.token = token;
-		this.buildBehavior = buildBehavior;
 	}
 
 	public SkyMineToken getToken() {
 		return token;
-	}
-
-	public BuildBehavior getBuildBehavior() {
-		return buildBehavior;
 	}
 
 	/**
@@ -48,7 +41,7 @@ public class SkyMineManager {
 	 */
 	public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades) {
 		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades);
-		if (!skyMine.isPresent()) {
+		if (skyMine.isEmpty()) {
 			return false;
 		}
 
@@ -123,6 +116,31 @@ public class SkyMineManager {
 	public void addSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.add(skyMine);
+
+		this.skyMines.put(uuid, skyMines);
+	}
+
+	/**
+	 * @param player any player
+	 * @param skyMine removed skymine
+	 */
+	public void removeSkyMine(Player player, SkyMine skyMine) {
+		removeSkyMine(player.getUniqueId(), skyMine);
+
+		try {
+			plugin.getStorage().deleteMine(skyMine);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param uuid any uuid of player
+	 * @param skyMine removed skymine
+	 */
+	public void removeSkyMine(UUID uuid, SkyMine skyMine) {
+		List<SkyMine> skyMines = getSkyMines(uuid);
+		skyMines.remove(skyMine);
 
 		this.skyMines.put(uuid, skyMines);
 	}

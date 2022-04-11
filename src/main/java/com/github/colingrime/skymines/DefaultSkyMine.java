@@ -91,13 +91,8 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		try {
-			SkyMines.getInstance().getStorage().deleteMine(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		structure.destroy();
+		SkyMines.getInstance().getSkyMineManager().removeSkyMine(player, this);
 		return true;
 	}
 }
