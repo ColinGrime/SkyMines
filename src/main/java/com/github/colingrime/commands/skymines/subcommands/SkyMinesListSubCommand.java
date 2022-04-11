@@ -1,7 +1,7 @@
 package com.github.colingrime.commands.skymines.subcommands;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.commands.SubCommand;
+import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.utils.Utils;
@@ -10,16 +10,17 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class SkyMinesListSubCommand implements SubCommand {
+public class SkyMinesListSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
 	public SkyMinesListSubCommand(SkyMines plugin) {
+		super(plugin);
 		this.plugin = plugin;
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String subCommand, String[] args) {
+	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		Player player = (Player) sender;
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
 
@@ -32,6 +33,11 @@ public class SkyMinesListSubCommand implements SubCommand {
 			String message = Messages.LIST_SKYMINES.toString().replaceAll("%id%", String.valueOf(i));
 			player.spigot().sendMessage(Utils.command(message, "/skymines home " + i));
 		}
+	}
+
+	@Override
+	public boolean requireSkyMine() {
+		return false;
 	}
 
 	@Override

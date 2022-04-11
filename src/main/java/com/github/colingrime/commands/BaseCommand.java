@@ -57,7 +57,7 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 		}
 
 		// subcommand runs
-		subCommand.onCommand(sender, args[0], subArgs);
+		subCommand.onCommand(sender, subArgs);
 		return true;
 	}
 
@@ -72,7 +72,7 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 			return null;
 		}
 
-		return subCommand.onTabComplete(sender, args[0], Arrays.copyOfRange(args, 1, args.length));
+		return subCommand.onTabComplete(sender, Arrays.copyOfRange(args, 1, args.length));
 	}
 
 	/**

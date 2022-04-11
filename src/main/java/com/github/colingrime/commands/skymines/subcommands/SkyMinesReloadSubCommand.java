@@ -1,22 +1,29 @@
 package com.github.colingrime.commands.skymines.subcommands;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.commands.SubCommand;
+import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
 import com.github.colingrime.locale.Messages;
+import com.github.colingrime.skymines.SkyMine;
 import org.bukkit.command.CommandSender;
 
-public class SkyMinesReloadSubCommand implements SubCommand {
+public class SkyMinesReloadSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
 	public SkyMinesReloadSubCommand(SkyMines plugin) {
+		super(plugin);
 		this.plugin = plugin;
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String subCommand, String[] args) {
+	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		plugin.reload();
 		Messages.RELOADED.sendTo(sender);
+	}
+
+	@Override
+	public boolean requireSkyMine() {
+		return false;
 	}
 
 	@Override

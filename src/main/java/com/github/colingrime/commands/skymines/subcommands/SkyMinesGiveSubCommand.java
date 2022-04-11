@@ -1,26 +1,28 @@
 package com.github.colingrime.commands.skymines.subcommands;
 
-import com.github.colingrime.locale.Messages;
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.commands.SubCommand;
-import com.github.colingrime.skymines.structure.MineSize;
+import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
+import com.github.colingrime.locale.Messages;
 import com.github.colingrime.locale.Replacer;
+import com.github.colingrime.skymines.SkyMine;
+import com.github.colingrime.skymines.structure.MineSize;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SkyMinesGiveSubCommand implements SubCommand {
+public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
 	public SkyMinesGiveSubCommand(SkyMines plugin) {
+		super(plugin);
 		this.plugin = plugin;
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String subCommand, String[] args) {
+	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		Player receiver = Bukkit.getPlayer(args[0]);
 		if (receiver == null) {
 			getUsage().sendTo(sender);
@@ -79,6 +81,11 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 
 	private boolean isInt(String string) {
 		return string.matches("\\d+");
+	}
+
+	@Override
+	public boolean requireSkyMine() {
+		return false;
 	}
 
 	@Override

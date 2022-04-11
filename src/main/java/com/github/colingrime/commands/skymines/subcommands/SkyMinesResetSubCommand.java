@@ -1,36 +1,25 @@
 package com.github.colingrime.commands.skymines.subcommands;
 
-import com.github.colingrime.locale.Messages;
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.commands.SubCommand;
+import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
+import com.github.colingrime.locale.Messages;
 import com.github.colingrime.skymines.SkyMine;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import java.util.Optional;
-
-public class SkyMinesResetSubCommand implements SubCommand {
-
-	private final SkyMines plugin;
+public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 
 	public SkyMinesResetSubCommand(SkyMines plugin) {
-		this.plugin = plugin;
+		super(plugin);
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String subCommand, String[] args) {
-		Player player = (Player) sender;
-		if (args.length == 0) {
-			player.performCommand("skymines list");
-			return;
-		}
+	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+		skyMine.reset();
+	}
 
-		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(player, args[0]);
-		if (skyMine.isPresent()) {
-			skyMine.get().reset();
-		} else {
-			player.sendMessage("You don't have a skymine with the ID: " + args[0]);
-		}
+	@Override
+	public boolean requireSkyMine() {
+		return true;
 	}
 
 	@Override
@@ -46,10 +35,5 @@ public class SkyMinesResetSubCommand implements SubCommand {
 	@Override
 	public String getPermission() {
 		return "skymines.reset";
-	}
-
-	@Override
-	public boolean requirePlayer() {
-		return true;
 	}
 }

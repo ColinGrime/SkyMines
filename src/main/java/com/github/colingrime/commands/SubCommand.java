@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public interface SubCommand {
 
-	void onCommand(CommandSender sender, String subCommand, String[] args);
+	void onCommand(CommandSender sender, String[] args);
 
-	default ArrayList<String> onTabComplete(CommandSender sender, String subCommand, String[] args) {
+	default ArrayList<String> onTabComplete(CommandSender sender, String[] args) {
 		return null;
 	}
 
