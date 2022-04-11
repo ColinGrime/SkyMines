@@ -7,29 +7,27 @@ import com.github.colingrime.listeners.PanelListeners;
 import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.panel.setup.PanelSettings;
-import com.github.colingrime.storage.StorageType;
-import com.github.colingrime.storage.database.DataSourceProvider;
-import com.github.colingrime.storage.database.Database;
-import com.github.colingrime.storage.database.mysql.MySqlDatabase;
-import com.github.colingrime.storage.database.mysql.MySqlProvider;
+import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.manager.SkyMineManager;
+import com.github.colingrime.skymines.structure.behavior.DefaultBuildBehavior;
+import com.github.colingrime.skymines.token.DefaultSkyMineToken;
+import com.github.colingrime.storage.Storage;
+import com.github.colingrime.storage.StorageFactory;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
-
 public class SkyMines extends JavaPlugin {
+
+	private static SkyMines instance;
 
 	private SkyMineManager skyMineManager;
 	private Settings settings;
 	private PanelSettings panelSettings;
-	private DataSourceProvider sourceProvider;
-	private Database database;
+	private Storage storage;
 	private Economy econ = null;
-	private boolean isDatabaseEnabled = false;
 
 	@Override
 	public void onEnable() {
@@ -38,35 +36,12 @@ public class SkyMines extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
-		skyMineManager = new SkyMineManager(this);
+		instance = this;
+		// TODO clean this up and account for different instances
+		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this), new DefaultBuildBehavior());
+
 		loadData();
-		reload();
-
-		StorageType type = settings.getStorageType();
-		if (type == StorageType.None) {
-			Logger.log("Your SkyMines aren't currently being saved. Pick a storage option in the config.");
-		}
-
-		// TODO make a database manager class
-		if (type == StorageType.MySql) {
-			try {
-				// initialize data provider and test connection
-				sourceProvider = new MySqlProvider(settings);
-				sourceProvider.testConection();
-				isDatabaseEnabled = true;
-			} catch (SQLException ex) {
-				Logger.severe("Could not establish database connection. Defaulting to YAML (database is recommended).");
-			}
-		}
-
-		if (isDatabaseEnabled) {
-			// set up the database (build needed tables / perform updates)
-			Timer.time(() -> database = new MySqlDatabase(this, sourceProvider.getSource()), "Database set up in %s ms");
-
-			// load mine data and starts the timers
-			Timer.time(() -> database.getMineData().loadMines(), "Users loaded in %s ms");
-			database.startTimers();
-		}
+		loadStorage();
 
 		registerCommands();
 		registerListeners();
@@ -74,9 +49,8 @@ public class SkyMines extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		if (isDatabaseEnabled) {
-			database.getMineData().saveMines();
-			sourceProvider.close();
+		if (storage != null) {
+			storage.shutdown();
 		}
 	}
 
@@ -87,6 +61,7 @@ public class SkyMines extends JavaPlugin {
 		settings = new Settings(this);
 		panelSettings = new PanelSettings(this);
 		Messages.init(this);
+		reload();
 	}
 
 	/**
@@ -96,6 +71,27 @@ public class SkyMines extends JavaPlugin {
 		settings.reload();
 		panelSettings.reload();
 		Messages.reload();
+	}
+
+	/**
+	 * Initializes the storage system.
+	 */
+	private void loadStorage() {
+		storage = new StorageFactory(this).createStorage();
+
+		try {
+			storage.init();
+		} catch (Exception ex) {
+			Logger.severe("The storage has failed to initialize.");
+		}
+
+		Timer.time(() -> {
+			try {
+				storage.loadMines();
+			} catch (Exception e) {
+				Logger.severe("Mines have failed to load.");
+			}
+		}, "Mines have been loaded!");
 	}
 
 	private void registerCommands() {
@@ -130,6 +126,14 @@ public class SkyMines extends JavaPlugin {
 		return true;
 	}
 
+	public static SkyMines getInstance() {
+		return instance;
+	}
+
+	public SkyMineManager getSkyMineManager() {
+		return skyMineManager;
+	}
+
 	public Settings getSettings() {
 		return settings;
 	}
@@ -138,12 +142,8 @@ public class SkyMines extends JavaPlugin {
 		return panelSettings;
 	}
 
-	public SkyMineManager getSkyMineManager() {
-		return skyMineManager;
-	}
-
-	public Database getActiveDatabase() {
-		return database;
+	public Storage getStorage() {
+		return storage;
 	}
 
 	public Economy getEconomy() {
