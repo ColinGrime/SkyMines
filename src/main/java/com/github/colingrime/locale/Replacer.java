@@ -1,4 +1,4 @@
-package com.github.colingrime.utils;
+package com.github.colingrime.locale;
 
 import java.util.ArrayList;
 import java.util.HashMap;

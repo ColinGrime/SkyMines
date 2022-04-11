@@ -3,7 +3,7 @@ package com.github.colingrime.skymines.token;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import com.github.colingrime.utils.Replacer;
+import com.github.colingrime.locale.Replacer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

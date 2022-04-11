@@ -8,7 +8,7 @@ import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.skymines.upgrades.UpgradeType;
 import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
-import com.github.colingrime.utils.Replacer;
+import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

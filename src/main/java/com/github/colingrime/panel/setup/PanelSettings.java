@@ -105,7 +105,7 @@ public class PanelSettings {
 	}
 
 	private UpgradePanelSlot getUpgradeSlot(String upgradeName) {
-		UpgradeType upgradeType = UpgradeType.getUpgradeType(upgradeName);
+		UpgradeType upgradeType = UpgradeType.parse(upgradeName);
 		if (upgradeType == null) {
 			return null;
 		}

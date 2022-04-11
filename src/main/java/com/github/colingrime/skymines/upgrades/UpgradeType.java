@@ -7,7 +7,7 @@ public enum UpgradeType {
 	BlockVariety,
 	ResetCooldown;
 
-	public static UpgradeType getUpgradeType(String name) {
+	public static UpgradeType parse(String name) {
 		name = Utils.strip(name);
 		for (UpgradeType type : UpgradeType.values()) {
 			if (type.name().equalsIgnoreCase(name)) {

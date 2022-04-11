@@ -4,7 +4,7 @@ import com.github.colingrime.locale.Messages;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.commands.SubCommand;
 import com.github.colingrime.skymines.structure.MineSize;
-import com.github.colingrime.utils.Replacer;
+import com.github.colingrime.locale.Replacer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

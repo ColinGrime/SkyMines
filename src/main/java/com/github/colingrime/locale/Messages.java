@@ -1,7 +1,6 @@
 package com.github.colingrime.locale;
 
 import com.github.colingrime.utils.Logger;
-import com.github.colingrime.utils.Replacer;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
