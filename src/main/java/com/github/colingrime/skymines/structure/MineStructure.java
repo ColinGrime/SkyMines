@@ -2,25 +2,29 @@ package com.github.colingrime.skymines.structure;
 
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.config.BlockVariety;
+import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MineStructure {
 
+	private final World world;
 	private final Location startCorner;
 	private final Location endCorner;
 	private final MineSize size;
 
-	private final List<Block> parameter = new ArrayList<>();
-	private final List<Block> blocksInside = new ArrayList<>();
+	private final List<Vector> parameter = new ArrayList<>();
+	private final List<Vector> blocksInside = new ArrayList<>();
 
 	public MineStructure(Location startCorner, Location endCorner, MineSize size) {
+		this.world = startCorner.getWorld();
 		this.startCorner = startCorner;
 		this.endCorner = endCorner;
 		this.size = size;
@@ -30,9 +34,10 @@ public class MineStructure {
 	 * Gets the mine structure's parameter
 	 * along with the blocks inside it.
 	 *
+	 * @param checkForBlockage checks if there's blocks in the way (will cost more performance-wise)
 	 * @return true if there were no blocks in the way of the structure
 	 */
-	public boolean setup() {
+	public boolean setup(boolean checkForBlockage) {
 		// all major points around the mine
 		int x1 = startCorner.getBlockX();
 		int y1 = startCorner.getBlockY();
@@ -49,52 +54,50 @@ public class MineStructure {
 		int highY = lowY == y1 ? y2 : y1;
 		int highZ = lowZ == z1 ? z2 : z1;
 
-		World world = startCorner.getWorld();
 		for (int x=lowX; x<=highX; x++) {
 			for (int y=lowY; y<=highY; y++) {
 				for (int z=lowZ; z<=highZ; z++) {
-					Block block = world.getBlockAt(x, y, z);
-
-					// there's blocks in the way
-					if (block.getType() != Material.AIR) {
-						return false;
-					}
+					Vector vector = new Vector(x, y, z);
 
 					// don't build around top face
 					if (y == highY && x != x1 && x != x2 && z != z1 && z != z2) {
-						blocksInside.add(block);
+						blocksInside.add(vector);
 					} else if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-						parameter.add(block);
+						parameter.add(vector);
 					} else {
-						blocksInside.add(block);
+						blocksInside.add(vector);
 					}
 				}
 			}
+		}
+
+		if (checkForBlockage) {
+			return getBehavior().isClear(world, parameter);
 		}
 
 		return true;
 	}
 
 	public void buildParameter() {
-		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(parameter, Material.BEDROCK);
+		getBehavior().build(world, parameter, Material.BEDROCK);
 	}
 
 	public void buildInside(BlockVariety blockVariety) {
-		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksInside, blockVariety);
+		getBehavior().build(world, blocksInside, blockVariety);
 	}
 
 	public void destroy() {
 		// TODO refactor class
-		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(parameter, Material.AIR);
-		SkyMines.getInstance().getSkyMineManager().getBuildBehavior().build(blocksInside, Material.AIR);
+		getBehavior().build(world, parameter, Material.AIR);
+		getBehavior().build(world, blocksInside, Material.AIR);
 	}
 
-	public List<Block> getParameter() {
+	public BuildBehavior getBehavior() {
+		return SkyMines.getInstance().getDependencyManager().getBuildbehavior();
+	}
+
+	public List<Vector> getParameter() {
 		return parameter;
-	}
-
-	public List<Block> getBlocksInside() {
-		return blocksInside;
 	}
 
 	public MineSize getSize() {
@@ -123,7 +126,7 @@ public class MineStructure {
 		}
 
 		MineStructure structure = new MineStructure(startCorner, endCorner, size);
-		structure.setup();
+		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> structure.setup(false));
 		return structure;
 	}
 }
