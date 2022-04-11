@@ -12,19 +12,17 @@ import java.util.UUID;
 
 public class DefaultSkyMine implements SkyMine {
 
-	private final SkyMines plugin;
 	private final UUID uuid;
 	private final UUID owner;
 	private final MineStructure structure;
 	private final Location home;
 	private final SkyMineUpgrades upgrades;
 
-	public DefaultSkyMine(SkyMines plugin, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
-		this(plugin, UUID.randomUUID(), owner, structure, home, upgrades);
+	public DefaultSkyMine(UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
+		this(UUID.randomUUID(), owner, structure, home, upgrades);
 	}
 
-	public DefaultSkyMine(SkyMines plugin, UUID uuid, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
-		this.plugin = plugin;
+	public DefaultSkyMine(UUID uuid, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
 		this.uuid = uuid;
 		this.owner = owner;
 		this.structure = structure;
@@ -51,7 +49,7 @@ public class DefaultSkyMine implements SkyMine {
 			return -1;
 		}
 
-		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
+		List<SkyMine> skyMines = SkyMines.getInstance().getSkyMineManager().getSkyMines(player);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (skyMines.get(i).equals(this)) {
 				return i + 1;

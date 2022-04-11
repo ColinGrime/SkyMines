@@ -62,6 +62,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new sky mine
-		return Optional.of(new DefaultSkyMine(plugin, owner.getUniqueId(), structure, home, upgrades));
+		return Optional.of(new DefaultSkyMine(owner.getUniqueId(), structure, home, upgrades));
 	}
 }
