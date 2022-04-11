@@ -25,7 +25,7 @@ public class SkyMinesPickupSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public String getName() {
-		return null;
+		return "pickup";
 	}
 
 	@Override
