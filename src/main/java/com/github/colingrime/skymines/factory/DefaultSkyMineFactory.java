@@ -1,6 +1,5 @@
 package com.github.colingrime.skymines.factory;
 
-import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.DefaultSkyMine;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.structure.MineSize;
@@ -12,12 +11,6 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 
 public class DefaultSkyMineFactory implements SkyMineFactory {
-
-	private final SkyMines plugin;
-
-	public DefaultSkyMineFactory(SkyMines plugin) {
-		this.plugin = plugin;
-	}
 
 	@Override
 	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades) {
@@ -50,7 +43,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// creates and builds structure
 		MineStructure structure = new MineStructure(location, endLoc, size);
-		if (!structure.setup()) {
+		if (!structure.setup(true)) {
 			return Optional.empty();
 		}
 
