@@ -9,7 +9,9 @@ import com.github.colingrime.locale.Messages;
 import com.github.colingrime.panel.setup.PanelSettings;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.manager.SkyMineManager;
+import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.skymines.structure.behavior.DefaultBuildBehavior;
+import com.github.colingrime.skymines.structure.behavior.FastBuildBehavior;
 import com.github.colingrime.skymines.token.DefaultSkyMineToken;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.StorageFactory;
@@ -36,9 +38,16 @@ public class SkyMines extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
+		BuildBehavior buildBehavior;
+		if (getServer().getPluginManager().getPlugin("FastAsyncWorldEdit") == null) {
+			buildBehavior = new DefaultBuildBehavior();
+		} else {
+			buildBehavior = new FastBuildBehavior(this);
+		}
+
 		instance = this;
 		// TODO clean this up and account for different instances
-		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this), new DefaultBuildBehavior());
+		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this), buildBehavior);
 
 		loadData();
 		loadStorage();
@@ -101,6 +110,7 @@ public class SkyMines extends JavaPlugin {
 		skyMines.registerSubCommand(new SkyMinesPanelSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesGiveSubCommand(this));
+		skyMines.registerSubCommand(new SkyMinesPickupSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesReloadSubCommand(this));
 	}
 

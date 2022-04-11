@@ -6,6 +6,7 @@ authors: [Scill]
 description: Place mines... IN THE SKY!!
 api-version: 1.18
 depend: [Vault]
+softdepend: [FastAsyncWorldEdit]
 
 commands:
   skymines:
