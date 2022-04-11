@@ -37,7 +37,7 @@ public class BlockVariety {
 		typeRandomizer.put(totalPercentages, material);
 	}
 
-	public Optional<Material> getRandom() {
-		return Optional.ofNullable(typeRandomizer.higherEntry(random.nextDouble() * totalPercentages).getValue());
+	public Material getRandom() {
+		return typeRandomizer.higherEntry(random.nextDouble() * totalPercentages).getValue();
 	}
 }
