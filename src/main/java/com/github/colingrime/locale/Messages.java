@@ -26,6 +26,7 @@ public enum Messages {
 	FAILURE_TOO_SMALL("failure.too-small", "&cThe SkyMine you are trying to create is too small!"),
 	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the SkyMine to be placed there."),
 	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
+	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a skymine with the ID: %id%"),
 	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this command."),
 	FAILURE_INVALID_SENDER("failure.invalid-sender", "&cYou must be a player to perform this command."),
 

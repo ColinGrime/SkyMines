@@ -2,6 +2,7 @@
 general:
   list-skymines: '&7[%id%&7] &eClick to teleport.'
 
+
 # Success messages:
 success:
   give: "&7You've given &a%amount%x %token% &7to &a%player%&7!"
@@ -13,6 +14,7 @@ failure:
   too-small: '&cThe SkyMine you are trying to create is too small.'
   no-space: '&cThere is no space for the SkyMine to be placed there.'
   no-funds: "&cYou don't have enough money to buy this upgrade."
+  no-skymine: "&cYou don't have a skymine with the ID: %id%"
   no-permission: '&cYou do not have permission to perform this command.'
   invalid-sender: '&cYou must be a player to perform this command.'
 
