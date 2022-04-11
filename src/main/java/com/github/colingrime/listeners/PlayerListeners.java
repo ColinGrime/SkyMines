@@ -51,7 +51,7 @@ public class PlayerListeners implements Listener {
 		Block block = event.getClickedBlock();
 		if (block != null) {
 			for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines(player)) {
-				if (skyMine.getStructure().getParameter().contains(block)) {
+				if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 					new UpgradePanel(plugin, player, skyMine).openInventory(player);
 					return;
 				}
