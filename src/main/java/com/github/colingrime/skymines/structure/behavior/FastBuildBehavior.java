@@ -10,32 +10,41 @@ import com.sk89q.worldedit.world.block.BlockState;
 import com.sk89q.worldedit.world.block.BlockTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
 public class FastBuildBehavior implements BuildBehavior {
 
-	private final SkyMines plugin;
+	@Override
+	public boolean isClear(org.bukkit.World world, List<Vector> vectors) {
+		World faweWorld = FaweAPI.getWorld(world.getName());
 
-	public FastBuildBehavior(SkyMines plugin) {
-		this.plugin = plugin;
+		try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
+			for (Vector vector : vectors) {
+				BlockState state = es.getBlock(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+				if (!state.isAir()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	@Override
-	public void build(List<Block> blocks, Material type) {
-		if (blocks.isEmpty()) {
+	public void build(org.bukkit.World world, List<Vector> vectors, Material type) {
+		if (vectors.isEmpty()) {
 			return;
 		}
 
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			Block randomBlock = blocks.get(0);
-			World world = FaweAPI.getWorld(randomBlock.getWorld().getName());
+		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
+			World faweWorld = FaweAPI.getWorld(world.getName());
 			BlockState state = BlockTypes.parse(type.name()).getDefaultState();
 
-			try (EditSession es = WorldEdit.getInstance().newEditSession(world)) {
-				for (Block block : blocks) {
-					es.setBlock(block.getX(), block.getY(), block.getZ(), state);
+			try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
+				for (Vector vector : vectors) {
+					es.setBlock(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ(), state);
 				}
 				es.flushQueue();
 			}
@@ -43,19 +52,17 @@ public class FastBuildBehavior implements BuildBehavior {
 	}
 
 	@Override
-	public void build(List<Block> blocks, BlockVariety blockVariety) {
-		if (blocks.isEmpty()) {
+	public void build(org.bukkit.World world, List<Vector> vectors, BlockVariety blockVariety) {
+		if (vectors.isEmpty()) {
 			return;
 		}
 
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			Block randomBlock = blocks.get(0);
-			World world = FaweAPI.getWorld(randomBlock.getWorld().getName());
-
-			try (EditSession es = WorldEdit.getInstance().newEditSession(world)) {
-				for (Block block : blocks) {
+		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
+			World faweWorld = FaweAPI.getWorld(world.getName());
+			try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
+				for (Vector vector : vectors) {
 					BlockState state = BlockTypes.parse(blockVariety.getRandom().name()).getDefaultState();
-					es.setBlock(block.getX(), block.getY(), block.getZ(), state);
+					es.setBlock(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ(), state);
 				}
 				es.flushQueue();
 			}
