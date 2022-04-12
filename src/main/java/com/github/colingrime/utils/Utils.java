@@ -44,9 +44,10 @@ public final class Utils {
 	 * @return new message with spaces, dashes, and colons removed
 	 */
 	public static String strip(String message) {
-		return message.replaceAll("\\s+", "")
-				.replaceAll("-", "")
-				.replaceAll(":", "");
+		if (message == null) {
+			return "";
+		}
+		return message.replaceAll("\\s+", "").replaceAll("-", "").replaceAll(":", "");
 	}
 
 	/**
@@ -56,6 +57,16 @@ public final class Utils {
 	public static String format(String message) {
 		message = message.replaceAll("_", " ").replaceAll("-", " ").replaceAll("(.)([A-Z])", "$1 $2");
 		return WordUtils.capitalizeFully(message);
+	}
+
+	/**
+	 * @param time any time
+	 * @return new time that is formatted
+	 */
+	public static String formatTime(double time) {
+		int minutes = (int) time / 60;
+		int seconds = (int) time - (minutes * 60);
+		return String.format("%d:%02d", minutes, seconds);
 	}
 
 	/**
@@ -83,6 +94,19 @@ public final class Utils {
 			item.setAmount(item.getAmount() - 1);
 		} else {
 			player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+		}
+	}
+
+	/**
+	 * Gives the player the item, or drops it on
+	 * the ground if their inventory is full.
+	 *
+	 * @param player any player
+	 * @param item any item
+	 */
+	public static void giveItemOrDrop(Player player, ItemStack item) {
+		for (ItemStack itemDrop : player.getInventory().addItem(item).values()) {
+			player.getWorld().dropItemNaturally(player.getLocation(), itemDrop);
 		}
 	}
 
