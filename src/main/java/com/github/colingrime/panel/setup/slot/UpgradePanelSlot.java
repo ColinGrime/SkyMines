@@ -6,6 +6,7 @@ import com.github.colingrime.skymines.upgrades.UpgradeType;
 import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class UpgradePanelSlot extends PanelSlot {
 	private final PanelSlotMeta slotMeta;
 	private final PanelSlotMeta maxSlotMeta;
 	private final Map<Integer, List<String>> lores;
+	private SkyMineUpgrades upgrades;
 
 	public UpgradePanelSlot(UpgradeType upgradeType, PanelSlotMeta slotMeta, PanelSlotMeta maxSlotMeta) {
 		this(upgradeType, slotMeta, maxSlotMeta, new HashMap<>());
@@ -30,8 +32,13 @@ public class UpgradePanelSlot extends PanelSlot {
 		this.lores = levelLores;
 	}
 
+	public ItemStack getUpgradeItem(SkyMineUpgrades upgrades) {
+		this.upgrades = upgrades;
+		return getItem();
+	}
+
 	@Override
-	public Material getType(SkyMineUpgrades upgrades) {
+	public Material getType() {
 		if (upgrades.getUpgrade(upgradeType).canBeUpgraded()) {
 			return slotMeta.getType();
 		} else {
@@ -40,7 +47,7 @@ public class UpgradePanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public String getName(SkyMineUpgrades upgrades) {
+	public String getName() {
 		SkyMineUpgrade upgrade = upgrades.getUpgrade(upgradeType);
 		int level = upgrade.getLevel();
 
@@ -52,7 +59,7 @@ public class UpgradePanelSlot extends PanelSlot {
 	}
 
 	@Override
-	public List<String> getLore(SkyMineUpgrades upgrades) {
+	public List<String> getLore() {
 		SkyMineUpgrade upgrade = upgrades.getUpgrade(upgradeType);
 		if (!upgrade.canBeUpgraded()) {
 			return maxSlotMeta.getLore();
@@ -63,6 +70,15 @@ public class UpgradePanelSlot extends PanelSlot {
 			return Collections.singletonList(Utils.color("&cFailed to retrieve lore values."));
 		} else {
 			return lore;
+		}
+	}
+
+	@Override
+	public String getCommand() {
+		if (upgrades.getUpgrade(upgradeType).canBeUpgraded()) {
+			return maxSlotMeta.getCommand();
+		} else {
+			return slotMeta.getCommand();
 		}
 	}
 
