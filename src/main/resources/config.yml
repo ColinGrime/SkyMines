@@ -14,6 +14,8 @@ options:
   max-per-player: 10
   # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
   replace-blocks: false
+  # Should the owner of the mine be teleported to the mine's home on reset?
+  teleport-home-on-reset: true
 
 # Physical form of a skymine:
 token:

@@ -7,20 +7,27 @@ import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 
+	private final SkyMines plugin;
+
 	public SkyMinesResetSubCommand(SkyMines plugin) {
 		super(plugin);
+		this.plugin = plugin;
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		if (skyMine.reset()) {
-			Messages.SUCCESS_RESET.sendTo(sender);
-		} else {
+		if (!skyMine.reset()) {
 			Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldownTime()));
 			Messages.FAILURE_INCOMPLETE_COOLDOWN.sendTo(sender, replacer);
+		}
+
+		Messages.SUCCESS_RESET.sendTo(sender);
+		if (plugin.getSettings().shouldTeleportHomeOnReset()) {
+			((Player) sender).teleport(skyMine.getHome());
 		}
 	}
 

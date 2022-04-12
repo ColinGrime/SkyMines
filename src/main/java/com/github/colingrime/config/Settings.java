@@ -25,6 +25,7 @@ public class Settings {
 	// skymine options
 	private int maxPerPlayer;
 	private boolean replaceBlocks;
+	private boolean teleportHomeOnReset;
 
 	// token info
 	private Material tokenType;
@@ -59,6 +60,7 @@ public class Settings {
 		// skymine options
 		maxPerPlayer = _getMaxPerPlayer();
 		replaceBlocks = _shouldReplaceBlocks();
+		teleportHomeOnReset = _shouldTeleportHomeOnReset();
 
 		// token info
 		tokenType = _getTokenType();
@@ -114,6 +116,14 @@ public class Settings {
 
 	public boolean shouldReplaceBlocks() {
 		return replaceBlocks;
+	}
+
+	private boolean _shouldTeleportHomeOnReset() {
+		return config.getBoolean("options.teleport-home-on-reset");
+	}
+
+	public boolean shouldTeleportHomeOnReset() {
+		return teleportHomeOnReset;
 	}
 
 	private Material _getTokenType() {
