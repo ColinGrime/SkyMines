@@ -8,6 +8,7 @@ import com.github.colingrime.listeners.PanelListeners;
 import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.panel.setup.PanelSettings;
+import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.manager.SkyMineManager;
 import com.github.colingrime.skymines.token.DefaultSkyMineToken;
@@ -15,6 +16,8 @@ import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.StorageFactory;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyMines extends JavaPlugin {
@@ -43,10 +46,18 @@ public class SkyMines extends JavaPlugin {
 			Logger.severe("Storage has failed to load. Plugin has been disabled.");
 			ex.printStackTrace();
 			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 		registerCommands();
 		registerListeners();
+
+		// load mines
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			for (SkyMine skyMine : skyMineManager.getSkyMines(player)) {
+				skyMine.getStructure().setup();
+			}
+		}
 	}
 
 	@Override
@@ -89,6 +100,7 @@ public class SkyMines extends JavaPlugin {
 		skyMines.registerSubCommand(new SkyMinesListSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesHomeSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesPanelSubCommand(this));
+		skyMines.registerSubCommand(new SkyMinesUpgradeSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesGiveSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesPickupSubCommand(this));
