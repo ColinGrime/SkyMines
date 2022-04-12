@@ -18,18 +18,24 @@ public enum Messages {
 	LIST_SKYMINES("general.list-skymines", "&7[&a%id%&7] &eClick to teleport."),
 
 	// success messages
-	SUCCESS_GIVE("success.give", "&7You've given &a%amount%x %token% &7to &a%player%&7!"),
-	SUCCESS_RECEIVE("success.receive", "&7You've received &a%amount%x %token%&7!"),
-	SUCCESS_UPGRADE("success.upgrade", "&aYou've upgraded &e%upgrade% &ato level &e%level%&a!"),
+	SUCCESS_GIVE("success.give", "&7You have given &a%amount%x %token% &7to &a%player%&7!"),
+	SUCCESS_RECEIVE("success.receive", "&7You have received &a%amount%x %token%&7!"),
+	SUCCESS_UPGRADE("success.upgrade", "&aYou have upgraded &e%upgrade% &ato level &e%level%&a!"),
+	SUCCESS_HOME("success.home", "&aYou have been teleported to your &eSkyMine&a!"),
+	SUCCESS_RESET("success.reset", "&aThe &eSkyMine &ahas been reset!"),
+	SUCCESS_PICKUP("success.pickup", "&aYou have successfully picked up your &eSkyMine&a!"),
+	SUCCESS_PLACE("success.place", "&aYou have successfully placed your &eSkyMine&a!"),
 
 	// failure messages
-	FAILURE_MAX_AMOUNT("failure.max-amount", "&cYou have reached the maximum amount of skymines you can place."),
-	FAILURE_TOO_SMALL("failure.too-small", "&cThe SkyMine you are trying to create is too small!"),
+	FAILURE_MAX_AMOUNT("failure.max-amount", "&cYou have reached the maximum amount of &eSkyMines &cyou can place."),
+	FAILURE_TOO_SMALL("failure.too-small", "&cThe &eSkyMine &cyou are trying to create is too small."),
 	FAILURE_TOO_BIG("failure.too-big", "&cFor performance reasons, a side is not permitted to exceed 100 blocks."),
-	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the SkyMine to be placed there."),
+	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the &eSkyMine &cto be placed here."),
+	FAILURE_NO_INVENTORY_SPACE("failure.no-inventory-space", "&cThere is no space in your inventory to get the &eSkyMine Token&c."),
 	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
-	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a skymine with the ID: %id%"),
+	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."),
 	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this command."),
+	FAILURE_INCOMPLETE_COOLDOWN("failure.incomplete-cooldown", "&cThe cooldown on this &eSkyMine &cstill has &e%time% &cleft."),
 	FAILURE_INVALID_SENDER("failure.invalid-sender", "&cYou must be a player to perform this command."),
 
 	// usage messages

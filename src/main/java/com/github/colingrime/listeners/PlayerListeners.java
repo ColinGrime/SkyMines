@@ -51,7 +51,7 @@ public class PlayerListeners implements Listener {
 		SkyMineToken token = manager.getToken();
 
 		if (token.isToken(item)) {
-			if (manager.getSkyMines(player).size() > plugin.getSettings().getMaxPerPlayer()) {
+			if (manager.getSkyMines(player).size() >= plugin.getSettings().getMaxPerPlayer()) {
 				Messages.FAILURE_MAX_AMOUNT.sendTo(player);
 				return;
 			}
@@ -61,6 +61,7 @@ public class PlayerListeners implements Listener {
 
 			if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades)) {
 				Utils.removeOneItemFromHand(player);
+				Messages.SUCCESS_PLACE.sendTo(player);
 			} else {
 				Messages.FAILURE_NO_SPACE.sendTo(player);
 			}

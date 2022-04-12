@@ -15,7 +15,11 @@ public class SkyMinesPickupSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		skyMine.pickup((Player) sender);
+		if (skyMine.pickup((Player) sender)) {
+			Messages.SUCCESS_PICKUP.sendTo(sender);
+		} else {
+			Messages.FAILURE_NO_INVENTORY_SPACE.sendTo(sender);
+		}
 	}
 
 	@Override

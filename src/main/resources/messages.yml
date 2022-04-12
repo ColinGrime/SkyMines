@@ -5,19 +5,25 @@ general:
 
 # Success messages:
 success:
-  give: "&7You've given &a%amount%x %token% &7to &a%player%&7!"
-  receive: "&7You've received &a%amount%x %token%&7!"
-  upgrade: "&aYou've upgraded &e%upgrade% &ato level &e%level%&a!"
+  give: '&7You have given &a%amount%x %token% &7to &a%player%&7!'
+  receive: '&7You have received &a%amount%x %token%&7!'
+  upgrade: '&aYou have upgraded &e%upgrade% &ato level &e%level%&a!'
+  home: '&aYou have been teleported to your &eSkyMine&a!'
+  reset: '&aThe &eSkyMine &ahas been reset!'
+  pickup: '&aYou have successfully picked up your &eSkyMine&a!'
+  place: '&aYou have successfully placed your &eSkyMine&a!'
 
 # Failure messages:
 failure:
-  max-amount: '&cYou have reached the maximum amount of skymines you can place.'
-  too-small: '&cThe SkyMine you are trying to create is too small.'
+  max-amount: '&cYou have reached the maximum amount of &eSkyMines &cyou can place.'
+  too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
   too-big: '&cFor performance reasons, a side is not permitted to exceed 100 blocks.'
-  no-space: '&cThere is no space for the SkyMine to be placed there.'
+  no-space: '&cThere is no space for the &eSkyMine &cto be placed here.'
+  no-inventory-space: '&cThere is no space in your inventory to get the &eSkyMine Token&c.'
   no-funds: "&cYou don't have enough money to buy this upgrade."
-  no-skymine: "&cYou don't have a skymine with the ID: %id%"
+  no-skymine: "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."
   no-permission: '&cYou do not have permission to perform this command.'
+  incomplete-cooldown: '&cThe cooldown on this &eSkyMine &cstill has &e%time% &cleft.'
   invalid-sender: '&cYou must be a player to perform this command.'
 
 # Usage messages (for commands):

@@ -16,6 +16,7 @@ public class SkyMinesHomeSubCommand extends SkyMinesSubCommand {
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		((Player) sender).teleport(skyMine.getHome());
+		Messages.SUCCESS_HOME.sendTo(sender);
 	}
 
 	@Override
