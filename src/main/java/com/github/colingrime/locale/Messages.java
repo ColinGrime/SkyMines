@@ -23,6 +23,7 @@ public enum Messages {
 	SUCCESS_UPGRADE("success.upgrade", "&aYou've upgraded &e%upgrade% &ato level &e%level%&a!"),
 
 	// failure messages
+	FAILURE_MAX_AMOUNT("failure.max-amount", "&cYou have reached the maximum amount of skymines you can place."),
 	FAILURE_TOO_SMALL("failure.too-small", "&cThe SkyMine you are trying to create is too small!"),
 	FAILURE_TOO_BIG("failure.too-big", "&cFor performance reasons, a side is not permitted to exceed 100 blocks."),
 	FAILURE_NO_SPACE("failure.no-space", "&cThere is no space for the SkyMine to be placed there."),
