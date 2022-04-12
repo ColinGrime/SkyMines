@@ -6,6 +6,7 @@ import com.github.colingrime.locale.Messages;
 import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.structure.MineSize;
+import com.github.colingrime.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -58,10 +59,9 @@ public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 		}
 
 		// gets the specified amount of tokens and gives it to the player
-		// TODO drop item if inv is full
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
 		item.setAmount(amount);
-		receiver.getInventory().addItem(item);
+		Utils.giveItemOrDrop(receiver, item);
 
 		// gets the name of the item
 		ItemMeta meta = item.getItemMeta();
