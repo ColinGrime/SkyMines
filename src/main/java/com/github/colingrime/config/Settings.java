@@ -18,11 +18,15 @@ public class Settings {
 	private final JavaPlugin plugin;
 	private FileConfiguration config;
 
-	// database stuff
+	// database
 	private StorageType storageType;
 	private StorageCredentials credentials;
 
-	// token stuff
+	// skymine options
+	private int maxPerPlayer;
+	private boolean replaceBlocks;
+
+	// token info
 	private Material tokenType;
 	private String tokenName;
 	private List<String> tokenLore;
@@ -48,11 +52,15 @@ public class Settings {
 		plugin.reloadConfig();
 		config = plugin.getConfig();
 
-		// database stuff
+		// database
 		storageType = _getStorageType();
 		credentials = _getCredentials();
 
-		// token stuff
+		// skymine options
+		maxPerPlayer = _getMaxPerPlayer();
+		replaceBlocks = _shouldReplaceBlocks();
+
+		// token info
 		tokenType = _getTokenType();
 		tokenName = _getTokenName();
 		tokenLore = _getTokenLore();
@@ -90,6 +98,22 @@ public class Settings {
 
 	public StorageCredentials getCredentials() {
 		return credentials;
+	}
+
+	private int _getMaxPerPlayer() {
+		return config.getInt("options.max-per-player");
+	}
+
+	public int getMaxPerPlayer() {
+		return maxPerPlayer;
+	}
+
+	private boolean _shouldReplaceBlocks() {
+		return config.getBoolean("options.replace-blocks");
+	}
+
+	public boolean shouldReplaceBlocks() {
+		return replaceBlocks;
 	}
 
 	private Material _getTokenType() {

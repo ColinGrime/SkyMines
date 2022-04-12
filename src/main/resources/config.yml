@@ -8,6 +8,13 @@ skymines-save:
   username: 'root'
   password: ''
 
+# Various options for skymines:
+options:
+  # Maximum amount of skymines per player.
+  max-per-player: 10
+  # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
+  replace-blocks: false
+
 # Physical form of a skymine:
 token:
   type: TRIPWIRE_HOOK
