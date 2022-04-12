@@ -7,7 +7,6 @@ import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.sql.connection.ConnectionProvider;
-import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Location;
 
