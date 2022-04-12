@@ -43,10 +43,14 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// creates and builds structure
 		MineStructure structure = new MineStructure(location, endLoc, size);
-		if (!structure.setup(true)) {
+		structure.setup();
+
+		// check for access and blocks in the way
+		if (!structure.doBlockCheck(owner)) {
 			return Optional.empty();
 		}
 
+		// build the mine
 		structure.buildParameter();
 		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 
@@ -55,6 +59,8 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new sky mine
-		return Optional.of(new DefaultSkyMine(owner.getUniqueId(), structure, home, upgrades));
+		SkyMine skyMine = new DefaultSkyMine(owner.getUniqueId(), structure, home, upgrades);
+		skyMine.reset();
+		return Optional.of(skyMine);
 	}
 }
