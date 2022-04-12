@@ -23,4 +23,11 @@ public class ResetCooldownUpgrade extends SkyMineUpgrade {
 		}
 		return costs.get(level);
 	}
+
+	/**
+	 * @return reset cooldown depending on the upgrade's level
+	 */
+	public double getResetCooldown() {
+		return getPlugin().getSettings().getUpgradesResetCooldown().get(getLevel());
+	}
 }

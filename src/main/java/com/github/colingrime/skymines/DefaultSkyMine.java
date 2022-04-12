@@ -19,6 +19,8 @@ public class DefaultSkyMine implements SkyMine {
 	private final Location home;
 	private final SkyMineUpgrades upgrades;
 
+	private long cooldownTimer = 0;
+
 	public DefaultSkyMine(UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
 		this(UUID.randomUUID(), owner, structure, home, upgrades);
 	}
@@ -29,8 +31,6 @@ public class DefaultSkyMine implements SkyMine {
 		this.structure = structure;
 		this.home = home;
 		this.upgrades = upgrades;
-
-		reset();
 	}
 
 	@Override
@@ -76,8 +76,19 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
-	public void reset() {
+	public boolean reset() {
+		if (getCooldownTime() > 0) {
+			return false;
+		}
+
 		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
+		cooldownTimer = (long) (System.currentTimeMillis() + (getUpgrades().getResetCooldownUpgrade().getResetCooldown() * 1000));
+		return true;
+	}
+
+	@Override
+	public int getCooldownTime() {
+		return (int) Math.max(0, (cooldownTimer - System.currentTimeMillis()) / 1000);
 	}
 
 	@Override

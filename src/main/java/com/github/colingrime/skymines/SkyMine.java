@@ -42,8 +42,14 @@ public interface SkyMine {
 
 	/**
 	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 * @return true if there is no cooldown and mine was successfully reset
 	 */
-	void reset();
+	boolean reset();
+
+	/**
+	 * @return time (in seconds) left on the cooldown
+	 */
+	int getCooldownTime();
 
 	/**
 	 * Picks the skymine up. Only works if it's the owner who is requesting pickup.
