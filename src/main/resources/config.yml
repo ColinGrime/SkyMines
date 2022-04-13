@@ -1,7 +1,7 @@
 # Save your skymines:
 skymines-save:
-  # Options: YAML, MySql, None
-  storage-type: YAML
+  # Options: SQLite, MySql (preferred), YAML (not recommended)
+  storage-type: SQLite
   host: 'localhost'
   port: 3306
   database: 'minecraft'

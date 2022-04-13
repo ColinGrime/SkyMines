@@ -3,8 +3,8 @@ package com.github.colingrime.storage;
 public enum StorageType {
 
 	YAML("YAML"),
-	MYSQL("MySQL");
-	// TODO add more storage types
+	MYSQL("MySQL"),
+	SQLITE("SQLite");
 
 	private final String name;
 
