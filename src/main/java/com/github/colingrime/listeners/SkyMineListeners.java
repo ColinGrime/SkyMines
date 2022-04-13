@@ -11,15 +11,22 @@ import org.bukkit.event.Listener;
 
 public class SkyMineListeners implements Listener {
 
+	private final SkyMines plugin;
+
 	public SkyMineListeners(SkyMines plugin) {
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		this.plugin = plugin;
+		this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
 	public void onCooldownFinish(SkyMineCooldownFinishEvent event) {
+		if (!plugin.getSettings().shouldNotifyOnResetCooldownFinish()) {
+			return;
+		}
+
 		Player player = Bukkit.getPlayer(event.getSkyMine().getOwner());
 		if (player != null) {
-			Messages.COOLDOWN_FINISH.sendTo(player, new Replacer("%id%", event.getSkyMine().getId()));
+			Messages.RESET_COOLDOWN_FINISH.sendTo(player, new Replacer("%id%", event.getSkyMine().getId()));
 		}
 	}
 }
