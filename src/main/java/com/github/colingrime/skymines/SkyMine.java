@@ -26,14 +26,20 @@ public interface SkyMine {
 	int getId();
 
 	/**
-	 * @return structure of the sky mine
+	 * @return structure of the skymine
 	 */
 	MineStructure getStructure();
 
 	/**
-	 * @return home of the sky mine
+	 * @return home of the skymine
 	 */
 	Location getHome();
+
+	/**
+	 * Sets the home of the skymine.
+	 * @param home any location
+	 */
+	void setHome(Location home);
 
 	/**
 	 * @return upgrades of the sky mine
@@ -61,7 +67,7 @@ public interface SkyMine {
 	boolean pickup(Player player);
 
 	/**
-	 * Asynchronously saves the SkyMine's current state.
+	 * Asynchronously saves the skymine's current state.
 	 */
 	void save();
 }

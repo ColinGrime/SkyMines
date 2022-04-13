@@ -9,6 +9,7 @@ success:
   receive: '&7You have received &a%amount%x %token%&7!'
   upgrade: '&aYou have upgraded &e%upgrade% &ato level &e%level%&a!'
   home: '&aYou have been teleported to your &eSkyMine&a!'
+  sethome: "&aYou have successfully changed your &eSkyMine&a's home location!"
   reset: '&aThe &eSkyMine &ahas been reset!'
   pickup: '&aYou have successfully picked up your &eSkyMine&a!'
   place: '&aYou have successfully placed your &eSkyMine&a!'

@@ -23,6 +23,7 @@ public enum Messages {
 	SUCCESS_RECEIVE("success.receive", "&7You have received &a%amount%x %token%&7!"),
 	SUCCESS_UPGRADE("success.upgrade", "&aYou have upgraded &e%upgrade% &ato level &e%level%&a!"),
 	SUCCESS_HOME("success.home", "&aYou have been teleported to your &eSkyMine&a!"),
+	SUCCESS_SETHOME("success.sethome", "&aYou have successfully changed your &eSkyMine&a's home location!"),
 	SUCCESS_RESET("success.reset", "&aThe &eSkyMine &ahas been reset!"),
 	SUCCESS_PICKUP("success.pickup", "&aYou have successfully picked up your &eSkyMine&a!"),
 	SUCCESS_PLACE("success.place", "&aYou have successfully placed your &eSkyMine&a!"),

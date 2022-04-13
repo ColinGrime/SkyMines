@@ -100,6 +100,7 @@ public class SkyMines extends JavaPlugin {
 		SkyMinesBaseCommand skyMines = new SkyMinesBaseCommand(this);
 		skyMines.registerSubCommand(new SkyMinesListSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesHomeSubCommand(this));
+		skyMines.registerSubCommand(new SkyMinesSetHomeSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesPanelSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesUpgradeSubCommand(this));
 		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));

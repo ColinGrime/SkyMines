@@ -17,8 +17,8 @@ public class DefaultSkyMine implements SkyMine {
 	private final UUID uuid;
 	private final UUID owner;
 	private final MineStructure structure;
-	private final Location home;
 	private final SkyMineUpgrades upgrades;
+	private Location home;
 
 	private long cooldownTimer = 0;
 
@@ -64,6 +64,12 @@ public class DefaultSkyMine implements SkyMine {
 	@Override
 	public Location getHome() {
 		return home;
+	}
+
+	@Override
+	public void setHome(Location home) {
+		this.home = home;
+		save();
 	}
 
 	@Override
