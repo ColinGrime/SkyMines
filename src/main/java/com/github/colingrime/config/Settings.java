@@ -26,6 +26,7 @@ public class Settings {
 	private int maxPerPlayer;
 	private boolean replaceBlocks;
 	private boolean teleportHomeOnReset;
+	private boolean notifyOnCooldownFinish;
 
 	// token info
 	private Material tokenType;
@@ -61,6 +62,7 @@ public class Settings {
 		maxPerPlayer = _getMaxPerPlayer();
 		replaceBlocks = _shouldReplaceBlocks();
 		teleportHomeOnReset = _shouldTeleportHomeOnReset();
+		notifyOnCooldownFinish = _shouldNotifyOnCooldownFinish();
 
 		// token info
 		tokenType = _getTokenType();
@@ -124,6 +126,14 @@ public class Settings {
 
 	public boolean shouldTeleportHomeOnReset() {
 		return teleportHomeOnReset;
+	}
+
+	private boolean _shouldNotifyOnCooldownFinish() {
+		return config.getBoolean("options.notify-on-cooldown-finish");
+	}
+
+	public boolean shouldNotifyOnCooldownFinish() {
+		return notifyOnCooldownFinish;
 	}
 
 	private Material _getTokenType() {

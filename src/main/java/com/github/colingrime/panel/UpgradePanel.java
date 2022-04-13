@@ -53,9 +53,12 @@ public class UpgradePanel extends Panel {
 							Replacer replacer = new Replacer("%upgrade%", Utils.format(type.name())).add("%level%", upgrade.getLevel());
 							Messages.SUCCESS_UPGRADE.sendTo(player, replacer);
 							skyMine.reset();
+							skyMine.save();
 						} else {
 							Messages.FAILURE_NO_FUNDS.sendTo(player);
 						}
+					} else {
+						Messages.FAILURE_ALREADY_MAXED.sendTo(player);
 					}
 
 					getViewer().closeInventory();

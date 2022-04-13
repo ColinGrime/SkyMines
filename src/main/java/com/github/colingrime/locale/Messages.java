@@ -16,6 +16,7 @@ public enum Messages {
 
 	// general messages
 	LIST_SKYMINES("general.list-skymines", "&7[&a%id%&7] &eClick to teleport."),
+	COOLDOWN_FINISH("general.cooldown-finish", "&aThe &eSkyMine &awith the ID &e%id% &ahas just finished cooling down!"),
 
 	// success messages
 	SUCCESS_GIVE("success.give", "&7You have given &a%amount%x %token% &7to &a%player%&7!"),
@@ -34,8 +35,10 @@ public enum Messages {
 	FAILURE_NO_INVENTORY_SPACE("failure.no-inventory-space", "&cThere is no space in your inventory to get the &eSkyMine Token&c."),
 	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
 	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."),
+	FAILURE_NO_SKYMINES("failure.no-skymines", "&cYou don't have any &eSkyMines&c."),
 	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this command."),
-	FAILURE_INCOMPLETE_COOLDOWN("failure.incomplete-cooldown", "&cThe cooldown on this &eSkyMine &cstill has &e%time% &cleft."),
+	FAILURE_INCOMPLETE_COOLDOWN("failure.incomplete-cooldown", "&cThe cooldown on the &eSkyMine &cis &e%time%&c."),
+	FAILURE_ALREADY_MAXED("failure.already-maxed", "&cThis &eSkyMine&c's upgrade is already maxed out!"),
 	FAILURE_INVALID_SENDER("failure.invalid-sender", "&cYou must be a player to perform this command."),
 
 	// usage messages

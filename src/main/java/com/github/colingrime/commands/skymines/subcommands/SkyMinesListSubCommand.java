@@ -25,7 +25,7 @@ public class SkyMinesListSubCommand extends SkyMinesSubCommand {
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
 
 		if (skyMines.size() == 0) {
-			player.sendMessage("You have no mines!");
+			Messages.FAILURE_NO_SKYMINES.sendTo(player);
 			return;
 		}
 

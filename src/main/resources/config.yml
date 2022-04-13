@@ -16,13 +16,14 @@ options:
   replace-blocks: false
   # Should the owner of the mine be teleported to the mine's home on reset?
   teleport-home-on-reset: true
+  # Should the owner of the mine be notified when it can be reset again?
+  notify-on-cooldown-finish: true
 
 # Physical form of a skymine:
 token:
   type: TRIPWIRE_HOOK
   name: '&c&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
   lore:
-    - '&7Left Click - &eOpens Upgrade Panel'
     - '&7Right Click - &ePlaces Structure'
 
 # Options for mine upgrades...
