@@ -13,7 +13,7 @@ public class DefaultBuildBehavior implements BuildBehavior {
 	@Override
 	public boolean isClear(World world, Set<Vector> vectors) {
 		for (Vector vector : vectors) {
-			if (vector.toLocation(world).getBlock().getType() == Material.AIR) {
+			if (vector.toLocation(world).getBlock().getType() != Material.AIR) {
 				return false;
 			}
 		}
