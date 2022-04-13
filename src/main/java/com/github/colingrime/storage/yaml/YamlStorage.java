@@ -38,9 +38,7 @@ public class YamlStorage implements Storage {
 	}
 
 	@Override
-	public void shutdown() {
-		save();
-	}
+	public void shutdown() {}
 
 	@Override
 	public void loadMines() {
