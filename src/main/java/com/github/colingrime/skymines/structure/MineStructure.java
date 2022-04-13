@@ -12,6 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class MineStructure {
 
 		for (Location location : locationsToCheck) {
 			Block block = location.getBlock();
-			BlockPlaceEvent fakeEvent = new BlockPlaceEvent(block, block.getState(), block, player.getInventory().getItemInMainHand(), player, true, EquipmentSlot.HAND);
+			BlockPlaceEvent fakeEvent = new BlockPlaceEvent(block, block.getState(), block, new ItemStack(Material.STONE), player, true, EquipmentSlot.HAND);
 			Bukkit.getPluginManager().callEvent(fakeEvent);
 
 			// player can't build here
