@@ -40,6 +40,6 @@ public class SkyMinesUpgradeSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_PANEL;
+		return Messages.USAGE_SKYMINES_UPGRADES;
 	}
 }

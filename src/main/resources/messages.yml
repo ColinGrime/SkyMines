@@ -1,12 +1,15 @@
 # General messages:
 general:
-  list-skymines: '&7[%id%&7] &eClick to teleport.'
-  cooldown-finish: '&aThe &eSkyMine &awith the ID &e%id% &ahas just finished cooling down!'
+  list-skymines:
+    top-message: '&aList of &eSkyMines&a:'
+    repeating-message: '&7→ [#%id%] &eClick to go home. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
+  reset-cooldown-finish: '&aThe &eSkyMine &awith the ID &e%id% &ahas just finished cooling down!'
+  placement-cooldown-finish: '&aYou are free to attempt &eSkyMine &aplacement again.'
 
 # Success messages:
 success:
-  give: '&7You have given &a%amount%x %token% &7to &a%player%&7!'
-  receive: '&7You have received &a%amount%x %token%&7!'
+  give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
+  receive: '&aYou have received &e%amount%x %token%&a!'
   upgrade: '&aYou have upgraded &e%upgrade% &ato level &e%level%&a!'
   home: '&aYou have been teleported to your &eSkyMine&a!'
   sethome: "&aYou have successfully changed your &eSkyMine&a's home location!"
@@ -19,31 +22,39 @@ failure:
   max-amount: '&cYou have reached the maximum amount of &eSkyMines &cyou can place.'
   too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
   too-big: '&cFor performance reasons, a side is not permitted to exceed 100 blocks.'
+  too-far-away: '&cYou are too far away from your &eSkyMine &cto set its home.'
   no-space: '&cThere is no space for the &eSkyMine &cto be placed here.'
   no-inventory-space: '&cThere is no space in your inventory to get the &eSkyMine Token&c.'
   no-funds: "&cYou don't have enough money to buy this upgrade."
   no-skymine: "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."
   no-skymines: "&cYou don't have any &eSkyMines&c."
   no-permission: '&cYou do not have permission to perform this command.'
-  incomplete-cooldown: '&cThe cooldown on the &eSkyMine &cis &e%time%&c.'
+  no-drop: '&cYou are not allowed to drop your &eSkyMine Token&c.'
+  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e%time%&c.'
+  on-reset-cooldown: '&cThe cooldown on the &eSkyMine &cis &e%time%&c.'
   already-maxed: "&cThis &eSkyMine&c's upgrade is already maxed out!"
   invalid-sender: '&cYou must be a player to perform this command.'
+  invalid-placement: "&cYou can't place down a &eSkyMine Token&c."
 
 # Usage messages (for commands):
 usage:
   skymines-command:
-    - '&7SkyMines Command:'
-    - '&a/skymines &7- &eOpens up the main panel for accessing your skymines.'
-    - '&a/skymines [id] &7- &eOpens up the panel of the specified skymine.'
-    - '&a/skymines list &7- &eLists the IDs of your skymines, and gives you a fast way to teleport to them.'
-    - '&a/skymines home [id] &7- &eTeleports to the specified skymine.'
-    - '&a/skymines sethome [id] &7- &eSets the home of the specified skymine.'
-    - '&a/skymines reset [id] &7- &eResets the specified skymine.'
-  skymines-panel: '&a/skymines [id] &7- &eOpens up the panel of the specified skymine.'
-  skymines-list: '&a/skymines list &7- &eLists the IDs of your skymines, and gives you a fast way to teleport to them.'
-  skymines-home: '&a/skymines home [id] &7- &eTeleports to the specified skymine.'
-  skymines-reset: '&a/skymines reset [id] &7- &eResets the specified skymine.'
-  skymines-give: '&a/skymines give [name] {LxHxW} {amount} &7- &eGives a skymine token to the specified player.'
+    - "&eSkyMine &aCommands:"
+    - "&7→ &a/sm list &7- lists your &eSkyMines&7."
+    - "&7→ &a/sm panel [id] &7- open the &eSkyMine&7's main panel."
+    - "&7→ &a/sm home [id] &7- go to the &eSkyMine&7."
+    - "&7→ &a/sm sethome [id] &7- set the &eSkyMine&7's home."
+    - "&7→ &a/sm reset [id] &7- reset the &eSkyMine&7."
+    - "&7→ &a/sm upgrades [id] &7- open the &eSkyMine&7's upgrade panel."
+    - "&7→ &a/sm pickup [id] &7- pickup the &eSkyMine&7."
+  skymines-list: "&7Usage: &a/sm list &7→ lists your &eSkyMines&7."
+  skymines-panel: "&7Usage: &a/sm panel [id] &7→ open the &eSkyMine&7's main panel."
+  skymines-home: "&7Usage: &a/sm home [id] &7→ go to the &eSkyMine&7."
+  skymines-sethome: "&7Usage: &a/sm sethome [id] &7→ set the &eSkyMine&7's home."
+  skymines-reset: "&7Usage: &a/sm reset [id] &7→ reset the &eSkyMine&7."
+  skymines-upgrades: "&7Usage: &a/sm upgrades [id] &7→ open the &eSkyMine&7's upgrade panel."
+  skymines-pickup: "&7Usage: &a/sm pickup [id] &7→ pickup the &eSkyMine&7."
+  skymines-give: "&7Usage: &a/sm give [name] {LxHxW} {amount} &7→ &egives a &eSkyMine Token &eto the player."
 
 # Only Admins should have access...
 admin:

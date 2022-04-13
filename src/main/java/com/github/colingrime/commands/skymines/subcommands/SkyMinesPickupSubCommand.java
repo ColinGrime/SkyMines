@@ -34,6 +34,6 @@ public class SkyMinesPickupSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_PICKUP;
 	}
 }

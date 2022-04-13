@@ -21,8 +21,8 @@ public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		if (!skyMine.reset()) {
-			Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldownTime()));
-			Messages.FAILURE_INCOMPLETE_COOLDOWN.sendTo(sender, replacer);
+			Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldown().getCooldownLeft()));
+			Messages.FAILURE_ON_RESET_COOLDOWN.sendTo(sender, replacer);
 			return;
 		}
 

@@ -3,8 +3,10 @@ package com.github.colingrime.commands.skymines.subcommands;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
 import com.github.colingrime.locale.Messages;
+import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.utils.Utils;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,8 +31,16 @@ public class SkyMinesListSubCommand extends SkyMinesSubCommand {
 			return;
 		}
 
+		Messages.LIST_SKYMINES_TOP_MESSAGE.sendTo(player);
 		for (int i=1; i<=skyMines.size(); i++) {
-			String message = Messages.LIST_SKYMINES.toString().replaceAll("%id%", String.valueOf(i));
+			Location loc = skyMines.get(i - 1).getHome();
+
+			Replacer replacer = new Replacer("%id%", i);
+			replacer.add("%x%", loc.getBlockX());
+			replacer.add("%y%", loc.getBlockY());
+			replacer.add("%z%", loc.getBlockZ());
+
+			String message = replacer.replace(Messages.LIST_SKYMINES_REPEATING_MESSAGE.toString());
 			player.spigot().sendMessage(Utils.command(message, "/skymines home " + i));
 		}
 	}
