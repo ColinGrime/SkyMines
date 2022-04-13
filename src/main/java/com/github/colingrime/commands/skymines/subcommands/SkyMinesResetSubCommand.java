@@ -23,6 +23,7 @@ public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 		if (!skyMine.reset()) {
 			Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldownTime()));
 			Messages.FAILURE_INCOMPLETE_COOLDOWN.sendTo(sender, replacer);
+			return;
 		}
 
 		Messages.SUCCESS_RESET.sendTo(sender);
