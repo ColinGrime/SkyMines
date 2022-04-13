@@ -3,6 +3,7 @@ package com.github.colingrime.skymines;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import com.github.colingrime.utils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -45,12 +46,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public int getId() {
-		Player player = Bukkit.getPlayer(owner);
-		if (player == null) {
-			return -1;
-		}
-
-		List<SkyMine> skyMines = SkyMines.getInstance().getSkyMineManager().getSkyMines(player);
+		List<SkyMine> skyMines = SkyMines.getInstance().getSkyMineManager().getSkyMines(owner);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (skyMines.get(i).equals(this)) {
 				return i + 1;
@@ -81,8 +77,10 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 		cooldownTimer = (long) (System.currentTimeMillis() + (getUpgrades().getResetCooldownUpgrade().getResetCooldown() * 1000));
+		SkyMines.getInstance().getSkyMineManager().getTimer().getMinesOnCooldown().add(this);
+
+		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 		return true;
 	}
 
@@ -105,5 +103,17 @@ public class DefaultSkyMine implements SkyMine {
 		structure.destroy();
 		SkyMines.getInstance().getSkyMineManager().removeSkyMine(player, this);
 		return true;
+	}
+
+	@Override
+	public void save() {
+		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
+			try {
+				SkyMines.getInstance().getStorage().saveMine(this);
+			} catch (Exception e) {
+				Logger.severe("SkyMine has failed to save. Please report this to the developer.");
+				e.printStackTrace();
+			}
+		});
 	}
 }

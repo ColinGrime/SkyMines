@@ -59,4 +59,9 @@ public interface SkyMine {
 	 * @return true if pickup was successful
 	 */
 	boolean pickup(Player player);
+
+	/**
+	 * Asynchronously saves the SkyMine's current state.
+	 */
+	void save();
 }
