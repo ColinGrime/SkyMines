@@ -40,11 +40,7 @@ dependencies {
 
 shadowJar {
     dependencies {
-        // Shades NBT API
         include dependency('de.tr7zw:item-nbt-api-plugin:2.9.2')
-
-        // Shades the SQL dependencies
-        include dependency('mysql:mysql-connector-java:8.0.28')
         include dependency('com.zaxxer:HikariCP:4.0.3')
     }
 
