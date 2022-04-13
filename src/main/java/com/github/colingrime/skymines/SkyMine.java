@@ -1,5 +1,6 @@
 package com.github.colingrime.skymines;
 
+import com.github.colingrime.cache.Cooldown;
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.skymines.upgrades.types.BlockVarietyUpgrade;
@@ -53,9 +54,9 @@ public interface SkyMine {
 	boolean reset();
 
 	/**
-	 * @return time (in seconds) left on the cooldown
+	 * @return cooldown cache for skymines
 	 */
-	int getCooldownTime();
+	Cooldown getCooldown();
 
 	/**
 	 * Picks the skymine up. Only works if it's the owner who is requesting pickup.

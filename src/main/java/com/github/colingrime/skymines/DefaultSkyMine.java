@@ -1,6 +1,8 @@
 package com.github.colingrime.skymines;
 
 import com.github.colingrime.SkyMines;
+import com.github.colingrime.cache.Cooldown;
+import com.github.colingrime.cache.SkyMineCooldownCache;
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.utils.Logger;
@@ -11,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class DefaultSkyMine implements SkyMine {
 
@@ -19,8 +22,7 @@ public class DefaultSkyMine implements SkyMine {
 	private final MineStructure structure;
 	private final SkyMineUpgrades upgrades;
 	private Location home;
-
-	private long cooldownTimer = 0;
+	private Cooldown cooldown = new SkyMineCooldownCache(this, 0, TimeUnit.SECONDS);
 
 	public DefaultSkyMine(UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
 		this(UUID.randomUUID(), owner, structure, home, upgrades);
@@ -79,20 +81,23 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public boolean reset() {
-		if (getCooldownTime() > 0) {
+		if (!cooldown.isCooldownFinished()) {
 			return false;
 		}
 
-		cooldownTimer = (long) (System.currentTimeMillis() + (getUpgrades().getResetCooldownUpgrade().getResetCooldown() * 1000));
-		SkyMines.getInstance().getSkyMineManager().getTimer().getMinesOnCooldown().add(this);
-
+		resetCooldown();
 		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 		return true;
 	}
 
+	private void resetCooldown() {
+		cooldown = new SkyMineCooldownCache(this, getUpgrades().getResetCooldownUpgrade().getResetCooldown(), TimeUnit.SECONDS);
+		SkyMines.getInstance().addCooldown(cooldown);
+	}
+
 	@Override
-	public int getCooldownTime() {
-		return (int) Math.max(0, (cooldownTimer - System.currentTimeMillis()) / 1000);
+	public Cooldown getCooldown() {
+		return cooldown;
 	}
 
 	@Override
