@@ -11,4 +11,4 @@ softdepend: [FastAsyncWorldEdit]
 commands:
   skymines:
     description: Main command for skymines.
-    aliases: [mines, sm]
+    aliases: [skymine, sm]
