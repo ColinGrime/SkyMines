@@ -35,7 +35,7 @@ public class MainPanel extends Panel {
 			// check for time placeholder
 			if (item.getItemMeta() != null && item.getItemMeta().getDisplayName().contains("%time%")) {
 				ItemMeta meta = item.getItemMeta();
-				Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldownTime()));
+				Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldown().getCooldownLeft()));
 				meta.setDisplayName(replacer.replace(meta.getDisplayName()));
 				item.setItemMeta(meta);
 			}

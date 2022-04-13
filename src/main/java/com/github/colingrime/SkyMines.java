@@ -1,5 +1,6 @@
 package com.github.colingrime;
 
+import com.github.colingrime.cache.Cooldown;
 import com.github.colingrime.commands.skymines.SkyMinesBaseCommand;
 import com.github.colingrime.commands.skymines.subcommands.*;
 import com.github.colingrime.config.Settings;
@@ -15,6 +16,7 @@ import com.github.colingrime.skymines.manager.SkyMineManager;
 import com.github.colingrime.skymines.token.DefaultSkyMineToken;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.StorageFactory;
+import com.github.colingrime.tasks.CooldownTask;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
 import org.bukkit.Bukkit;
@@ -30,6 +32,7 @@ public class SkyMines extends JavaPlugin {
 	private Settings settings;
 	private PanelSettings panelSettings;
 	private Storage storage;
+	private CooldownTask cooldownTask;
 
 	@Override
 	public void onEnable() {
@@ -59,6 +62,9 @@ public class SkyMines extends JavaPlugin {
 				skyMine.getStructure().setup();
 			}
 		}
+
+		cooldownTask = new CooldownTask();
+		cooldownTask.runTaskTimerAsynchronously(this, 0, 20L);
 	}
 
 	@Override
@@ -137,5 +143,9 @@ public class SkyMines extends JavaPlugin {
 
 	public Storage getStorage() {
 		return storage;
+	}
+
+	public void addCooldown(Cooldown cooldown) {
+		cooldownTask.getCooldownList().add(cooldown);
 	}
 }

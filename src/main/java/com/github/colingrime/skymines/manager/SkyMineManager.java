@@ -4,7 +4,6 @@ import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.SkyMineFactory;
 import com.github.colingrime.skymines.structure.MineSize;
-import com.github.colingrime.skymines.timer.SkyMineCooldownTimer;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
@@ -19,14 +18,11 @@ public class SkyMineManager {
 	private final SkyMines plugin;
 	private final SkyMineFactory factory;
 	private final SkyMineToken token;
-	private final SkyMineCooldownTimer timer = new SkyMineCooldownTimer();
 
 	public SkyMineManager(SkyMines plugin, SkyMineFactory factory, SkyMineToken token) {
 		this.plugin = plugin;
 		this.factory = factory;
 		this.token = token;
-
-		timer.runTaskTimerAsynchronously(plugin, 0, 2 * 20L);
 	}
 
 	public SkyMineToken getToken() {
@@ -85,7 +81,7 @@ public class SkyMineManager {
 	 * @param id id number of the skymine
 	 * @return Optional skymine if found, or an empty Optional
 	 */
-	public Optional<SkyMine> getSkyMine(Player player, int id) {
+	protected Optional<SkyMine> getSkyMine(Player player, int id) {
 		List<SkyMine> skyMines = getSkyMines(player);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (id == i + 1) {
@@ -97,6 +93,8 @@ public class SkyMineManager {
 	}
 
 	/**
+	 * Adds the new SkyMine and saves it to storage.
+	 *
 	 * @param player any player
 	 * @param skyMine created skymine
 	 */
@@ -117,6 +115,8 @@ public class SkyMineManager {
 	}
 
 	/**
+	 * Removes the SkyMine and delets it from storage.
+	 *
 	 * @param player any player
 	 * @param skyMine removed skymine
 	 */
@@ -134,18 +134,11 @@ public class SkyMineManager {
 	 * @param uuid any uuid of player
 	 * @param skyMine removed skymine
 	 */
-	public void removeSkyMine(UUID uuid, SkyMine skyMine) {
+	protected void removeSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.remove(skyMine);
-		timer.getMinesOnCooldown().remove(skyMine);
+		skyMine.getCooldown().invalidate();
 
 		this.skyMines.put(uuid, skyMines);
-	}
-
-	/**
-	 * @return skymine cooldown timer
-	 */
-	public SkyMineCooldownTimer getTimer() {
-		return timer;
 	}
 }
