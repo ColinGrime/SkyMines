@@ -17,14 +17,20 @@ options:
   # Should the owner of the mine be teleported to the mine's home on reset?
   teleport-home-on-reset: true
   # Should the owner of the mine be notified when it can be reset again?
-  notify-on-cooldown-finish: true
+  notify-on-reset-cooldown-finish: true
+  # Should a player be notified when they can attempt skymine placement again?
+  notify-on-placement-cooldown-finish: true
+  # Cooldown (in seconds) players have to wait to place another skymine down.
+  placement-cooldown: 10
+  # If true, players can no longer drop their skymine token.
+  prevent-token-drop: true
 
 # Physical form of a skymine:
 token:
   type: TRIPWIRE_HOOK
-  name: '&c&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
+  name: '&e&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
   lore:
-    - '&7Right Click - &ePlaces Structure'
+    - '&7Right Click → &ePlaces Structure'
 
 # Options for mine upgrades...
 #

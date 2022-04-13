@@ -26,7 +26,10 @@ public class Settings {
 	private int maxPerPlayer;
 	private boolean replaceBlocks;
 	private boolean teleportHomeOnReset;
-	private boolean notifyOnCooldownFinish;
+	private boolean notifyOnResetCooldownFinish;
+	private boolean notifyOnPlacementCooldownFinish;
+	private int placementCooldown;
+	private boolean preventTokenDrop;
 
 	// token info
 	private Material tokenType;
@@ -62,7 +65,10 @@ public class Settings {
 		maxPerPlayer = _getMaxPerPlayer();
 		replaceBlocks = _shouldReplaceBlocks();
 		teleportHomeOnReset = _shouldTeleportHomeOnReset();
-		notifyOnCooldownFinish = _shouldNotifyOnCooldownFinish();
+		notifyOnResetCooldownFinish = _shouldNotifyOnResetCooldownFinish();
+		notifyOnPlacementCooldownFinish = _shouldNotifyOnPlacementCooldownFinish();
+		placementCooldown = _getPlacementCooldown();
+		preventTokenDrop = _getPreventTokenDrop();
 
 		// token info
 		tokenType = _getTokenType();
@@ -128,12 +134,36 @@ public class Settings {
 		return teleportHomeOnReset;
 	}
 
-	private boolean _shouldNotifyOnCooldownFinish() {
-		return config.getBoolean("options.notify-on-cooldown-finish");
+	private boolean _shouldNotifyOnResetCooldownFinish() {
+		return config.getBoolean("options.notify-on-reset-cooldown-finish");
 	}
 
-	public boolean shouldNotifyOnCooldownFinish() {
-		return notifyOnCooldownFinish;
+	public boolean shouldNotifyOnResetCooldownFinish() {
+		return notifyOnResetCooldownFinish;
+	}
+
+	private boolean _shouldNotifyOnPlacementCooldownFinish() {
+		return config.getBoolean("options.notify-on-placement-cooldown-finish");
+	}
+
+	public boolean shouldNotifyOnPlacementCooldownFinish() {
+		return notifyOnPlacementCooldownFinish;
+	}
+
+	private int _getPlacementCooldown() {
+		return config.getInt("options.placement-cooldown");
+	}
+
+	public int getPlacementCooldown() {
+		return placementCooldown;
+	}
+
+	private boolean _getPreventTokenDrop() {
+		return config.getBoolean("options.prevent-token-drop");
+	}
+
+	public boolean getPreventTokenDrop() {
+		return preventTokenDrop;
 	}
 
 	private Material _getTokenType() {
