@@ -4,9 +4,9 @@ import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.SkyMineFactory;
 import com.github.colingrime.skymines.structure.MineSize;
+import com.github.colingrime.skymines.timer.SkyMineCooldownTimer;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -19,11 +19,14 @@ public class SkyMineManager {
 	private final SkyMines plugin;
 	private final SkyMineFactory factory;
 	private final SkyMineToken token;
+	private final SkyMineCooldownTimer timer = new SkyMineCooldownTimer();
 
 	public SkyMineManager(SkyMines plugin, SkyMineFactory factory, SkyMineToken token) {
 		this.plugin = plugin;
 		this.factory = factory;
 		this.token = token;
+
+		timer.runTaskTimerAsynchronously(plugin, 0, 2 * 20L);
 	}
 
 	public SkyMineToken getToken() {
@@ -99,14 +102,7 @@ public class SkyMineManager {
 	 */
 	public void addSkyMine(Player player, SkyMine skyMine) {
 		addSkyMine(player.getUniqueId(), skyMine);
-
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			try {
-				plugin.getStorage().saveMine(skyMine);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		skyMine.save();
 	}
 
 	/**
@@ -141,7 +137,15 @@ public class SkyMineManager {
 	public void removeSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.remove(skyMine);
+		timer.getMinesOnCooldown().remove(skyMine);
 
 		this.skyMines.put(uuid, skyMines);
+	}
+
+	/**
+	 * @return skymine cooldown timer
+	 */
+	public SkyMineCooldownTimer getTimer() {
+		return timer;
 	}
 }
