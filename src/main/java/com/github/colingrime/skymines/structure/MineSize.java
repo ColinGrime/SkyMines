@@ -26,6 +26,10 @@ public class MineSize {
 		return width;
 	}
 
+	public int getMaxSide() {
+		return Math.max(length, Math.max(height, width));
+	}
+
 	public static String parse(MineSize size) {
 		return size.length + ":" + size.height + ":" + size.width;
 	}
