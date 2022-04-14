@@ -26,8 +26,10 @@ public class Settings {
 	private int maxPerPlayer;
 	private boolean replaceBlocks;
 	private boolean teleportHomeOnReset;
+	private boolean resetOnUpgrade;
 	private boolean notifyOnResetCooldownFinish;
-	private boolean notifyOnPlacementCooldownFinish;
+	private boolean notifyOnPickupCooldownFinish;
+	private int pickupCooldown;
 	private int placementCooldown;
 	private boolean preventTokenDrop;
 
@@ -65,9 +67,11 @@ public class Settings {
 		maxPerPlayer = _getMaxPerPlayer();
 		replaceBlocks = _shouldReplaceBlocks();
 		teleportHomeOnReset = _shouldTeleportHomeOnReset();
+		resetOnUpgrade = _shouldResetOnUpgrade();
 		notifyOnResetCooldownFinish = _shouldNotifyOnResetCooldownFinish();
-		notifyOnPlacementCooldownFinish = _shouldNotifyOnPlacementCooldownFinish();
+		notifyOnPickupCooldownFinish = _shouldNotifyOnPickupCooldownFinish();
 		placementCooldown = _getPlacementCooldown();
+		pickupCooldown = _getPickupCooldown();
 		preventTokenDrop = _getPreventTokenDrop();
 
 		// token info
@@ -134,6 +138,14 @@ public class Settings {
 		return teleportHomeOnReset;
 	}
 
+	private boolean _shouldResetOnUpgrade() {
+		return config.getBoolean("options.reset-on-upgrade");
+	}
+
+	public boolean shouldResetOnUpgrade() {
+		return resetOnUpgrade;
+	}
+
 	private boolean _shouldNotifyOnResetCooldownFinish() {
 		return config.getBoolean("options.notify-on-reset-cooldown-finish");
 	}
@@ -142,12 +154,20 @@ public class Settings {
 		return notifyOnResetCooldownFinish;
 	}
 
-	private boolean _shouldNotifyOnPlacementCooldownFinish() {
-		return config.getBoolean("options.notify-on-placement-cooldown-finish");
+	private boolean _shouldNotifyOnPickupCooldownFinish() {
+		return config.getBoolean("options.notify-on-pickup-cooldown-finish");
 	}
 
-	public boolean shouldNotifyOnPlacementCooldownFinish() {
-		return notifyOnPlacementCooldownFinish;
+	public boolean shouldNotifyOnPickupCooldownFinish() {
+		return notifyOnPickupCooldownFinish;
+	}
+
+	private int _getPickupCooldown() {
+		return config.getInt("options.pickup-cooldown");
+	}
+
+	public int getPickupCooldown() {
+		return pickupCooldown;
 	}
 
 	private int _getPlacementCooldown() {

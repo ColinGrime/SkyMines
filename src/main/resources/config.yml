@@ -16,11 +16,15 @@ options:
   replace-blocks: false
   # Should the owner of the mine be teleported to the mine's home on reset?
   teleport-home-on-reset: true
+  # Should the mine be reset when you upgrade it?
+  reset-on-upgrade: true
   # Should the owner of the mine be notified when it can be reset again?
   notify-on-reset-cooldown-finish: true
-  # Should a player be notified when they can attempt skymine placement again?
-  notify-on-placement-cooldown-finish: true
-  # Cooldown (in seconds) players have to wait to place another skymine down.
+  # Should a player be notified when they can place skymines again? (see pickup-cooldown below)
+  notify-on-pickup-cooldown-finish: true
+  # Cooldown (in seconds) players have to wait if they picked up a skymine.
+  pickup-cooldown: 300
+  # Cooldown (in seconds) players have to wait to attempt skymine placement again (for performance reasons).
   placement-cooldown: 10
   # If true, players can no longer drop their skymine token.
   prevent-token-drop: true
