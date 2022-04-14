@@ -8,7 +8,6 @@ import com.github.colingrime.panel.setup.slot.StandardPanelSlot;
 import com.github.colingrime.panel.setup.slot.UpgradePanelSlot;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import com.github.colingrime.skymines.upgrades.UpgradeType;
 import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Bukkit;
@@ -45,27 +44,49 @@ public class UpgradePanel extends Panel {
 			UpgradePanelSlot upgradeSlot = (UpgradePanelSlot) panelSlot;
 			setItem(slotNum, upgradeSlot.getUpgradeItem(upgrades), (player, clickType) -> {
 				if (clickType == ClickType.LEFT) {
-					UpgradeType type = upgradeSlot.getUpgradeType();
-					SkyMineUpgrade upgrade = upgrades.getUpgrade(type);
-
-					if (upgrade.canBeUpgraded()) {
-						if (upgrade.levelUp(player)) {
-							Replacer replacer = new Replacer("%upgrade%", Utils.format(type.name())).add("%level%", upgrade.getLevel());
-							Messages.SUCCESS_UPGRADE.sendTo(player, replacer);
-							skyMine.reset();
-							skyMine.save();
-						} else {
-							Messages.FAILURE_NO_FUNDS.sendTo(player);
-						}
-					} else {
-						Messages.FAILURE_ALREADY_MAXED.sendTo(player);
-					}
-
+					attemptUpgrade(player, upgrades.getUpgrade(upgradeSlot.getUpgradeType()));
 					getViewer().closeInventory();
 				}
 			});
 		}
 
 		return true;
+	}
+
+	/**
+	 * Attempts to upgrade the specified skymine upgrade.
+	 * @param player any player
+	 * @param upgrade any upgrade
+	 */
+	private void attemptUpgrade(Player player, SkyMineUpgrade upgrade) {
+		// check if the upgrade can be upgraded
+		if (!upgrade.canBeUpgraded()) {
+			Messages.FAILURE_ALREADY_MAXED.sendTo(player);
+		}
+
+		// check for permission
+		else if (!upgrade.hasPermission(player)) {
+			Messages.FAILURE_NO_PERMISSION.sendTo(player);
+		}
+
+		// attempt upgrade
+		else if (upgrade.levelUp(player)) {
+			Replacer replacer = new Replacer("%upgrade%", Utils.format(upgrade.getType().name()));
+			replacer.add("%level%", upgrade.getLevel());
+
+			// send success message and save the skymine's state
+			Messages.SUCCESS_UPGRADE.sendTo(player, replacer);
+			skyMine.save();
+
+			// reset the mine on upgrade
+			if (plugin.getSettings().shouldResetOnUpgrade()) {
+				skyMine.reset(true);
+			}
+		}
+
+		// player has insuffient funds
+		else {
+			Messages.FAILURE_NO_FUNDS.sendTo(player);
+		}
 	}
 }
