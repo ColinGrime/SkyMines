@@ -3,6 +3,7 @@ package com.github.colingrime;
 import com.github.colingrime.commands.skymines.SkyMinesBaseCommand;
 import com.github.colingrime.commands.skymines.subcommands.*;
 import com.github.colingrime.config.Settings;
+import com.github.colingrime.dependencies.DependencyFailureException;
 import com.github.colingrime.dependencies.DependencyManager;
 import com.github.colingrime.listeners.PanelListeners;
 import com.github.colingrime.listeners.PlayerListeners;
@@ -39,8 +40,14 @@ public class SkyMines extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		dependencyManager = new DependencyManager(this);
-		dependencyManager.registerDependencies();
+		try {
+			dependencyManager = new DependencyManager(this);
+			dependencyManager.registerDependencies();
+		} catch (DependencyFailureException ex) {
+			Logger.severe(ex.getMessage());
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
 
 		instance = this;
 		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this));
@@ -56,6 +63,7 @@ public class SkyMines extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		Bukkit.getScheduler().cancelTasks(this);
 		if (storage != null) {
 			storage.shutdown();
 		}

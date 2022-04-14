@@ -20,14 +20,9 @@ public class DependencyManager {
 	/**
 	 * Registers all the depenencies.
 	 */
-	public void registerDependencies() {
+	public void registerDependencies() throws DependencyFailureException {
 		for (Dependency dependency : Dependency.values()) {
-			try {
-				registerDependency(dependency);
-			} catch (DependencyFailureException ex) {
-				Logger.severe(ex.getMessage());
-				plugin.getServer().getPluginManager().disablePlugin(plugin);
-			}
+			registerDependency(dependency);
 		}
 	}
 
