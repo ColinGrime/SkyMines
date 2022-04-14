@@ -20,7 +20,7 @@ public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		if (!skyMine.reset()) {
+		if (!skyMine.reset(false)) {
 			Replacer replacer = new Replacer("%time%", Utils.formatTime(skyMine.getCooldown().getCooldownLeft()));
 			Messages.FAILURE_ON_RESET_COOLDOWN.sendTo(sender, replacer);
 			return;
@@ -45,10 +45,5 @@ public class SkyMinesResetSubCommand extends SkyMinesSubCommand {
 	@Override
 	public Messages getUsage() {
 		return Messages.USAGE_SKYMINES_RESET;
-	}
-
-	@Override
-	public String getPermission() {
-		return "skymines.reset";
 	}
 }

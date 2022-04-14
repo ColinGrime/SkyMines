@@ -18,7 +18,7 @@ public class SkyMinesReloadSubCommand extends SkyMinesSubCommand {
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		plugin.reload();
-		Messages.RELOADED.sendTo(sender);
+		Messages.SUCCESS_RELOADED.sendTo(sender);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class SkyMinesReloadSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return Messages.RELOADED;
+		return Messages.SUCCESS_RELOADED;
 	}
 
 	@Override

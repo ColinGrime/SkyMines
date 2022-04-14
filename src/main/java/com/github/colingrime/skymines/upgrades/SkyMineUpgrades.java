@@ -20,14 +20,10 @@ public class SkyMineUpgrades {
 	}
 
 	public SkyMineUpgrade getUpgrade(UpgradeType upgradeType) {
-		switch (upgradeType) {
-			case BlockVariety:
-				return blockVarietyUpgrade;
-			case ResetCooldown:
-				return resetCooldownUpgrade;
-		}
-
-		return null;
+		return switch (upgradeType) {
+			case BlockVariety -> blockVarietyUpgrade;
+			case ResetCooldown -> resetCooldownUpgrade;
+		};
 	}
 
 	public BlockVarietyUpgrade getBlockVarietyUpgrade() {
