@@ -51,7 +51,7 @@ public class YamlStorage implements Storage {
 			SkyMineUpgrades upgrades = SkyMineUpgrades.parse(Objects.requireNonNull(sec.getString(uuidString + ".upgrades")));
 
 			if (structure != null && home != null) {
-				SkyMine skyMine = new DefaultSkyMine(uuid, owner, structure, home, upgrades);
+				SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, home, upgrades);
 				plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 			}
 		}
