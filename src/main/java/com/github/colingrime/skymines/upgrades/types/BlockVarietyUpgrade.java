@@ -2,6 +2,7 @@ package com.github.colingrime.skymines.upgrades.types;
 
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.config.BlockVariety;
+import com.github.colingrime.skymines.upgrades.UpgradeType;
 
 import java.util.Map;
 
@@ -9,6 +10,11 @@ public class BlockVarietyUpgrade extends SkyMineUpgrade {
 
 	public BlockVarietyUpgrade(SkyMines plugin, int level) {
 		super(plugin, level);
+	}
+
+	@Override
+	public UpgradeType getType() {
+		return UpgradeType.BlockVariety;
 	}
 
 	@Override
