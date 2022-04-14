@@ -17,6 +17,11 @@ public interface Cooldown {
 	void completionAction();
 
 	/**
+	 * Message for if the cooldown is not finished.
+	 */
+	String getDenyMessage();
+
+	/**
 	 * Invalidates the cooldown.
 	 */
 	void invalidate();
