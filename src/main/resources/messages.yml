@@ -4,11 +4,10 @@ general:
     top-message: '&aList of &eSkyMines&a:'
     repeating-message: '&7→ [#%id%] &eClick to go home. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
   reset-cooldown-finish: '&aThe &eSkyMine &awith the ID &e%id% &ahas just finished cooling down!'
-  placement-cooldown-finish: '&aYou are free to attempt &eSkyMine &aplacement again.'
+  pickup-cooldown-finish: '&aYou are free to place &eSkyMines &aagain.'
 
 # Success messages:
 success:
-  give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
   receive: '&aYou have received &e%amount%x %token%&a!'
   upgrade: '&aYou have upgraded &e%upgrade% &ato level &e%level%&a!'
   home: '&aYou have been teleported to your &eSkyMine&a!'
@@ -20,8 +19,6 @@ success:
 # Failure messages:
 failure:
   max-amount: '&cYou have reached the maximum amount of &eSkyMines &cyou can place.'
-  too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
-  too-big: '&cFor performance reasons, a side is not permitted to exceed 100 blocks.'
   too-far-away: '&cYou are too far away from your &eSkyMine &cto set its home.'
   no-space: '&cThere is no space for the &eSkyMine &cto be placed here.'
   no-inventory-space: '&cThere is no space in your inventory to get the &eSkyMine Token&c.'
@@ -30,8 +27,9 @@ failure:
   no-skymines: "&cYou don't have any &eSkyMines&c."
   no-permission: '&cYou do not have permission to perform this command.'
   no-drop: '&cYou are not allowed to drop your &eSkyMine Token&c.'
-  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e%time%&c.'
   on-reset-cooldown: '&cThe cooldown on the &eSkyMine &cis &e%time%&c.'
+  on-pickup-cooldown: '&cDue to picking up a &eSkyMine&c, you must wait &e%time% &cto place another.'
+  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e%time%&c.'
   already-maxed: "&cThis &eSkyMine&c's upgrade is already maxed out!"
   invalid-sender: '&cYou must be a player to perform this command.'
   invalid-placement: "&cYou can't place down a &eSkyMine Token&c."
@@ -54,8 +52,14 @@ usage:
   skymines-reset: "&7Usage: &a/sm reset [id] &7→ reset the &eSkyMine&7."
   skymines-upgrades: "&7Usage: &a/sm upgrades [id] &7→ open the &eSkyMine&7's upgrade panel."
   skymines-pickup: "&7Usage: &a/sm pickup [id] &7→ pickup the &eSkyMine&7."
-  skymines-give: "&7Usage: &a/sm give [name] {LxHxW} {amount} &7→ &egives a &eSkyMine Token &eto the player."
 
 # Only Admins should have access...
 admin:
-  reloaded: '&aSkyMines has been reloaded!'
+  success:
+    give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
+    reloaded: '&eSkyMines &ahas been reloaded!'
+  failure:
+    too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
+    too-big: '&cFor performance reasons, a side is not permitted to exceed &e100 blocks&c.'
+  usage:
+    skymines-give: "&7Usage: &a/sm give [name] {LxHxW} {amount} &7→ &egives a &eSkyMine Token &eto the player."
