@@ -1,5 +1,5 @@
 # Save your skymines:
-skymines-save:
+save:
   # Options: SQLite, MySql (preferred), YAML (not recommended)
   storage-type: SQLite
   host: 'localhost'

@@ -93,7 +93,7 @@ public class Settings {
 	}
 
 	private StorageType _getStorageType() {
-		return StorageType.parse(config.getString("skymines-save.storage-type"));
+		return StorageType.parse(config.getString("save.storage-type"));
 	}
 
 	public StorageType getStorageType() {
@@ -101,11 +101,11 @@ public class Settings {
 	}
 
 	private StorageCredentials _getCredentials() {
-		String host = config.getString("skymines-save.host");
-		int port = config.getInt("skymines-save.port");
-		String database = config.getString("skymines-save.database");
-		String username = config.getString("skymines-save.username");
-		String password = config.getString("skymines-save.password");
+		String host = config.getString("save.host");
+		int port = config.getInt("save.port");
+		String database = config.getString("save.database");
+		String username = config.getString("save.username");
+		String password = config.getString("save.password");
 
 		return new StorageCredentials(host, port, database, username, password);
 	}
