@@ -2,9 +2,7 @@ package com.github.colingrime.listeners;
 
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.cache.Cooldown;
-import com.github.colingrime.cache.PlayerCooldownCache;
 import com.github.colingrime.locale.Messages;
-import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.panel.MainPanel;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.manager.SkyMineManager;
@@ -24,14 +22,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 
 public class PlayerListeners implements Listener {
 
 	private final SkyMines plugin;
-	private final Map<Player, Cooldown> cooldowns = new HashMap<>();
 
 	public PlayerListeners(SkyMines plugin) {
 		this.plugin = plugin;
@@ -67,10 +62,9 @@ public class PlayerListeners implements Listener {
 			}
 
 			// check for cooldown
-			Cooldown cooldown = cooldowns.get(player);
-			if (cooldown != null && !cooldowns.get(player).isCooldownFinished()) {
-				Replacer replacer = new Replacer("%time%", Utils.formatTime(cooldown.getCooldownLeft()));
-				Messages.FAILURE_ON_PLACEMENT_COOLDOWN.sendTo(player, replacer);
+			Optional<Cooldown> cooldown = plugin.getCooldownManager().getPlayerCooldown(player);
+			if (cooldown.isPresent() && !cooldown.get().isCooldownFinished()) {
+				player.sendMessage(cooldown.get().getDenyMessage());
 				return;
 			}
 
@@ -84,9 +78,8 @@ public class PlayerListeners implements Listener {
 				Messages.FAILURE_NO_SPACE.sendTo(player);
 			}
 
-			cooldown = new PlayerCooldownCache(player, plugin.getSettings().getPlacementCooldown(), TimeUnit.SECONDS);
-			cooldowns.put(player, cooldown);
-			plugin.addCooldown(cooldown);
+			int time = plugin.getSettings().getPlacementCooldown();
+			plugin.getCooldownManager().addPlayerCooldown(player, time, p -> {}, Messages.FAILURE_ON_PLACEMENT_COOLDOWN);
 		}
 	}
 
