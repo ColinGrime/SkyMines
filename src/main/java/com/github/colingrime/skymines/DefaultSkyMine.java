@@ -1,8 +1,10 @@
 package com.github.colingrime.skymines;
 
 import com.github.colingrime.SkyMines;
+import com.github.colingrime.api.SkyMineCooldownFinishEvent;
 import com.github.colingrime.cache.Cooldown;
-import com.github.colingrime.cache.SkyMineCooldownCache;
+import com.github.colingrime.cache.CooldownCache;
+import com.github.colingrime.locale.Messages;
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.utils.Logger;
@@ -14,21 +16,24 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 public class DefaultSkyMine implements SkyMine {
 
+	private final SkyMines plugin;
 	private final UUID uuid;
 	private final UUID owner;
 	private final MineStructure structure;
 	private final SkyMineUpgrades upgrades;
 	private Location home;
-	private Cooldown cooldown = new SkyMineCooldownCache(this, 0, TimeUnit.SECONDS);
+	private Cooldown cooldown = new CooldownCache<>(this, 0, TimeUnit.SECONDS);
 
-	public DefaultSkyMine(UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
-		this(UUID.randomUUID(), owner, structure, home, upgrades);
+	public DefaultSkyMine(SkyMines plugin, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
+		this(plugin, UUID.randomUUID(), owner, structure, home, upgrades);
 	}
 
-	public DefaultSkyMine(UUID uuid, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
+	public DefaultSkyMine(SkyMines plugin, UUID uuid, UUID owner, MineStructure structure, Location home, SkyMineUpgrades upgrades) {
+		this.plugin = plugin;
 		this.uuid = uuid;
 		this.owner = owner;
 		this.structure = structure;
@@ -48,7 +53,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public int getId() {
-		List<SkyMine> skyMines = SkyMines.getInstance().getSkyMineManager().getSkyMines(owner);
+		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(owner);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (skyMines.get(i).equals(this)) {
 				return i + 1;
@@ -80,19 +85,23 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
-	public boolean reset() {
-		if (!cooldown.isCooldownFinished()) {
-			return false;
+	public boolean reset(boolean ignoreCooldown) {
+		if (!ignoreCooldown) {
+			if (!cooldown.isCooldownFinished()) {
+				return false;
+			}
+
+			resetCooldown();
 		}
 
-		resetCooldown();
 		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
 		return true;
 	}
 
 	private void resetCooldown() {
-		cooldown = new SkyMineCooldownCache(this, getUpgrades().getResetCooldownUpgrade().getResetCooldown(), TimeUnit.SECONDS);
-		SkyMines.getInstance().addCooldown(cooldown);
+		Consumer<SkyMine> action = skyMine -> Bukkit.getPluginManager().callEvent(new SkyMineCooldownFinishEvent(skyMine));
+		cooldown = new CooldownCache<>(this, getUpgrades().getResetCooldownUpgrade().getResetCooldown(), TimeUnit.SECONDS, action);
+		plugin.getCooldownManager().addCooldown(cooldown);
 	}
 
 	@Override
@@ -106,21 +115,28 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		ItemStack token = SkyMines.getInstance().getSkyMineManager().getToken().getToken(structure.getSize(), upgrades);
+		ItemStack token = plugin.getSkyMineManager().getToken().getToken(structure.getSize(), upgrades);
 		if (!player.getInventory().addItem(token).isEmpty()) {
 			return false;
 		}
 
+		// add cooldown
+		plugin.getCooldownManager().addPlayerCooldown(player, plugin.getSettings().getPickupCooldown(), p -> {
+			if (plugin.getSettings().shouldNotifyOnPickupCooldownFinish()) {
+				Messages.PICKUP_COOLDOWN_FINISH.sendTo(player);
+			}
+		}, Messages.FAILURE_ON_PICKUP_COOLDOWN);
+
 		structure.destroy();
-		SkyMines.getInstance().getSkyMineManager().removeSkyMine(player, this);
+		plugin.getSkyMineManager().removeSkyMine(player, this);
 		return true;
 	}
 
 	@Override
 	public void save() {
-		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
 			try {
-				SkyMines.getInstance().getStorage().saveMine(this);
+				plugin.getStorage().saveMine(this);
 			} catch (Exception e) {
 				Logger.severe("SkyMine has failed to save. Please report this to the developer.");
 				e.printStackTrace();

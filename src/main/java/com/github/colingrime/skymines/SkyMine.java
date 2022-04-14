@@ -49,9 +49,10 @@ public interface SkyMine {
 
 	/**
 	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 * @param ignoreCooldown whether the cooldown should be ignored
 	 * @return true if there is no cooldown and mine was successfully reset
 	 */
-	boolean reset();
+	boolean reset(boolean ignoreCooldown);
 
 	/**
 	 * @return cooldown cache for skymines
