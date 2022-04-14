@@ -72,6 +72,7 @@ public class PlayerListeners implements Listener {
 			SkyMineUpgrades upgrades = token.getUpgrades(item).orElseGet(() -> new SkyMineUpgrades(plugin));
 
 			if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades)) {
+				event.setCancelled(true);
 				Utils.removeOneItemFromHand(player);
 				Messages.SUCCESS_PLACE.sendTo(player);
 			} else {
