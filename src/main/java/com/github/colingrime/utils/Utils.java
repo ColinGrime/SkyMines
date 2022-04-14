@@ -60,6 +60,23 @@ public final class Utils {
 	}
 
 	/**
+	 * @param message any message
+	 * @return new message that is unformatted
+	 */
+	public static String unformat(String message) {
+		StringBuilder builder = new StringBuilder(message.substring(0, 1).toLowerCase());
+		for (char c : message.substring(1).toCharArray()) {
+			if (Character.isUpperCase(c)) {
+				builder.append("-").append(Character.toLowerCase(c));
+			} else {
+				builder.append(c);
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
 	 * @param time any time
 	 * @return new time that is formatted
 	 */
