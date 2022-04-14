@@ -1,6 +1,5 @@
 package com.github.colingrime;
 
-import com.github.colingrime.cache.Cooldown;
 import com.github.colingrime.commands.skymines.SkyMinesBaseCommand;
 import com.github.colingrime.commands.skymines.subcommands.*;
 import com.github.colingrime.config.Settings;
@@ -12,16 +11,20 @@ import com.github.colingrime.locale.Messages;
 import com.github.colingrime.panel.setup.PanelSettings;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
+import com.github.colingrime.skymines.manager.CooldownManager;
 import com.github.colingrime.skymines.manager.SkyMineManager;
 import com.github.colingrime.skymines.token.DefaultSkyMineToken;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.StorageFactory;
-import com.github.colingrime.tasks.CooldownTask;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SkyMines extends JavaPlugin {
 
@@ -29,10 +32,10 @@ public class SkyMines extends JavaPlugin {
 
 	private DependencyManager dependencyManager;
 	private SkyMineManager skyMineManager;
+	private CooldownManager cooldownManager;
 	private Settings settings;
 	private PanelSettings panelSettings;
 	private Storage storage;
-	private CooldownTask cooldownTask;
 
 	@Override
 	public void onEnable() {
@@ -40,31 +43,15 @@ public class SkyMines extends JavaPlugin {
 		dependencyManager.registerDependencies();
 
 		instance = this;
-		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(), new DefaultSkyMineToken(this));
+		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this));
+		cooldownManager = new CooldownManager(this);
 
 		loadData();
-
-		try {
-			loadStorage();
-		} catch (Exception ex) {
-			Logger.severe("Storage has failed to load. Plugin has been disabled.");
-			ex.printStackTrace();
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
-
 		registerCommands();
 		registerListeners();
 
-		// load mines
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			for (SkyMine skyMine : skyMineManager.getSkyMines(player)) {
-				skyMine.getStructure().setup();
-			}
-		}
-
-		cooldownTask = new CooldownTask();
-		cooldownTask.runTaskTimerAsynchronously(this, 0, 20L);
+		List<UUID> uuidsToLoad = Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId).collect(Collectors.toList());
+		Bukkit.getScheduler().runTaskAsynchronously(this, () -> loadStorage(uuidsToLoad));
 	}
 
 	@Override
@@ -96,10 +83,23 @@ public class SkyMines extends JavaPlugin {
 	/**
 	 * Initializes the storage system.
 	 */
-	private void loadStorage() throws Exception {
-		storage = new StorageFactory(this).createStorage();
-		storage.init();
-		Timer.time(() -> storage.loadMines(), "Mines have been loaded in %s ms");
+	private void loadStorage(List<UUID> uuidsToLoad) {
+		try {
+			storage = new StorageFactory(this).createStorage();
+			storage.init();
+			Timer.time(() -> storage.loadMines(), "Mines have been loaded in %s ms");
+		} catch (Exception ex) {
+			Logger.severe("Storage has failed to load. Plugin has been disabled.");
+			ex.printStackTrace();
+			getServer().getPluginManager().disablePlugin(this);
+		}
+
+		// load initial mines (because some people like to reload the server...)
+		for (UUID uuid : uuidsToLoad) {
+			for (SkyMine skyMine : skyMineManager.getSkyMines(uuid)) {
+				skyMine.getStructure().setup();
+			}
+		}
 	}
 
 	private void registerCommands() {
@@ -133,6 +133,10 @@ public class SkyMines extends JavaPlugin {
 		return skyMineManager;
 	}
 
+	public CooldownManager getCooldownManager() {
+		return cooldownManager;
+	}
+
 	public Settings getSettings() {
 		return settings;
 	}
@@ -143,9 +147,5 @@ public class SkyMines extends JavaPlugin {
 
 	public Storage getStorage() {
 		return storage;
-	}
-
-	public void addCooldown(Cooldown cooldown) {
-		cooldownTask.getCooldownList().add(cooldown);
 	}
 }
