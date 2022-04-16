@@ -45,6 +45,7 @@ public class SkyMineManager {
 		}
 
 		addSkyMine(player, skyMine.get());
+		skyMine.get().save();
 		return true;
 	}
 
@@ -118,14 +119,11 @@ public class SkyMineManager {
 	}
 
 	/**
-	 * Adds the new SkyMine and saves it to storage.
-	 *
 	 * @param player any player
 	 * @param skyMine created skymine
 	 */
 	public void addSkyMine(Player player, SkyMine skyMine) {
 		addSkyMine(player.getUniqueId(), skyMine);
-		skyMine.save();
 	}
 
 	/**
@@ -135,7 +133,6 @@ public class SkyMineManager {
 	public void addSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.add(skyMine);
-
 		this.skyMines.put(uuid, skyMines);
 	}
 
@@ -147,12 +144,6 @@ public class SkyMineManager {
 	 */
 	public void removeSkyMine(Player player, SkyMine skyMine) {
 		removeSkyMine(player.getUniqueId(), skyMine);
-
-		try {
-			plugin.getStorage().deleteMine(skyMine);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -162,8 +153,13 @@ public class SkyMineManager {
 	public void removeSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.remove(skyMine);
-		skyMine.getCooldown().invalidate();
-
 		this.skyMines.put(uuid, skyMines);
+
+		skyMine.getCooldown().invalidate();
+		try {
+			plugin.getStorage().deleteMine(skyMine);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
