@@ -49,6 +49,22 @@ public class SkyMineManager {
 	}
 
 	/**
+	 * @return all skymines that are set up
+	 */
+	public List<SkyMine> getActiveSkyMines() {
+		List<SkyMine> activeSkyMines = new ArrayList<>();
+		for (List<SkyMine> skyMines : skyMines.values()) {
+			for (SkyMine skyMine : skyMines) {
+				if (skyMine.getStructure().isSetup()) {
+					activeSkyMines.add(skyMine);
+				}
+			}
+		}
+
+		return activeSkyMines;
+	}
+
+	/**
 	 * @param player any player
 	 * @return list of skymines the player owns
 	 */
@@ -70,19 +86,28 @@ public class SkyMineManager {
 	 * @return Optional skymine if found, or an empty Optional
 	 */
 	public Optional<SkyMine> getSkyMine(Player player, String id) {
+		return getSkyMine(player.getUniqueId(), id);
+	}
+
+	/**
+	 * @param uuid any uuid
+	 * @param id id number of the skymine
+	 * @return Optional skymine if found, or an empty Optional
+	 */
+	public Optional<SkyMine> getSkyMine(UUID uuid, String id) {
 		if (id.matches("\\d+")) {
-			return getSkyMine(player, Integer.parseInt(id));
+			return getSkyMine(uuid, Integer.parseInt(id));
 		}
 		return Optional.empty();
 	}
 
 	/**
-	 * @param player any player
+	 * @param uuid any uuid
 	 * @param id id number of the skymine
 	 * @return Optional skymine if found, or an empty Optional
 	 */
-	protected Optional<SkyMine> getSkyMine(Player player, int id) {
-		List<SkyMine> skyMines = getSkyMines(player);
+	protected Optional<SkyMine> getSkyMine(UUID uuid, int id) {
+		List<SkyMine> skyMines = getSkyMines(uuid);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (id == i + 1) {
 				return Optional.of(skyMines.get(i));
@@ -115,7 +140,7 @@ public class SkyMineManager {
 	}
 
 	/**
-	 * Removes the SkyMine and delets it from storage.
+	 * Removes the SkyMine and deletes it from storage.
 	 *
 	 * @param player any player
 	 * @param skyMine removed skymine
@@ -134,7 +159,7 @@ public class SkyMineManager {
 	 * @param uuid any uuid of player
 	 * @param skyMine removed skymine
 	 */
-	protected void removeSkyMine(UUID uuid, SkyMine skyMine) {
+	public void removeSkyMine(UUID uuid, SkyMine skyMine) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
 		skyMines.remove(skyMine);
 		skyMine.getCooldown().invalidate();
