@@ -1,10 +1,10 @@
 package com.github.colingrime.commands;
 
+import com.github.colingrime.SkyMines;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.utils.Logger;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -13,7 +13,7 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 
 	private final Map<String, SubCommand> subCommands = new HashMap<>();
 
-	public BaseCommand(JavaPlugin plugin, String name) {
+	public BaseCommand(SkyMines plugin, String name) {
 		PluginCommand command = plugin.getCommand(name);
 
 		// disable plugin if a command is invalid
@@ -25,12 +25,27 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 
 		command.setExecutor(this);
 		command.setTabCompleter(this);
+		addSubCommands(plugin);
+	}
+
+	/**
+	 * Adds the subcommands to the base command.
+	 */
+	private void addSubCommands(SkyMines plugin) {
+		// register subcommands
+		List<SubCommand> subCommands = new ArrayList<>();
+		registerSubCommands(subCommands, plugin);
+
+		// add the subcommands
+		for (SubCommand subCommand : subCommands) {
+			registerSubCommand(subCommand);
+		}
 	}
 
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		// if there's no subcommand input, send the command usage
-		if (args.length == 0 || !getSubCommand(args[0]).isPresent()) {
+		if (args.length == 0 || getSubCommand(args[0]).isEmpty()) {
 			getUsage().sendTo(sender);
 			return true;
 		}
@@ -110,4 +125,9 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 	 * @return command usage as configured in the config.yml
 	 */
 	public abstract Messages getUsage();
+
+	/**
+	 * @param subCommands list to add the subcommands to
+	 */
+	public abstract void registerSubCommands(List<SubCommand> subCommands, SkyMines plugin);
 }

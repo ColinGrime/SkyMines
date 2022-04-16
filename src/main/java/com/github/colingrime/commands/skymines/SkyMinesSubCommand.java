@@ -54,13 +54,11 @@ public abstract class SkyMinesSubCommand implements SubCommand {
 
 	@Override
 	public ArrayList<String> onTabComplete(CommandSender sender, String[] args) {
-		if (!requireSkyMine() || !(sender instanceof Player)) {
+		if (!requireSkyMine() || !(sender instanceof Player player)) {
 			return null;
 		}
 
-		Player player = (Player) sender;
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
-
 		if (skyMines.size() == 0) {
 			return null;
 		}

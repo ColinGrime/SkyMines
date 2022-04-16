@@ -1,29 +1,27 @@
-package com.github.colingrime.commands.skymines.subcommands;
+package com.github.colingrime.commands.skyminesadmin.subcommands;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
+import com.github.colingrime.commands.SubCommand;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.locale.Replacer;
-import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.structure.MineSize;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
+public class SkyMinesGiveSubCommand implements SubCommand {
 
 	private final SkyMines plugin;
 
 	public SkyMinesGiveSubCommand(SkyMines plugin) {
-		super(plugin);
 		this.plugin = plugin;
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+	public void onCommand(CommandSender sender, String[] args) {
 		Player receiver = Bukkit.getPlayer(args[0]);
 		if (receiver == null) {
 			getUsage().sendTo(sender);
@@ -61,7 +59,7 @@ public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 		// gets the specified amount of tokens and gives it to the player
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
 		item.setAmount(amount);
-		Utils.giveItemOrDrop(receiver, item);
+		PlayerUtils.giveItemOrDrop(receiver, item);
 
 		// gets the name of the item
 		ItemMeta meta = item.getItemMeta();
@@ -85,11 +83,6 @@ public class SkyMinesGiveSubCommand extends SkyMinesSubCommand {
 
 	private boolean isInt(String string) {
 		return string.matches("\\d+");
-	}
-
-	@Override
-	public boolean requireSkyMine() {
-		return false;
 	}
 
 	@Override

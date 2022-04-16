@@ -3,7 +3,7 @@ main: com.github.colingrime.SkyMines
 version: @version@
 
 authors: [Scill]
-description: Place mines... IN THE SKY!!
+description: Personal Mines (in the sky!)
 api-version: 1.18
 depend: [Vault]
 softdepend: [FastAsyncWorldEdit]
@@ -12,3 +12,6 @@ commands:
   skymines:
     description: Main command for skymines.
     aliases: [skymine, sm]
+  skyminesadmin:
+    description: Admin section for skymines.
+    aliases: [skymineadmin, smadmin, sma]

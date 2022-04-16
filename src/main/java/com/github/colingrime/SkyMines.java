@@ -1,7 +1,7 @@
 package com.github.colingrime;
 
 import com.github.colingrime.commands.skymines.SkyMinesBaseCommand;
-import com.github.colingrime.commands.skymines.subcommands.*;
+import com.github.colingrime.commands.skyminesadmin.SkyMinesAdminBaseCommand;
 import com.github.colingrime.config.Settings;
 import com.github.colingrime.dependencies.DependencyFailureException;
 import com.github.colingrime.dependencies.DependencyManager;
@@ -111,16 +111,8 @@ public class SkyMines extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		SkyMinesBaseCommand skyMines = new SkyMinesBaseCommand(this);
-		skyMines.registerSubCommand(new SkyMinesListSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesHomeSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesSetHomeSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesPanelSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesUpgradeSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesResetSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesGiveSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesPickupSubCommand(this));
-		skyMines.registerSubCommand(new SkyMinesReloadSubCommand(this));
+		new SkyMinesBaseCommand(this);
+		new SkyMinesAdminBaseCommand(this);
 	}
 
 	private void registerListeners() {
