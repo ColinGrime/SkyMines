@@ -50,6 +50,9 @@ public class Settings {
 	private int maxBlockVariety;
 	private int maxResetCooldown;
 
+	// misc settings
+	private boolean enableMetrics;
+
 	public Settings(JavaPlugin plugin) {
 		this.plugin = plugin;
 		this.plugin.saveDefaultConfig();
@@ -90,6 +93,9 @@ public class Settings {
 		// max levels
 		maxBlockVariety = Collections.max(upgradesBlockVariety.keySet());
 		maxResetCooldown = Collections.max(upgradesResetCooldown.keySet());
+
+		// misc settings
+		enableMetrics = _isMetricsEnabled();
 	}
 
 	private StorageType _getStorageType() {
@@ -328,5 +334,13 @@ public class Settings {
 
 	public int getMaxResetCooldown() {
 		return maxResetCooldown;
+	}
+
+	private boolean _isMetricsEnabled() {
+		return config.getBoolean("misc.enable-metrics");
+	}
+
+	public boolean isMetricsEnabled() {
+		return enableMetrics;
 	}
 }

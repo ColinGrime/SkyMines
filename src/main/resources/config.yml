@@ -100,3 +100,7 @@ upgrades:
     4:
       cost: 150000
       upgrade: 30 seconds
+
+misc:
+  # Allows us to collect anonymous data about the plugin.
+  enable-metrics: true
