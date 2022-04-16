@@ -15,4 +15,8 @@ public final class Logger {
 	public static void severe(String message) {
 		Bukkit.getLogger().log(Level.SEVERE, "[SkyMines] " + message);
 	}
+
+	public static void warn(String message) {
+		Bukkit.getLogger().log(Level.WARNING, "[SkyMines] " + message);
+	}
 }
