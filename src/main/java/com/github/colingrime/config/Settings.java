@@ -337,7 +337,7 @@ public class Settings {
 	}
 
 	private boolean _isMetricsEnabled() {
-		return config.getBoolean("misc.enable-metrics");
+		return config.getBoolean("misc.enable-metrics", true);
 	}
 
 	public boolean isMetricsEnabled() {
