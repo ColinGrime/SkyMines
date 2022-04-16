@@ -3,9 +3,10 @@ package com.github.colingrime.utils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,36 +96,6 @@ public final class Utils {
 		TextComponent commandMessage = new TextComponent(TextComponent.fromLegacyText(color(message)));
 		commandMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
 		return commandMessage;
-	}
-
-	/**
-	 * Removes a single item from the player's hand.
-	 * @param player any player
-	 */
-	public static void removeOneItemFromHand(Player player) {
-		ItemStack item = player.getInventory().getItemInMainHand();
-		if (item.getType() == Material.AIR) {
-			return;
-		}
-
-		if (item.getAmount() > 1) {
-			item.setAmount(item.getAmount() - 1);
-		} else {
-			player.getInventory().setItemInMainHand(null);
-		}
-	}
-
-	/**
-	 * Gives the player the item, or drops it on
-	 * the ground if their inventory is full.
-	 *
-	 * @param player any player
-	 * @param item any item
-	 */
-	public static void giveItemOrDrop(Player player, ItemStack item) {
-		for (ItemStack itemDrop : player.getInventory().addItem(item).values()) {
-			player.getWorld().dropItemNaturally(player.getLocation(), itemDrop);
-		}
 	}
 
 	/**
