@@ -69,6 +69,11 @@ public interface SkyMine {
 	boolean pickup(Player player);
 
 	/**
+	 * Removes the skymine and gives no skymine token.
+	 */
+	void remove();
+
+	/**
 	 * Asynchronously saves the skymine's current state.
 	 */
 	void save();

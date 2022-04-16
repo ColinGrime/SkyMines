@@ -111,7 +111,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public boolean pickup(Player player) {
-		if (!owner.equals(player.getUniqueId())) {
+		if (!owner.equals(player.getUniqueId()) && !player.hasPermission("skymines.admin.pickup")) {
 			return false;
 		}
 
@@ -127,10 +127,16 @@ public class DefaultSkyMine implements SkyMine {
 			}
 		}, Messages.FAILURE_ON_PICKUP_COOLDOWN);
 
-		structure.destroy();
-		plugin.getSkyMineManager().removeSkyMine(player, this);
+		remove();
 		return true;
 	}
+
+	@Override
+	public void remove() {
+		structure.destroy();
+		plugin.getSkyMineManager().removeSkyMine(owner, this);
+	}
+
 
 	@Override
 	public void save() {
