@@ -9,6 +9,7 @@ import com.github.colingrime.listeners.PanelListeners;
 import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.listeners.SkyMineListeners;
 import com.github.colingrime.locale.Messages;
+import com.github.colingrime.metrics.Metrics;
 import com.github.colingrime.panel.setup.PanelSettings;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
@@ -17,6 +18,7 @@ import com.github.colingrime.skymines.manager.SkyMineManager;
 import com.github.colingrime.skymines.token.DefaultSkyMineToken;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.StorageFactory;
+import com.github.colingrime.updater.SpigotUpdater;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
 import org.bukkit.Bukkit;
@@ -59,6 +61,15 @@ public class SkyMines extends JavaPlugin {
 
 		List<UUID> uuidsToLoad = Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId).collect(Collectors.toList());
 		Bukkit.getScheduler().runTaskAsynchronously(this, () -> loadStorage(uuidsToLoad));
+
+		// check for metrics
+		if (settings.isMetricsEnabled()) {
+			new Metrics(this, 14946);
+		}
+
+		// check for updates
+		SpigotUpdater updater = new SpigotUpdater(this);
+		Bukkit.getScheduler().runTaskAsynchronously(this, updater::checkForUpdate);
 	}
 
 	@Override
