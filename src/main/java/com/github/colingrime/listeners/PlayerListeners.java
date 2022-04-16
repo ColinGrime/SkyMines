@@ -9,7 +9,7 @@ import com.github.colingrime.skymines.manager.SkyMineManager;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,6 +44,15 @@ public class PlayerListeners implements Listener {
 		Block block = event.getClickedBlock();
 
 		if (block != null) {
+			if (player.hasPermission("skymines.admin.panel")) {
+				for (SkyMine skyMine : manager.getActiveSkyMines()) {
+					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
+						new MainPanel(plugin, player, skyMine).openInventory(player);
+						return;
+					}
+				}
+			}
+
 			for (SkyMine skyMine : manager.getSkyMines(player)) {
 				if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 					new MainPanel(plugin, player, skyMine).openInventory(player);
@@ -73,7 +82,7 @@ public class PlayerListeners implements Listener {
 
 			if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades)) {
 				event.setCancelled(true);
-				Utils.removeOneItemFromHand(player);
+				PlayerUtils.removeOneItemFromHand(player);
 				Messages.SUCCESS_PLACE.sendTo(player);
 			} else {
 				Messages.FAILURE_NO_SPACE.sendTo(player);
