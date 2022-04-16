@@ -26,6 +26,7 @@ public class MineStructure {
 	private final Location startCorner;
 	private final Location endCorner;
 	private final MineSize size;
+	private boolean isSetup = false;
 
 	// must hold references of parameter for the menu to open on right-click
 	private Set<Vector> parameter = new HashSet<>();
@@ -76,6 +77,8 @@ public class MineStructure {
 				}
 			}
 		}
+
+		isSetup = true;
 	}
 
 	/**
@@ -131,6 +134,11 @@ public class MineStructure {
 	}
 
 	public void destroy() {
+		// skymine must be setup for it to be destroyed
+		if (!isSetup) {
+			setup();
+		}
+
 		getBehavior().buildParameter(world, parameter, Material.AIR);
 		getBehavior().buildInside(world, minInside, maxInside, Material.AIR);
 		parameter = null;
@@ -146,6 +154,10 @@ public class MineStructure {
 
 	public MineSize getSize() {
 		return size;
+	}
+
+	public boolean isSetup() {
+		return isSetup;
 	}
 
 	public static String parse(MineStructure structure) {
