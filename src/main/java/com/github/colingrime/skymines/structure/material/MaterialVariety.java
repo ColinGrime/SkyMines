@@ -1,16 +1,14 @@
-package com.github.colingrime.config;
+package com.github.colingrime.skymines.structure.material;
 
 import org.bukkit.Material;
 
-import java.util.NavigableMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
-public class BlockVariety {
+public class MaterialVariety implements MaterialType {
 
 	// used to get random materials
 	private final NavigableMap<Double, Material> typeRandomizer = new TreeMap<>();
+	private final List<Material> materials = new ArrayList<>();
 
 	private final Random random = new Random();
 	private double totalPercentages = 0;
@@ -35,9 +33,15 @@ public class BlockVariety {
 
 		totalPercentages += chance;
 		typeRandomizer.put(totalPercentages, material);
+		materials.add(material);
 	}
 
-	public Material getRandom() {
+	@Override
+	public Material get(){
 		return typeRandomizer.higherEntry(random.nextDouble() * totalPercentages).getValue();
+	}
+
+	public List<Material> getMaterials() {
+		return materials;
 	}
 }
