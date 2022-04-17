@@ -1,7 +1,7 @@
 package com.github.colingrime.skymines.upgrades.types;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.config.BlockVariety;
+import com.github.colingrime.skymines.structure.material.MaterialVariety;
 import com.github.colingrime.skymines.upgrades.UpgradeType;
 
 import java.util.Map;
@@ -34,7 +34,7 @@ public class BlockVarietyUpgrade extends SkyMineUpgrade {
 	/**
 	 * @return BlockVariety object depending on the upgrade's level
 	 */
-	public BlockVariety getBlockVariety() {
+	public MaterialVariety getBlockVariety() {
 		return getPlugin().getSettings().getUpgradesBlockVariety().get(getLevel());
 	}
 }
