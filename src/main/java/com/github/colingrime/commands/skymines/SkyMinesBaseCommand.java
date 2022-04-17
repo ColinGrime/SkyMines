@@ -21,12 +21,12 @@ public class SkyMinesBaseCommand extends BaseCommand {
 
 	@Override
 	public void registerSubCommands(List<SubCommand> subCommands, SkyMines plugin) {
-		subCommands.add(new SkyMinesListSubCommand(plugin));
-		subCommands.add(new SkyMinesPanelSubCommand(plugin));
-		subCommands.add(new SkyMinesHomeSubCommand(plugin));
-		subCommands.add(new SkyMinesSetHomeSubCommand(plugin));
-		subCommands.add(new SkyMinesResetSubCommand(plugin));
-		subCommands.add(new SkyMinesUpgradeSubCommand(plugin));
-		subCommands.add(new SkyMinesPickupSubCommand(plugin));
+		subCommands.add(new ListSubCommand(plugin));
+		subCommands.add(new PanelSubCommand(plugin));
+		subCommands.add(new HomeSubCommand(plugin));
+		subCommands.add(new SetHomeSubCommand(plugin));
+		subCommands.add(new ResetSubCommand(plugin));
+		subCommands.add(new UpgradeSubCommand(plugin));
+		subCommands.add(new PickupSubCommand(plugin));
 	}
 }
