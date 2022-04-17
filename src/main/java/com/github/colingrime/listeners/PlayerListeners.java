@@ -1,6 +1,7 @@
 package com.github.colingrime.listeners;
 
 import com.github.colingrime.SkyMines;
+import com.github.colingrime.api.SkyMineBlockBreakEvent;
 import com.github.colingrime.cache.Cooldown;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.panel.MainPanel;
@@ -15,10 +16,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -45,7 +46,7 @@ public class PlayerListeners implements Listener {
 
 		if (block != null) {
 			if (player.hasPermission("skymines.admin.panel")) {
-				for (SkyMine skyMine : manager.getActiveSkyMines()) {
+				for (SkyMine skyMine : manager.getSkyMines()) {
 					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 						new MainPanel(plugin, player, skyMine).openInventory(player);
 						return;
@@ -103,6 +104,22 @@ public class PlayerListeners implements Listener {
 	}
 
 	@EventHandler
+	public void onPlayerBlockBreak(BlockBreakEvent event) {
+		Block block = event.getBlock();
+		if (!plugin.getSettings().getAllPossibleMaterials().contains(block.getType())) {
+			return;
+		}
+
+		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
+			if (skyMine.getStructure().getInside().contains(block.getLocation().toVector())) {
+				SkyMineBlockBreakEvent blockBreakEvent = new SkyMineBlockBreakEvent(event, skyMine);
+				Bukkit.getPluginManager().callEvent(blockBreakEvent);
+				return;
+			}
+		}
+	}
+
+	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
 		if (plugin.getSkyMineManager().getToken().isToken(event.getItemDrop().getItemStack())) {
 			if (plugin.getSettings().getPreventTokenDrop()) {
@@ -110,14 +127,5 @@ public class PlayerListeners implements Listener {
 				event.setCancelled(true);
 			}
 		}
-	}
-
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines(event.getPlayer())) {
-				skyMine.getStructure().setup();
-			}
-		});
 	}
 }
