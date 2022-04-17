@@ -50,19 +50,15 @@ public class SkyMineManager {
 	}
 
 	/**
-	 * @return all skymines that are set up
+	 * @return all skymines
 	 */
-	public List<SkyMine> getActiveSkyMines() {
-		List<SkyMine> activeSkyMines = new ArrayList<>();
-		for (List<SkyMine> skyMines : skyMines.values()) {
-			for (SkyMine skyMine : skyMines) {
-				if (skyMine.getStructure().isSetup()) {
-					activeSkyMines.add(skyMine);
-				}
-			}
+	public List<SkyMine> getSkyMines() {
+		List<SkyMine> skyMines = new ArrayList<>();
+		for (List<SkyMine> skyMine : this.skyMines.values()) {
+			skyMines.addAll(skyMine);
 		}
 
-		return activeSkyMines;
+		return skyMines;
 	}
 
 	/**

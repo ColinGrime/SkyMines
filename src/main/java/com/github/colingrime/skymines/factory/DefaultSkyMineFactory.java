@@ -50,7 +50,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// creates and builds structure
 		MineStructure structure = new MineStructure(location, endLoc, size);
-		structure.setup();
 
 		// check for access and blocks in the way
 		if (!structure.doBlockCheck(owner)) {
