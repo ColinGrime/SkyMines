@@ -25,12 +25,10 @@ public class SkyMinesSetHomeSubCommand extends SkyMinesSubCommand {
 		Vector playerVector = location.toVector();
 
 		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			for (Vector vector : skyMine.getStructure().getParameter()) {
-				if (vector.distance(playerVector) <= skyMine.getStructure().getSize().getMaxSide() / 2.0) {
-					skyMine.setHome(location);
-					Messages.SUCCESS_SETHOME.sendTo(sender);
-					return;
-				}
+			if (skyMine.getStructure().getInside().containsWithin(playerVector, 5)) {
+				skyMine.setHome(location);
+				Messages.SUCCESS_SETHOME.sendTo(sender);
+				return;
 			}
 
 			Messages.FAILURE_TOO_FAR_AWAY.sendTo(sender);
