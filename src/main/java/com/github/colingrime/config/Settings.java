@@ -1,5 +1,6 @@
 package com.github.colingrime.config;
 
+import com.github.colingrime.skymines.structure.material.MaterialVariety;
 import com.github.colingrime.storage.StorageCredentials;
 import com.github.colingrime.storage.StorageType;
 import com.github.colingrime.utils.Utils;
@@ -8,10 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Settings {
 
@@ -38,9 +36,10 @@ public class Settings {
 	private String tokenName;
 	private List<String> tokenLore;
 
-	// upgrade: block variety
-	private Map<Integer, BlockVariety> upgradesBlockVariety;
+	// upgrade: material variety
+	private Map<Integer, MaterialVariety> upgradesBlockVariety;
 	private Map<Integer, Double> costsBlockVariety;
+	private Set<Material> allPossibleMaterials;
 
 	// upgrade: reset cooldown
 	private Map<Integer, Double> upgradesResetCooldown;
@@ -85,6 +84,7 @@ public class Settings {
 		// upgrade: block variety
 		upgradesBlockVariety = _getUpgradesBlockVariety();
 		costsBlockVariety = _getCostsBlockVariety();
+		allPossibleMaterials = _getAllPossibleMaterials();
 
 		// upgrade: reset cooldown
 		upgradesResetCooldown = _getUpgradesResetCooldown();
@@ -220,8 +220,8 @@ public class Settings {
 		return tokenLore;
 	}
 
-	private Map<Integer, BlockVariety> _getUpgradesBlockVariety() {
-		Map<Integer, BlockVariety> upgradesBlockVariety = new HashMap<>();
+	private Map<Integer, MaterialVariety> _getUpgradesBlockVariety() {
+		Map<Integer, MaterialVariety> upgradesBlockVariety = new HashMap<>();
 		ConfigurationSection sec = config.getConfigurationSection("upgrades.block-variety");
 		if (sec == null) {
 			return upgradesBlockVariety;
@@ -234,7 +234,7 @@ public class Settings {
 			}
 
 			// sets up collection of types with chances
-			BlockVariety blockVariety = new BlockVariety();
+			MaterialVariety blockVariety = new MaterialVariety();
 			for (String types : sec.getStringList(level + ".upgrade")) {
 				String[] type = types.split(" ");
 				blockVariety.addType(type[0], type[1]);
@@ -246,7 +246,7 @@ public class Settings {
 		return upgradesBlockVariety;
 	}
 
-	public Map<Integer, BlockVariety> getUpgradesBlockVariety() {
+	public Map<Integer, MaterialVariety> getUpgradesBlockVariety() {
 		return upgradesBlockVariety;
 	}
 
@@ -269,6 +269,18 @@ public class Settings {
 
 	public Map<Integer, Double> getCostsBlockVariety() {
 		return costsBlockVariety;
+	}
+
+	private Set<Material> _getAllPossibleMaterials() {
+		Set<Material> allPossibleMaterials = new HashSet<>();
+		for (MaterialVariety materialVariety : getUpgradesBlockVariety().values()) {
+			allPossibleMaterials.addAll(materialVariety.getMaterials());
+		}
+		return allPossibleMaterials;
+	}
+
+	public Set<Material> getAllPossibleMaterials() {
+		return allPossibleMaterials;
 	}
 
 	private Map<Integer, Double> _getUpgradesResetCooldown() {
