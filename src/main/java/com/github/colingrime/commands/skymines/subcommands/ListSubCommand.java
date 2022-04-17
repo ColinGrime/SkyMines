@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class SkyMinesListSubCommand extends SkyMinesSubCommand {
+public class ListSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesListSubCommand(SkyMines plugin) {
+	public ListSubCommand(SkyMines plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

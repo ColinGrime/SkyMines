@@ -5,11 +5,11 @@ import com.github.colingrime.commands.SubCommand;
 import com.github.colingrime.locale.Messages;
 import org.bukkit.command.CommandSender;
 
-public class SkyMinesReloadSubCommand implements SubCommand {
+public class ReloadSubCommand implements SubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesReloadSubCommand(SkyMines plugin) {
+	public ReloadSubCommand(SkyMines plugin) {
 		this.plugin = plugin;
 	}
 
@@ -31,6 +31,6 @@ public class SkyMinesReloadSubCommand implements SubCommand {
 
 	@Override
 	public String getPermission() {
-		return "skymines.reload";
+		return "skymines.admin.reload";
 	}
 }

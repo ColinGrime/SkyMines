@@ -10,11 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class SkyMinesSetHomeSubCommand extends SkyMinesSubCommand {
+public class SetHomeSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesSetHomeSubCommand(SkyMines plugin) {
+	public SetHomeSubCommand(SkyMines plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

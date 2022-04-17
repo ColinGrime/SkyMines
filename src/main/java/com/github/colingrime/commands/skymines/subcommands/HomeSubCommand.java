@@ -7,19 +7,16 @@ import com.github.colingrime.skymines.SkyMine;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SkyMinesPickupSubCommand extends SkyMinesSubCommand {
+public class HomeSubCommand extends SkyMinesSubCommand {
 
-	public SkyMinesPickupSubCommand(SkyMines plugin) {
+	public HomeSubCommand(SkyMines plugin) {
 		super(plugin);
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		if (skyMine.pickup((Player) sender)) {
-			Messages.SUCCESS_PICKUP.sendTo(sender);
-		} else {
-			Messages.FAILURE_NO_INVENTORY_SPACE.sendTo(sender);
-		}
+		((Player) sender).teleport(skyMine.getHome());
+		Messages.SUCCESS_HOME.sendTo(sender);
 	}
 
 	@Override
@@ -29,11 +26,16 @@ public class SkyMinesPickupSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public String getName() {
-		return "pickup";
+		return "home";
 	}
 
 	@Override
 	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_PICKUP;
+		return Messages.USAGE_SKYMINES_HOME;
+	}
+
+	@Override
+	public String getPermission() {
+		return "skymines.home";
 	}
 }

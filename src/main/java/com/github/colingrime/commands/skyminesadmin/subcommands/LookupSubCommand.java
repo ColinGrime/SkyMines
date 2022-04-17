@@ -12,11 +12,11 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 import java.util.UUID;
 
-public class SkyMinesLookupSubCommand implements SubCommand {
+public class LookupSubCommand implements SubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesLookupSubCommand(SkyMines plugin) {
+	public LookupSubCommand(SkyMines plugin) {
 		this.plugin = plugin;
 	}
 
@@ -24,17 +24,17 @@ public class SkyMinesLookupSubCommand implements SubCommand {
 	public void onCommand(CommandSender sender, String[] args) {
 		UUID uuid = UUIDFinder.fromName(args[0]);
 		if (uuid == null) {
-			sender.sendMessage("nope from lookup");
+			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender);
 			return;
 		}
 
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(uuid);
 		if (skyMines.size() == 0) {
-			Messages.FAILURE_NO_SKYMINES.sendTo(sender);
+			Messages.FAILURE_NO_SKYMINES_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
 			return;
 		}
 
-		Messages.LIST_SKYMINES_TOP_MESSAGE.sendTo(sender);
+		Messages.LOOKUP_SKYMINES_TOP_MESSAGE.sendTo(sender, new Replacer("%player%", args[0]));
 		for (int i=1; i<=skyMines.size(); i++) {
 			Location loc = skyMines.get(i - 1).getHome();
 
@@ -44,7 +44,7 @@ public class SkyMinesLookupSubCommand implements SubCommand {
 			replacer.add("%y%", loc.getBlockY());
 			replacer.add("%z%", loc.getBlockZ());
 
-			Messages.LIST_SKYMINES_REPEATING_MESSAGE.sendTo(sender, replacer);
+			Messages.LOOKUP_SKYMINES_REPEATING_MESSAGE.sendTo(sender, replacer);
 		}
 	}
 
@@ -55,6 +55,16 @@ public class SkyMinesLookupSubCommand implements SubCommand {
 
 	@Override
 	public Messages getUsage() {
-		return null;
+		return Messages.USAGE_SKYMINES_LOOKUP;
+	}
+
+	@Override
+	public String getPermission() {
+		return "skymines.admin.lookup";
+	}
+
+	@Override
+	public int getArgumentsRequired() {
+		return 1;
 	}
 }

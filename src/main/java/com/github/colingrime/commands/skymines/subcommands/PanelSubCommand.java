@@ -3,16 +3,16 @@ package com.github.colingrime.commands.skymines.subcommands;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.commands.skymines.SkyMinesSubCommand;
 import com.github.colingrime.locale.Messages;
-import com.github.colingrime.panel.UpgradePanel;
+import com.github.colingrime.panel.MainPanel;
 import com.github.colingrime.skymines.SkyMine;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SkyMinesUpgradeSubCommand extends SkyMinesSubCommand {
+public class PanelSubCommand extends SkyMinesSubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesUpgradeSubCommand(SkyMines plugin) {
+	public PanelSubCommand(SkyMines plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -20,7 +20,7 @@ public class SkyMinesUpgradeSubCommand extends SkyMinesSubCommand {
 	@Override
 	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
 		Player player = (Player) sender;
-		new UpgradePanel(plugin, player, skyMine).openInventory(player);
+		new MainPanel(plugin, player, skyMine).openInventory(player);
 	}
 
 	@Override
@@ -30,16 +30,11 @@ public class SkyMinesUpgradeSubCommand extends SkyMinesSubCommand {
 
 	@Override
 	public String getName() {
-		return "upgrade";
-	}
-
-	@Override
-	public String[] getAliases() {
-		return new String[]{"upgrades"};
+		return "panel";
 	}
 
 	@Override
 	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_UPGRADES;
+		return Messages.USAGE_SKYMINES_PANEL;
 	}
 }

@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SkyMinesGiveSubCommand implements SubCommand {
+public class GiveSubCommand implements SubCommand {
 
 	private final SkyMines plugin;
 
-	public SkyMinesGiveSubCommand(SkyMines plugin) {
+	public GiveSubCommand(SkyMines plugin) {
 		this.plugin = plugin;
 	}
 
@@ -97,11 +97,11 @@ public class SkyMinesGiveSubCommand implements SubCommand {
 
 	@Override
 	public String getPermission() {
-		return "skymines.give";
+		return "skymines.admin.give";
 	}
 
 	@Override
-	public boolean requireArguments() {
-		return true;
+	public int getArgumentsRequired() {
+		return 1;
 	}
 }
