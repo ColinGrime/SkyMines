@@ -1,8 +1,12 @@
 package com.github.colingrime.skymines.structure;
 
 import com.github.colingrime.SkyMines;
-import com.github.colingrime.config.BlockVariety;
+import com.github.colingrime.skymines.structure.material.MaterialSingle;
+import com.github.colingrime.skymines.structure.material.MaterialType;
+import com.github.colingrime.skymines.structure.material.MaterialVariety;
 import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
+import com.github.colingrime.skymines.structure.region.CuboidRegion;
+import com.github.colingrime.skymines.structure.region.ParameterRegion;
 import com.github.colingrime.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,9 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MineStructure {
 
@@ -26,25 +28,23 @@ public class MineStructure {
 	private final Location startCorner;
 	private final Location endCorner;
 	private final MineSize size;
-	private boolean isSetup = false;
 
-	// must hold references of parameter for the menu to open on right-click
-	private Set<Vector> parameter = new HashSet<>();
-	private Vector minInside, maxInside;
+	private final ParameterRegion parameter;
+	private final CuboidRegion inside;
 
 	public MineStructure(Location startCorner, Location endCorner, MineSize size) {
 		this.world = startCorner.getWorld();
 		this.startCorner = startCorner;
 		this.endCorner = endCorner;
 		this.size = size;
+		this.parameter = new ParameterRegion(startCorner.toVector(), endCorner.toVector());
+		this.inside = _getInside();
 	}
 
 	/**
-	 * Gets the mine structure's parameter
-	 * along with the blocks inside it.
+	 * Gets the mine structure's inside region.
 	 */
-	public void setup() {
-		// all major points around the mine
+	private CuboidRegion _getInside() {
 		int x1 = startCorner.getBlockX();
 		int y1 = startCorner.getBlockY();
 		int z1 = startCorner.getBlockZ();
@@ -52,33 +52,17 @@ public class MineStructure {
 		int y2 = endCorner.getBlockY();
 		int z2 = endCorner.getBlockZ();
 
-		// lowest and highest points around the mine
-		int lowX = Math.min(x1, x2);
-		int lowY = Math.min(y1, y2);
-		int lowZ = Math.min(z1, z2);
-		int highX = lowX == x1 ? x2 : x1;
-		int highY = lowY == y1 ? y2 : y1;
-		int highZ = lowZ == z1 ? z2 : z1;
+		int minX = Math.min(x1, x2);
+		int minY = Math.min(y1, y2);
+		int minZ = Math.min(z1, z2);
+		int maxX = minX == x1 ? x2 : x1;
+		int maxY = minY == y1 ? y2 : y1;
+		int maxZ = minZ == z1 ? z2 : z1;
 
-		// get minimum/maximum inside locations
-		minInside = new Vector(lowX + 1, lowY + 1, lowZ + 1);
-		maxInside = new Vector(highX - 1, highY, highZ - 1);
-
-		for (int x=lowX; x<=highX; x++) {
-			for (int y=lowY; y<=highY; y++) {
-				for (int z=lowZ; z<=highZ; z++) {
-					// it's part of the parameter
-					if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-						// the top face is not part of the parameter
-						if (!(y == highY && x != x1 && x != x2 && z != z1 && z != z2)) {
-							parameter.add(new Vector(x, y, z));
-						}
-					}
-				}
-			}
-		}
-
-		isSetup = true;
+		CuboidRegion inside = new CuboidRegion();
+		inside.setMin(new Vector(minX + 1, minY + 1, minZ + 1));
+		inside.setMax(new Vector(maxX - 1, maxY, maxZ - 1));
+		return inside;
 	}
 
 	/**
@@ -126,38 +110,33 @@ public class MineStructure {
 	}
 
 	public void buildParameter() {
-		getBehavior().buildParameter(world, parameter, Material.BEDROCK);
+		getBehavior().build(world, parameter, new MaterialSingle(Material.BEDROCK));
 	}
 
-	public void buildInside(BlockVariety blockVariety) {
-		getBehavior().buildInside(world, minInside, maxInside, blockVariety, SkyMines.getInstance().getSettings().shouldReplaceBlocks());
+	public void buildInside(MaterialVariety blockVariety) {
+		getBehavior().build(world, inside, blockVariety, SkyMines.getInstance().getSettings().shouldReplaceBlocks());
 	}
 
 	public void destroy() {
-		// skymine must be setup for it to be destroyed
-		if (!isSetup) {
-			setup();
-		}
-
-		getBehavior().buildParameter(world, parameter, Material.AIR);
-		getBehavior().buildInside(world, minInside, maxInside, Material.AIR);
-		parameter = null;
+		MaterialType air = new MaterialSingle(Material.AIR);
+		getBehavior().build(world, parameter, air);
+		getBehavior().build(world, inside, air);
 	}
 
-	public BuildBehavior getBehavior() {
+	private BuildBehavior getBehavior() {
 		return SkyMines.getInstance().getDependencyManager().getBuildbehavior();
-	}
-
-	public Set<Vector> getParameter() {
-		return parameter;
 	}
 
 	public MineSize getSize() {
 		return size;
 	}
 
-	public boolean isSetup() {
-		return isSetup;
+	public ParameterRegion getParameter() {
+		return parameter;
+	}
+
+	public CuboidRegion getInside() {
+		return inside;
 	}
 
 	public static String parse(MineStructure structure) {

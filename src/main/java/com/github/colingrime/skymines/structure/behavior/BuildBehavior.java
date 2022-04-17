@@ -1,46 +1,33 @@
 package com.github.colingrime.skymines.structure.behavior;
 
-import com.github.colingrime.config.BlockVariety;
-import org.bukkit.Material;
+import com.github.colingrime.skymines.structure.material.MaterialType;
+import com.github.colingrime.skymines.structure.region.Region;
 import org.bukkit.World;
-import org.bukkit.util.Vector;
 
-import java.util.Set;
-
-// TODO find a way to refactor #blockInside
 public interface BuildBehavior {
 
 	/**
 	 * Checks if the area is all air.
 	 * @param world any world
-	 * @param vectors list of vectors to check
+	 * @param region any type of region
 	 * @return true if the area is clear
 	 */
-	boolean isClear(World world, Set<Vector> vectors);
+	boolean isClear(World world, Region region);
 
 	/**
-	 * Builds the structure given the material for each block.
-	 * @param world any world
-	 * @param parameter list of vectors to change
-	 * @param type material to change each block into
+	 * @param world world that the region is in
+	 * @param region any type of region
+	 * @param type material type
 	 */
-	void buildParameter(World world, Set<Vector> parameter, Material type);
+	default void build(World world, Region region, MaterialType type) {
+		build(world, region, type, true);
+	}
 
 	/**
-	 * Builds the structure given the material for each block.
-	 * @param world any world
-	 * @param min minimum vector
-	 * @param max maximum vector
-	 * @param type material to change each block into
+	 * @param world world that the region is in
+	 * @param region any type of region
+	 * @param type material type
+	 * @param replaceBlocks true if blocks should be replaced
 	 */
-	void buildInside(World world, Vector min, Vector max, Material type);
-
-	/**
-	 * Builds the structure given the material for each block.
-	 * @param world any world
-	 * @param min minimum vector
-	 * @param max maximum vector
-	 * @param blockVariety variety of block types
-	 */
-	void buildInside(World world, Vector min, Vector max, BlockVariety blockVariety, boolean replaceBlocks);
+	void build(World world, Region region, MaterialType type, boolean replaceBlocks);
 }
