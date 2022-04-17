@@ -40,12 +40,12 @@ public interface SubCommand {
 	/**
 	 * If arguments are required, the usage of the
 	 * subcommand will be displayed if there are
-	 * no arguments for it.
+	 * not enough arguments inputted.
 	 *
-	 * @return true if arguments should be required
+	 * @return amount of arguments required
 	 */
-	default boolean requireArguments() {
-		return false;
+	default int getArgumentsRequired() {
+		return 0;
 	}
 
 	/**
