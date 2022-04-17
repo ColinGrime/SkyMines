@@ -11,7 +11,6 @@ import com.github.colingrime.listeners.SkyMineListeners;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.metrics.Metrics;
 import com.github.colingrime.panel.setup.PanelSettings;
-import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.manager.CooldownManager;
 import com.github.colingrime.skymines.manager.SkyMineManager;
@@ -22,12 +21,7 @@ import com.github.colingrime.updater.SpigotUpdater;
 import com.github.colingrime.utils.Logger;
 import com.github.colingrime.utils.Timer;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class SkyMines extends JavaPlugin {
 
@@ -56,11 +50,10 @@ public class SkyMines extends JavaPlugin {
 		cooldownManager = new CooldownManager(this);
 
 		loadData();
+		Bukkit.getScheduler().runTaskAsynchronously(this, this::loadStorage);
+
 		registerCommands();
 		registerListeners();
-
-		List<UUID> uuidsToLoad = Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId).collect(Collectors.toList());
-		Bukkit.getScheduler().runTaskAsynchronously(this, () -> loadStorage(uuidsToLoad));
 
 		// check for metrics
 		if (settings.isMetricsEnabled()) {
@@ -102,7 +95,7 @@ public class SkyMines extends JavaPlugin {
 	/**
 	 * Initializes the storage system.
 	 */
-	private void loadStorage(List<UUID> uuidsToLoad) {
+	private void loadStorage() {
 		try {
 			storage = new StorageFactory(this).createStorage();
 			storage.init();
@@ -111,13 +104,6 @@ public class SkyMines extends JavaPlugin {
 			Logger.severe("Storage has failed to load. Plugin has been disabled.");
 			ex.printStackTrace();
 			getServer().getPluginManager().disablePlugin(this);
-		}
-
-		// load initial mines (because some people like to reload the server...)
-		for (UUID uuid : uuidsToLoad) {
-			for (SkyMine skyMine : skyMineManager.getSkyMines(uuid)) {
-				skyMine.getStructure().setup();
-			}
 		}
 	}
 
