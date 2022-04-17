@@ -55,11 +55,31 @@ usage:
 
 # Only Admins should have access...
 admin:
+  general:
+    lookup-skymines:
+      top-message: '&aList of &eSkyMines &aowned by &e%player%&a:'
+      repeating-message: '&7→ [#%id%] &eThis home is located in the &a%world% &eworld. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
   success:
     give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
+    pickup: "&aYou have successfully picked up &e%player%&a's &eSkyMine&a."
+    remove: "&aYou have successfully removed &e%player%&a's &eSkyMine&a."
     reloaded: '&eSkyMines &ahas been reloaded!'
   failure:
     too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
     too-big: '&cFor performance reasons, a side is not permitted to exceed &e100 blocks&c.'
+    no-player-found: '&cThe player &e%player% &cdoes not exist.'
+    no-skymine-found: '&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c.'
+    no-skymines-found: '&e%player% &cdoes not have any &eSkyMines&e.'
   usage:
-    skymines-give: "&7Usage: &a/sm give [name] {LxHxW} {amount} &7→ &egives a &eSkyMine Token &eto the player."
+    skymines-admin-command:
+      - "&eSkyMine &cAdmin Commands:"
+      - "&7→ &c/sma give [player] {LxHxW} {amount} &7- give away &eSkyMine Tokens&7."
+      - "&7→ &c/sma lookup [player] &7- lookup a player's &eSkyMine&7's list."
+      - "&7→ &c/sma pickup [player] &7- pickup a player's &eSkyMine&7."
+      - "&7→ &c/sma remove [player] &7- remove a player's &eSkyMine&7."
+      - "&7→ &c/sma reload &7- reloads the YAML files."
+    skymines-give: "&7Usage &c/sma give [player] {LxHxW} {amount} &7→ give away &eSkyMine Tokens&7."
+    skymines-lookup: "&7Usage &c/sma lookup [player] &7→ lookup a player's &eSkyMine&7's list."
+    skymines-pickup: "&7Usage &c/sma pickup [player] &7→ pickup a player's &eSkyMine&7."
+    skymines-remove: "&7Usage &c/sma remove [player] &7→ remove a player's &eSkyMine&7."
+    skymines-reload: "&7Usage &c/sma reload &7→ reloads the YAML files."

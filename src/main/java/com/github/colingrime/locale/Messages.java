@@ -64,11 +64,28 @@ public enum Messages {
 	USAGE_SKYMINES_PICKUP("usage.skymines-pickup", "&7Usage: &a/sm pickup [id] &7→ pickup the &eSkyMine&7."),
 
 	// admin messages
+	LOOKUP_SKYMINES_TOP_MESSAGE("admin.general.lookup-skymines.top-message", "&aList of &eSkyMines &aowned by &e%player%&a:"),
+	LOOKUP_SKYMINES_REPEATING_MESSAGE("admin.general.lookup-skymines.repeating-message", "&7→ [#%id%] &eThis home is located in the &a%world% &eworld. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)"),
 	SUCCESS_GIVE("admin.success.give", "&aYou have given &e%amount%x %token% &ato &e%player%&a!"),
-	SUCCESS_RELOADED("admin.success.reloaded", "&aAutoSell has been reloaded!"),
+	SUCCESS_PICKUP_ADMIN("admin.success.pickup", "&aYou have successfully picked up &e%player%&a's &eSkyMine&a."),
+	SUCCESS_REMOVE("admin.success.remove", "&aYou have successfully removed &e%player%&a's &eSkyMine&a."),
+	SUCCESS_RELOADED("admin.success.reloaded", "&eSkyMines &ahas been reloaded!"),
 	FAILURE_TOO_SMALL("admin.failure.too-small", "&cThe &eSkyMine &cyou are trying to create is too small."),
 	FAILURE_TOO_BIG("admin.failure.too-big", "&cFor performance reasons, a side is not permitted to exceed 100 blocks."),
-	USAGE_SKYMINES_GIVE("admin.usage.skymines-give", "&7Usage: &a/sm give [name] {LxHxW} {amount} &7→ &egives a &eSkyMine Token &eto the player."),
+	FAILURE_NO_PLAYER_FOUND("admin.failure.no-player-found", "&cThe player &e%player% &cdoes not exist."),
+	FAILURE_NO_SKYMINE_FOUND("admin.failure.no-skymine-found", "&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c."),
+	FAILURE_NO_SKYMINES_FOUND("admin.failure.no-skymines.found", "&e%player% &cdoes not have any &eSkyMines&e."),
+	USAGE_SKYMINES_ADMIN_COMMAND("admin.usage.skymines-admin-command", "&eSkyMine &cAdmin Commands:",
+			"&7→ &c/sma give [player] {LxHxW} {amount} &7- give away &eSkyMine Tokens&7.",
+			"&7→ &c/sma lookup [player] &7- lookup a player's &eSkyMine&7's list.",
+			"&7→ &c/sma pickup [player] &7- pickup a player's &eSkyMine&7.",
+			"&7→ &c/sma remove [player] &7- remove a player's &eSkyMine&7.",
+			"&7→ &c/sma reload &7- reloads the YAML files."),
+	USAGE_SKYMINES_GIVE("admin.usage.skymines-give", "&7Usage &c/sma give [player] {LxHxW} {amount} &7→ give away &eSkyMine Tokens&7."),
+	USAGE_SKYMINES_LOOKUP("admin.usage.skymines-lookup", "&7Usage &c/sma lookup [player] &7→ lookup a player's &eSkyMine&7's list."),
+	USAGE_SKYMINES_PICKUP_ADMIN("admin.usage.skymines-pickup", "&7Usage &c/sma pickup [player] &7→ pickup a player's &eSkyMine&7."),
+	USAGE_SKYMINES_REMOVE("admin.usage.skymines-remove", "&7Usage &c/sma remove [player] &7→ remove a player's &eSkyMine&7."),
+	USAGE_SKYMINES_RELOAD("admin.usage.skymines-reload", "&7Usage &c/sma reload &7→ reloads the YAML files.")
 	;
 
 	private static File file;
