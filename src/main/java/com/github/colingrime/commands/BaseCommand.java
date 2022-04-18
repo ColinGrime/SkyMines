@@ -66,7 +66,7 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 		}
 
 		String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
-		if (subArgs.length >= subCommand.getArgumentsRequired()) {
+		if (subCommand.getArgumentsRequired() > subArgs.length) {
 			subCommand.getUsage().sendTo(sender);
 			return true;
 		}
