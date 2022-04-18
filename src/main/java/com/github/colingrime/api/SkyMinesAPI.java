@@ -5,22 +5,23 @@ import com.github.colingrime.skymines.manager.SkyMineManager;
 
 public final class SkyMinesAPI {
 
-	private static final SkyMinesAPI instance;
-	private final SkyMines plugin;
+    private static final SkyMinesAPI instance;
 
-	static {
-		instance = new SkyMinesAPI();
-	}
+    static {
+        instance = new SkyMinesAPI();
+    }
 
-	private SkyMinesAPI() {
-		this.plugin = SkyMines.getInstance();
-	}
+    private final SkyMines plugin;
 
-	public static SkyMinesAPI getInstance() {
-		return instance;
-	}
+    private SkyMinesAPI() {
+        this.plugin = SkyMines.getInstance();
+    }
 
-	public SkyMineManager getManager() {
-		return plugin.getSkyMineManager();
-	}
+    public static SkyMinesAPI getInstance() {
+        return instance;
+    }
+
+    public SkyMineManager getManager() {
+        return plugin.getSkyMineManager();
+    }
 }

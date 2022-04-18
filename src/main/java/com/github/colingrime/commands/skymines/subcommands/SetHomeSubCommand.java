@@ -12,46 +12,46 @@ import org.bukkit.util.Vector;
 
 public class SetHomeSubCommand extends SkyMinesSubCommand {
 
-	private final SkyMines plugin;
+    private final SkyMines plugin;
 
-	public SetHomeSubCommand(SkyMines plugin) {
-		super(plugin);
-		this.plugin = plugin;
-	}
+    public SetHomeSubCommand(SkyMines plugin) {
+        super(plugin);
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		Location location = ((Player) sender).getLocation();
-		Vector playerVector = location.toVector();
+    @Override
+    public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+        Location location = ((Player) sender).getLocation();
+        Vector playerVector = location.toVector();
 
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			if (skyMine.getStructure().getInside().containsWithin(playerVector, 5)) {
-				skyMine.setHome(location);
-				Messages.SUCCESS_SETHOME.sendTo(sender);
-				return;
-			}
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            if (skyMine.getStructure().getInside().containsWithin(playerVector, 5)) {
+                skyMine.setHome(location);
+                Messages.SUCCESS_SETHOME.sendTo(sender);
+                return;
+            }
 
-			Messages.FAILURE_TOO_FAR_AWAY.sendTo(sender);
-		});
-	}
+            Messages.FAILURE_TOO_FAR_AWAY.sendTo(sender);
+        });
+    }
 
-	@Override
-	public boolean requireSkyMine() {
-		return true;
-	}
+    @Override
+    public boolean requireSkyMine() {
+        return true;
+    }
 
-	@Override
-	public String getName() {
-		return "sethome";
-	}
+    @Override
+    public String getName() {
+        return "sethome";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_SETHOME;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_SETHOME;
+    }
 
-	@Override
-	public String getPermission() {
-		return "skymines.sethome";
-	}
+    @Override
+    public String getPermission() {
+        return "skymines.sethome";
+    }
 }

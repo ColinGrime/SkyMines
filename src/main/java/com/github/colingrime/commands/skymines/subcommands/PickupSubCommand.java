@@ -9,31 +9,31 @@ import org.bukkit.entity.Player;
 
 public class PickupSubCommand extends SkyMinesSubCommand {
 
-	public PickupSubCommand(SkyMines plugin) {
-		super(plugin);
-	}
+    public PickupSubCommand(SkyMines plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		if (skyMine.pickup((Player) sender)) {
-			Messages.SUCCESS_PICKUP.sendTo(sender);
-		} else {
-			Messages.FAILURE_NO_INVENTORY_SPACE.sendTo(sender);
-		}
-	}
+    @Override
+    public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+        if (skyMine.pickup((Player) sender)) {
+            Messages.SUCCESS_PICKUP.sendTo(sender);
+        } else {
+            Messages.FAILURE_NO_INVENTORY_SPACE.sendTo(sender);
+        }
+    }
 
-	@Override
-	public boolean requireSkyMine() {
-		return true;
-	}
+    @Override
+    public boolean requireSkyMine() {
+        return true;
+    }
 
-	@Override
-	public String getName() {
-		return "pickup";
-	}
+    @Override
+    public String getName() {
+        return "pickup";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_PICKUP;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_PICKUP;
+    }
 }

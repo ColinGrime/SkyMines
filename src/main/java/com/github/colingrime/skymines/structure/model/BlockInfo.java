@@ -5,19 +5,19 @@ import org.bukkit.block.Block;
 
 public class BlockInfo {
 
-	private final Block block;
-	private final Material type;
+    private final Block block;
+    private final Material type;
 
-	public BlockInfo(Block block, Material type) {
-		this.block = block;
-		this.type = type;
-	}
+    public BlockInfo(Block block, Material type) {
+        this.block = block;
+        this.type = type;
+    }
 
-	public Block getBlock() {
-		return block;
-	}
+    public Block getBlock() {
+        return block;
+    }
 
-	public Material getType() {
-		return type;
-	}
+    public Material getType() {
+        return type;
+    }
 }

@@ -7,50 +7,50 @@ import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
 
 public class SkyMineUpgrades {
 
-	private final BlockVarietyUpgrade blockVarietyUpgrade;
-	private final ResetCooldownUpgrade resetCooldownUpgrade;
+    private final BlockVarietyUpgrade blockVarietyUpgrade;
+    private final ResetCooldownUpgrade resetCooldownUpgrade;
 
-	public SkyMineUpgrades(SkyMines plugin) {
-		this(plugin, 1, 1);
-	}
+    public SkyMineUpgrades(SkyMines plugin) {
+        this(plugin, 1, 1);
+    }
 
-	public SkyMineUpgrades(SkyMines plugin, int blockVarietyLevel, int resetCooldownLevel) {
-		this.blockVarietyUpgrade = new BlockVarietyUpgrade(plugin, blockVarietyLevel);
-		this.resetCooldownUpgrade = new ResetCooldownUpgrade(plugin, resetCooldownLevel);
-	}
+    public SkyMineUpgrades(SkyMines plugin, int blockVarietyLevel, int resetCooldownLevel) {
+        this.blockVarietyUpgrade = new BlockVarietyUpgrade(plugin, blockVarietyLevel);
+        this.resetCooldownUpgrade = new ResetCooldownUpgrade(plugin, resetCooldownLevel);
+    }
 
-	public SkyMineUpgrade getUpgrade(UpgradeType upgradeType) {
-		return switch (upgradeType) {
-			case BlockVariety -> blockVarietyUpgrade;
-			case ResetCooldown -> resetCooldownUpgrade;
-		};
-	}
+    public static String parse(SkyMineUpgrades upgrades) {
+        return upgrades.getBlockVarietyUpgrade().getLevel() + ":" + upgrades.getResetCooldownUpgrade().getLevel();
+    }
 
-	public BlockVarietyUpgrade getBlockVarietyUpgrade() {
-		return blockVarietyUpgrade;
-	}
+    public static SkyMineUpgrades parse(String text) {
+        String[] texts = text.split(":");
 
-	public ResetCooldownUpgrade getResetCooldownUpgrade() {
-		return resetCooldownUpgrade;
-	}
+        int blockVarietyLevel = 1;
+        int resetCooldownLevel = 1;
 
-	public static String parse(SkyMineUpgrades upgrades) {
-		return upgrades.getBlockVarietyUpgrade().getLevel() + ":" + upgrades.getResetCooldownUpgrade().getLevel();
-	}
+        try {
+            blockVarietyLevel = Integer.parseInt(texts[0]);
+            resetCooldownLevel = Integer.parseInt(texts[1]);
+        } catch (NumberFormatException ex) {
+            // there's nothing to do
+        }
 
-	public static SkyMineUpgrades parse(String text) {
-		String[] texts = text.split(":");
+        return new SkyMineUpgrades(SkyMines.getInstance(), blockVarietyLevel, resetCooldownLevel);
+    }
 
-		int blockVarietyLevel = 1;
-		int resetCooldownLevel = 1;
+    public SkyMineUpgrade getUpgrade(UpgradeType upgradeType) {
+        return switch (upgradeType) {
+            case BlockVariety -> blockVarietyUpgrade;
+            case ResetCooldown -> resetCooldownUpgrade;
+        };
+    }
 
-		try {
-			blockVarietyLevel = Integer.parseInt(texts[0]);
-			resetCooldownLevel = Integer.parseInt(texts[1]);
-		} catch (NumberFormatException ex) {
-			// there's nothing to do
-		}
+    public BlockVarietyUpgrade getBlockVarietyUpgrade() {
+        return blockVarietyUpgrade;
+    }
 
-		return new SkyMineUpgrades(SkyMines.getInstance(), blockVarietyLevel, resetCooldownLevel);
-	}
+    public ResetCooldownUpgrade getResetCooldownUpgrade() {
+        return resetCooldownUpgrade;
+    }
 }

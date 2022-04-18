@@ -11,24 +11,24 @@ import org.bukkit.block.Block;
 
 public class DefaultBuildBehavior implements BuildBehavior {
 
-	@Override
-	public boolean isClear(World world, Region region) {
-		return region.handler((x, y, z) -> world.getBlockAt(x, y, z).getType() == Material.AIR);
-	}
+    @Override
+    public boolean isClear(World world, Region region) {
+        return region.handler((x, y, z) -> world.getBlockAt(x, y, z).getType() == Material.AIR);
+    }
 
-	@Override
-	public void build(World world, Region region, MaterialType type, boolean replaceBlocks) {
-		BuildTask buildTask = new BuildTask();
-		region.handler((x, y, z) -> {
-			Block block = world.getBlockAt(x, y, z);
-			if (replaceBlocks || block.getType() == Material.AIR) {
-				buildTask.getBlocksToPlace().add(new BlockInfo(block, type.get()));
-			}
-			return true;
-		});
+    @Override
+    public void build(World world, Region region, MaterialType type, boolean replaceBlocks) {
+        BuildTask buildTask = new BuildTask();
+        region.handler((x, y, z) -> {
+            Block block = world.getBlockAt(x, y, z);
+            if (replaceBlocks || block.getType() == Material.AIR) {
+                buildTask.getBlocksToPlace().add(new BlockInfo(block, type.get()));
+            }
+            return true;
+        });
 
-		if (!buildTask.getBlocksToPlace().isEmpty()) {
-			buildTask.runTaskTimer(SkyMines.getInstance(), 0L, 1L);
-		}
-	}
+        if (!buildTask.getBlocksToPlace().isEmpty()) {
+            buildTask.runTaskTimer(SkyMines.getInstance(), 0L, 1L);
+        }
+    }
 }

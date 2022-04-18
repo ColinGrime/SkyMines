@@ -8,29 +8,29 @@ import org.jetbrains.annotations.NotNull;
 
 public class SkyMineBlockBreakEvent extends Event {
 
-	private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-	private final BlockBreakEvent breakEvent;
-	private final SkyMine skyMine;
+    private final BlockBreakEvent breakEvent;
+    private final SkyMine skyMine;
 
-	public SkyMineBlockBreakEvent(BlockBreakEvent breakEvent, SkyMine skyMine) {
-		this.breakEvent = breakEvent;
-		this.skyMine = skyMine;
-	}
+    public SkyMineBlockBreakEvent(BlockBreakEvent breakEvent, SkyMine skyMine) {
+        this.breakEvent = breakEvent;
+        this.skyMine = skyMine;
+    }
 
-	public BlockBreakEvent getBreakEvent() {
-		return breakEvent;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-	public SkyMine getSkyMine() {
-		return skyMine;
-	}
+    public BlockBreakEvent getBreakEvent() {
+        return breakEvent;
+    }
 
-	public @NotNull HandlerList getHandlers() {
-		return handlers;
-	}
+    public SkyMine getSkyMine() {
+        return skyMine;
+    }
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public @NotNull HandlerList getHandlers() {
+        return handlers;
+    }
 }

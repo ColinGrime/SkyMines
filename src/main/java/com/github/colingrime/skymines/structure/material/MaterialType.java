@@ -4,8 +4,8 @@ import org.bukkit.Material;
 
 public interface MaterialType {
 
-	/**
-	 * @return a material
-	 */
-	Material get();
+    /**
+     * @return a material
+     */
+    Material get();
 }

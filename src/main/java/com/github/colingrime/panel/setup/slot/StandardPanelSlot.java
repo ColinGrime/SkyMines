@@ -7,29 +7,29 @@ import java.util.List;
 
 public class StandardPanelSlot extends PanelSlot {
 
-	private final PanelSlotMeta slotMeta;
+    private final PanelSlotMeta slotMeta;
 
-	public StandardPanelSlot(PanelSlotMeta slotMeta) {
-		this.slotMeta = slotMeta;
-	}
+    public StandardPanelSlot(PanelSlotMeta slotMeta) {
+        this.slotMeta = slotMeta;
+    }
 
-	@Override
-	public Material getType() {
-		return slotMeta.getType();
-	}
+    @Override
+    public Material getType() {
+        return slotMeta.getType();
+    }
 
-	@Override
-	public String getName() {
-		return slotMeta.getName();
-	}
+    @Override
+    public String getName() {
+        return slotMeta.getName();
+    }
 
-	@Override
-	public List<String> getLore() {
-		return slotMeta.getLore();
-	}
+    @Override
+    public List<String> getLore() {
+        return slotMeta.getLore();
+    }
 
-	@Override
-	public String getCommand() {
-		return slotMeta.getCommand();
-	}
+    @Override
+    public String getCommand() {
+        return slotMeta.getCommand();
+    }
 }

@@ -13,46 +13,46 @@ import java.util.UUID;
 
 public class RemoveSubCommand implements SubCommand {
 
-	private final SkyMines plugin;
+    private final SkyMines plugin;
 
-	public RemoveSubCommand(SkyMines plugin) {
-		this.plugin = plugin;
-	}
+    public RemoveSubCommand(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args) {
-		UUID uuid = UUIDFinder.fromName(args[0]);
-		if (uuid == null) {
-			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
-			return;
-		}
+    @Override
+    public void onCommand(CommandSender sender, String[] args) {
+        UUID uuid = UUIDFinder.fromName(args[0]);
+        if (uuid == null) {
+            Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
+            return;
+        }
 
-		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid, args[1]);
-		if (skyMine.isPresent()) {
-			skyMine.get().remove();
-			Messages.SUCCESS_REMOVE.sendTo(sender, new Replacer("%player%", args[0]));
-		} else {
-			Messages.FAILURE_NO_SKYMINE_FOUND.sendTo(sender, new  Replacer("%player%", args[0]).add("%id%", args[1]));
-		}
-	}
+        Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid, args[1]);
+        if (skyMine.isPresent()) {
+            skyMine.get().remove();
+            Messages.SUCCESS_REMOVE.sendTo(sender, new Replacer("%player%", args[0]));
+        } else {
+            Messages.FAILURE_NO_SKYMINE_FOUND.sendTo(sender, new Replacer("%player%", args[0]).add("%id%", args[1]));
+        }
+    }
 
-	@Override
-	public String getName() {
-		return "remove";
-	}
+    @Override
+    public String getName() {
+        return "remove";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_REMOVE;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_REMOVE;
+    }
 
-	@Override
-	public String getPermission() {
-		return "skymines.admin.remove";
-	}
+    @Override
+    public String getPermission() {
+        return "skymines.admin.remove";
+    }
 
-	@Override
-	public int getArgumentsRequired() {
-		return 2;
-	}
+    @Override
+    public int getArgumentsRequired() {
+        return 2;
+    }
 }

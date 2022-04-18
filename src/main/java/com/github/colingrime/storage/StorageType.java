@@ -2,28 +2,28 @@ package com.github.colingrime.storage;
 
 public enum StorageType {
 
-	YAML("YAML"),
-	MYSQL("MySQL"),
-	SQLITE("SQLite");
+    YAML("YAML"),
+    MYSQL("MySQL"),
+    SQLITE("SQLite");
 
-	private final String name;
+    private final String name;
 
-	StorageType(String name) {
-		this.name = name;
-	}
+    StorageType(String name) {
+        this.name = name;
+    }
 
-	public static StorageType parse(String name) {
-		for (StorageType type : StorageType.values()) {
-			if (type.getName().equalsIgnoreCase(name)) {
-				return type;
-			}
-		}
+    public static StorageType parse(String name) {
+        for (StorageType type : StorageType.values()) {
+            if (type.getName().equalsIgnoreCase(name)) {
+                return type;
+            }
+        }
 
-		// default storage type
-		return StorageType.YAML;
-	}
+        // default storage type
+        return StorageType.YAML;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 }

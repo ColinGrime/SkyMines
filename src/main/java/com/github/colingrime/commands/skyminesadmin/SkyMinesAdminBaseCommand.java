@@ -10,21 +10,21 @@ import java.util.List;
 
 public class SkyMinesAdminBaseCommand extends BaseCommand {
 
-	public SkyMinesAdminBaseCommand(SkyMines plugin) {
-		super(plugin, "skyminesadmin");
-	}
+    public SkyMinesAdminBaseCommand(SkyMines plugin) {
+        super(plugin, "skyminesadmin");
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_ADMIN_COMMAND;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_ADMIN_COMMAND;
+    }
 
-	@Override
-	public void registerSubCommands(List<SubCommand> subCommands, SkyMines plugin) {
-		subCommands.add(new GiveSubCommand(plugin));
-		subCommands.add(new LookupSubCommand(plugin));
-		subCommands.add(new PickupSubCommand(plugin));
-		subCommands.add(new RemoveSubCommand(plugin));
-		subCommands.add(new ReloadSubCommand(plugin));
-	}
+    @Override
+    public void registerSubCommands(List<SubCommand> subCommands, SkyMines plugin) {
+        subCommands.add(new GiveSubCommand(plugin));
+        subCommands.add(new LookupSubCommand(plugin));
+        subCommands.add(new PickupSubCommand(plugin));
+        subCommands.add(new RemoveSubCommand(plugin));
+        subCommands.add(new ReloadSubCommand(plugin));
+    }
 }

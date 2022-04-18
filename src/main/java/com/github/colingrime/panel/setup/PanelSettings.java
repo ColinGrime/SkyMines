@@ -19,166 +19,166 @@ import java.util.Map;
 
 public class PanelSettings {
 
-	private final File file;
-	private FileConfiguration config;
+    private final File file;
+    private FileConfiguration config;
 
-	private PanelData mainPanel;
-	private PanelData upgradePanel;
+    private PanelData mainPanel;
+    private PanelData upgradePanel;
 
-	public PanelSettings(SkyMines plugin) {
-		this.file = new File(plugin.getDataFolder(), "panel.yml");
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			plugin.saveResource("panel.yml", false);
-		}
-	}
+    public PanelSettings(SkyMines plugin) {
+        this.file = new File(plugin.getDataFolder(), "panel.yml");
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            plugin.saveResource("panel.yml", false);
+        }
+    }
 
-	public void reload() {
-		config = YamlConfiguration.loadConfiguration(file);
+    public void reload() {
+        config = YamlConfiguration.loadConfiguration(file);
 
-		// set new values
-		mainPanel = _getMainPanel();
-		upgradePanel = _getUpgradePanel();
-	}
+        // set new values
+        mainPanel = _getMainPanel();
+        upgradePanel = _getUpgradePanel();
+    }
 
-	private PanelData _getMainPanel() {
-		String panelName = "main-panel";
+    private PanelData _getMainPanel() {
+        String panelName = "main-panel";
 
-		String name = getName(panelName);
-		int rows = getRows(panelName);
-		Map<Integer, PanelSlot> slots = getSlots(panelName);
-		fill(panelName, slots, rows);
+        String name = getName(panelName);
+        int rows = getRows(panelName);
+        Map<Integer, PanelSlot> slots = getSlots(panelName);
+        fill(panelName, slots, rows);
 
-		return new PanelData(name, rows, slots);
-	}
+        return new PanelData(name, rows, slots);
+    }
 
-	public PanelData getMainPanel() {
-		return mainPanel;
-	}
+    public PanelData getMainPanel() {
+        return mainPanel;
+    }
 
-	private PanelData _getUpgradePanel() {
-		String panelName = "upgrade-panel";
-		String name = getName(panelName);
-		int rows = getRows(panelName);
+    private PanelData _getUpgradePanel() {
+        String panelName = "upgrade-panel";
+        String name = getName(panelName);
+        int rows = getRows(panelName);
 
-		ConfigurationSection sec = config.getConfigurationSection(panelName + ".slots");
-		if (sec == null) {
-			return null;
-		}
+        ConfigurationSection sec = config.getConfigurationSection(panelName + ".slots");
+        if (sec == null) {
+            return null;
+        }
 
-		Map<Integer, PanelSlot> slots = getSlots(sec);
-		for (String slotNum : sec.getKeys(false)) {
-			if (slotNum.matches("\\d+")) {
-				// replace with an upgrade slot if available
-				UpgradePanelSlot upgradeSlot = getUpgradeSlot(sec.getString(slotNum + ".upgrade"));
-				if (upgradeSlot != null) {
-					slots.put(Integer.parseInt(slotNum) - 1, upgradeSlot);
-				}
-			}
-		}
+        Map<Integer, PanelSlot> slots = getSlots(sec);
+        for (String slotNum : sec.getKeys(false)) {
+            if (slotNum.matches("\\d+")) {
+                // replace with an upgrade slot if available
+                UpgradePanelSlot upgradeSlot = getUpgradeSlot(sec.getString(slotNum + ".upgrade"));
+                if (upgradeSlot != null) {
+                    slots.put(Integer.parseInt(slotNum) - 1, upgradeSlot);
+                }
+            }
+        }
 
-		fill("upgrade-panel", slots, rows);
-		return new PanelData(name, rows, slots);
-	}
+        fill("upgrade-panel", slots, rows);
+        return new PanelData(name, rows, slots);
+    }
 
-	public PanelData getUpgradePanel() {
-		return upgradePanel;
-	}
+    public PanelData getUpgradePanel() {
+        return upgradePanel;
+    }
 
-	private String getName(String path) {
-		return Utils.color(config.getString(path + ".name"));
-	}
+    private String getName(String path) {
+        return Utils.color(config.getString(path + ".name"));
+    }
 
-	private int getRows(String path) {
-		int rows = config.getInt(path + ".rows");
-		if (rows < 1) {
-			return 1;
-		} else {
-			return Math.min(rows, 6);
-		}
-	}
+    private int getRows(String path) {
+        int rows = config.getInt(path + ".rows");
+        if (rows < 1) {
+            return 1;
+        } else {
+            return Math.min(rows, 6);
+        }
+    }
 
-	private void fill(String path, Map<Integer, PanelSlot> slots, int rows) {
-		String type = config.getString(path + ".fill");
-		if (type == null) {
-			return;
-		}
+    private void fill(String path, Map<Integer, PanelSlot> slots, int rows) {
+        String type = config.getString(path + ".fill");
+        if (type == null) {
+            return;
+        }
 
-		Material fill = Material.matchMaterial(type);
-		for (int i=0; i<rows*9; i++) {
-			if (slots.get(i) == null) {
-				slots.put(i, new StandardPanelSlot(new PanelSlotMeta(fill, "")));
-			}
-		}
-	}
+        Material fill = Material.matchMaterial(type);
+        for (int i = 0; i < rows * 9; i++) {
+            if (slots.get(i) == null) {
+                slots.put(i, new StandardPanelSlot(new PanelSlotMeta(fill, "")));
+            }
+        }
+    }
 
-	private Map<Integer, PanelSlot> getSlots(String path) {
-		ConfigurationSection sec = config.getConfigurationSection(path + ".slots");
-		if (sec == null) {
-			return new HashMap<>();
-		} else {
-			return getSlots(sec);
-		}
-	}
+    private Map<Integer, PanelSlot> getSlots(String path) {
+        ConfigurationSection sec = config.getConfigurationSection(path + ".slots");
+        if (sec == null) {
+            return new HashMap<>();
+        } else {
+            return getSlots(sec);
+        }
+    }
 
-	private Map<Integer, PanelSlot> getSlots(ConfigurationSection sec) {
-		Map<Integer, PanelSlot> slots = new HashMap<>();
-		for (String slotNum : sec.getKeys(false)) {
-			if (slotNum.matches("\\d+")) {
-				PanelSlotMeta slotMeta = getSlotMeta(sec.getCurrentPath() + "." + slotNum);
-				slots.put(Integer.parseInt(slotNum) - 1, new StandardPanelSlot(slotMeta));
-			}
-		}
+    private Map<Integer, PanelSlot> getSlots(ConfigurationSection sec) {
+        Map<Integer, PanelSlot> slots = new HashMap<>();
+        for (String slotNum : sec.getKeys(false)) {
+            if (slotNum.matches("\\d+")) {
+                PanelSlotMeta slotMeta = getSlotMeta(sec.getCurrentPath() + "." + slotNum);
+                slots.put(Integer.parseInt(slotNum) - 1, new StandardPanelSlot(slotMeta));
+            }
+        }
 
-		return slots;
-	}
+        return slots;
+    }
 
-	/*
-	 * Gets an upgrade slot given the name of an upgrade.
-	 */
-	private UpgradePanelSlot getUpgradeSlot(String upgradeName) {
-		UpgradeType upgradeType = UpgradeType.parse(upgradeName);
-		if (upgradeType == null) {
-			return null;
-		}
+    /*
+     * Gets an upgrade slot given the name of an upgrade.
+     */
+    private UpgradePanelSlot getUpgradeSlot(String upgradeName) {
+        UpgradeType upgradeType = UpgradeType.parse(upgradeName);
+        if (upgradeType == null) {
+            return null;
+        }
 
-		String path = "upgrades." + upgradeName;
+        String path = "upgrades." + upgradeName;
 
-		// slot metas
-		PanelSlotMeta slotMeta = getSlotMeta(path);
-		PanelSlotMeta maxSlotMeta = getSlotMeta(path + ".max");
+        // slot metas
+        PanelSlotMeta slotMeta = getSlotMeta(path);
+        PanelSlotMeta maxSlotMeta = getSlotMeta(path + ".max");
 
-		ConfigurationSection sec = config.getConfigurationSection(path + ".lore");
-		if (sec == null) {
-			return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta);
-		}
+        ConfigurationSection sec = config.getConfigurationSection(path + ".lore");
+        if (sec == null) {
+            return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta);
+        }
 
-		// upgrade lore levels
-		Map<Integer, List<String>> lores = new HashMap<>();
-		for (String level : sec.getKeys(false)) {
-			if (level.matches("\\d+")) {
-				lores.put(Integer.parseInt(level), Utils.color(sec.getStringList(level)));
-			}
-		}
+        // upgrade lore levels
+        Map<Integer, List<String>> lores = new HashMap<>();
+        for (String level : sec.getKeys(false)) {
+            if (level.matches("\\d+")) {
+                lores.put(Integer.parseInt(level), Utils.color(sec.getStringList(level)));
+            }
+        }
 
-		return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta, lores);
-	}
+        return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta, lores);
+    }
 
-	/*
-	 * Gets the type, name, and lore of the given path.
-	 */
-	private PanelSlotMeta getSlotMeta(String path) {
-		Material type = getType(config.getString(path + ".type"));
-		String name = Utils.color(config.getString(path + ".name"));
-		List<String> lore = Utils.color(config.getStringList(path + ".lore"));
-		String command = config.getString(path + ".command");
-		return new PanelSlotMeta(type, name, lore, command);
-	}
+    /*
+     * Gets the type, name, and lore of the given path.
+     */
+    private PanelSlotMeta getSlotMeta(String path) {
+        Material type = getType(config.getString(path + ".type"));
+        String name = Utils.color(config.getString(path + ".name"));
+        List<String> lore = Utils.color(config.getStringList(path + ".lore"));
+        String command = config.getString(path + ".command");
+        return new PanelSlotMeta(type, name, lore, command);
+    }
 
-	/*
-	 * Returns the specified Material, or returns AIR if not found.
-	 */
-	private Material getType(String name) {
-		return name == null ? Material.AIR : Material.matchMaterial(name);
-	}
+    /*
+     * Returns the specified Material, or returns AIR if not found.
+     */
+    private Material getType(String name) {
+        return name == null ? Material.AIR : Material.matchMaterial(name);
+    }
 }

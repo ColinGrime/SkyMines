@@ -7,30 +7,30 @@ import org.bukkit.command.CommandSender;
 
 public class ReloadSubCommand implements SubCommand {
 
-	private final SkyMines plugin;
+    private final SkyMines plugin;
 
-	public ReloadSubCommand(SkyMines plugin) {
-		this.plugin = plugin;
-	}
+    public ReloadSubCommand(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args) {
-		plugin.reload();
-		Messages.SUCCESS_RELOADED.sendTo(sender);
-	}
+    @Override
+    public void onCommand(CommandSender sender, String[] args) {
+        plugin.reload();
+        Messages.SUCCESS_RELOADED.sendTo(sender);
+    }
 
-	@Override
-	public String getName() {
-		return "reload";
-	}
+    @Override
+    public String getName() {
+        return "reload";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.SUCCESS_RELOADED;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.SUCCESS_RELOADED;
+    }
 
-	@Override
-	public String getPermission() {
-		return "skymines.admin.reload";
-	}
+    @Override
+    public String getPermission() {
+        return "skymines.admin.reload";
+    }
 }

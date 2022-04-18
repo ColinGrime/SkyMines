@@ -13,58 +13,58 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class HikariConnectionProvider implements ConnectionProvider {
 
-	private final StorageCredentials credentials;
-	private HikariDataSource hikari;
+    private final StorageCredentials credentials;
+    private HikariDataSource hikari;
 
-	public HikariConnectionProvider(StorageCredentials credentials) {
-		this.credentials = credentials;
-	}
+    public HikariConnectionProvider(StorageCredentials credentials) {
+        this.credentials = credentials;
+    }
 
-	protected abstract void configureDatabase(HikariConfig config, StorageCredentials storage);
+    protected abstract void configureDatabase(HikariConfig config, StorageCredentials storage);
 
-	protected void overrideProperties(Map<String, String> properties) {
-		// https://github.com/brettwooldridge/HikariCP/wiki/Rapid-Recovery
-		properties.putIfAbsent("socketTimeout", String.valueOf(TimeUnit.SECONDS.toMillis(30)));
-	}
+    protected void overrideProperties(Map<String, String> properties) {
+        // https://github.com/brettwooldridge/HikariCP/wiki/Rapid-Recovery
+        properties.putIfAbsent("socketTimeout", String.valueOf(TimeUnit.SECONDS.toMillis(30)));
+    }
 
-	protected void setProperties(HikariConfig config, Map<String, String> properties) {
-		for (Map.Entry<String, String> property : properties.entrySet()) {
-			config.addDataSourceProperty(property.getKey(), property.getValue());
-		}
-	}
+    protected void setProperties(HikariConfig config, Map<String, String> properties) {
+        for (Map.Entry<String, String> property : properties.entrySet()) {
+            config.addDataSourceProperty(property.getKey(), property.getValue());
+        }
+    }
 
-	@Override
-	public void init() {
-		HikariConfig config = new HikariConfig();
-		configureDatabase(config, credentials);
+    @Override
+    public void init() {
+        HikariConfig config = new HikariConfig();
+        configureDatabase(config, credentials);
 
-		Map<String, String> properties = new HashMap<>();
-		overrideProperties(properties);
-		setProperties(config, properties);
+        Map<String, String> properties = new HashMap<>();
+        overrideProperties(properties);
+        setProperties(config, properties);
 
-		// TODO learn how to configure connection pool
+        // TODO learn how to configure connection pool
 
-		hikari = new HikariDataSource(config);
-	}
+        hikari = new HikariDataSource(config);
+    }
 
-	@Override
-	public void shutdown() {
-		if (hikari != null) {
-			hikari.close();
-		}
-	}
+    @Override
+    public void shutdown() {
+        if (hikari != null) {
+            hikari.close();
+        }
+    }
 
-	@Override
-	public Connection getConnection() throws SQLException {
-		if (hikari == null) {
-			throw new SQLException("Connection has failed, hikari is null.");
-		}
+    @Override
+    public Connection getConnection() throws SQLException {
+        if (hikari == null) {
+            throw new SQLException("Connection has failed, hikari is null.");
+        }
 
-		Connection connection = hikari.getConnection();
-		if (connection == null) {
-			throw new SQLException("Connection has failed, connection is null.");
-		}
+        Connection connection = hikari.getConnection();
+        if (connection == null) {
+            throw new SQLException("Connection has failed, connection is null.");
+        }
 
-		return connection;
-	}
+        return connection;
+    }
 }
