@@ -6,6 +6,7 @@ import com.github.colingrime.config.Settings;
 import com.github.colingrime.dependencies.DependencyFailureException;
 import com.github.colingrime.dependencies.DependencyManager;
 import com.github.colingrime.listeners.PanelListeners;
+import com.github.colingrime.listeners.ParameterListeners;
 import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.listeners.SkyMineListeners;
 import com.github.colingrime.locale.Messages;
@@ -116,6 +117,7 @@ public class SkyMines extends JavaPlugin {
 		new PlayerListeners(this);
 		new PanelListeners(this);
 		new SkyMineListeners(this);
+		new ParameterListeners(this);
 	}
 
 	public static SkyMines getInstance() {
