@@ -66,6 +66,7 @@ public enum Messages {
 	// admin messages
 	LOOKUP_SKYMINES_TOP_MESSAGE("admin.general.lookup-skymines.top-message", "&aList of &eSkyMines &aowned by &e%player%&a:"),
 	LOOKUP_SKYMINES_REPEATING_MESSAGE("admin.general.lookup-skymines.repeating-message", "&7→ [#%id%] &eThis home is located in the &a%world% &eworld. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)"),
+	SUCCESS_PANEL("admin.success.panel", "&aYou have accessed another player's &eSkyMine&a."),
 	SUCCESS_GIVE("admin.success.give", "&aYou have given &e%amount%x %token% &ato &e%player%&a!"),
 	SUCCESS_PICKUP_ADMIN("admin.success.pickup", "&aYou have successfully picked up &e%player%&a's &eSkyMine&a."),
 	SUCCESS_REMOVE("admin.success.remove", "&aYou have successfully removed &e%player%&a's &eSkyMine&a."),
@@ -74,7 +75,7 @@ public enum Messages {
 	FAILURE_TOO_BIG("admin.failure.too-big", "&cFor performance reasons, a side is not permitted to exceed 100 blocks."),
 	FAILURE_NO_PLAYER_FOUND("admin.failure.no-player-found", "&cThe player &e%player% &cdoes not exist."),
 	FAILURE_NO_SKYMINE_FOUND("admin.failure.no-skymine-found", "&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c."),
-	FAILURE_NO_SKYMINES_FOUND("admin.failure.no-skymines.found", "&e%player% &cdoes not have any &eSkyMines&e."),
+	FAILURE_NO_SKYMINES_FOUND("admin.failure.no-skymines-found", "&e%player% &cdoes not have any &eSkyMines&e."),
 	USAGE_SKYMINES_ADMIN_COMMAND("admin.usage.skymines-admin-command", "&eSkyMine &cAdmin Commands:",
 			"&7→ &c/sma give [player] {LxHxW} {amount} &7- give away &eSkyMine Tokens&7.",
 			"&7→ &c/sma lookup [player] &7- lookup a player's &eSkyMine&7's list.",

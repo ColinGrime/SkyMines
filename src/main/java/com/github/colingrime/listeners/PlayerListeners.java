@@ -45,19 +45,20 @@ public class PlayerListeners implements Listener {
 		Block block = event.getClickedBlock();
 
 		if (block != null) {
-			if (player.hasPermission("skymines.admin.panel")) {
-				for (SkyMine skyMine : manager.getSkyMines()) {
-					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
-						new MainPanel(plugin, player, skyMine).openInventory(player);
-						return;
-					}
-				}
-			}
-
 			for (SkyMine skyMine : manager.getSkyMines(player)) {
 				if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 					new MainPanel(plugin, player, skyMine).openInventory(player);
 					return;
+				}
+			}
+
+			if (player.hasPermission("skymines.admin.panel")) {
+				for (SkyMine skyMine : manager.getSkyMines()) {
+					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
+						new MainPanel(plugin, player, skyMine).openInventory(player);
+						Messages.SUCCESS_PANEL.sendTo(player);
+						return;
+					}
 				}
 			}
 		}

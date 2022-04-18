@@ -16,7 +16,7 @@ public class SkyMinesAdminBaseCommand extends BaseCommand {
 
 	@Override
 	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_COMMAND;
+		return Messages.USAGE_SKYMINES_ADMIN_COMMAND;
 	}
 
 	@Override

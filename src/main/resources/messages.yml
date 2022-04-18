@@ -60,6 +60,7 @@ admin:
       top-message: '&aList of &eSkyMines &aowned by &e%player%&a:'
       repeating-message: '&7→ [#%id%] &eThis home is located in the &a%world% &eworld. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
   success:
+    panel: "&aYou have accessed another player's &eSkyMine&a."
     give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
     pickup: "&aYou have successfully picked up &e%player%&a's &eSkyMine&a."
     remove: "&aYou have successfully removed &e%player%&a's &eSkyMine&a."

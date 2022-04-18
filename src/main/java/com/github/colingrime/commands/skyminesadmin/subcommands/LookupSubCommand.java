@@ -24,7 +24,7 @@ public class LookupSubCommand implements SubCommand {
 	public void onCommand(CommandSender sender, String[] args) {
 		UUID uuid = UUIDFinder.fromName(args[0]);
 		if (uuid == null) {
-			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender);
+			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
 			return;
 		}
 

@@ -24,7 +24,7 @@ public class GiveSubCommand implements SubCommand {
 	public void onCommand(CommandSender sender, String[] args) {
 		Player receiver = Bukkit.getPlayer(args[0]);
 		if (receiver == null) {
-			getUsage().sendTo(sender);
+			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
 			return;
 		}
 

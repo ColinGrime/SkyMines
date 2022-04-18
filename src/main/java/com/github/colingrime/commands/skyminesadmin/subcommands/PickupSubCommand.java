@@ -24,7 +24,7 @@ public class PickupSubCommand implements SubCommand {
 	public void onCommand(CommandSender sender, String[] args) {
 		UUID uuid = UUIDFinder.fromName(args[0]);
 		if (uuid == null) {
-			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender);
+			Messages.FAILURE_NO_PLAYER_FOUND.sendTo(sender, new Replacer("%player%", args[0]));
 			return;
 		}
 
@@ -33,7 +33,7 @@ public class PickupSubCommand implements SubCommand {
 			skyMine.get().pickup((Player) sender);
 			Messages.SUCCESS_PICKUP_ADMIN.sendTo(sender, new Replacer("%player%", args[0]));
 		} else {
-			Messages.FAILURE_NO_SKYMINE_FOUND.sendTo(sender);
+			Messages.FAILURE_NO_SKYMINE_FOUND.sendTo(sender, new  Replacer("%player%", args[0]).add("%id%", args[1]));
 		}
 	}
 
