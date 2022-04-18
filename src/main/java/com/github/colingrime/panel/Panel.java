@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Panel implements Listener, InventoryHolder {
+public abstract class Panel implements InventoryHolder {
 
 	private final static Map<Player, Panel> panelViewers = new HashMap<>();
 
