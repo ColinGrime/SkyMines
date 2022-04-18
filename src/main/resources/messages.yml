@@ -71,6 +71,8 @@ admin:
     no-player-found: '&cThe player &e%player% &cdoes not exist.'
     no-skymine-found: '&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c.'
     no-skymines-found: '&e%player% &cdoes not have any &eSkyMines&e.'
+    invalid-amount: '&cThe amount &e%amount% &cis an invalid amount.'
+    invalid-material: '&cThe material &e%material% &cis an invalid border type.'
   usage:
     skymines-admin-command:
       - "&eSkyMine &cAdmin Commands:"

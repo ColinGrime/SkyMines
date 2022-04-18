@@ -76,6 +76,8 @@ public enum Messages {
 	FAILURE_NO_PLAYER_FOUND("admin.failure.no-player-found", "&cThe player &e%player% &cdoes not exist."),
 	FAILURE_NO_SKYMINE_FOUND("admin.failure.no-skymine-found", "&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c."),
 	FAILURE_NO_SKYMINES_FOUND("admin.failure.no-skymines-found", "&e%player% &cdoes not have any &eSkyMines&e."),
+	FAILURE_INVALID_AMOUNT("admin.failure.invalid-amount", "&cThe amount &e%amount% &cis an invalid amount."),
+	FAILURE_INVALID_MATERIAL("admin.failure.invalid-material", "&cThe material &e%material% &cis an invalid border type."),
 	USAGE_SKYMINES_ADMIN_COMMAND("admin.usage.skymines-admin-command", "&eSkyMine &cAdmin Commands:",
 			"&7→ &c/sma give [player] {LxHxW} {amount} &7- give away &eSkyMine Tokens&7.",
 			"&7→ &c/sma lookup [player] &7- lookup a player's &eSkyMine&7's list.",
