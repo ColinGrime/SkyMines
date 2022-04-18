@@ -115,7 +115,7 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		ItemStack token = plugin.getSkyMineManager().getToken().getToken(structure.getSize(), upgrades);
+		ItemStack token = plugin.getSkyMineManager().getToken().getToken(structure.getSize(), upgrades, structure.getBorderType());
 		if (!player.getInventory().addItem(token).isEmpty()) {
 			return false;
 		}

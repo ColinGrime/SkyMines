@@ -12,6 +12,7 @@ import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.utils.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -81,8 +82,9 @@ public class PlayerListeners implements Listener {
 
 			MineSize size = token.getMineSize(item).orElseGet(() -> new MineSize(10, 10, 10));
 			SkyMineUpgrades upgrades = token.getUpgrades(item).orElseGet(() -> new SkyMineUpgrades(plugin));
+			Material borderType = token.getBorderType(item).orElse(Material.BEDROCK);
 
-			if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades)) {
+			if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades, borderType)) {
 				event.setCancelled(true);
 				PlayerUtils.removeOneItemFromHand(player);
 				Messages.SUCCESS_PLACE.sendTo(player);

@@ -7,6 +7,7 @@ import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -38,8 +39,8 @@ public class SkyMineManager {
 	 * @param upgrades upgrades of the skymine
 	 * @return true if the skymine was successfully created
 	 */
-	public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades) {
-		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades);
+	public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades, Material borderType) {
+		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades, borderType);
 		if (skyMine.isEmpty()) {
 			return false;
 		}

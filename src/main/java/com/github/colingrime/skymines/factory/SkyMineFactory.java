@@ -4,6 +4,7 @@ import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -17,7 +18,8 @@ public interface SkyMineFactory {
 	 * @param location location of the skymine
 	 * @param size size of the skymine
 	 * @param upgrades upgrades of the skymine
+	 * @param borderType border type of the skymine
 	 * @return created SkyMine if one can be placed
 	 */
-	Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades);
+	Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades, Material borderType);
 }

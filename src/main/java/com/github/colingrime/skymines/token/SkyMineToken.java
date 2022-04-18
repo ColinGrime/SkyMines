@@ -2,6 +2,7 @@ package com.github.colingrime.skymines.token;
 
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
@@ -15,16 +16,18 @@ public interface SkyMineToken {
 
 	/**
 	 * @param size size of the mine
-	 * @return skymine token with custom size
+	 * @param borderType border type of the mine
+	 * @return skymine token with custom size and upgrades
 	 */
-	ItemStack getToken(MineSize size);
+	ItemStack getToken(MineSize size, Material borderType);
 
 	/**
 	 * @param size size of the mine
 	 * @param upgrades upgrades of the mine
-	 * @return skymine token with custom size and upgrades
+	 * @param borderType border type of the mine
+	 * @return skymine token with custom size, upgrades, and border type
 	 */
-	ItemStack getToken(MineSize size, SkyMineUpgrades upgrades);
+	ItemStack getToken(MineSize size, SkyMineUpgrades upgrades, Material borderType);
 
 	/**
 	 * @param item any item
@@ -43,4 +46,10 @@ public interface SkyMineToken {
 	 * @return upgrades of the mine if available
 	 */
 	Optional<SkyMineUpgrades> getUpgrades(ItemStack item);
+
+	/**
+	 * @param item any item
+	 * @return border type of the mine if available
+	 */
+	Optional<Material> getBorderType(ItemStack item);
 }

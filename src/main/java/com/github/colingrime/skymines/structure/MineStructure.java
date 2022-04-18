@@ -28,15 +28,17 @@ public class MineStructure {
 	private final Location startCorner;
 	private final Location endCorner;
 	private final MineSize size;
+	private final Material borderType;
 
 	private final ParameterRegion parameter;
 	private final CuboidRegion inside;
 
-	public MineStructure(Location startCorner, Location endCorner, MineSize size) {
+	public MineStructure(Location startCorner, Location endCorner, MineSize size, Material borderType) {
 		this.world = startCorner.getWorld();
 		this.startCorner = startCorner;
 		this.endCorner = endCorner;
 		this.size = size;
+		this.borderType = borderType;
 		this.parameter = new ParameterRegion(startCorner.toVector(), endCorner.toVector());
 		this.inside = _getInside();
 	}
@@ -110,7 +112,7 @@ public class MineStructure {
 	}
 
 	public void buildParameter() {
-		getBehavior().build(world, parameter, new MaterialSingle(Material.BEDROCK));
+		getBehavior().build(world, parameter, new MaterialSingle(borderType));
 	}
 
 	public void buildInside(MaterialVariety blockVariety) {
@@ -131,6 +133,10 @@ public class MineStructure {
 		return size;
 	}
 
+	public Material getBorderType() {
+		return borderType;
+	}
+
 	public ParameterRegion getParameter() {
 		return parameter;
 	}
@@ -139,27 +145,29 @@ public class MineStructure {
 		return inside;
 	}
 
-	public static String parse(MineStructure structure) {
+	public static String serialize(MineStructure structure) {
 		String startCorner = Utils.parseLocation(structure.startCorner);
 		String endCorner = Utils.parseLocation(structure.endCorner);
 		String size = MineSize.parse(structure.size);
-		return startCorner + '\n' + endCorner + '\n' + size;
+		String borderType = structure.borderType.name();
+		return startCorner + '\n' + endCorner + '\n' + size + '\n' + borderType;
 	}
 
-	public static MineStructure parse(String text) {
+	public static MineStructure deserialize(String text) {
 		String[] texts = text.split("\n");
-		if (texts.length != 3) {
+		if (texts.length < 3) {
 			return null;
 		}
 
 		Location startCorner = Utils.parseLocation(texts[0]);
 		Location endCorner = Utils.parseLocation(texts[1]);
 		MineSize size = MineSize.parse(texts[2]);
+		Material borderType = texts.length == 4 ? Material.getMaterial(texts[3]) : Material.BEDROCK;
 
 		if (startCorner == null || endCorner == null || size == null) {
 			return null;
 		}
 
-		return new MineStructure(startCorner, endCorner, size);
+		return new MineStructure(startCorner, endCorner, size, borderType);
 	}
 }

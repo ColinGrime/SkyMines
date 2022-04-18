@@ -7,6 +7,7 @@ import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 	}
 
 	@Override
-	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades) {
+	public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades, Material borderType) {
 		float yaw = owner.getLocation().getYaw();
 		if (yaw < 0) {
 			yaw += 360;
@@ -49,7 +50,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			endLoc = location.clone().add(width, -height, length);
 
 		// creates and builds structure
-		MineStructure structure = new MineStructure(location, endLoc, size);
+		MineStructure structure = new MineStructure(location, endLoc, size, borderType);
 
 		// check for access and blocks in the way
 		if (!structure.doBlockCheck(owner)) {
