@@ -46,7 +46,7 @@ public class YamlStorage implements Storage {
 		for (String uuidString : Objects.requireNonNull(sec).getKeys(false)) {
 			UUID uuid = UUID.fromString(uuidString);
 			UUID owner = UUID.fromString(Objects.requireNonNull(sec.getString(uuidString + ".owner")));
-			MineStructure structure = MineStructure.parse(Objects.requireNonNull(sec.getString(uuidString + ".structure")));
+			MineStructure structure = MineStructure.deserialize(Objects.requireNonNull(sec.getString(uuidString + ".structure")));
 			Location home = sec.getObject(uuidString + ".home", Location.class);
 			SkyMineUpgrades upgrades = SkyMineUpgrades.parse(Objects.requireNonNull(sec.getString(uuidString + ".upgrades")));
 
@@ -61,7 +61,7 @@ public class YamlStorage implements Storage {
 	public void saveMine(SkyMine skyMine) {
 		String uuid = skyMine.getUUID().toString();
 		config.set(uuid + ".owner", skyMine.getOwner().toString());
-		config.set(uuid + ".structure", MineStructure.parse(skyMine.getStructure()));
+		config.set(uuid + ".structure", MineStructure.serialize(skyMine.getStructure()));
 		config.set(uuid + ".home", skyMine.getHome());
 		config.set(uuid + ".upgrades", SkyMineUpgrades.parse(skyMine.getUpgrades()));
 		save();
