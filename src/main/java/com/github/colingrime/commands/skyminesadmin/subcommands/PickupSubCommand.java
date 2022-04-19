@@ -12,13 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PickupSubCommand implements SubCommand {
-
-    private final SkyMines plugin;
-
-    public PickupSubCommand(SkyMines plugin) {
-        this.plugin = plugin;
-    }
+public record PickupSubCommand(SkyMines plugin) implements SubCommand {
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {

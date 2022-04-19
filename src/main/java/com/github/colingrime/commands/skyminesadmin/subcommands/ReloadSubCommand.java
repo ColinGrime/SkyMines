@@ -5,13 +5,7 @@ import com.github.colingrime.commands.SubCommand;
 import com.github.colingrime.locale.Messages;
 import org.bukkit.command.CommandSender;
 
-public class ReloadSubCommand implements SubCommand {
-
-    private final SkyMines plugin;
-
-    public ReloadSubCommand(SkyMines plugin) {
-        this.plugin = plugin;
-    }
+public record ReloadSubCommand(SkyMines plugin) implements SubCommand {
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {

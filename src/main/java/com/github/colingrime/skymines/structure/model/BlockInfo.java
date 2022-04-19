@@ -3,15 +3,7 @@ package com.github.colingrime.skymines.structure.model;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class BlockInfo {
-
-    private final Block block;
-    private final Material type;
-
-    public BlockInfo(Block block, Material type) {
-        this.block = block;
-        this.type = type;
-    }
+public record BlockInfo(Block block, Material type) {
 
     public Block getBlock() {
         return block;

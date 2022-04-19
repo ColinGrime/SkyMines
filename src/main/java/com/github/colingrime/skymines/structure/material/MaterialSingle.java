@@ -2,13 +2,7 @@ package com.github.colingrime.skymines.structure.material;
 
 import org.bukkit.Material;
 
-public class MaterialSingle implements MaterialType {
-
-    private final Material material;
-
-    public MaterialSingle(Material material) {
-        this.material = material;
-    }
+public record MaterialSingle(Material material) implements MaterialType {
 
     @Override
     public Material get() {

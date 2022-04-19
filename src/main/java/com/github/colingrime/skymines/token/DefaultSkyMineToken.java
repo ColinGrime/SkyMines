@@ -11,13 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Optional;
 
-public class DefaultSkyMineToken implements SkyMineToken {
-
-    private final SkyMines plugin;
-
-    public DefaultSkyMineToken(SkyMines plugin) {
-        this.plugin = plugin;
-    }
+public record DefaultSkyMineToken(SkyMines plugin) implements SkyMineToken {
 
     @Override
     public ItemStack getToken() {
