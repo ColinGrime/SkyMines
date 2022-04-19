@@ -1,6 +1,6 @@
 name: SkyMines
 main: com.github.colingrime.SkyMines
-version: @version@
+version: ${project.version}
 
 authors: [ Scill ]
 description: Personal Mines (in the sky!)

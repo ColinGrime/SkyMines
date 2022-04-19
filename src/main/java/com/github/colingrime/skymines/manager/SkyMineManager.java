@@ -7,6 +7,7 @@ import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.token.SkyMineToken;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -38,8 +39,8 @@ public class SkyMineManager {
      * @param upgrades upgrades of the skymine
      * @return true if the skymine was successfully created
      */
-    public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades) {
-        Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades);
+    public boolean createSkyMine(Player player, Location location, MineSize size, SkyMineUpgrades upgrades, Material borderType) {
+        Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, upgrades, borderType);
         if (skyMine.isEmpty()) {
             return false;
         }
@@ -79,7 +80,7 @@ public class SkyMineManager {
 
     /**
      * @param player any player
-     * @param id     id number of the skymine
+     * @param id id number of the skymine
      * @return Optional skymine if found, or an empty Optional
      */
     public Optional<SkyMine> getSkyMine(Player player, String id) {
@@ -88,7 +89,7 @@ public class SkyMineManager {
 
     /**
      * @param uuid any uuid
-     * @param id   id number of the skymine
+     * @param id id number of the skymine
      * @return Optional skymine if found, or an empty Optional
      */
     public Optional<SkyMine> getSkyMine(UUID uuid, String id) {
@@ -100,7 +101,7 @@ public class SkyMineManager {
 
     /**
      * @param uuid any uuid
-     * @param id   id number of the skymine
+     * @param id id number of the skymine
      * @return Optional skymine if found, or an empty Optional
      */
     protected Optional<SkyMine> getSkyMine(UUID uuid, int id) {
@@ -115,7 +116,7 @@ public class SkyMineManager {
     }
 
     /**
-     * @param player  any player
+     * @param player any player
      * @param skyMine created skymine
      */
     public void addSkyMine(Player player, SkyMine skyMine) {
@@ -123,7 +124,7 @@ public class SkyMineManager {
     }
 
     /**
-     * @param uuid    any uuid of player
+     * @param uuid any uuid of player
      * @param skyMine created skymine
      */
     public void addSkyMine(UUID uuid, SkyMine skyMine) {
@@ -135,7 +136,7 @@ public class SkyMineManager {
     /**
      * Removes the SkyMine and deletes it from storage.
      *
-     * @param player  any player
+     * @param player any player
      * @param skyMine removed skymine
      */
     public void removeSkyMine(Player player, SkyMine skyMine) {
@@ -143,7 +144,7 @@ public class SkyMineManager {
     }
 
     /**
-     * @param uuid    any uuid of player
+     * @param uuid any uuid of player
      * @param skyMine removed skymine
      */
     public void removeSkyMine(UUID uuid, SkyMine skyMine) {

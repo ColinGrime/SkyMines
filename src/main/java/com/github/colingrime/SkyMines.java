@@ -6,6 +6,7 @@ import com.github.colingrime.config.Settings;
 import com.github.colingrime.dependencies.DependencyFailureException;
 import com.github.colingrime.dependencies.DependencyManager;
 import com.github.colingrime.listeners.PanelListeners;
+import com.github.colingrime.listeners.ParameterListeners;
 import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.listeners.SkyMineListeners;
 import com.github.colingrime.locale.Messages;
@@ -33,10 +34,6 @@ public class SkyMines extends JavaPlugin {
     private Settings settings;
     private PanelSettings panelSettings;
     private Storage storage;
-
-    public static SkyMines getInstance() {
-        return instance;
-    }
 
     @Override
     public void onEnable() {
@@ -116,10 +113,15 @@ public class SkyMines extends JavaPlugin {
         new SkyMinesAdminBaseCommand(this);
     }
 
+    public static SkyMines getInstance() {
+        return instance;
+    }
+
     private void registerListeners() {
         new PlayerListeners(this);
         new PanelListeners(this);
         new SkyMineListeners(this);
+        new ParameterListeners(this);
     }
 
     public DependencyManager getDependencyManager() {

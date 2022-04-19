@@ -7,18 +7,13 @@ import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.utils.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class GiveSubCommand implements SubCommand {
-
-    private final SkyMines plugin;
-
-    public GiveSubCommand(SkyMines plugin) {
-        this.plugin = plugin;
-    }
+public record GiveSubCommand(SkyMines plugin) implements SubCommand {
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {
@@ -52,12 +47,23 @@ public class GiveSubCommand implements SubCommand {
         }
 
         int amount = 1;
-        if (args.length >= 3 && isInt(args[2])) {
+        if (args.length >= 3) {
+            if (!isInt(args[2])) {
+                Messages.FAILURE_INVALID_AMOUNT.sendTo(sender, new Replacer("%amount%", args[2]));
+                return;
+            }
+
             amount = Integer.parseInt(args[2]);
         }
 
+        Material borderType = args.length >= 4 ? Material.matchMaterial(args[3]) : Material.BEDROCK;
+        if (borderType == null || !borderType.isBlock()) {
+            Messages.FAILURE_INVALID_MATERIAL.sendTo(sender, new Replacer("%material%", args[3]));
+            return;
+        }
+
         // gets the specified amount of tokens and gives it to the player
-        ItemStack item = plugin.getSkyMineManager().getToken().getToken(size);
+        ItemStack item = plugin.getSkyMineManager().getToken().getToken(size, borderType);
         item.setAmount(amount);
         PlayerUtils.giveItemOrDrop(receiver, item);
 

@@ -9,9 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class SkyMineListeners implements Listener {
-
-    private final SkyMines plugin;
+public record SkyMineListeners(SkyMines plugin) implements Listener {
 
     public SkyMineListeners(SkyMines plugin) {
         this.plugin = plugin;

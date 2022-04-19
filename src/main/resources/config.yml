@@ -28,6 +28,9 @@ options:
   placement-cooldown: 10
   # If true, players can no longer drop their skymine token.
   prevent-token-drop: true
+  # If true, skymines can be placed over transparent blocks (grass, flowers, etc.)
+  # This does not include chests.
+  override-transparent-blocks: true
 
 # Physical form of a skymine:
 token:

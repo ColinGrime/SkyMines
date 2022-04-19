@@ -9,28 +9,33 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Objects;
 import java.util.Optional;
 
-public record DefaultSkyMineToken(SkyMines plugin) implements SkyMineToken {
+public class DefaultSkyMineToken implements SkyMineToken {
+
+    private final SkyMines plugin;
+
+    public DefaultSkyMineToken(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public ItemStack getToken() {
-        return getToken(new MineSize(10, 10, 10));
+        return getToken(new MineSize(10, 10, 10), Material.BEDROCK);
     }
 
     @Override
-    public ItemStack getToken(MineSize size) {
-        return getToken(size, new SkyMineUpgrades(plugin));
+    public ItemStack getToken(MineSize size, Material borderType) {
+        return getToken(size, new SkyMineUpgrades(plugin), borderType);
     }
 
     @Override
-    public ItemStack getToken(MineSize size, SkyMineUpgrades upgrades) {
+    public ItemStack getToken(MineSize size, SkyMineUpgrades upgrades, Material borderType) {
         ItemStack item = new ItemStack(plugin.getSettings().getTokenType());
         ItemMeta meta = item.getItemMeta();
         Replacer replacer = getReplacer(size);
 
-        Objects.requireNonNull(meta).setDisplayName(replacer.replace(plugin.getSettings().getTokenName()));
+        meta.setDisplayName(replacer.replace(plugin.getSettings().getTokenName()));
         meta.setLore(replacer.replace(plugin.getSettings().getTokenLore()));
         item.setItemMeta(meta);
 
@@ -39,6 +44,7 @@ public record DefaultSkyMineToken(SkyMines plugin) implements SkyMineToken {
         nbtItem.setObject("skymine-size", size);
         nbtItem.setInteger("skymine-blockvariety", upgrades.getBlockVarietyUpgrade().getLevel());
         nbtItem.setInteger("skymine-resetcooldown", upgrades.getResetCooldownUpgrade().getLevel());
+        nbtItem.setObject("skymine-bordertype", borderType);
         return nbtItem.getItem();
     }
 
@@ -78,6 +84,16 @@ public record DefaultSkyMineToken(SkyMines plugin) implements SkyMineToken {
         int blockVarietyLevel = nbtItem.getInteger("skymine-blockvariety");
         int resetCooldown = nbtItem.getInteger("skymine-resetcooldown");
         return Optional.of(new SkyMineUpgrades(plugin, blockVarietyLevel, resetCooldown));
+    }
+
+    @Override
+    public Optional<Material> getBorderType(ItemStack item) {
+        if (isInvalidItem(item)) {
+            return Optional.empty();
+        }
+
+        NBTItem nbtItem = new NBTItem(item);
+        return Optional.ofNullable(nbtItem.getObject("skymine-bordertype", Material.class));
     }
 
     private boolean isInvalidItem(ItemStack item) {

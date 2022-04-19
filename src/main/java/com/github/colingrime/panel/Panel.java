@@ -3,7 +3,6 @@ package com.github.colingrime.panel;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -14,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Panel implements Listener, InventoryHolder {
+public abstract class Panel implements InventoryHolder {
 
     private final static Map<Player, Panel> panelViewers = new HashMap<>();
 
@@ -27,10 +26,6 @@ public abstract class Panel implements Listener, InventoryHolder {
         this.plugin = plugin;
         this.inventory = inventory;
         this.viewer = viewer;
-    }
-
-    public static Map<Player, Panel> getPanelViewers() {
-        return panelViewers;
     }
 
     /**
@@ -61,6 +56,10 @@ public abstract class Panel implements Listener, InventoryHolder {
         Bukkit.getScheduler().runTask(plugin, viewer::closeInventory);
     }
 
+    public static Map<Player, Panel> getPanelViewers() {
+        return panelViewers;
+    }
+
     public void setItem(int slotNum, Material material) {
         setItem(slotNum, new ItemStack(material));
     }
@@ -84,6 +83,14 @@ public abstract class Panel implements Listener, InventoryHolder {
         }
     }
 
+    /**
+     * Interface for actions ran from inventory clicks.
+     */
+    @FunctionalInterface
+    public interface MenuAction {
+        void click(Player player, ClickType clickType);
+    }
+
     public Player getViewer() {
         return viewer;
     }
@@ -95,13 +102,5 @@ public abstract class Panel implements Listener, InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
         return inventory;
-    }
-
-    /**
-     * Interface for actions ran from inventory clicks.
-     */
-    @FunctionalInterface
-    public interface MenuAction {
-        void click(Player player, ClickType clickType);
     }
 }

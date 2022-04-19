@@ -107,7 +107,7 @@ public class PanelSettings {
         Material fill = Material.matchMaterial(type);
         for (int i = 0; i < rows * 9; i++) {
             if (slots.get(i) == null) {
-                slots.put(i, new StandardPanelSlot(new PanelSlotMeta(fill, "")));
+                slots.put(i, new StandardPanelSlot(new PanelSlotMeta(fill, " ")));
             }
         }
     }

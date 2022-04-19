@@ -13,7 +13,17 @@ public class DefaultBuildBehavior implements BuildBehavior {
 
     @Override
     public boolean isClear(World world, Region region) {
-        return region.handler((x, y, z) -> world.getBlockAt(x, y, z).getType() == Material.AIR);
+        return region.handler((x, y, z) -> {
+            Material type = world.getBlockAt(x, y, z).getType();
+            if (type == Material.AIR) {
+                return true;
+            }
+
+            boolean tryOverride = SkyMines.getInstance().getSettings().getOverrideTransparentBlocks();
+
+            // checks for transparent blocks
+            return tryOverride && !type.isOccluding() && !type.name().contains("CHEST");
+        });
     }
 
     @Override

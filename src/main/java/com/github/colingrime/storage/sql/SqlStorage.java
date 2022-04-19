@@ -94,7 +94,7 @@ public class SqlStorage implements Storage {
                 while (rs.next()) {
                     UUID uuid = UUID.fromString(rs.getString(1));
                     UUID owner = UUID.fromString(rs.getString(2));
-                    MineStructure structure = MineStructure.parse(rs.getString(3));
+                    MineStructure structure = MineStructure.deserialize(rs.getString(3));
                     Location home = Utils.parseLocation(rs.getString(4));
                     SkyMineUpgrades upgrades = SkyMineUpgrades.parse(rs.getString(5));
 
@@ -145,7 +145,7 @@ public class SqlStorage implements Storage {
             try (PreparedStatement ps = c.prepareStatement(statementProcessor.apply(MINES_INSERT))) {
                 ps.setString(1, skyMine.getUUID().toString());
                 ps.setString(2, skyMine.getOwner().toString());
-                ps.setString(3, MineStructure.parse(skyMine.getStructure()));
+                ps.setString(3, MineStructure.serialize(skyMine.getStructure()));
                 ps.setString(4, Utils.parseLocation(skyMine.getHome()));
                 ps.setString(5, SkyMineUpgrades.parse(skyMine.getUpgrades()));
                 ps.executeUpdate();

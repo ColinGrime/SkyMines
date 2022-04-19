@@ -30,6 +30,7 @@ public class Settings {
     private int pickupCooldown;
     private int placementCooldown;
     private boolean preventTokenDrop;
+    private boolean overrideTransparentBlocks;
 
     // token info
     private Material tokenType;
@@ -75,6 +76,7 @@ public class Settings {
         placementCooldown = _getPlacementCooldown();
         pickupCooldown = _getPickupCooldown();
         preventTokenDrop = _getPreventTokenDrop();
+        overrideTransparentBlocks = _getOverrideTransparentBlocks();
 
         // token info
         tokenType = _getTokenType();
@@ -190,6 +192,14 @@ public class Settings {
 
     public boolean getPreventTokenDrop() {
         return preventTokenDrop;
+    }
+
+    private boolean _getOverrideTransparentBlocks() {
+        return config.getBoolean("options.override-transparent-blocks", true);
+    }
+
+    public boolean getOverrideTransparentBlocks() {
+        return overrideTransparentBlocks;
     }
 
     private Material _getTokenType() {
