@@ -104,7 +104,7 @@ public class PanelSettings {
 			return;
 		}
 
-		Material fill = Material.matchMaterial(type);
+		Material fill = getType(type);
 		for (int i=0; i<rows*9; i++) {
 			if (slots.get(i) == null) {
 				slots.put(i, new StandardPanelSlot(new PanelSlotMeta(fill, " ")));
@@ -175,10 +175,16 @@ public class PanelSettings {
 		return new PanelSlotMeta(type, name, lore, command);
 	}
 
-	/*
-	 * Returns the specified Material, or returns AIR if not found.
+	/**
+	 * @param name any name
+	 * @return the specified type, or STONE if the item does not exist
 	 */
 	private Material getType(String name) {
-		return name == null ? Material.AIR : Material.matchMaterial(name);
+		if (name == null) {
+			return Material.STONE;
+		}
+
+		Material type = Material.matchMaterial(name);
+		return type == null ? Material.STONE : type;
 	}
 }
