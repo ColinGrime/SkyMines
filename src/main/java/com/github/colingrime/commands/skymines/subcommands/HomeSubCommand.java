@@ -9,33 +9,33 @@ import org.bukkit.entity.Player;
 
 public class HomeSubCommand extends SkyMinesSubCommand {
 
-	public HomeSubCommand(SkyMines plugin) {
-		super(plugin);
-	}
+    public HomeSubCommand(SkyMines plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		((Player) sender).teleport(skyMine.getHome());
-		Messages.SUCCESS_HOME.sendTo(sender);
-	}
+    @Override
+    public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+        ((Player) sender).teleport(skyMine.getHome());
+        Messages.SUCCESS_HOME.sendTo(sender);
+    }
 
-	@Override
-	public boolean requireSkyMine() {
-		return true;
-	}
+    @Override
+    public boolean requireSkyMine() {
+        return true;
+    }
 
-	@Override
-	public String getName() {
-		return "home";
-	}
+    @Override
+    public String getName() {
+        return "home";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_HOME;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_HOME;
+    }
 
-	@Override
-	public String getPermission() {
-		return "skymines.home";
-	}
+    @Override
+    public String getPermission() {
+        return "skymines.home";
+    }
 }

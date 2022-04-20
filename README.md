@@ -1,7 +1,9 @@
 # SkyMines
+
 Fully customizable, personal skymines
 
 ### Features:
+
 * Skymines are personal. Only the owner of a mine can access its panel.
 * Skymines are upgradable, there are currently two paths:
   * BlockVariety - alter the composition of a mine.
@@ -15,12 +17,14 @@ Fully customizable, personal skymines
 * Multiple storage options: MySQL, SQLite, YAML.
 
 ### Dependencies / Hooks:
+
 * Vault is **required**. Used for skymine upgrades.
 * FastAsyncWorldEdit hook is available for efficient skymine creation.
 
 ---
 
 ### Player Commands:
+
 Aliases available: /skymines, /skymine, /sm
 
 * `/skymines`
@@ -41,6 +45,7 @@ Aliases available: /skymines, /skymine, /sm
   * Picks up the specified skymine.
 
 ### Admin Commands:
+
 * `/skymines give [player] {LxHxW} {amount}` **(skymines.give)**
   * Gives the player the specified amount of skymine tokens.
   * Example: /skymines give Notch 10x10x10 5

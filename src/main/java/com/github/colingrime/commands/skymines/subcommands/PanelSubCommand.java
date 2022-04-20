@@ -10,31 +10,31 @@ import org.bukkit.entity.Player;
 
 public class PanelSubCommand extends SkyMinesSubCommand {
 
-	private final SkyMines plugin;
+    private final SkyMines plugin;
 
-	public PanelSubCommand(SkyMines plugin) {
-		super(plugin);
-		this.plugin = plugin;
-	}
+    public PanelSubCommand(SkyMines plugin) {
+        super(plugin);
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		Player player = (Player) sender;
-		new MainPanel(plugin, player, skyMine).openInventory(player);
-	}
+    @Override
+    public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+        Player player = (Player) sender;
+        new MainPanel(plugin, player, skyMine).openInventory(player);
+    }
 
-	@Override
-	public boolean requireSkyMine() {
-		return true;
-	}
+    @Override
+    public boolean requireSkyMine() {
+        return true;
+    }
 
-	@Override
-	public String getName() {
-		return "panel";
-	}
+    @Override
+    public String getName() {
+        return "panel";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_PANEL;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_PANEL;
+    }
 }

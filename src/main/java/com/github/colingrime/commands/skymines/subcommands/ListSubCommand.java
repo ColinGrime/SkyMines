@@ -14,54 +14,54 @@ import java.util.List;
 
 public class ListSubCommand extends SkyMinesSubCommand {
 
-	private final SkyMines plugin;
+    private final SkyMines plugin;
 
-	public ListSubCommand(SkyMines plugin) {
-		super(plugin);
-		this.plugin = plugin;
-	}
+    public ListSubCommand(SkyMines plugin) {
+        super(plugin);
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
-		Player player = (Player) sender;
-		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
+    @Override
+    public void onCommand(CommandSender sender, String[] args, SkyMine skyMine) {
+        Player player = (Player) sender;
+        List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(player);
 
-		if (skyMines.size() == 0) {
-			Messages.FAILURE_NO_SKYMINES.sendTo(player);
-			return;
-		}
+        if (skyMines.size() == 0) {
+            Messages.FAILURE_NO_SKYMINES.sendTo(player);
+            return;
+        }
 
-		Messages.LIST_SKYMINES_TOP_MESSAGE.sendTo(player);
-		for (int i=1; i<=skyMines.size(); i++) {
-			Location loc = skyMines.get(i - 1).getHome();
+        Messages.LIST_SKYMINES_TOP_MESSAGE.sendTo(player);
+        for (int i = 1; i <= skyMines.size(); i++) {
+            Location loc = skyMines.get(i - 1).getHome();
 
-			Replacer replacer = new Replacer("%id%", i);
-			replacer.add("%x%", loc.getBlockX());
-			replacer.add("%y%", loc.getBlockY());
-			replacer.add("%z%", loc.getBlockZ());
+            Replacer replacer = new Replacer("%id%", i);
+            replacer.add("%x%", loc.getBlockX());
+            replacer.add("%y%", loc.getBlockY());
+            replacer.add("%z%", loc.getBlockZ());
 
-			String message = replacer.replace(Messages.LIST_SKYMINES_REPEATING_MESSAGE.toString());
-			player.spigot().sendMessage(Utils.command(message, "/skymines home " + i));
-		}
-	}
+            String message = replacer.replace(Messages.LIST_SKYMINES_REPEATING_MESSAGE.toString());
+            player.spigot().sendMessage(Utils.command(message, "/skymines home " + i));
+        }
+    }
 
-	@Override
-	public boolean requireSkyMine() {
-		return false;
-	}
+    @Override
+    public boolean requireSkyMine() {
+        return false;
+    }
 
-	@Override
-	public String getName() {
-		return "list";
-	}
+    @Override
+    public String getName() {
+        return "list";
+    }
 
-	@Override
-	public Messages getUsage() {
-		return Messages.USAGE_SKYMINES_LIST;
-	}
+    @Override
+    public Messages getUsage() {
+        return Messages.USAGE_SKYMINES_LIST;
+    }
 
-	@Override
-	public boolean requirePlayer() {
-		return true;
-	}
+    @Override
+    public boolean requirePlayer() {
+        return true;
+    }
 }

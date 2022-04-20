@@ -12,41 +12,42 @@ import java.util.function.Function;
 
 public class SqliteConnectionProvider implements ConnectionProvider {
 
-	private final SkyMines plugin;
-	private File file;
+    private final SkyMines plugin;
+    private File file;
 
-	public SqliteConnectionProvider(SkyMines plugin) {
-		this.plugin = plugin;
-	}
+    public SqliteConnectionProvider(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public String getName() {
-		return "SQLite";
-	}
+    @Override
+    public String getName() {
+        return "SQLite";
+    }
 
-	@Override
-	public void init() {
-		file = new File(plugin.getDataFolder(), "mines.db");
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    @Override
+    public void init() {
+        file = new File(plugin.getDataFolder(), "mines.db");
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	@Override
-	public void shutdown() {}
+    @Override
+    public void shutdown() {
+    }
 
-	@Override
-	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-	}
+    @Override
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+    }
 
-	@Override
-	public Function<String, String> getStatementProcessor() {
-		return s -> s.replace('\'', '`');
-	}
+    @Override
+    public Function<String, String> getStatementProcessor() {
+        return s -> s.replace('\'', '`');
+    }
 }

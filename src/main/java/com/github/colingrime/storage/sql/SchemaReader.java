@@ -11,16 +11,17 @@ import java.util.stream.Collectors;
 
 public final class SchemaReader {
 
-	private SchemaReader() {}
+    private SchemaReader() {
+    }
 
-	public static List<String> getQueries(InputStream is) {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-			String query = reader.lines().collect(Collectors.joining("\n"));
-			return Arrays.asList(query.split(";"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    public static List<String> getQueries(InputStream is) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            String query = reader.lines().collect(Collectors.joining("\n"));
+            return Arrays.asList(query.split(";"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return new ArrayList<>();
-	}
+        return new ArrayList<>();
+    }
 }

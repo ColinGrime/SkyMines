@@ -15,24 +15,24 @@ import java.util.function.Consumer;
 
 public class CooldownManager {
 
-	private final CooldownTask cooldownTask = new CooldownTask();
-	private final Map<Player, Cooldown> playerCooldowns = new HashMap<>();
+    private final CooldownTask cooldownTask = new CooldownTask();
+    private final Map<Player, Cooldown> playerCooldowns = new HashMap<>();
 
-	public CooldownManager(SkyMines plugin) {
-		cooldownTask.runTaskTimerAsynchronously(plugin, 0, 20L);
-	}
+    public CooldownManager(SkyMines plugin) {
+        cooldownTask.runTaskTimerAsynchronously(plugin, 0, 20L);
+    }
 
-	public void addCooldown(Cooldown cooldown) {
-		cooldownTask.getCooldownList().add(cooldown);
-	}
+    public void addCooldown(Cooldown cooldown) {
+        cooldownTask.getCooldownList().add(cooldown);
+    }
 
-	public Optional<Cooldown> getPlayerCooldown(Player player) {
-		return Optional.ofNullable(playerCooldowns.get(player));
-	}
+    public Optional<Cooldown> getPlayerCooldown(Player player) {
+        return Optional.ofNullable(playerCooldowns.get(player));
+    }
 
-	public void addPlayerCooldown(Player player, int seconds, Consumer<Player> completionAction, Messages denyMessage) {
-		Cooldown cooldown = new CooldownCache<>(player, seconds, TimeUnit.SECONDS, completionAction, denyMessage);
-		playerCooldowns.put(player, cooldown);
-		addCooldown(cooldown);
-	}
+    public void addPlayerCooldown(Player player, int seconds, Consumer<Player> completionAction, Messages denyMessage) {
+        Cooldown cooldown = new CooldownCache<>(player, seconds, TimeUnit.SECONDS, completionAction, denyMessage);
+        playerCooldowns.put(player, cooldown);
+        addCooldown(cooldown);
+    }
 }

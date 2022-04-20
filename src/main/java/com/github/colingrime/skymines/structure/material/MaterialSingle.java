@@ -4,14 +4,14 @@ import org.bukkit.Material;
 
 public class MaterialSingle implements MaterialType {
 
-	private final Material material;
+    private final Material material;
 
-	public MaterialSingle(Material material) {
-		this.material = material;
-	}
+    public MaterialSingle(Material material) {
+        this.material = material;
+    }
 
-	@Override
-	public Material get() {
-		return material;
-	}
+    @Override
+    public Material get() {
+        return material;
+    }
 }

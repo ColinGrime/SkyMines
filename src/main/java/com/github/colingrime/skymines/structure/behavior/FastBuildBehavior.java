@@ -14,43 +14,43 @@ import org.bukkit.Bukkit;
 
 public class FastBuildBehavior implements BuildBehavior {
 
-	@Override
-	public boolean isClear(org.bukkit.World world, Region region) {
-		World faweWorld = FaweAPI.getWorld(world.getName());
-		try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
-			return region.handler((x, y, z) -> {
-				BlockState state = es.getBlock(x, y, z);
-				if (state.isAir()) {
-					return true;
-				}
+    @Override
+    public boolean isClear(org.bukkit.World world, Region region) {
+        World faweWorld = FaweAPI.getWorld(world.getName());
+        try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
+            return region.handler((x, y, z) -> {
+                BlockState state = es.getBlock(x, y, z);
+                if (state.isAir()) {
+                    return true;
+                }
 
-				boolean tryOverride = SkyMines.getInstance().getSettings().getOverrideTransparentBlocks();
-				if (!tryOverride) {
-					return false;
-				}
+                boolean tryOverride = SkyMines.getInstance().getSettings().getOverrideTransparentBlocks();
+                if (!tryOverride) {
+                    return false;
+                }
 
-				// check for transparent blocks
-				BlockMaterial material = state.getBlockType().getMaterial();
-				return material.isTranslucent() && !material.hasContainer();
-			});
-		}
-	}
+                // check for transparent blocks
+                BlockMaterial material = state.getBlockType().getMaterial();
+                return material.isTranslucent() && !material.hasContainer();
+            });
+        }
+    }
 
-	@Override
-	public void build(org.bukkit.World world, Region region, MaterialType type, boolean replaceBlocks) {
-		Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
-			World faweWorld = FaweAPI.getWorld(world.getName());
-			try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
-				region.handler((x, y, z) -> {
-					if (replaceBlocks || es.getBlock(x, y, z).isAir()) {
-						BlockState state = BlockTypes.parse(type.get().name()).getDefaultState();
-						es.setBlock(x, y, z, state);
-					}
-					return true;
-				});
+    @Override
+    public void build(org.bukkit.World world, Region region, MaterialType type, boolean replaceBlocks) {
+        Bukkit.getScheduler().runTaskAsynchronously(SkyMines.getInstance(), () -> {
+            World faweWorld = FaweAPI.getWorld(world.getName());
+            try (EditSession es = WorldEdit.getInstance().newEditSession(faweWorld)) {
+                region.handler((x, y, z) -> {
+                    if (replaceBlocks || es.getBlock(x, y, z).isAir()) {
+                        BlockState state = BlockTypes.parse(type.get().name()).getDefaultState();
+                        es.setBlock(x, y, z, state);
+                    }
+                    return true;
+                });
 
-				es.flushQueue();
-			}
-		});
-	}
+                es.flushQueue();
+            }
+        });
+    }
 }
