@@ -6,7 +6,13 @@ import com.github.colingrime.storage.sql.connection.file.SqliteConnectionProvide
 import com.github.colingrime.storage.sql.connection.hikari.MySqlConnectionProvider;
 import com.github.colingrime.storage.yaml.YamlStorage;
 
-public record StorageFactory(SkyMines plugin) {
+public class StorageFactory {
+
+    private final SkyMines plugin;
+
+    public StorageFactory(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     public Storage createStorage() {
         StorageType storageType = plugin.getSettings().getStorageType();

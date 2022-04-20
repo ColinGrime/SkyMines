@@ -26,7 +26,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
 
-public record PlayerListeners(SkyMines plugin) implements Listener {
+public class PlayerListeners implements Listener {
+
+    private final SkyMines plugin;
 
     public PlayerListeners(SkyMines plugin) {
         this.plugin = plugin;

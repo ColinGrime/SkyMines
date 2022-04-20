@@ -2,7 +2,17 @@ package com.github.colingrime.skymines.structure;
 
 import com.github.colingrime.utils.Utils;
 
-public record MineSize(int length, int height, int width) {
+public class MineSize {
+
+    private final int length;
+    private final int height;
+    private final int width;
+
+    public MineSize(int length, int height, int width) {
+        this.length = length;
+        this.height = height;
+        this.width = width;
+    }
 
     public static String parse(MineSize size) {
         return size.length + ":" + size.height + ":" + size.width;

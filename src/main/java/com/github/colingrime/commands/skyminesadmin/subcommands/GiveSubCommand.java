@@ -13,7 +13,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public record GiveSubCommand(SkyMines plugin) implements SubCommand {
+public class GiveSubCommand implements SubCommand {
+
+    private final SkyMines plugin;
+
+    public GiveSubCommand(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {

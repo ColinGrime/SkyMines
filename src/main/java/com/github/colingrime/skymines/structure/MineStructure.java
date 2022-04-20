@@ -43,6 +43,32 @@ public class MineStructure {
         this.inside = _getInside();
     }
 
+    public static String serialize(MineStructure structure) {
+        String startCorner = Utils.parseLocation(structure.startCorner);
+        String endCorner = Utils.parseLocation(structure.endCorner);
+        String size = MineSize.parse(structure.size);
+        String borderType = structure.borderType.name();
+        return startCorner + '\n' + endCorner + '\n' + size + '\n' + borderType;
+    }
+
+    public static MineStructure deserialize(String text) {
+        String[] texts = text.split("\n");
+        if (texts.length < 3) {
+            return null;
+        }
+
+        Location startCorner = Utils.parseLocation(texts[0]);
+        Location endCorner = Utils.parseLocation(texts[1]);
+        MineSize size = MineSize.parse(texts[2]);
+        Material borderType = texts.length == 4 ? Material.getMaterial(texts[3]) : Material.BEDROCK;
+
+        if (startCorner == null || endCorner == null || size == null) {
+            return null;
+        }
+
+        return new MineStructure(startCorner, endCorner, size, borderType);
+    }
+
     /**
      * Gets the mine structure's inside region.
      */
@@ -111,12 +137,8 @@ public class MineStructure {
         return true;
     }
 
-    public static String serialize(MineStructure structure) {
-        String startCorner = Utils.parseLocation(structure.startCorner);
-        String endCorner = Utils.parseLocation(structure.endCorner);
-        String size = MineSize.parse(structure.size);
-        String borderType = structure.borderType.name();
-        return startCorner + '\n' + endCorner + '\n' + size + '\n' + borderType;
+    public void buildParameter() {
+        getBehavior().build(world, parameter, new MaterialSingle(borderType));
     }
 
     public void buildInside(MaterialVariety blockVariety) {
@@ -137,22 +159,8 @@ public class MineStructure {
         return size;
     }
 
-    public static MineStructure deserialize(String text) {
-        String[] texts = text.split("\n");
-        if (texts.length < 3) {
-            return null;
-        }
-
-        Location startCorner = Utils.parseLocation(texts[0]);
-        Location endCorner = Utils.parseLocation(texts[1]);
-        MineSize size = MineSize.parse(texts[2]);
-        Material borderType = texts.length == 4 ? Material.getMaterial(texts[3]) : Material.BEDROCK;
-
-        if (startCorner == null || endCorner == null || size == null) {
-            return null;
-        }
-
-        return new MineStructure(startCorner, endCorner, size, borderType);
+    public Material getBorderType() {
+        return borderType;
     }
 
     public ParameterRegion getParameter() {
@@ -161,13 +169,5 @@ public class MineStructure {
 
     public CuboidRegion getInside() {
         return inside;
-    }
-
-    public void buildParameter() {
-        getBehavior().build(world, parameter, new MaterialSingle(borderType));
-    }
-
-    public Material getBorderType() {
-        return borderType;
     }
 }

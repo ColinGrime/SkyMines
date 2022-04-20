@@ -12,7 +12,13 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
-public record DefaultSkyMineFactory(SkyMines plugin) implements SkyMineFactory {
+public class DefaultSkyMineFactory implements SkyMineFactory {
+
+    private final SkyMines plugin;
+
+    public DefaultSkyMineFactory(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public Optional<SkyMine> createSkyMine(Player owner, Location location, MineSize size, SkyMineUpgrades upgrades, Material borderType) {

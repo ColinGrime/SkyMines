@@ -28,6 +28,10 @@ public abstract class Panel implements InventoryHolder {
         this.viewer = viewer;
     }
 
+    public static Map<Player, Panel> getPanelViewers() {
+        return panelViewers;
+    }
+
     /**
      * Attempts to set up the Inventory.
      *
@@ -56,10 +60,6 @@ public abstract class Panel implements InventoryHolder {
         Bukkit.getScheduler().runTask(plugin, viewer::closeInventory);
     }
 
-    public static Map<Player, Panel> getPanelViewers() {
-        return panelViewers;
-    }
-
     public void setItem(int slotNum, Material material) {
         setItem(slotNum, new ItemStack(material));
     }
@@ -83,14 +83,6 @@ public abstract class Panel implements InventoryHolder {
         }
     }
 
-    /**
-     * Interface for actions ran from inventory clicks.
-     */
-    @FunctionalInterface
-    public interface MenuAction {
-        void click(Player player, ClickType clickType);
-    }
-
     public Player getViewer() {
         return viewer;
     }
@@ -102,5 +94,13 @@ public abstract class Panel implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
         return inventory;
+    }
+
+    /**
+     * Interface for actions ran from inventory clicks.
+     */
+    @FunctionalInterface
+    public interface MenuAction {
+        void click(Player player, ClickType clickType);
     }
 }

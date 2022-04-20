@@ -1,0 +1,55 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+}
+
+group 'com.github.colingrime'
+version '1.2.2'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'https://jitpack.io' }
+
+    // NBTAPI
+    maven { url 'https://repo.codemc.org/repository/maven-public/' }
+
+    // FastAsyncWorldEdit
+    maven { url 'https://mvn.intellectualsites.com/content/groups/public/' }
+}
+
+dependencies {
+    // Spigot and Minecraft plugin dependencies
+    implementation 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    implementation 'com.github.MilkBowl:VaultAPI:1.7'
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.9.2'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.1.1'
+
+    // SQL stuff
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+
+    // Annotations
+    implementation 'org.jetbrains:annotations:16.0.2'
+}
+
+shadowJar {
+    dependencies {
+        include dependency('de.tr7zw:item-nbt-api-plugin:2.9.2')
+        include dependency('com.zaxxer:HikariCP:4.0.3')
+    }
+
+    archiveFileName = "${project.name}-${project.version}.jar"
+}
+
+// Allows @version@ placeholder in plugin.yml
+processResources {
+    filter ReplaceTokens, tokens: ['version': version]
+}

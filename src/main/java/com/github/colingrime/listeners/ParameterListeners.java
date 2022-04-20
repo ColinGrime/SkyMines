@@ -15,7 +15,9 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 /**
  * Used to block access from breaking the parameter of a mine.
  */
-public record ParameterListeners(SkyMines plugin) implements Listener {
+public class ParameterListeners implements Listener {
+
+    private final SkyMines plugin;
 
     public ParameterListeners(SkyMines plugin) {
         this.plugin = plugin;

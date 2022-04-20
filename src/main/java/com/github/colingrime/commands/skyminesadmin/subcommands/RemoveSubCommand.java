@@ -11,7 +11,13 @@ import org.bukkit.command.CommandSender;
 import java.util.Optional;
 import java.util.UUID;
 
-public record RemoveSubCommand(SkyMines plugin) implements SubCommand {
+public class RemoveSubCommand implements SubCommand {
+
+    private final SkyMines plugin;
+
+    public RemoveSubCommand(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {

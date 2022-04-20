@@ -4,14 +4,20 @@ import com.github.colingrime.SkyMines;
 import com.github.colingrime.locale.Replacer;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Optional;
 
-public record DefaultSkyMineToken(SkyMines plugin) implements SkyMineToken {
+public class DefaultSkyMineToken implements SkyMineToken {
+
+    private final SkyMines plugin;
+
+    public DefaultSkyMineToken(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public ItemStack getToken() {

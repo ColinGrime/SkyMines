@@ -2,9 +2,9 @@ package com.github.colingrime.utils;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONValue;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,7 +32,7 @@ public final class UUIDFinder {
 
         // attempts to retrieve the uuid from the Mojang API
         try (BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream()))) {
-            JsonElement idElement = ((JsonObject) JSONValue.parseWithException(in)).get("id");
+            JsonElement idElement = ((JsonObject) JsonParser.parseReader(in)).get("id");
             if (idElement != null) {
                 return storeAndReturnUuid(name, getUuidFromString(idElement.toString()));
             }

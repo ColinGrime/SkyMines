@@ -12,7 +12,13 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 import java.util.UUID;
 
-public record LookupSubCommand(SkyMines plugin) implements SubCommand {
+public class LookupSubCommand implements SubCommand {
+
+    private final SkyMines plugin;
+
+    public LookupSubCommand(SkyMines plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {

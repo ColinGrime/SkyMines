@@ -35,6 +35,10 @@ public class SkyMines extends JavaPlugin {
     private PanelSettings panelSettings;
     private Storage storage;
 
+    public static SkyMines getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
         try {
@@ -111,10 +115,6 @@ public class SkyMines extends JavaPlugin {
     private void registerCommands() {
         new SkyMinesBaseCommand(this);
         new SkyMinesAdminBaseCommand(this);
-    }
-
-    public static SkyMines getInstance() {
-        return instance;
     }
 
     private void registerListeners() {
