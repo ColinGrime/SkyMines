@@ -1,5 +1,6 @@
 package com.github.colingrime.skymines.token;
 
+import com.github.colingrime.config.custom.implementation.TokenConfig;
 import com.github.colingrime.skymines.structure.MineSize;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import org.bukkit.Material;
@@ -10,24 +11,10 @@ import java.util.Optional;
 public interface SkyMineToken {
 
 	/**
-	 * @return default skymine token
-	 */
-	ItemStack getToken();
-
-	/**
-	 * @param size size of the mine
-	 * @param borderType border type of the mine
-	 * @return skymine token with custom size and upgrades
-	 */
-	ItemStack getToken(MineSize size, Material borderType);
-
-	/**
-	 * @param size size of the mine
-	 * @param upgrades upgrades of the mine
-	 * @param borderType border type of the mine
+	 * @param token the TokenItem object you want to be physical
 	 * @return skymine token with custom size, upgrades, and border type
 	 */
-	ItemStack getToken(MineSize size, SkyMineUpgrades upgrades, Material borderType);
+	ItemStack getToken(TokenConfig.TokenItem token);
 
 	/**
 	 * @param item any item

@@ -1,0 +1,9 @@
+OreSmall:
+  item:
+    type: TRIPWIRE_HOOK
+    name: '&e&lSkyMine Ore Token &7[%size%&7]'
+    lore:
+      - '&7Right Click → &ePlaces Structure'
+  upgrades: [Ores, Depth, Reset]
+  size: [50, 50, 50]
+  border-type: BEDROCK
