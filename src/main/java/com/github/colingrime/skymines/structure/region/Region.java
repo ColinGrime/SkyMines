@@ -7,6 +7,8 @@ public interface Region {
 
 	/**
 	 * Sets the points of the region.
+	 * Explicitly called when a region is first created.
+	 *
 	 * @param pt1 first point
 	 * @param pt2 second point
 	 */
