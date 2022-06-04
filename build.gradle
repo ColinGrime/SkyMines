@@ -11,7 +11,7 @@ java {
 }
 
 group 'com.github.colingrime'
-version '1.2.2'
+version '2.0.0'
 
 repositories {
     mavenCentral()
@@ -24,6 +24,9 @@ repositories {
 
     // FastAsyncWorldEdit
     maven { url 'https://mvn.intellectualsites.com/content/groups/public/' }
+
+    // WorldGuard
+    maven { url "https://maven.enginehub.org/repo/" }
 }
 
 dependencies {
@@ -32,6 +35,7 @@ dependencies {
     implementation 'com.github.MilkBowl:VaultAPI:1.7'
     implementation 'de.tr7zw:item-nbt-api-plugin:2.9.2'
     implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.1.1'
+    implementation 'com.sk89q.worldguard:worldguard-bukkit:7.0.7'
 
     // SQL stuff
     implementation 'com.zaxxer:HikariCP:4.0.3'
