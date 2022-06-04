@@ -4,14 +4,13 @@ import com.github.colingrime.SkyMines;
 import com.github.colingrime.panel.Panel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-public class PanelListeners implements Listener {
+public class PanelListeners extends AbstractListener {
 
     public PanelListeners(SkyMines plugin) {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        super(plugin);
     }
 
     @EventHandler

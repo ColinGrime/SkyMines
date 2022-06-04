@@ -7,15 +7,11 @@ import com.github.colingrime.locale.Replacer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 
-public class SkyMineListeners implements Listener {
-
-	private final SkyMines plugin;
+public class SkyMineListeners extends AbstractListener {
 
 	public SkyMineListeners(SkyMines plugin) {
-		this.plugin = plugin;
-		this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		super(plugin);
 	}
 
 	@EventHandler

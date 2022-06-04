@@ -16,7 +16,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -26,13 +25,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
 
-public class PlayerListeners implements Listener {
-
-	private final SkyMines plugin;
+public class PlayerListeners extends AbstractListener {
 
 	public PlayerListeners(SkyMines plugin) {
-		this.plugin = plugin;
-		this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		super(plugin);
 	}
 
 	@EventHandler
@@ -68,6 +64,11 @@ public class PlayerListeners implements Listener {
 		SkyMineToken token = manager.getToken();
 
 		if (token.isToken(item)) {
+			if (!player.hasPermission("skymines.use")) {
+				Messages.FAILURE_NO_PERMISSION.sendTo(player);
+				return;
+			}
+
 			if (manager.getSkyMines(player).size() >= plugin.getSettings().getMaxPerPlayer()) {
 				Messages.FAILURE_MAX_AMOUNT.sendTo(player);
 				return;
@@ -109,10 +110,6 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onPlayerBlockBreak(BlockBreakEvent event) {
 		Block block = event.getBlock();
-		if (!plugin.getSettings().getAllPossibleMaterials().contains(block.getType())) {
-			return;
-		}
-
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
 			if (skyMine.getStructure().getInside().contains(block.getLocation().toVector())) {
 				SkyMineBlockBreakEvent blockBreakEvent = new SkyMineBlockBreakEvent(event, skyMine);

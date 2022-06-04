@@ -5,20 +5,19 @@ import com.github.colingrime.skymines.SkyMine;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
  * Used to block access from breaking the parameter of a mine.
  */
-public class ParameterListeners implements Listener {
-
-	private final SkyMines plugin;
+public class ParameterListeners extends AbstractListener {
 
 	public ParameterListeners(SkyMines plugin) {
-		this.plugin = plugin;
-		this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		super(plugin);
 	}
 
 	@EventHandler
