@@ -7,13 +7,14 @@ import com.github.colingrime.skymines.structure.MineStructure;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
 import com.github.colingrime.storage.Storage;
 import com.github.colingrime.storage.sql.connection.ConnectionProvider;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.utils.LocationUtils;
 import org.bukkit.Location;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -66,6 +67,7 @@ public class SqlStorage implements Storage {
 			if (is == null) {
 				throw new IOException("Schema file not found (" + path + ")");
 			}
+
 			queries = SchemaReader.getQueries(is);
 		}
 
@@ -95,11 +97,11 @@ public class SqlStorage implements Storage {
 					UUID uuid = UUID.fromString(rs.getString(1));
 					UUID owner = UUID.fromString(rs.getString(2));
 					MineStructure structure = MineStructure.deserialize(rs.getString(3));
-					Location home = Utils.parseLocation(rs.getString(4));
-					SkyMineUpgrades upgrades = SkyMineUpgrades.parse(rs.getString(5));
+					Optional<Location> home = LocationUtils.deserializeLocation(rs.getString(4));
+					Optional<SkyMineUpgrades> upgrades = SkyMineUpgrades.deserialize(rs.getString(5));
 
-					if (structure != null && home != null) {
-						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, home, upgrades);
+					if (structure != null && home.isPresent() && upgrades.isPresent()) {
+						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, home.get(), upgrades.get());
 						plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 					}
 				}
@@ -127,13 +129,13 @@ public class SqlStorage implements Storage {
 	private void updateMine(SkyMine skyMine) throws SQLException {
 		try (Connection c = connectionProvider.getConnection()) {
 			try (PreparedStatement ps = c.prepareStatement(statementProcessor.apply(MINES_UPDATE_HOME))) {
-				ps.setString(1, Utils.parseLocation(skyMine.getHome()));
+				ps.setString(1, LocationUtils.serializeLocation(skyMine.getHome()));
 				ps.setString(2, skyMine.getUUID().toString());
 				ps.executeUpdate();
 			}
 
 			try (PreparedStatement ps = c.prepareStatement(statementProcessor.apply(MINES_UPDATE_UPGRADES))) {
-				ps.setString(1, SkyMineUpgrades.parse(skyMine.getUpgrades()));
+				ps.setString(1, SkyMineUpgrades.serialize(skyMine.getUpgrades()));
 				ps.setString(2, skyMine.getUUID().toString());
 				ps.executeUpdate();
 			}
@@ -146,8 +148,8 @@ public class SqlStorage implements Storage {
 				ps.setString(1, skyMine.getUUID().toString());
 				ps.setString(2, skyMine.getOwner().toString());
 				ps.setString(3, MineStructure.serialize(skyMine.getStructure()));
-				ps.setString(4, Utils.parseLocation(skyMine.getHome()));
-				ps.setString(5, SkyMineUpgrades.parse(skyMine.getUpgrades()));
+				ps.setString(4, LocationUtils.serializeLocation(skyMine.getHome()));
+				ps.setString(5, SkyMineUpgrades.serialize(skyMine.getUpgrades()));
 				ps.executeUpdate();
 			}
 		}

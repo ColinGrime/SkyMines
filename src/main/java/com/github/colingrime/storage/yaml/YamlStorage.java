@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class YamlStorage implements Storage {
@@ -43,15 +44,17 @@ public class YamlStorage implements Storage {
 	@Override
 	public void loadMines() {
 		ConfigurationSection sec = config.getConfigurationSection("");
-		for (String uuidString : Objects.requireNonNull(sec).getKeys(false)) {
+		Objects.requireNonNull(sec, "mines.yml");
+
+		for (String uuidString : sec.getKeys(false)) {
 			UUID uuid = UUID.fromString(uuidString);
 			UUID owner = UUID.fromString(Objects.requireNonNull(sec.getString(uuidString + ".owner")));
 			MineStructure structure = MineStructure.deserialize(Objects.requireNonNull(sec.getString(uuidString + ".structure")));
 			Location home = sec.getObject(uuidString + ".home", Location.class);
-			SkyMineUpgrades upgrades = SkyMineUpgrades.parse(Objects.requireNonNull(sec.getString(uuidString + ".upgrades")));
+			Optional<SkyMineUpgrades> upgrades = SkyMineUpgrades.deserialize(sec.getString(uuidString + ".upgrades"));
 
-			if (structure != null && home != null) {
-				SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, home, upgrades);
+			if (home != null && upgrades.isPresent()) {
+				SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, home, upgrades.get());
 				plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 			}
 		}
@@ -63,7 +66,7 @@ public class YamlStorage implements Storage {
 		config.set(uuid + ".owner", skyMine.getOwner().toString());
 		config.set(uuid + ".structure", MineStructure.serialize(skyMine.getStructure()));
 		config.set(uuid + ".home", skyMine.getHome());
-		config.set(uuid + ".upgrades", SkyMineUpgrades.parse(skyMine.getUpgrades()));
+		config.set(uuid + ".upgrades", SkyMineUpgrades.serialize(skyMine.getUpgrades()));
 		save();
 	}
 
