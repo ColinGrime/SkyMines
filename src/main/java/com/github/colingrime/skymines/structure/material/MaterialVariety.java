@@ -13,21 +13,12 @@ public class MaterialVariety implements MaterialType {
 	private final Random random = new Random();
 	private double totalPercentages = 0;
 
-	public void addType(String materialString, String chanceString) {
-		Material material = Material.matchMaterial(materialString);
-		chanceString = chanceString.replaceAll("%", "");
-
-		if (material != null && chanceString.matches("\\d+(\\.\\d+)?")) {
-			addType(material, Double.parseDouble(chanceString));
-		}
-	}
-
 	/**
 	 * @param material any material
 	 * @param chance chance that the specified material will drop
 	 */
 	public void addType(Material material, double chance) {
-		if (chance <= 0) {
+		if (material == null || chance <= 0) {
 			return;
 		}
 
