@@ -2,8 +2,6 @@ package com.github.colingrime.utils;
 
 public final class Timer {
 
-	private Timer() {}
-
 	/**
 	 * Times a method.
 	 * @param action any method you want timed
@@ -18,5 +16,9 @@ public final class Timer {
 	@FunctionalInterface
 	public interface Action {
 		void run() throws Exception;
+	}
+
+	private Timer() {
+		throw new UnsupportedOperationException("This class cannot be instantiated.");
 	}
 }
