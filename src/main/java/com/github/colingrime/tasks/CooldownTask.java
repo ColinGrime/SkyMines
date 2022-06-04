@@ -9,17 +9,16 @@ import java.util.List;
 
 public class CooldownTask extends BukkitRunnable {
 
-	private final List<Cooldown> cooldownList = new ArrayList<>();
+	private final List<Cooldown> cooldowns = new ArrayList<>();
 
 	@Override
 	public void run() {
-		Iterator<Cooldown> cooldownIterator = cooldownList.iterator();
-		while (cooldownIterator.hasNext()) {
-			Cooldown cooldown = cooldownIterator.next();
+		for (Iterator<Cooldown> i = cooldowns.iterator(); i.hasNext();) {
+			Cooldown cooldown = i.next();
 
 			// check for cooldown completion
 			if (cooldown.getCooldownLeft() <= 0) {
-				cooldownIterator.remove();
+				i.remove();
 
 				// only returns true if cooldown was finished normally
 				if (cooldown.isCooldownFinished()) {
@@ -29,7 +28,7 @@ public class CooldownTask extends BukkitRunnable {
 		}
 	}
 
-	public List<Cooldown> getCooldownList() {
-		return cooldownList;
+	public List<Cooldown> getCooldowns() {
+		return cooldowns;
 	}
 }
