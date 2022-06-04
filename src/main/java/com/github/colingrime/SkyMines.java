@@ -3,6 +3,8 @@ package com.github.colingrime;
 import com.github.colingrime.commands.skymines.SkyMinesBaseCommand;
 import com.github.colingrime.commands.skyminesadmin.SkyMinesAdminBaseCommand;
 import com.github.colingrime.config.Settings;
+import com.github.colingrime.config.custom.implementation.TokenConfig;
+import com.github.colingrime.config.custom.implementation.UpgradeConfig;
 import com.github.colingrime.dependencies.DependencyFailureException;
 import com.github.colingrime.dependencies.DependencyManager;
 import com.github.colingrime.listeners.PanelListeners;
@@ -11,7 +13,7 @@ import com.github.colingrime.listeners.PlayerListeners;
 import com.github.colingrime.listeners.SkyMineListeners;
 import com.github.colingrime.locale.Messages;
 import com.github.colingrime.metrics.Metrics;
-import com.github.colingrime.panel.setup.PanelSettings;
+import com.github.colingrime.config.custom.implementation.PanelConfig;
 import com.github.colingrime.skymines.factory.DefaultSkyMineFactory;
 import com.github.colingrime.skymines.manager.CooldownManager;
 import com.github.colingrime.skymines.manager.SkyMineManager;
@@ -31,8 +33,12 @@ public class SkyMines extends JavaPlugin {
 	private DependencyManager dependencyManager;
 	private SkyMineManager skyMineManager;
 	private CooldownManager cooldownManager;
+
+	// TODO put them in a Map to reload easier
 	private Settings settings;
-	private PanelSettings panelSettings;
+	private UpgradeConfig upgrades;
+	private TokenConfig tokens;
+	private PanelConfig panelSettings;
 	private Storage storage;
 
 	@Override
@@ -79,7 +85,9 @@ public class SkyMines extends JavaPlugin {
 	 */
 	private void loadData() {
 		settings = new Settings(this);
-		panelSettings = new PanelSettings(this);
+		upgrades = new UpgradeConfig(this);
+		tokens = new TokenConfig(this);
+		panelSettings = new PanelConfig(this);
 		Messages.init(this);
 		reload();
 	}
@@ -89,6 +97,8 @@ public class SkyMines extends JavaPlugin {
 	 */
 	public void reload() {
 		settings.reload();
+		upgrades.reload();
+		tokens.reload();
 		panelSettings.reload();
 		Messages.reload();
 	}
@@ -140,7 +150,15 @@ public class SkyMines extends JavaPlugin {
 		return settings;
 	}
 
-	public PanelSettings getPanelSettings() {
+	public UpgradeConfig getUpgrades() {
+		return upgrades;
+	}
+
+	public TokenConfig getTokens() {
+		return tokens;
+	}
+
+	public PanelConfig getPanelSettings() {
 		return panelSettings;
 	}
 
