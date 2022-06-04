@@ -6,7 +6,7 @@ authors: [Scill]
 description: Personal Mines (in the sky!)
 api-version: 1.13
 depend: [Vault]
-softdepend: [FastAsyncWorldEdit]
+softdepend: [FastAsyncWorldEdit, WorldGuard]
 
 commands:
   skymines:
