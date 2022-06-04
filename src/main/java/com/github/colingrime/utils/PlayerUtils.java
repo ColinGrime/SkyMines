@@ -6,8 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 public final class PlayerUtils {
 
-	private PlayerUtils() {}
-
 	/**
 	 * Removes a single item from the player's hand.
 	 * @param player any player
@@ -36,5 +34,9 @@ public final class PlayerUtils {
 		for (ItemStack itemDrop : player.getInventory().addItem(item).values()) {
 			player.getWorld().dropItemNaturally(player.getLocation(), itemDrop);
 		}
+	}
+
+	private PlayerUtils() {
+		throw new UnsupportedOperationException("This class cannot be instantiated.");
 	}
 }

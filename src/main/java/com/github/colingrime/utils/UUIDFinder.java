@@ -17,8 +17,6 @@ public final class UUIDFinder {
 
 	private static final Map<String, UUID> uuidCache = new HashMap<>();
 
-	private UUIDFinder() {}
-
 	public static UUID fromName(String name) {
 		if (uuidCache.containsKey(name)) {
 			return uuidCache.get(name);
@@ -45,7 +43,11 @@ public final class UUIDFinder {
 		return uuid;
 	}
 
-	private static UUID getUuidFromString(String uuidString) {
-		return UUID.fromString(uuidString.replaceAll("\"", "").replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5"));
+	private static UUID getUuidFromString(String str) {
+		return UUID.fromString(str.replaceAll("\"", "").replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5"));
+	}
+
+	private UUIDFinder() {
+		throw new UnsupportedOperationException("This class cannot be instantiated.");
 	}
 }
