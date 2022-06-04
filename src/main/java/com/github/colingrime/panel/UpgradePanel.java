@@ -8,8 +8,8 @@ import com.github.colingrime.panel.setup.slot.StandardPanelSlot;
 import com.github.colingrime.panel.setup.slot.UpgradePanelSlot;
 import com.github.colingrime.skymines.SkyMine;
 import com.github.colingrime.skymines.upgrades.SkyMineUpgrades;
-import com.github.colingrime.skymines.upgrades.types.SkyMineUpgrade;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.skymines.upgrades.factory.SkyMineUpgrade;
+import com.github.colingrime.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -43,8 +43,8 @@ public class UpgradePanel extends Panel {
 
 			UpgradePanelSlot upgradeSlot = (UpgradePanelSlot) panelSlot;
 			setItem(slotNum, upgradeSlot.getUpgradeItem(upgrades), (player, clickType) -> {
-				if (clickType == ClickType.LEFT) {
-					attemptUpgrade(player, upgrades.getUpgrade(upgradeSlot.getUpgradeType()));
+				if (clickType == ClickType.LEFT && upgrades.getUpgrade(upgradeSlot.getUpgradeType()).isPresent()) {
+					attemptUpgrade(player, upgrades.getUpgrade(upgradeSlot.getUpgradeType()).get());
 					getViewer().closeInventory();
 				}
 			});
@@ -58,7 +58,7 @@ public class UpgradePanel extends Panel {
 	 * @param player any player
 	 * @param upgrade any upgrade
 	 */
-	private void attemptUpgrade(Player player, SkyMineUpgrade upgrade) {
+	private void attemptUpgrade(Player player, SkyMineUpgrade<?> upgrade) {
 		// check if the upgrade can be upgraded
 		if (!upgrade.canBeUpgraded()) {
 			Messages.FAILURE_ALREADY_MAXED.sendTo(player);
@@ -71,7 +71,7 @@ public class UpgradePanel extends Panel {
 
 		// attempt upgrade
 		else if (upgrade.levelUp(player)) {
-			Replacer replacer = new Replacer("%upgrade%", Utils.format(upgrade.getType().name()));
+			Replacer replacer = new Replacer("%upgrade%", StringUtils.format(upgrade.getUpgradeType().name()));
 			replacer.add("%level%", upgrade.getLevel());
 
 			// send success message and save the skymine's state

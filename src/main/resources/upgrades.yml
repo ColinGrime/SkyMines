@@ -1,0 +1,65 @@
+# Usage information: TODO add link
+defaults:
+  block-variety: Ores
+  depth-increase: Depth
+  reset-cooldown: Reset
+
+# Default path for block-variety:
+Ores:
+  type: block-variety
+  default:
+    upgrade:
+      - STONE 90%
+      - IRON_ORE 10%
+      - GOLD_ORE 5%
+  2:
+    cost: 100000
+    upgrade:
+      - STONE 70%
+      - IRON_ORE 15%
+      - GOLD_ORE 10%
+      - REDSTONE_ORE 5%
+      - LAPIS_ORE 5%
+  3:
+    cost: 250000
+    upgrade:
+      - STONE 50%
+      - IRON_ORE 20%
+      - GOLD_ORE 15%
+      - REDSTONE_ORE 7.5%
+      - LAPIS_ORE 7.5%
+      - DIAMOND_ORE 2%
+  4:
+    cost: 750000
+    upgrade:
+      - STONE 30%
+      - IRON_ORE 25%
+      - GOLD_ORE 25%
+      - REDSOTNE_ORE 10%
+      - LAPIS_ORE 10%
+      - DIAMOND_ORE 5%
+      - EMERALD_ORE 5%
+
+# Default path for depth-increase:
+Depth:
+  type: depth-increase
+  default:
+    upgrade: 0
+  2:
+    cost: 100000
+    upgrade: 2
+  3:
+    cost: 150000
+    upgrade: 2
+  4:
+    cost: 150000
+    upgrade: 2
+
+# Default path for reset-cooldown:
+Reset:
+  type: reset-cooldown
+  default:
+    upgrade: 5 minutes
+  2:
+    cost: 10000
+    upgrade: 2 minutes
