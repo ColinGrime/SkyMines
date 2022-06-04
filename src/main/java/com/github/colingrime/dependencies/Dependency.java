@@ -3,11 +3,12 @@ package com.github.colingrime.dependencies;
 import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.skymines.structure.behavior.DefaultBuildBehavior;
 import com.github.colingrime.skymines.structure.behavior.FastBuildBehavior;
+import com.sk89q.worldguard.WorldGuard;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public enum Dependency {
+enum Dependency {
 
 	VAULT("Vault", true, (manager, plugin) -> {
 		RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
@@ -20,6 +21,12 @@ public enum Dependency {
 	FAWE("FastAsyncWorldEdit", false, (manager, plugin) -> {
 		BuildBehavior behavior = plugin == null ? new DefaultBuildBehavior() : new FastBuildBehavior();
 		manager.setBuildBehavior(behavior);
+	}),
+
+	WORLD_GUARD("WorldGuard", false, (manager, plugin) -> {
+		if (plugin != null && plugin.isEnabled()) {
+			manager.setRegionContainer(WorldGuard.getInstance().getPlatform().getRegionContainer());
+		}
 	});
 
 	private final String name;
@@ -45,7 +52,7 @@ public enum Dependency {
 	}
 
 	@FunctionalInterface
-	public interface Registry<A, B> {
+	interface Registry<A, B> {
 		void apply(A a, B b) throws DependencyFailureException;
 	}
 }

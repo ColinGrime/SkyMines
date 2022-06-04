@@ -3,6 +3,7 @@ package com.github.colingrime.dependencies;
 import com.github.colingrime.SkyMines;
 import com.github.colingrime.skymines.structure.behavior.BuildBehavior;
 import com.github.colingrime.utils.Logger;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
 
@@ -12,6 +13,7 @@ public class DependencyManager {
 
 	private Economy econ;
 	private BuildBehavior buildbehavior;
+	private RegionContainer regionContainer;
 
 	public DependencyManager(SkyMines plugin) {
 		this.plugin = plugin;
@@ -60,5 +62,13 @@ public class DependencyManager {
 
 	protected void setBuildBehavior(BuildBehavior buildBehavior) {
 		this.buildbehavior = buildBehavior;
+	}
+
+	protected void setRegionContainer(RegionContainer regionContainer) {
+		this.regionContainer = regionContainer;
+	}
+
+	public RegionContainer getRegionContainer() {
+		return regionContainer;
 	}
 }
