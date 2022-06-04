@@ -1,42 +1,30 @@
-package com.github.colingrime.skymines.structure.region;
+package com.github.colingrime.skymines.structure.region.implementation;
 
 import com.github.colingrime.skymines.structure.region.functional.TriPredicate;
 import org.bukkit.util.Vector;
 
-public class CuboidRegion implements Region {
+public class CuboidRegion extends AbstractRegion {
 
 	private Vector min;
 	private Vector max;
 
-	public CuboidRegion() {}
+	private CuboidRegion(Vector pt1, Vector pt2) {
+		super(pt1, pt2);
+	}
 
-	public CuboidRegion(Vector pt1, Vector pt2) {
-		setPoints(pt1, pt2);
+	/**
+	 * @param pt1 first point
+	 * @param pt2 second point
+	 * @return CuboidRegion with the specified points
+	 */
+	public static CuboidRegion of(Vector pt1, Vector pt2) {
+		return new CuboidRegion(pt1, pt2);
 	}
 
 	@Override
 	public void setPoints(Vector pt1, Vector pt2) {
-		int x1 = pt1.getBlockX();
-		int y1 = pt1.getBlockY();
-		int z1 = pt1.getBlockZ();
-		int x2 = pt2.getBlockX();
-		int y2 = pt2.getBlockY();
-		int z2 = pt2.getBlockZ();
-
-		int minX = Math.min(x1, x2);
-		int minY = Math.min(y1, y2);
-		int minZ = Math.min(z1, z2);
-		int maxX = minX == x1 ? x2 : x1;
-		int maxY = minY == y1 ? y2 : y1;
-		int maxZ = minZ == z1 ? z2 : z1;
-
-		min = new Vector(minX, minY, minZ);
-		max = new Vector(maxX, maxY, maxZ);
-	}
-
-	@Override
-	public boolean contains(Vector pt) {
-		return containsWithin(pt, 0);
+		this.min = new Vector(points.minX, points.minY, points.minZ);
+		this.max = new Vector(points.maxX, points.maxY, points.maxZ);
 	}
 
 	@Override
@@ -63,13 +51,5 @@ public class CuboidRegion implements Region {
 		}
 
 		return true;
-	}
-
-	public void setMin(Vector min) {
-		this.min = min;
-	}
-
-	public void setMax(Vector max) {
-		this.max = max;
 	}
 }
