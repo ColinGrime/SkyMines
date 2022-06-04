@@ -1,42 +1,37 @@
-package com.github.colingrime.panel.setup;
+package com.github.colingrime.config.custom.implementation;
 
 import com.github.colingrime.SkyMines;
+import com.github.colingrime.panel.setup.PanelData;
 import com.github.colingrime.panel.setup.slot.PanelSlot;
 import com.github.colingrime.panel.setup.slot.StandardPanelSlot;
 import com.github.colingrime.panel.setup.slot.UpgradePanelSlot;
 import com.github.colingrime.panel.setup.slot.meta.PanelSlotMeta;
 import com.github.colingrime.skymines.upgrades.UpgradeType;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public class PanelSettings {
-
-	private final File file;
-	private FileConfiguration config;
+public class PanelConfig extends AbstractConfiguration {
 
 	private PanelData mainPanel;
 	private PanelData upgradePanel;
 
-	public PanelSettings(SkyMines plugin) {
-		this.file = new File(plugin.getDataFolder(), "panel.yml");
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			plugin.saveResource("panel.yml", false);
-		}
+	public PanelConfig(SkyMines plugin) {
+		super(plugin);
 	}
 
-	public void reload() {
-		config = YamlConfiguration.loadConfiguration(file);
+	@Override
+	public String getName() {
+		return "panels";
+	}
 
-		// set new values
+	@Override
+	void updateValues() {
 		mainPanel = _getMainPanel();
 		upgradePanel = _getUpgradePanel();
 	}
@@ -52,6 +47,9 @@ public class PanelSettings {
 		return new PanelData(name, rows, slots);
 	}
 
+	/**
+	 * @return
+	 */
 	public PanelData getMainPanel() {
 		return mainPanel;
 	}
@@ -86,16 +84,12 @@ public class PanelSettings {
 	}
 
 	private String getName(String path) {
-		return Utils.color(config.getString(path + ".name"));
+		return StringUtils.color(config.getString(path + ".name"));
 	}
 
 	private int getRows(String path) {
 		int rows = config.getInt(path + ".rows");
-		if (rows < 1) {
-			return 1;
-		} else {
-			return Math.min(rows, 6);
-		}
+		return rows < 1 ? 1 : Math.min(rows, 6);
 	}
 
 	private void fill(String path, Map<Integer, PanelSlot> slots, int rows) {
@@ -114,11 +108,7 @@ public class PanelSettings {
 
 	private Map<Integer, PanelSlot> getSlots(String path) {
 		ConfigurationSection sec = config.getConfigurationSection(path + ".slots");
-		if (sec == null) {
-			return new HashMap<>();
-		} else {
-			return getSlots(sec);
-		}
+		return sec == null ? new HashMap<>() : getSlots(sec);
 	}
 
 	private Map<Integer, PanelSlot> getSlots(ConfigurationSection sec) {
@@ -137,8 +127,8 @@ public class PanelSettings {
 	 * Gets an upgrade slot given the name of an upgrade.
 	 */
 	private UpgradePanelSlot getUpgradeSlot(String upgradeName) {
-		UpgradeType upgradeType = UpgradeType.parse(upgradeName);
-		if (upgradeType == null) {
+		Optional<UpgradeType> upgradeType = UpgradeType.from(upgradeName);
+		if (upgradeType.isEmpty()) {
 			return null;
 		}
 
@@ -150,18 +140,18 @@ public class PanelSettings {
 
 		ConfigurationSection sec = config.getConfigurationSection(path + ".lore");
 		if (sec == null) {
-			return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta);
+			return new UpgradePanelSlot(upgradeType.get(), slotMeta, maxSlotMeta);
 		}
 
 		// upgrade lore levels
 		Map<Integer, List<String>> lores = new HashMap<>();
 		for (String level : sec.getKeys(false)) {
 			if (level.matches("\\d+")) {
-				lores.put(Integer.parseInt(level), Utils.color(sec.getStringList(level)));
+				lores.put(Integer.parseInt(level), StringUtils.color(sec.getStringList(level)));
 			}
 		}
 
-		return new UpgradePanelSlot(upgradeType, slotMeta, maxSlotMeta, lores);
+		return new UpgradePanelSlot(upgradeType.get(), slotMeta, maxSlotMeta, lores);
 	}
 
 	/*
@@ -169,8 +159,8 @@ public class PanelSettings {
 	 */
 	private PanelSlotMeta getSlotMeta(String path) {
 		Material type = getType(config.getString(path + ".type"));
-		String name = Utils.color(config.getString(path + ".name"));
-		List<String> lore = Utils.color(config.getStringList(path + ".lore"));
+		String name = StringUtils.color(config.getString(path + ".name"));
+		List<String> lore = StringUtils.color(config.getStringList(path + ".lore"));
 		String command = config.getString(path + ".command");
 		return new PanelSlotMeta(type, name, lore, command);
 	}
