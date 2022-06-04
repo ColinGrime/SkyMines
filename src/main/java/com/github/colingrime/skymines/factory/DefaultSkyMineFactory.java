@@ -27,9 +27,9 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			yaw += 360;
 		}
 
-		int length = size.getLength();
-		int height = size.getHeight();
-		int width = size.getWidth();
+		int length = size.length();
+		int height = size.height();
+		int width = size.width();
 		Location endLoc;
 
 		if (yaw >= 0 && yaw <= 35)
@@ -59,7 +59,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// build the mine
 		structure.buildParameter();
-		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
+		structure.buildInside(upgrades.getBlockVariety());
 
 		// creates the home of the mine
 		Location home = location.clone().add(0, 1, 0);

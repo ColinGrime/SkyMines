@@ -17,7 +17,7 @@ public class BuildTask extends BukkitRunnable {
 
 		BlockInfo blockInfo;
 		while (System.currentTimeMillis() <= stopTime && (blockInfo = blocksToPlace.poll()) != null) {
-			blockInfo.getBlock().setType(blockInfo.getType());
+			blockInfo.block().setType(blockInfo.type());
 		}
 
 		// nothing left to place, cancel task

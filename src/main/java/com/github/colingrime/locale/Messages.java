@@ -1,7 +1,7 @@
 package com.github.colingrime.locale;
 
 import com.github.colingrime.utils.Logger;
-import com.github.colingrime.utils.Utils;
+import com.github.colingrime.utils.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +37,7 @@ public enum Messages {
 	FAILURE_NO_FUNDS("failure.no-funds", "&cYou don't have enough money to buy this upgrade."),
 	FAILURE_NO_SKYMINE("failure.no-skymine", "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."),
 	FAILURE_NO_SKYMINES("failure.no-skymines", "&cYou don't have any &eSkyMines&c."),
-	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this command."),
+	FAILURE_NO_PERMISSION("failure.no-permission", "&cYou do not have permission to perform this action."),
 	FAILURE_NO_DROP("failure.no-drop", "&cYou are not allowed to drop your &eSkyMine Token&c."),
 	FAILURE_ON_RESET_COOLDOWN("failure.on-reset-cooldown", "&cThe cooldown on the &eSkyMine &cis &e%time%&c."),
 	FAILURE_ON_PICKUP_COOLDOWN("failure.on-pickup-cooldown", "&cDue to picking up a &eSkyMine&c, you must wait &e%time% &cto place another."),
@@ -117,12 +117,12 @@ public enum Messages {
 
 	public void update() {
 		if (!config.getStringList(path).isEmpty()) {
-			messages = Utils.color(config.getStringList(path));
+			messages = StringUtils.color(config.getStringList(path));
 		} else if (config.getString(path) != null) {
-			messages = Collections.singletonList(Utils.color(config.getString(path)));
+			messages = Collections.singletonList(StringUtils.color(config.getString(path)));
 		} else {
 			Logger.log("Messages path \"" + path + "\" has failed to load (using default value).");
-			messages = Utils.color(messages);
+			messages = StringUtils.color(messages);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class CooldownManager {
 	}
 
 	public void addCooldown(Cooldown cooldown) {
-		cooldownTask.getCooldownList().add(cooldown);
+		cooldownTask.getCooldowns().add(cooldown);
 	}
 
 	public Optional<Cooldown> getPlayerCooldown(Player player) {

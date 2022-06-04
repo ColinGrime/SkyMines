@@ -25,9 +25,9 @@ public class MySqlConnectionProvider extends HikariConnectionProvider {
 	@Override
 	protected void configureDatabase(HikariConfig config, StorageCredentials credentials) {
 		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		config.setJdbcUrl("jdbc:mysql://" + credentials.getHost() + ":" + credentials.getPort() + "/" + credentials.getDatabase());
-		config.setUsername(credentials.getUsername());
-		config.setPassword(credentials.getPassword());
+		config.setJdbcUrl("jdbc:mysql://" + credentials.host() + ":" + credentials.port() + "/" + credentials.database());
+		config.setUsername(credentials.username());
+		config.setPassword(credentials.password());
 	}
 
 	@Override

@@ -19,15 +19,15 @@ public class MainPanel extends Panel {
 	private final SkyMine skyMine;
 
 	public MainPanel(SkyMines plugin, Player viewer, SkyMine skyMine) {
-		super(plugin, Bukkit.createInventory(null, plugin.getPanelSettings().getMainPanel().getRows() * 9,
-				plugin.getPanelSettings().getMainPanel().getName()), viewer);
+		super(plugin, Bukkit.createInventory(null, plugin.getPanelSettings().getMainPanel().rows() * 9,
+				plugin.getPanelSettings().getMainPanel().name()), viewer);
 		this.plugin = plugin;
 		this.skyMine = skyMine;
 	}
 
 	@Override
 	protected boolean setupInventory(String[] args) {
-		for (Map.Entry<Integer, PanelSlot> upgradePanel : plugin.getPanelSettings().getMainPanel().getSlots().entrySet()) {
+		for (Map.Entry<Integer, PanelSlot> upgradePanel : plugin.getPanelSettings().getMainPanel().slots().entrySet()) {
 			int slotNum = upgradePanel.getKey();
 			PanelSlot panelSlot = upgradePanel.getValue();
 			ItemStack item = panelSlot.getItem();
