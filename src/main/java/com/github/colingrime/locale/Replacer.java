@@ -9,6 +9,8 @@ public final class Replacer {
 
 	private final Map<String, String> replacements = new HashMap<>();
 
+	public Replacer() {}
+
 	public Replacer(String placeholder, int replacement) {
 		this(placeholder, String.valueOf(replacement));
 	}
