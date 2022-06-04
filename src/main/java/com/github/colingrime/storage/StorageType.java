@@ -20,7 +20,7 @@ public enum StorageType {
 		}
 
 		// default storage type
-		return StorageType.YAML;
+		return StorageType.SQLITE;
 	}
 
 	public String getName() {
