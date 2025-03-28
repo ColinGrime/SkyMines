@@ -1,17 +1,6 @@
 name: SkyMines
-main: com.github.colingrime.SkyMines
-version: @version@
-
-authors: [Scill]
-description: Personal Mines (in the sky!)
-api-version: 1.13
-depend: [Vault]
-softdepend: [FastAsyncWorldEdit]
-
-commands:
-  skymines:
-    description: Main command for skymines.
-    aliases: [skymine, sm]
-  skyminesadmin:
-    description: Admin section for skymines.
-    aliases: [skymineadmin, smadmin, sma]
+main: me.colingrimes.skymines.SkyMines
+version: ${version}
+api-version: 1.21
+author: Scill
+depend: [Midnight, Vault]

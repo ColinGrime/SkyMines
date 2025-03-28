@@ -2,14 +2,14 @@
 general:
   list-skymines:
     top-message: '&aList of &eSkyMines&a:'
-    repeating-message: '&7→ [#%id%] &eClick to go home. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
-  reset-cooldown-finish: '&aThe &eSkyMine &awith the ID &e%id% &ahas just finished cooling down!'
+    repeating-message: '&7→ [#{id}] &eClick to go home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)'
+  reset-cooldown-finish: '&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down!'
   pickup-cooldown-finish: '&aYou are free to place &eSkyMines &aagain.'
 
 # Success messages:
 success:
-  receive: '&aYou have received &e%amount%x %token%&a!'
-  upgrade: '&aYou have upgraded &e%upgrade% &ato level &e%level%&a!'
+  receive: '&aYou have received &e{amount}x {token}&a!'
+  upgrade: '&aYou have upgraded &e{upgrade} &ato level &e{level}&a!'
   home: '&aYou have been teleported to your &eSkyMine&a!'
   sethome: "&aYou have successfully changed your &eSkyMine&a's home location!"
   reset: '&aThe &eSkyMine &ahas been reset!'
@@ -23,13 +23,13 @@ failure:
   no-space: '&cThere is no space for the &eSkyMine &cto be placed here.'
   no-inventory-space: '&cThere is no space in your inventory to get the &eSkyMine Token&c.'
   no-funds: "&cYou don't have enough money to buy this upgrade."
-  no-skymine: "&cYou don't have a &eSkyMine &cwith the ID: &e%id%&c."
+  no-skymine: "&cYou don't have a &eSkyMine &cwith the ID: &e{id}&c."
   no-skymines: "&cYou don't have any &eSkyMines&c."
   no-permission: '&cYou do not have permission to perform this command.'
   no-drop: '&cYou are not allowed to drop your &eSkyMine Token&c.'
-  on-reset-cooldown: '&cThe cooldown on the &eSkyMine &cis &e%time%&c.'
-  on-pickup-cooldown: '&cDue to picking up a &eSkyMine&c, you must wait &e%time% &cto place another.'
-  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e%time%&c.'
+  on-reset-cooldown: '&cThe cooldown on the &eSkyMine &cis &e{time}&c.'
+  on-pickup-cooldown: '&cDue to picking up a &eSkyMine&c, you must wait &e{time} &cto place another.'
+  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c.'
   already-maxed: "&cThis &eSkyMine&c's upgrade is already maxed out!"
   invalid-sender: '&cYou must be a player to perform this command.'
   invalid-placement: "&cYou can't place down a &eSkyMine Token&c."
@@ -57,22 +57,22 @@ usage:
 admin:
   general:
     lookup-skymines:
-      top-message: '&aList of &eSkyMines &aowned by &e%player%&a:'
-      repeating-message: '&7→ [#%id%] &eThis home is located in the &a%world% &eworld. &7(&a%x%x&7, &a%y%y&7, &a%z%z&7)'
+      top-message: '&aList of &eSkyMines &aowned by &e{player}&a:'
+      repeating-message: '&7→ [#{id}] &eThis home is located in the &a{world} &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)'
   success:
     panel: "&aYou have accessed another player's &eSkyMine&a."
-    give: '&aYou have given &e%amount%x %token% &ato &e%player%&a!'
-    pickup: "&aYou have successfully picked up &e%player%&a's &eSkyMine&a."
-    remove: "&aYou have successfully removed &e%player%&a's &eSkyMine&a."
+    give: '&aYou have given &e{amount}x {token} &ato &e{player}&a!'
+    pickup: "&aYou have successfully picked up &e{player}&a's &eSkyMine&a."
+    remove: "&aYou have successfully removed &e{player}&a's &eSkyMine&a."
     reloaded: '&eSkyMines &ahas been reloaded!'
   failure:
     too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
     too-big: '&cFor performance reasons, a side is not permitted to exceed &e100 blocks&c.'
-    no-player-found: '&cThe player &e%player% &cdoes not exist.'
-    no-skymine-found: '&e%player% &cdoes not have a &eSkyMine &cwith the ID: &e%id%&c.'
-    no-skymines-found: '&e%player% &cdoes not have any &eSkyMines&e.'
-    invalid-amount: '&cThe amount &e%amount% &cis an invalid amount.'
-    invalid-material: '&cThe material &e%material% &cis an invalid border type.'
+    no-player-found: '&cThe player &e{player} &cdoes not exist.'
+    no-skymine-found: '&e{player} &cdoes not have a &eSkyMine &cwith the ID: &e{id}&c.'
+    no-skymines-found: '&e{player} &cdoes not have any &eSkyMines&e.'
+    invalid-amount: '&cThe amount &e{amount} &cis an invalid amount.'
+    invalid-material: '&cThe material &e{material} &cis an invalid border type.'
   usage:
     skymines-admin-command:
       - "&eSkyMine &cAdmin Commands:"

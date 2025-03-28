@@ -1,12 +1,12 @@
 # Save your skymines:
 save:
-  # Options: SQLite, MySql (preferred), YAML (not recommended)
-  storage-type: SQLite
-  host: 'localhost'
+  # Options: PostgreSQL, MySQL, SQLite
+  type: SQLite
+  host: "localhost"
   port: 3306
-  database: 'minecraft'
-  username: 'root'
-  password: ''
+  database: "minecraft"
+  username: "root"
+  password: ""
 
 # Various options for skymines:
 options:
@@ -35,9 +35,9 @@ options:
 # Physical form of a skymine:
 token:
   type: TRIPWIRE_HOOK
-  name: '&e&lSkyMine &7[&a%length%&7x&a%height%&7x&a%width%&7]'
+  name: "&e&lSkyMine &7[&a{length}&7x&a{height}&7x&a{width}&7]"
   lore:
-    - '&7Right Click → &ePlaces Structure'
+    - "&7Right Click → &ePlaces Structure"
 
 # Options for mine upgrades...
 #
@@ -55,7 +55,7 @@ upgrades:
   block-variety:
     # Level of the upgrade.
     1:
-      # Format: %type% %percentage%
+      # Format: {type} {percentage}
       # No, it doesn't have to add up to 100%.
       upgrade:
         - STONE 90%
@@ -92,7 +92,7 @@ upgrades:
   # Alter the cooldown until a mine can be reset.
   reset-cooldown:
     1:
-      # You can put [seconds/minutes] if you want. Default: seconds
+      # You can put [seconds/minutes/hours/etc] if you want.
       upgrade: 5 minutes
     2:
       cost: 50000
