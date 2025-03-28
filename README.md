@@ -12,11 +12,11 @@ Fully customizable, personal skymines
 * Skymines have their own homes that can be set (players must be close to the mine).
 * Skymines can be personalized with the various options available in the config.yml.
 * All messages and panel slots are configurable in the messages.yml and panel.yml files.
-* Multiple storage options: MySQL, SQLite, YAML.
+* Multiple storage options: PostgreSQL, MySQL, SQLite.
 
 ### Dependencies / Hooks:
-* Vault is **required**. Used for skymine upgrades.
-* FastAsyncWorldEdit hook is available for efficient skymine creation.
+* [`Midnight`](https://github.com/ColinGrime/Midnight) is **required**. It's my personal library! :)
+* [`Vault`](https://www.spigotmc.org/resources/vault.34315/) is **required**. Used for skymine upgrades.
 
 ---
 
@@ -49,4 +49,4 @@ Aliases available: /skymines, /skymine, /sm
 
 ---
 
-README.md was last updated for v1.0.0
+README.md was last updated on v1.3.0.
