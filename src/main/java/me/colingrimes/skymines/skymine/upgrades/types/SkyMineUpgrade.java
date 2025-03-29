@@ -1,7 +1,6 @@
 package me.colingrimes.skymines.skymine.upgrades.types;
 
 import me.colingrimes.midnight.util.text.Text;
-import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.upgrades.UpgradeType;
 import me.colingrimes.midnight.util.Common;
 import org.bukkit.entity.Player;
@@ -10,43 +9,51 @@ import javax.annotation.Nonnull;
 
 public abstract class SkyMineUpgrade {
 
-	private final SkyMines plugin;
 	private int level;
 
-	public SkyMineUpgrade(@Nonnull SkyMines plugin, int level) {
-		this.plugin = plugin;
+	public SkyMineUpgrade(int level) {
 		this.level = level;
 	}
 
+	/**
+	 * Gets the type of upgrade.
+	 *
+	 * @return the type of upgrade
+	 */
 	@Nonnull
-	protected SkyMines getPlugin() {
-		return plugin;
-	}
+	public abstract UpgradeType getType();
 
+	/**
+	 * Gets the current level of the upgrade type.
+	 *
+	 * @return the level of the upgrade type
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Gets the max level of the type.
+	 *
+	 * @return max level of the upgrade type
+	 */
+	public abstract int getMaxLevel();
+
+	/**
+	 * Gets the cost to upgrade to the specified level.
+	 *
+	 * @param level the level
+	 * @return amount of money required to level up (from the previous level)
+	 */
+	public abstract double getCost(int level);
+
+	/**
+	 * Checks if this upgrade type can still be upgraded based on its current level and the max level of its type.
+	 *
+	 * @return true if it can be further upgraded
+	 */
 	public boolean canBeUpgraded() {
 		return getMaxLevel() > getLevel();
-	}
-
-	public boolean hasPermission(@Nonnull Player player) {
-		String permission = "skymines.upgrades." + Text.unformat(getType().name());
-		String negation = "-" + permission;
-
-		// check for the whole type
-		if (player.hasPermission(negation)) {
-			return player.hasPermission(permission);
-		}
-
-		// check for a specific level
-		else if (player.hasPermission(negation + "." + (level + 1))) {
-			return player.hasPermission(permission + "." + (level + 1));
-		}
-
-		// no permission negation is happening, so player has permission
-		return true;
 	}
 
 	/**
@@ -55,7 +62,7 @@ public abstract class SkyMineUpgrade {
 	 * Returns false if the {@code player} doesn't have the funds required.
 	 *
 	 * @param player the player buying the upgrade
-	 * @return true if the upgrade was sucessfully leveled up
+	 * @return true if the upgrade was sucessfully leveled up, false if the player had insufficient funds
 	 */
 	public boolean levelUp(@Nonnull Player player) {
 		double cost = getCost(level + 1);
@@ -64,24 +71,31 @@ public abstract class SkyMineUpgrade {
 			level++;
 			return true;
 		}
-
 		return false;
 	}
 
 	/**
-	 * @return UpgradeType of the upgrade
+	 * Checks if the specified player has permission to upgrade.
+	 * This method has special permission handling which checks the negation of permissions.
+	 * <p>
+	 * It will first check if the whole type has been negated (e.g. -skymines.upgrades.block-variety).
+	 * If it is negated, then the player must have the upgrade permission to upgrade it (e.g. skymines.upgrades.block-variety).
+	 * <p>
+	 * It will then check if a specific level has been negated (e.g. -skymines.upgrades.block-variety.2).
+	 * If it is negated, then the player must have the upgrade level permission to upgrade it (e.g. skymines.upgrades.block-variety.2).
+	 *
+	 * @param player the player to check
+	 * @return true if the player can upgrade this type
 	 */
-	@Nonnull
-	public abstract UpgradeType getType();
-
-	/**
-	 * @return max level of the upgrade
-	 */
-	public abstract int getMaxLevel();
-
-	/**
-	 * @param level any level
-	 * @return amount of money required to level up (from the previous level)
-	 */
-	public abstract double getCost(int level);
+	public boolean hasPermission(@Nonnull Player player) {
+		String permission = "skymines.upgrades." + Text.unformat(getType().name()).replace("_", "-");
+		String negation = "-" + permission;
+		if (player.hasPermission(negation)) {
+			return player.hasPermission(permission);
+		}
+		if (player.hasPermission(negation + "." + (level + 1))) {
+			return player.hasPermission(permission + "." + (level + 1));
+		}
+		return true;
+	}
 }
