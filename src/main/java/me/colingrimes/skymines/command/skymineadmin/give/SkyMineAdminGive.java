@@ -6,6 +6,7 @@ import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.midnight.message.Placeholders;
 import me.colingrimes.midnight.util.bukkit.Inventories;
+import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.structure.MineSize;
@@ -15,9 +16,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SkyMineAdminGive implements Command<SkyMines> {
+
+	private static final Set<Material> validBlocks = Arrays.stream(Material.values())
+			.filter(Material::isBlock)
+			.filter(Material::isSolid)
+			.filter(m -> !m.hasGravity())
+			.filter(m -> !m.isAir())
+			.collect(Collectors.toSet());
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
@@ -60,7 +73,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		}
 
 		Material borderType = args.size() >= 4 ? Material.matchMaterial(args.get(3)) : Material.BEDROCK;
-		if (borderType == null || !borderType.isBlock()) {
+		if (borderType == null || !validBlocks.contains(borderType)) {
 			Messages.FAILURE_INVALID_MATERIAL.replace("{material}", args.get(3)).send(sender);
 			return;
 		}
@@ -81,6 +94,18 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		Placeholders placeholders = Placeholders.of("{token}", name).add("{amount}", item.getAmount());
 		Messages.SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);
 		Messages.SUCCESS_RECEIVE.replace(placeholders).send(receiver.get());
+	}
+
+	@Nullable
+	@Override
+	public List<String> tabComplete(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
+		if (args.size() == 1) {
+			return Players.filter(p -> p.getName().startsWith(args.get(0))).map(Player::getName).toList();
+		} else if (args.size() == 4) {
+			return validBlocks.stream().map(m -> m.name().toLowerCase()).filter(name -> name.startsWith(args.getLowercase(3))).toList();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
