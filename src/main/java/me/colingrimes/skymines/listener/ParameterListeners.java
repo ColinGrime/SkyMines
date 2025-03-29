@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import javax.annotation.Nonnull;
 
 /**
- * Used to block access from breaking the parameter of a mine.
+ * Responsible for preventing all attempts to break the parameter of a skymine.
  */
 public class ParameterListeners implements Listener {
 
@@ -24,45 +24,59 @@ public class ParameterListeners implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(@Nonnull BlockBreakEvent event) {
-		blockAccessIfParameter(event.getBlock(), event);
+		cancelIfSkyMineParameter(event, event.getBlock());
 	}
 
 	@EventHandler
-	public void onEntityExplodeEvent(@Nonnull EntityExplodeEvent event) {
+	public void onEntityExplode(@Nonnull EntityExplodeEvent event) {
 		for (Block block : event.blockList()) {
-			blockAccessIfParameter(block, event);
+			if (cancelIfSkyMineParameter(event, block)) {
+				return;
+			}
 		}
 	}
 
 	@EventHandler
 	public void onPistonRetract(@Nonnull BlockPistonRetractEvent event) {
 		for (Block block : event.getBlocks()) {
-			blockAccessIfParameter(block, event);
+			if (cancelIfSkyMineParameter(event, block)) {
+				return;
+			}
 		}
 	}
 
 	@EventHandler
 	public void onPistonExtend(@Nonnull BlockPistonExtendEvent event) {
 		for (Block block : event.getBlocks()) {
-			blockAccessIfParameter(block, event);
+			if (cancelIfSkyMineParameter(event, block)) {
+				return;
+			}
 		}
 	}
 
 	@EventHandler
 	public void onBlockBurn(@Nonnull BlockBurnEvent event) {
-		blockAccessIfParameter(event.getBlock(), event);
+		cancelIfSkyMineParameter(event, event.getBlock());
 	}
 
-	private void blockAccessIfParameter(@Nonnull Block block, @Nonnull Cancellable cancellableEvent) {
-		if (cancellableEvent.isCancelled()) {
-			return;
+	/**
+	 * Cancels the specified event if the block is part of a skymine parameter.
+	 *
+	 * @param event the event to cancel
+	 * @param block the block to check
+	 * @return true if the event was cancelled
+	 */
+	private boolean cancelIfSkyMineParameter(@Nonnull Cancellable event, @Nonnull Block block) {
+		if (event.isCancelled()) {
+			return true;
 		}
 
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
 			if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
-				cancellableEvent.setCancelled(true);
-				return;
+				event.setCancelled(true);
+				return true;
 			}
 		}
+		return false;
 	}
 }

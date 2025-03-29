@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,26 +153,42 @@ public class MineStructure {
 		return inside;
 	}
 
-	public static String serialize(MineStructure structure) {
-		String startCorner = Utils.parseLocation(structure.startCorner);
-		String endCorner = Utils.parseLocation(structure.endCorner);
-		String size = MineSize.parse(structure.mineSize);
-		String borderType = structure.borderType.name();
-		return startCorner + '\n' + endCorner + '\n' + size + '\n' + borderType;
+	/**
+	 * Serializes the mine structure into a string.
+	 *
+	 * @return a string representing the mine structure
+	 */
+	@Nonnull
+	public String serialize() {
+		String corner1 = Utils.parseLocation(startCorner);
+		String corner2 = Utils.parseLocation(endCorner);
+		String size = mineSize.serialize();
+		String border = borderType.name();
+		return corner1 + '\n' + corner2 + '\n' + size + '\n' + border;
 	}
 
-	public static MineStructure deserialize(String text) {
+	/**
+	 * Deserializes the string into a mine structure.
+	 *
+	 * @param text the text to parse
+	 * @return the mine structure if available
+	 */
+	@Nullable
+	public static MineStructure deserialize(@Nullable String text) {
+		if (text == null || text.isEmpty()) {
+			return null;
+		}
+
 		String[] texts = text.split("\n");
-		if (texts.length < 3) {
+		if (texts.length < 4) {
 			return null;
 		}
 
 		Location startCorner = Utils.parseLocation(texts[0]);
 		Location endCorner = Utils.parseLocation(texts[1]);
-		MineSize size = MineSize.parse(texts[2]);
-		Material borderType = texts.length == 4 ? Material.getMaterial(texts[3]) : Material.BEDROCK;
-
-		if (startCorner == null || endCorner == null || size == null) {
+		MineSize size = MineSize.deserialize(texts[2]);
+		Material borderType = Material.getMaterial(texts[3]);
+		if (startCorner == null || endCorner == null || size == null || borderType == null) {
 			return null;
 		}
 

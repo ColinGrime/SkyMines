@@ -87,7 +87,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_INSERT))) {
 				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
 				DatabaseUtils.setUUID(ps, 2, skyMine.getOwner(), database);
-				ps.setString(3, MineStructure.serialize(skyMine.getStructure()));
+				ps.setString(3, skyMine.getStructure().serialize());
 				ps.setString(4, SkyMineUpgrades.parse(skyMine.getUpgrades()));
 				ps.setString(5, Utils.parseLocation(skyMine.getHome()));
 				ps.executeUpdate();

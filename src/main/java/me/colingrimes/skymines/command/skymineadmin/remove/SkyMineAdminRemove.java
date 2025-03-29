@@ -31,7 +31,8 @@ public class SkyMineAdminRemove implements Command<SkyMines> {
 			Messages.FAILURE_NO_SKYMINE_FOUND
 					.replace("{player}", args.get(0))
 					.replace("{id}", args.get(1))
-					.send(sender);		}
+					.send(sender);
+		}
 	}
 
 	@Override

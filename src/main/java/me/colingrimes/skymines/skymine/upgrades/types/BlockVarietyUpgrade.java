@@ -1,6 +1,5 @@
 package me.colingrimes.skymines.skymine.upgrades.types;
 
-import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.structure.material.MaterialVariety;
 import me.colingrimes.skymines.skymine.upgrades.UpgradeType;
@@ -9,8 +8,8 @@ import javax.annotation.Nonnull;
 
 public class BlockVarietyUpgrade extends SkyMineUpgrade {
 
-	public BlockVarietyUpgrade(@Nonnull SkyMines plugin, int level) {
-		super(plugin, level);
+	public BlockVarietyUpgrade(int level) {
+		super(level);
 	}
 
 	@Override
@@ -29,9 +28,6 @@ public class BlockVarietyUpgrade extends SkyMineUpgrade {
 		return Settings.UPGRADES_BLOCK_VARIETY_COSTS.get().getOrDefault(level, -1D);
 	}
 
-	/**
-	 * @return BlockVariety object depending on the upgrade's level
-	 */
 	@Nonnull
 	public MaterialVariety getBlockVariety() {
 		return Settings.UPGRADES_BLOCK_VARIETY.get().get(getLevel());

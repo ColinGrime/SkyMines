@@ -64,6 +64,7 @@ public class PlayerListeners implements Listener {
 					}
 				}
 			}
+			return;
 		}
 
 		ItemStack item = player.getInventory().getItemInMainHand();
@@ -93,7 +94,7 @@ public class PlayerListeners implements Listener {
 		SkyMineUpgrades upgrades = token.getUpgrades(item);
 		Material borderType = token.getBorderType(item).orElse(Material.BEDROCK);
 
-		if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, upgrades, borderType)) {
+		if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, borderType, upgrades)) {
 			event.setCancelled(true);
 			Inventories.removeSingle(player.getInventory(), item);
 			Messages.SUCCESS_PLACE.send(player);
@@ -131,11 +132,14 @@ public class PlayerListeners implements Listener {
 
 	@EventHandler
 	public void onPlayerDropItem(@Nonnull PlayerDropItemEvent event) {
+		if (!Settings.OPTIONS_PREVENT_TOKEN_DROP.get()) {
+			return;
+		}
+
+		// Checks if the dropped item was a skymine token.
 		if (plugin.getSkyMineManager().getToken().isToken(event.getItemDrop().getItemStack())) {
-			if (Settings.OPTIONS_PREVENT_TOKEN_DROP.get()) {
-				Messages.FAILURE_NO_DROP.send(event.getPlayer());
-				event.setCancelled(true);
-			}
+			Messages.FAILURE_NO_DROP.send(event.getPlayer());
+			event.setCancelled(true);
 		}
 	}
 }

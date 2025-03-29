@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ParameterRegion implements Region {
 
-	private List<Region> parameterSides = new ArrayList<>();
+	private final List<Region> parameterSides = new ArrayList<>();
 
 	public ParameterRegion(@Nonnull Vector pt1, @Nonnull Vector pt2) {
 		setPoints(pt1, pt2);

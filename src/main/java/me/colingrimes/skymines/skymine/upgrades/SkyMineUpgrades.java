@@ -1,6 +1,5 @@
 package me.colingrimes.skymines.skymine.upgrades;
 
-import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.upgrades.types.BlockVarietyUpgrade;
 import me.colingrimes.skymines.skymine.upgrades.types.ResetCooldownUpgrade;
 import me.colingrimes.skymines.skymine.upgrades.types.SkyMineUpgrade;
@@ -12,13 +11,13 @@ public class SkyMineUpgrades {
 	private final BlockVarietyUpgrade blockVarietyUpgrade;
 	private final ResetCooldownUpgrade resetCooldownUpgrade;
 
-	public SkyMineUpgrades(@Nonnull SkyMines plugin) {
-		this(plugin, 1, 1);
+	public SkyMineUpgrades() {
+		this(1, 1);
 	}
 
-	public SkyMineUpgrades(@Nonnull SkyMines plugin, int blockVarietyLevel, int resetCooldownLevel) {
-		this.blockVarietyUpgrade = new BlockVarietyUpgrade(plugin, blockVarietyLevel);
-		this.resetCooldownUpgrade = new ResetCooldownUpgrade(plugin, resetCooldownLevel);
+	public SkyMineUpgrades(int blockVarietyLevel, int resetCooldownLevel) {
+		this.blockVarietyUpgrade = new BlockVarietyUpgrade(blockVarietyLevel);
+		this.resetCooldownUpgrade = new ResetCooldownUpgrade(resetCooldownLevel);
 	}
 
 	@Nonnull
@@ -56,6 +55,6 @@ public class SkyMineUpgrades {
 			// there's nothing to do
 		}
 
-		return new SkyMineUpgrades(SkyMines.getInstance(), blockVarietyLevel, resetCooldownLevel);
+		return new SkyMineUpgrades(blockVarietyLevel, resetCooldownLevel);
 	}
 }

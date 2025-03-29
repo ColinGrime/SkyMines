@@ -12,35 +12,54 @@ import java.util.UUID;
 public interface SkyMine {
 
 	/**
-	 * @return UUID of mine
+	 * Gets the UUID of the skymine.
+	 *
+	 * @return UUID of the skymine
 	 */
 	@Nonnull
 	UUID getUUID();
 
 	/**
+	 * Gets the UUID of the player who owns the skymine.
+	 *
 	 * @return UUID of the owner
 	 */
 	@Nonnull
 	UUID getOwner();
 
 	/**
-	 * @return gets the ID of the skymine
+	 * Gets the current ID of the skymine.
+	 * This ID is subject to change (e.g. removing a skymine can change the IDs of all other skymines).
+	 * <p>
+	 * This is used to target specific skymines for skymine-related commands.
+	 * It will always start at ID=1 and increment by 1 for each skymine a player owns.
+	 *
+	 * @return the ID of the skymine
 	 */
 	int getId();
 
 	/**
+	 * Gets the structure of the skymine.
+	 * <p>
+	 * This tells you information about the skymine's regions, size, border material, and more.
+	 *
 	 * @return structure of the skymine
 	 */
 	@Nonnull
 	MineStructure getStructure();
 
 	/**
-	 * @return upgrades of the sky mine
+	 * Gets the skymine's current upgrades. Used for everything upgrade-related.
+	 *
+	 * @return upgrades of the skymine
 	 */
 	@Nonnull
 	SkyMineUpgrades getUpgrades();
 
 	/**
+	 * Gets the current home of the skymine.
+	 * The owner of the skymine is allowed to change this if they have access to the '/skymine sethome' command.
+	 *
 	 * @return home of the skymine
 	 */
 	@Nonnull
@@ -48,19 +67,24 @@ public interface SkyMine {
 
 	/**
 	 * Sets the home of the skymine.
-	 * @param home any location
+	 *
+	 * @param home location to set the home
 	 */
 	void setHome(@Nonnull Location home);
 
 	/**
 	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 * This will fill up the inside of the skymine with random blocks.
+	 * <p>
+	 * If the owner is currently on cooldown, and {@code ignoreCooldown} is false, then nothing will happen.
+	 *
 	 * @param ignoreCooldown whether the cooldown should be ignored
-	 * @return true if there is no cooldown and mine was successfully reset
+	 * @return true if the skymine was successfully reset
 	 */
 	boolean reset(boolean ignoreCooldown);
 
 	/**
-	 * Picks the skymine up. Only works if it's the owner who is requesting pickup.
+	 * Picks the skymine up. This only works if it's the owner who is requesting pickup.
 	 * It will also return false if the owner's inventory is full.
 	 *
 	 * @param player any player
@@ -69,7 +93,7 @@ public interface SkyMine {
 	boolean pickup(@Nonnull Player player);
 
 	/**
-	 * Removes the skymine and gives no skymine token.
+	 * Removes the skymine, destroys the structure, and gives no skymine token.
 	 */
 	void remove();
 

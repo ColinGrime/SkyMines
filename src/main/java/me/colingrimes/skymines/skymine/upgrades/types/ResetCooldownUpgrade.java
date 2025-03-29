@@ -1,6 +1,5 @@
 package me.colingrimes.skymines.skymine.upgrades.types;
 
-import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.upgrades.UpgradeType;
 
@@ -9,8 +8,8 @@ import java.time.Duration;
 
 public class ResetCooldownUpgrade extends SkyMineUpgrade {
 
-	public ResetCooldownUpgrade(@Nonnull SkyMines plugin, int level) {
-		super(plugin, level);
+	public ResetCooldownUpgrade(int level) {
+		super(level);
 	}
 
 	@Override
@@ -29,9 +28,6 @@ public class ResetCooldownUpgrade extends SkyMineUpgrade {
 		return Settings.UPGRADES_RESET_COOLDOWN_COSTS.get().getOrDefault(level, -1D);
 	}
 
-	/**
-	 * @return reset cooldown depending on the upgrade's level
-	 */
 	@Nonnull
 	public Duration getResetCooldown() {
 		return Settings.UPGRADES_RESET_COOLDOWN.get().get(getLevel());

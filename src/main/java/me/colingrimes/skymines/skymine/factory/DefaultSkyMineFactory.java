@@ -23,7 +23,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 	@Override
 	@Nonnull
-	public Optional<SkyMine> createSkyMine(@Nonnull Player owner, @Nonnull Location location, @Nonnull MineSize size, @Nonnull SkyMineUpgrades upgrades, @Nonnull Material borderType) {
+	public Optional<SkyMine> createSkyMine(@Nonnull Player owner, @Nonnull Location location, @Nonnull MineSize size, @Nonnull Material borderType, @Nonnull SkyMineUpgrades upgrades) {
 		float yaw = owner.getLocation().getYaw();
 		if (yaw < 0) {
 			yaw += 360;
@@ -67,7 +67,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		Location home = location.clone().add(0, 1, 0);
 		home.setYaw(yaw);
 
-		// creates new sky mine
+		// creates new skymine
 		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), structure, upgrades, home);
 		skyMine.reset(true);
 		return Optional.of(skyMine);

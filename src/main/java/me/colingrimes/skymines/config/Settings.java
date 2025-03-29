@@ -65,7 +65,6 @@ public interface Settings {
 		return materials;
 	});
 
-
 	// Reset cooldown configurations.
 	Option<Integer>                UPGRADES_RESET_COOLDOWN_MAX_LEVEL = option("upgrades.reset-cooldown", sec -> Collections.max(Types.integerKeys(sec)));
 	Option<Map<Integer, Double>>   UPGRADES_RESET_COOLDOWN_COSTS = option("upgrades.reset-cooldown", sec -> Types.mapIntegerKeys(sec, slot -> sec.getDouble(slot + ".cost")));
