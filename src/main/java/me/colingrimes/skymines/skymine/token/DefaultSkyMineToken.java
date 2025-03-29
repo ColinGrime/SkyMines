@@ -23,25 +23,19 @@ public class DefaultSkyMineToken implements SkyMineToken {
 
 	@Override
 	@Nonnull
-	public ItemStack getToken() {
-		return getToken(new MineSize(10, 10, 10), Material.BEDROCK);
-	}
-
-	@Override
-	@Nonnull
 	public ItemStack getToken(@Nonnull MineSize size, @Nonnull Material borderType) {
-		return getToken(size, new SkyMineUpgrades(plugin), borderType);
+		return getToken(size, borderType, new SkyMineUpgrades());
 	}
 
 	@Override
 	@Nonnull
-	public ItemStack getToken(@Nonnull MineSize size, @Nonnull SkyMineUpgrades upgrades, @Nonnull Material borderType) {
-		return Items.of(Settings.TOKEN.get())
+	public ItemStack getToken(@Nonnull MineSize size, @Nonnull Material borderType, @Nonnull SkyMineUpgrades upgrades) {
+		return Items.of(Settings.TOKEN.get().clone())
 				.placeholder("{length}", size.getLength())
 				.placeholder("{height}", size.getHeight())
 				.placeholder("{width}", size.getWidth())
 				.nbt("skymine", true)
-				.nbt("skymine-size", MineSize.parse(size))
+				.nbt("skymine-size", size.serialize())
 				.nbt("skymine-blockvariety", upgrades.getBlockVarietyUpgrade().getLevel())
 				.nbt("skymine-resetcooldown", upgrades.getResetCooldownUpgrade().getLevel())
 				.nbt("skymine-bordertype", borderType.name())
@@ -56,7 +50,13 @@ public class DefaultSkyMineToken implements SkyMineToken {
 	@Override
 	@Nonnull
 	public Optional<MineSize> getMineSize(@Nullable ItemStack item) {
-		return NBT.getTag(item, "skymine-size", String.class).map(MineSize::parse);
+		return NBT.getTag(item, "skymine-size", String.class).map(MineSize::deserialize);
+	}
+
+	@Override
+	@Nonnull
+	public Optional<Material> getBorderType(@Nullable ItemStack item) {
+		return NBT.getTag(item, "skymine-bordertype").map(Material::getMaterial);
 	}
 
 	@Override
@@ -64,12 +64,6 @@ public class DefaultSkyMineToken implements SkyMineToken {
 	public SkyMineUpgrades getUpgrades(@Nullable ItemStack item) {
 		int blockVarietyLevel = NBT.getTag(item, "skymine-blockvariety", Integer.class).orElse(1);
 		int resetCooldownLevel = NBT.getTag(item, "skymine-resetcooldown", Integer.class).orElse(1);
-		return new SkyMineUpgrades(plugin, blockVarietyLevel, resetCooldownLevel);
-	}
-
-	@Override
-	@Nonnull
-	public Optional<Material> getBorderType(@Nullable ItemStack item) {
-		return NBT.getTag(item, "skymine-bordertype").map(Material::getMaterial);
+		return new SkyMineUpgrades(blockVarietyLevel, resetCooldownLevel);
 	}
 }
