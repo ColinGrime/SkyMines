@@ -11,8 +11,9 @@ public interface Messages {
 	/**************************************************
 	 *                 General Messages               *
 	 **************************************************/
-	Message<?> GENERAL_LIST_SKYMINES_TOP_MESSAGE       = message("general.list-skymines.top-message", "&aList of &eSkyMines&a:");
-	Message<?> GENERAL_LIST_SKYMINES_REPEATING_MESSAGE = message("general.list-skymines.repeating-message", "&7→ [#{id}] &eClick to go home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> GENERAL_LIST_SKYMINES_TOP_MESSAGE       = message("general.list-skymines.top-message", "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------");
+	Message<?> GENERAL_LIST_SKYMINES_REPEATING_MESSAGE = message("general.list-skymines.repeating-message", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE    = message("general.list-skymines.bottom-message");
 	Message<?> GENERAL_RESET_COOLDOWN_FINISH           = message("general.reset-cooldown-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
 	Message<?> GENERAL_PICKUP_COOLDOWN_FINISH          = message("general.pickup-cooldown-finish", "&aYou are free to place &eSkyMines &aagain.");
 
@@ -42,8 +43,8 @@ public interface Messages {
 	Message<?> FAILURE_ON_RESET_COOLDOWN     = message("failure.on-reset-cooldown", "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c.");
 	Message<?> FAILURE_ON_PICKUP_COOLDOWN    = message("failure.on-pickup-cooldown", "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c.");
 	Message<?> FAILURE_ON_PLACEMENT_COOLDOWN = message("failure.on-placement-cooldown", "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c.");
-	Message<?> FAILURE_ALREADY_MAXED         = message("failure.already-maxed", "&4&l❌ &cThis &lSkyMine's &cupgrade is already maxed out.");
-	Message<?> FAILURE_INVALID_PLACEMENT     = message("failure.invalid-placement", "&4&l❌ &cYou are forbidden from placing down this item.");
+	Message<?> FAILURE_ALREADY_MAXED         = message("failure.already-maxed", "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out.");
+	Message<?> FAILURE_INVALID_PLACEMENT     = message("failure.invalid-placement", "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c.");
 
 	/**************************************************
 	 *                  Usage Messages                *
@@ -72,23 +73,24 @@ public interface Messages {
 			"&a► &7Teleports to the specified mine's home."
 	);
 	Message<?> USAGE_SKYMINES_SETHOME  = message("usage.skymines-sethome",
-			"&eUsage: &a/sm panel <id>",
+			"&eUsage: &a/sm sethome <id>",
 			"&a► &7Sets the specified mine's home."
 	);
 	Message<?> USAGE_SKYMINES_RESET    = message("usage.skymines-reset",
-			"&eUsage: &a/sm panel <id>",
+			"&eUsage: &a/sm reset <id>",
 			"&a► &7Resets the specified mine."
 	);
 	Message<?> USAGE_SKYMINES_PICKUP   = message("usage.skymines-pickup",
-			"&eUsage: &a/sm panel <id>",
+			"&eUsage: &a/sm pickup <id>",
 			"&a► &7Picks up the specified mine."
 	);
 
 	/**************************************************
 	 *                  Admin Messages                *
 	 **************************************************/
-	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&aList of &eSkyMines &aowned by &e{player}&a:");
-	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eHome located in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------");
+	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");
 	Message<?> SUCCESS_PANEL                     = message("admin.success.panel", "&2&l✓ &aYou have accessed another player's &eSkyMine&a.");
 	Message<?> SUCCESS_GIVE                      = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
 	Message<?> SUCCESS_PICKUP_ADMIN              = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a.");

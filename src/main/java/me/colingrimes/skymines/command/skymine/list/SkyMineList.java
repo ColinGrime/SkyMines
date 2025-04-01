@@ -23,7 +23,9 @@ public class SkyMineList implements Command<SkyMines> {
 			return;
 		}
 
-		Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.send(sender);
+		if (!Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.toText().isEmpty()) {
+			Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.send(sender);
+		}
 		for (int i=1; i<=skyMines.size(); i++) {
 			Location loc = skyMines.get(i - 1).getHome();
 			String message = Messages.GENERAL_LIST_SKYMINES_REPEATING_MESSAGE
@@ -33,6 +35,9 @@ public class SkyMineList implements Command<SkyMines> {
 					.replace("{z}", loc.getBlockZ())
 					.toText();
 			Markdown.of("[" + message + "](/skymines_home_" + i + " &cGo Home!)").send(sender);
+		}
+		if (!Messages.GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE.toText().isEmpty()) {
+			Messages.GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE.send(sender);
 		}
 	}
 

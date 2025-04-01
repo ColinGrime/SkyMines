@@ -1,8 +1,9 @@
 # General messages:
 general:
   list-skymines:
-    top-message: "&aList of &eSkyMines&a:"
-    repeating-message: "&7→ [#{id}] &eClick to go home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+    top-message: "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------"
+    repeating-message: "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+    bottom-message: "&7&m---------------------------------------------"
   reset-cooldown-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
   pickup-cooldown-finish: "&aYou are free to place &eSkyMines &aagain."
 
@@ -30,8 +31,8 @@ failure:
   on-reset-cooldown: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
   on-pickup-cooldown: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
   on-placement-cooldown: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
-  already-maxed: "&4&l❌ &cThis &lSkyMine's &cupgrade is already maxed out."
-  invalid-placement: "&4&l❌ &cYou are forbidden from placing down this item."
+  already-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
+  invalid-placement: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
 
 # Usage messages (for commands):
 usage:
@@ -55,21 +56,22 @@ usage:
     - "&eUsage: &a/sm home <id>"
     - "&a► &7Teleports to the specified mine's home."
   skymines-sethome:
-    - "&eUsage: &a/sm panel <id>"
+    - "&eUsage: &a/sm sethome <id>"
     - "&a► &7Sets the specified mine's home."
   skymines-reset:
-    - "&eUsage: &a/sm panel <id>"
+    - "&eUsage: &a/sm reset <id>"
     - "&a► &7Resets the specified mine."
   skymines-pickup:
-    - "&eUsage: &a/sm panel <id>"
+    - "&eUsage: &a/sm pickup <id>"
     - "&a► &7Picks up the specified mine."
 
 # Only Admins should have access...
 admin:
   general:
     lookup-skymines:
-      top-message: "&aList of &eSkyMines &aowned by &e{player}&a:"
-      repeating-message: "&7→ [#{id}] &eHome located in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+      top-message: "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------"
+      repeating-message: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+      bottom-message: "&7&m---------------------------------------------"
   success:
     panel: "&2&l✓ &aYou have accessed another player's &eSkyMine&a."
     give: "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a."

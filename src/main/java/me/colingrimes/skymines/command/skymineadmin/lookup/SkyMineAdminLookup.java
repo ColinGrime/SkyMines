@@ -32,7 +32,9 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 			return;
 		}
 
-		Messages.LOOKUP_SKYMINES_TOP_MESSAGE.replace("{player}", args.get(0)).send(sender);
+		if (!Messages.LOOKUP_SKYMINES_TOP_MESSAGE.toText().isEmpty()) {
+			Messages.LOOKUP_SKYMINES_TOP_MESSAGE.replace("{player}", args.get(0)).send(sender);
+		}
 		for (int i=1; i<=skyMines.size(); i++) {
 			Location location = skyMines.get(i - 1).getHome();
 			Messages.LOOKUP_SKYMINES_REPEATING_MESSAGE
@@ -42,6 +44,9 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 					.replace("{y}", location.getBlockY())
 					.replace("{z}", location.getBlockZ())
 					.send(sender);
+		}
+		if (!Messages.LOOKUP_SKYMINES_BOTTOM_MESSAGE.toText().isEmpty()) {
+			Messages.LOOKUP_SKYMINES_BOTTOM_MESSAGE.replace("{player}", args.get(0)).send(sender);
 		}
 	}
 
