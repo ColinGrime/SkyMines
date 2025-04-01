@@ -4,7 +4,7 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
-import me.colingrimes.midnight.util.bukkit.Players;
+import me.colingrimes.midnight.message.Message;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
@@ -29,9 +29,9 @@ public class SkyMineCommand implements Command<SkyMines> {
 	 * @return a valid skymine if one was entered, null otherwise
 	 */
 	@Nullable
-	public static SkyMine forceSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, ArgumentList args) {
+	public static SkyMine forceSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, ArgumentList args, @Nonnull Message<?> usageMessage) {
 		if (args.isEmpty()) {
-			Players.command(sender.player(), "/skymines list");
+			usageMessage.send(sender);
 			return null;
 		}
 

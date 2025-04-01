@@ -20,7 +20,7 @@ public class SkyMineHome implements Command<me.colingrimes.skymines.SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_HOME);
 		if (skyMine != null) {
 			sender.player().teleport(skyMine.getHome());
 			Messages.SUCCESS_HOME.send(sender);

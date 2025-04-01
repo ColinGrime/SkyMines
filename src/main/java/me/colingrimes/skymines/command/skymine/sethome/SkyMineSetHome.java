@@ -22,7 +22,7 @@ public class SkyMineSetHome implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_SETHOME);
 		if (skyMine == null) {
 			return;
 		}
