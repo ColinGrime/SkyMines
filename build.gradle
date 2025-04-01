@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     implementation 'org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT'
-    implementation 'com.github.ColinGrime:Midnight:v1.2.4'
+    implementation 'com.github.ColinGrime:Midnight:v1.2.5'
     implementation 'com.github.MilkBowl:VaultAPI:1.7.1'
 }
 
