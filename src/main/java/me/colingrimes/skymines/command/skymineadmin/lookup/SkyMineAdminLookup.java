@@ -5,7 +5,6 @@ import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.midnight.util.misc.UUIDs;
-import me.colingrimes.midnight.util.text.Markdown;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
@@ -13,6 +12,7 @@ import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,14 +34,14 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 
 		Messages.LOOKUP_SKYMINES_TOP_MESSAGE.replace("{player}", args.get(0)).send(sender);
 		for (int i=1; i<=skyMines.size(); i++) {
-			Location loc = skyMines.get(i - 1).getHome();
-			String message = Messages.LIST_SKYMINES_REPEATING_MESSAGE
+			Location location = skyMines.get(i - 1).getHome();
+			Messages.LOOKUP_SKYMINES_REPEATING_MESSAGE
 					.replace("{id}", i)
-					.replace("{x}", loc.getBlockX())
-					.replace("{y}", loc.getBlockY())
-					.replace("{z}", loc.getBlockZ())
-					.toText();
-			Markdown.of("[" + message + "](/skymines_home_" + i + " &cGo Home!)").send(sender);
+					.replace("{world}", Objects.requireNonNull(location.getWorld()).getName())
+					.replace("{x}", location.getBlockX())
+					.replace("{y}", location.getBlockY())
+					.replace("{z}", location.getBlockZ())
+					.send(sender);
 		}
 	}
 
