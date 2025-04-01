@@ -1,88 +1,107 @@
 # General messages:
 general:
   list-skymines:
-    top-message: '&aList of &eSkyMines&a:'
-    repeating-message: '&7→ [#{id}] &eClick to go home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)'
-  reset-cooldown-finish: '&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down!'
-  pickup-cooldown-finish: '&aYou are free to place &eSkyMines &aagain.'
+    top-message: "&aList of &eSkyMines&a:"
+    repeating-message: "&7→ [#{id}] &eClick to go home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+  reset-cooldown-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
+  pickup-cooldown-finish: "&aYou are free to place &eSkyMines &aagain."
 
 # Success messages:
 success:
-  receive: '&aYou have received &e{amount}x {token}&a!'
-  upgrade: '&aYou have upgraded &e{upgrade} &ato level &e{level}&a!'
-  home: '&aYou have been teleported to your &eSkyMine&a!'
-  sethome: "&aYou have successfully changed your &eSkyMine&a's home location!"
-  reset: '&aThe &eSkyMine &ahas been reset!'
-  pickup: '&aYou have successfully picked up your &eSkyMine&a!'
-  place: '&aYou have successfully placed your &eSkyMine&a!'
+  receive: "&2&l✓ &aYou have received &e{amount}x {token}&a."
+  upgrade: "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a."
+  home: "&2&l✓ &aYou have been teleported to your &eSkyMine&a."
+  sethome: "&2&l✓ &aYou have changed your &eSkyMine's &ahome location."
+  reset: "&2&l✓ &aThe &eSkyMine &ahas been reset."
+  pickup: "&2&l✓ &aYou have picked up your &eSkyMine&a."
+  place: "&2&l✓ &aYou have placed your &eSkyMine&a."
 
 # Failure messages:
 failure:
-  max-amount: '&cYou have reached the maximum amount of &eSkyMines &cyou can place.'
-  too-far-away: '&cYou are too far away from your &eSkyMine &cto set its home.'
-  no-space: '&cThere is no space for the &eSkyMine &cto be placed here.'
-  no-inventory-space: '&cThere is no space in your inventory to get the &eSkyMine Token&c.'
-  no-funds: "&cYou don't have enough money to buy this upgrade."
-  no-skymine: "&cYou don't have a &eSkyMine &cwith the ID: &e{id}&c."
-  no-skymines: "&cYou don't have any &eSkyMines&c."
-  no-permission: '&cYou do not have permission to perform this command.'
-  no-drop: '&cYou are not allowed to drop your &eSkyMine Token&c.'
-  on-reset-cooldown: '&cThe cooldown on the &eSkyMine &cis &e{time}&c.'
-  on-pickup-cooldown: '&cDue to picking up a &eSkyMine&c, you must wait &e{time} &cto place another.'
-  on-placement-cooldown: '&cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c.'
-  already-maxed: "&cThis &eSkyMine&c's upgrade is already maxed out!"
-  invalid-sender: '&cYou must be a player to perform this command.'
-  invalid-placement: "&cYou can't place down a &eSkyMine Token&c."
+  max-amount: "&4&l❌ &cMaximum amount of mines reached."
+  too-far-away: "&4&l❌ &cYou are too far away from this &eSkyMine&c."
+  no-space: "&4&l❌ &cThere is no space here to place a &eSkyMine&c."
+  no-inventory-space: "&4&l❌ &cYou do not have enough inventory space."
+  no-funds: "&4&l❌ &cYou do not have enough money to purchase this upgrade."
+  no-skymine: "&4&l❌ &cNo mine &cexists with the ID '&e{id}&c'."
+  no-skymines: "&4&l❌ &cYou currently do not own any mines."
+  no-permission: "&4&l❌ You lack the required permission for this action."
+  no-drop: "&4&l❌ &cYou are not allowed to drop your &eSkyMine Token&c."
+  on-reset-cooldown: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
+  on-pickup-cooldown: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
+  on-placement-cooldown: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
+  already-maxed: "&4&l❌ &cThis &lSkyMine's &cupgrade is already maxed out."
+  invalid-placement: "&4&l❌ &cYou are forbidden from placing down this item."
 
 # Usage messages (for commands):
 usage:
   skymines-command:
-    - "&eSkyMine &aCommands:"
-    - "&7→ &a/sm list &7- lists your &eSkyMines&7."
-    - "&7→ &a/sm panel [id] &7- open the &eSkyMine&7's main panel."
-    - "&7→ &a/sm home [id] &7- go to the &eSkyMine&7."
-    - "&7→ &a/sm sethome [id] &7- set the &eSkyMine&7's home."
-    - "&7→ &a/sm reset [id] &7- reset the &eSkyMine&7."
-    - "&7→ &a/sm upgrades [id] &7- open the &eSkyMine&7's upgrade panel."
-    - "&7→ &a/sm pickup [id] &7- pickup the &eSkyMine&7."
-  skymines-list: "&7Usage: &a/sm list &7→ lists your &eSkyMines&7."
-  skymines-panel: "&7Usage: &a/sm panel [id] &7→ open the &eSkyMine&7's main panel."
-  skymines-home: "&7Usage: &a/sm home [id] &7→ go to the &eSkyMine&7."
-  skymines-sethome: "&7Usage: &a/sm sethome [id] &7→ set the &eSkyMine&7's home."
-  skymines-reset: "&7Usage: &a/sm reset [id] &7→ reset the &eSkyMine&7."
-  skymines-upgrades: "&7Usage: &a/sm upgrades [id] &7→ open the &eSkyMine&7's upgrade panel."
-  skymines-pickup: "&7Usage: &a/sm pickup [id] &7→ pickup the &eSkyMine&7."
+    - "&7&m--------------&r &e&lSkyMine &aCommands &7&m--------------"
+    - "&7- &a/sm list &e: &7Lists all mines."
+    - "&7- &a/sm panel <id> &e: &7Opens the mine's main panel."
+    - "&7- &a/sm upgrades <id> &e: &7Opens the mine's upgrade panel."
+    - "&7- &a/sm home <id> &e: &7Teleports to the mine's home."
+    - "&7- &a/sm sethome <id> &e: &7Sets the mine's home."
+    - "&7- &a/sm reset <id> &e: &7Resets the mine."
+    - "&7- &a/sm pickup <id> &e: &7Picks up the mine."
+    - "&7&m---------------------------------------------"
+  skymines-panel:
+    - "&eUsage: &a/sm panel <id>"
+    - "&a► &7Opens up the specified mine's main panel."
+  skymines-upgrades:
+    - "&eUsage: &a/sm upgrades <id>"
+    - "&a► &7Opens up the specified mine's upgrade panel."
+  skymines-home:
+    - "&eUsage: &a/sm home <id>"
+    - "&a► &7Teleports to the specified mine's home."
+  skymines-sethome:
+    - "&eUsage: &a/sm panel <id>"
+    - "&a► &7Sets the specified mine's home."
+  skymines-reset:
+    - "&eUsage: &a/sm panel <id>"
+    - "&a► &7Resets the specified mine."
+  skymines-pickup:
+    - "&eUsage: &a/sm panel <id>"
+    - "&a► &7Picks up the specified mine."
 
 # Only Admins should have access...
 admin:
   general:
     lookup-skymines:
-      top-message: '&aList of &eSkyMines &aowned by &e{player}&a:'
-      repeating-message: '&7→ [#{id}] &eThis home is located in the &a{world} &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)'
+      top-message: "&aList of &eSkyMines &aowned by &e{player}&a:"
+      repeating-message: "&7→ [#{id}] &eHome located in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
   success:
-    panel: "&aYou have accessed another player's &eSkyMine&a."
-    give: '&aYou have given &e{amount}x {token} &ato &e{player}&a!'
-    pickup: "&aYou have successfully picked up &e{player}&a's &eSkyMine&a."
-    remove: "&aYou have successfully removed &e{player}&a's &eSkyMine&a."
-    reloaded: '&eSkyMines &ahas been reloaded!'
+    panel: "&2&l✓ &aYou have accessed another player's &eSkyMine&a."
+    give: "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a."
+    pickup: "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a."
+    remove: "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a."
+    reloaded: "&2&l✓ &eSkyMines &ahas been reloaded."
   failure:
-    too-small: '&cThe &eSkyMine &cyou are trying to create is too small.'
-    too-big: '&cFor performance reasons, a side is not permitted to exceed &e100 blocks&c.'
-    no-player-found: '&cThe player &e{player} &cdoes not exist.'
-    no-skymine-found: '&e{player} &cdoes not have a &eSkyMine &cwith the ID: &e{id}&c.'
-    no-skymines-found: '&e{player} &cdoes not have any &eSkyMines&e.'
-    invalid-amount: '&cThe amount &e{amount} &cis an invalid amount.'
-    invalid-material: '&cThe material &e{material} &cis an invalid border type.'
+    too-small: "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small."
+    too-big: "&4&l❌ &cSides are not permitted to exceed 100 blocks."
+    no-player-found: "&4&l❌ &cThe player &e{player} &cdoes not exist."
+    no-skymine-found: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'."
+    no-skymines-found: "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c."
+    invalid-amount: "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount."
+    invalid-material: "&4&l❌ &cThe material '&e{material}&c' is an invalid border type."
   usage:
     skymines-admin-command:
-      - "&eSkyMine &cAdmin Commands:"
-      - "&7→ &c/sma give [player] {LxHxW} {amount} &7- give away &eSkyMine Tokens&7."
-      - "&7→ &c/sma lookup [player] &7- lookup a player's &eSkyMine&7's list."
-      - "&7→ &c/sma pickup [player] &7- pickup a player's &eSkyMine&7."
-      - "&7→ &c/sma remove [player] &7- remove a player's &eSkyMine&7."
-      - "&7→ &c/sma reload &7- reloads the YAML files."
-    skymines-give: "&7Usage &c/sma give [player] {LxHxW} {amount} &7→ give away &eSkyMine Tokens&7."
-    skymines-lookup: "&7Usage &c/sma lookup [player] &7→ lookup a player's &eSkyMine&7's list."
-    skymines-pickup: "&7Usage &c/sma pickup [player] &7→ pickup a player's &eSkyMine&7."
-    skymines-remove: "&7Usage &c/sma remove [player] &7→ remove a player's &eSkyMine&7."
-    skymines-reload: "&7Usage &c/sma reload &7→ reloads the YAML files."
+      - "&7&m-----------&r &e&lSkyMine &cAdmin Commands &7&m-----------"
+      - "&7- &c/sma give <player> <LxHxW> <amount> <material>"
+      - "&7- &c/sma lookup <player> &e: &7Lookup a player's mines."
+      - "&7- &c/sma pickup <player> &e: &7Pickup a player's mines."
+      - "&7- &c/sma remove <player> &e: &7Remove a player's mines."
+      - "&7- &c/sma reload &e: &7Reloads config files."
+      - "&7&m---------------------------------------------"
+    skymines-give:
+      - "&eUsage: &c/sma give <player> <LxHxW> <amount> <material>"
+      - "&c► &7Gives the player mine tokens with the size and border."
+    skymines-lookup:
+      - "&eUsage: &c/sma lookup <player>"
+      - "&c► &7Lookup the specified player's list of mines."
+    skymines-pickup:
+      - "&eUsage: &c/sma pickup <player> <id>"
+      - "&c► &7Pickup the specified player's mine."
+    skymines-remove:
+      - "&eUsage: &c/sma remove <player> <id>"
+      - "&c► &7Remove the specified player's mine."
