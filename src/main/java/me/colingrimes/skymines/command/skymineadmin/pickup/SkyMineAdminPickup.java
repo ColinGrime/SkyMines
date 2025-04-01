@@ -37,7 +37,7 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_LOOKUP);
+		properties.setUsage(Messages.USAGE_SKYMINES_PICKUP_ADMIN);
 		properties.setPermission("skymines.admin.pickup");
 		properties.setArgumentsRequired(2);
 	}

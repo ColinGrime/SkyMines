@@ -19,7 +19,6 @@ public class SkyMineAdminReload implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.SUCCESS_RELOADED);
 		properties.setPermission("skymines.admin.reload");
 	}
 }

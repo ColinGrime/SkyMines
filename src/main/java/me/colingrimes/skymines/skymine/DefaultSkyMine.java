@@ -125,7 +125,7 @@ public class DefaultSkyMine implements SkyMine {
 		int time = Settings.OPTIONS_PICKUP_COOLDOWN.get();
 		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(time), p -> {
 			if (Settings.OPTIONS_NOTIFY_ON_PICKUP_COOLDOWN_FINISH.get()) {
-				Messages.PICKUP_COOLDOWN_FINISH.send(player);
+				Messages.GENERAL_PICKUP_COOLDOWN_FINISH.send(player);
 			}
 		});
 

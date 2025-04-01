@@ -23,10 +23,10 @@ public class SkyMineList implements Command<SkyMines> {
 			return;
 		}
 
-		Messages.LIST_SKYMINES_TOP_MESSAGE.send(sender);
+		Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.send(sender);
 		for (int i=1; i<=skyMines.size(); i++) {
 			Location loc = skyMines.get(i - 1).getHome();
-			String message = Messages.LIST_SKYMINES_REPEATING_MESSAGE
+			String message = Messages.GENERAL_LIST_SKYMINES_REPEATING_MESSAGE
 					.replace("{id}", i)
 					.replace("{x}", loc.getBlockX())
 					.replace("{y}", loc.getBlockY())
@@ -38,7 +38,6 @@ public class SkyMineList implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_LIST);
 		properties.setPlayerRequired(true);
 	}
 }
