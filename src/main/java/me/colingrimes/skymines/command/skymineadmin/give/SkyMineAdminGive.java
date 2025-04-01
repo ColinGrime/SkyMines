@@ -81,7 +81,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		// gets the specified amount of tokens and gives it to the player
 		ItemStack item = plugin.getSkyMineManager().getToken().getToken(size, borderType);
 		item.setAmount(amount);
-		Inventories.give(receiver.get(), item);
+		Inventories.give(receiver.get(), item, true);
 
 		// gets the name of the item
 		ItemMeta meta = item.getItemMeta();
@@ -92,8 +92,10 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 
 		// messages
 		Placeholders placeholders = Placeholders.of("{token}", name).add("{amount}", item.getAmount());
-		Messages.SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);
 		Messages.SUCCESS_RECEIVE.replace(placeholders).send(receiver.get());
+		if (!sender.isPlayer() || !sender.player().equals(receiver.get())) {
+			Messages.SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);
+		}
 	}
 
 	@Nullable
