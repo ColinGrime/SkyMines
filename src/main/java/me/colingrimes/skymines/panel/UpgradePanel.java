@@ -1,7 +1,6 @@
 package me.colingrimes.skymines.panel;
 
 import me.colingrimes.midnight.util.bukkit.Items;
-import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.config.Panels;
 import me.colingrimes.skymines.config.Settings;
@@ -90,7 +89,7 @@ public class UpgradePanel extends Gui {
 			Messages.FAILURE_NO_PERMISSION.send(player);
 		} else if (upgrade.levelUp(player)) {
 			Messages.SUCCESS_UPGRADE
-					.replace("{upgrade}", Text.format(upgrade.getType().name()))
+					.replace("{upgrade}", upgrade.getType().getName())
 					.replace("{level}", upgrade.getLevel())
 					.send(player);
 			skyMine.save();
