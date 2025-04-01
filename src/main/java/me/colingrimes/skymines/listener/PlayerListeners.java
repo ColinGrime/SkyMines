@@ -51,6 +51,7 @@ public class PlayerListeners implements Listener {
 			for (SkyMine skyMine : manager.getSkyMines(player)) {
 				if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 					new MainPanel(plugin, player, skyMine).open();
+					event.setCancelled(true);
 					return;
 				}
 			}
@@ -60,6 +61,7 @@ public class PlayerListeners implements Listener {
 					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
 						new MainPanel(plugin, player, skyMine).open();
 						Messages.SUCCESS_PANEL.send(player);
+						event.setCancelled(true);
 						return;
 					}
 				}
@@ -95,15 +97,13 @@ public class PlayerListeners implements Listener {
 		Material borderType = token.getBorderType(item).orElse(Material.BEDROCK);
 
 		if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, borderType, upgrades)) {
-			event.setCancelled(true);
+			plugin.getCooldownManager().getPlacementCooldown().add(player, Duration.ofSeconds(Settings.OPTIONS_PLACEMENT_COOLDOWN.get()));
 			Inventories.removeSingle(player.getInventory(), item);
 			Messages.SUCCESS_PLACE.send(player);
+			event.setCancelled(true);
 		} else {
 			Messages.FAILURE_NO_SPACE.send(player);
 		}
-
-		int time = Settings.OPTIONS_PLACEMENT_COOLDOWN.get();
-		plugin.getCooldownManager().getPlacementCooldown().add(player, Duration.ofSeconds(time));
 	}
 
 	@EventHandler
