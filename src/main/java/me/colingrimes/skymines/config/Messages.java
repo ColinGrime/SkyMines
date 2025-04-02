@@ -107,8 +107,8 @@ public interface Messages {
 			"&7&m---------&r &e&lSkyMine &cAdmin Commands &7&m---------",
 			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
 			"&7- &c/sma lookup <player> &e: &7Lookup a player's mines.",
-			"&7- &c/sma pickup <player> &e: &7Pickup a player's mines.",
-			"&7- &c/sma remove <player> &e: &7Remove a player's mines.",
+			"&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines.",
+			"&7- &c/sma remove <player> <id> &e: &7Remove a player's mines.",
 			"&7- &c/sma reload &e: &7Reloads config files.",
 			"&7&m---------------------------------------------"
 	);
