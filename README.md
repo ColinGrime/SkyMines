@@ -1,8 +1,4 @@
 <div align="center">
-    <img src="images/SkyMines.png" alt="NightBank" width="300" height="300" />
-</div>
-
-<div align="center">
     <h3>SkyMines</h3>
     <p>Fully customizable, personal skymines.</p>
 </div>
