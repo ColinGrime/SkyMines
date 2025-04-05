@@ -12,6 +12,7 @@ public class CooldownManager {
 	private final Cooldown<SkyMine> skyMineCooldown = Cooldown.create(Duration.ofSeconds(0));
 	private final Cooldown<Player> pickupCooldown = Cooldown.create(Duration.ofSeconds(300));
 	private final Cooldown<Player> placementCooldown = Cooldown.create(Duration.ofSeconds(10));
+	private final Cooldown<Player> throttle = Cooldown.create(Duration.ofMillis(100));
 
 	@Nonnull
 	public Cooldown<SkyMine> getSkyMineCooldown() {
@@ -26,5 +27,10 @@ public class CooldownManager {
 	@Nonnull
 	public Cooldown<Player> getPlacementCooldown() {
 		return placementCooldown;
+	}
+
+	@Nonnull
+	public Cooldown<Player> getThrottle() {
+		return throttle;
 	}
 }
