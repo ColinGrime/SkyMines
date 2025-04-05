@@ -129,6 +129,11 @@ public class DefaultSkyMine implements SkyMine {
 			pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
 		}
 
+		// Ensure if there's already an existing pickup cooldown, the maximum cooldown is applied.
+		if (cooldowns.getPickupCooldown().onCooldown(player)) {
+			pickupCooldown = Math.max(pickupCooldown, (int) cooldowns.getPickupCooldown().getTimeLeft(player).getSeconds());
+		}
+
 		// Add the pickup cooldown to the player.
 		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
 			if (Settings.OPTIONS_NOTIFY_ON_PICKUP_COOLDOWN_FINISH.get()) {
