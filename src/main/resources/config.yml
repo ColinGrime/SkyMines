@@ -23,7 +23,8 @@ options:
   # Should a player be notified when they can place skymines again? (see pickup-cooldown below)
   notify-on-pickup-cooldown-finish: true
   # Cooldown (in seconds) players have to wait if they picked up a skymine.
-  pickup-cooldown: 300
+  # Additional option: 'dynamic' - the cooldown to place it back down would be the current time left to reset the mine.
+  pickup-cooldown: dynamic
   # Cooldown (in seconds) players have to wait to attempt skymine placement again (for performance reasons).
   placement-cooldown: 10
   # If true, players can no longer drop their skymine token.
@@ -51,7 +52,7 @@ token:
 # ^ After negating permission, the player can no longer upgrade the mine until
 # you remove the negation or add the "skymines.upgrades.block-varity.2" permission.
 upgrades:
-  # Alter the composition of a mine.
+  # Upgrade the composition of a mine.
   block-variety:
     # Level of the upgrade.
     1:
@@ -89,7 +90,7 @@ upgrades:
         - LAPIS_ORE 10%
         - DIAMOND_ORE 5%
         - EMERALD_ORE 5%
-  # Alter the cooldown until a mine can be reset.
+  # Decrease the cooldown until a mine can be reset.
   reset-cooldown:
     1:
       # You can put [seconds/minutes/hours/etc] if you want.

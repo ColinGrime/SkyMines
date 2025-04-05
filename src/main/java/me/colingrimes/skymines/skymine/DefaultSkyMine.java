@@ -121,9 +121,16 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		// add cooldown
-		int time = Settings.OPTIONS_PICKUP_COOLDOWN.get();
-		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(time), p -> {
+		// Calculate pickup cooldown.
+		int pickupCooldown;
+		if (Settings.OPTIONS_PICKUP_COOLDOWN.get().matches("\\d+")) {
+			pickupCooldown = Integer.parseInt(Settings.OPTIONS_PICKUP_COOLDOWN.get());
+		} else {
+			pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
+		}
+
+		// Add the pickup cooldown to the player.
+		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
 			if (Settings.OPTIONS_NOTIFY_ON_PICKUP_COOLDOWN_FINISH.get()) {
 				Messages.GENERAL_PICKUP_COOLDOWN_FINISH.send(player);
 			}
