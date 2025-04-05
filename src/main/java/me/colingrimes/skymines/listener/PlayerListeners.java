@@ -71,20 +71,44 @@ public class PlayerListeners implements Listener {
 
 		ItemStack item = player.getInventory().getItemInMainHand();
 		SkyMineToken token = manager.getToken();
-
 		if (!token.isToken(item)) {
 			return;
 		}
+
+		// Add throttle to ensure lag/placement spam is accounted for.
+		if (plugin.getCooldownManager().getThrottle().onCooldown(player)) {
+			return;
+		} else {
+			plugin.getCooldownManager().getThrottle().add(player);
+		}
+
+		// Make sure all SkyMines are loaded.
+		if (!plugin.getStorage().isLoaded()) {
+			Messages.FAILURE_NOT_LOADED.send(player);
+			return;
+		}
+
+		// Check: max skymines.
 		if (manager.getSkyMines(player).size() >= Settings.OPTIONS_MAX_PER_PLAYER.get()) {
 			Messages.FAILURE_MAX_AMOUNT.send(player);
 			return;
 		}
+
+		// Check: cooldown when you pick up a skymine.
 		if (plugin.getCooldownManager().getPickupCooldown().onCooldown(player)) {
 			Messages.FAILURE_ON_PICKUP_COOLDOWN
 					.replace("{time}", Text.formatTime(plugin.getCooldownManager().getPickupCooldown().getTimeLeft(player)))
 					.send(player);
 			return;
 		}
+
+		// Check: cooldown when you place down a skymine.
+		//
+		// TODO this was originally made to prevent lag from spamming skymine placement,
+		//  but it's only per-player and who's really going to have that many large skymines at once?
+		//  Build task needs to be updated anyways to evenly spread out build over ticks,
+		//  once that's complete + profiled over many large structures, consider deprecating this.
+		//
 		if (plugin.getCooldownManager().getPlacementCooldown().onCooldown(player)) {
 			Messages.FAILURE_ON_PLACEMENT_COOLDOWN
 					.replace("{time}", Text.formatTime(plugin.getCooldownManager().getPlacementCooldown().getTimeLeft(player)))
