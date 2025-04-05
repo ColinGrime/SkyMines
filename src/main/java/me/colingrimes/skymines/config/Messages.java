@@ -45,6 +45,7 @@ public interface Messages {
 	Message<?> FAILURE_ON_PLACEMENT_COOLDOWN = message("failure.on-placement-cooldown", "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c.");
 	Message<?> FAILURE_ALREADY_MAXED         = message("failure.already-maxed", "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out.");
 	Message<?> FAILURE_INVALID_PLACEMENT     = message("failure.invalid-placement", "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c.");
+	Message<?> FAILURE_NOT_LOADED            = message("failure.not-loaded", "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading.");
 
 	/**************************************************
 	 *                  Usage Messages                *

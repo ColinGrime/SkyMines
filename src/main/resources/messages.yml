@@ -33,6 +33,7 @@ failure:
   on-placement-cooldown: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
   already-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
   invalid-placement: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
+  not-loaded: "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading."
 
 # Usage messages (for commands):
 usage:

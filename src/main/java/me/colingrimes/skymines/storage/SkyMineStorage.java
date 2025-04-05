@@ -25,6 +25,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	private static final String MINES_DELETE = "DELETE FROM 'skymines_mines' WHERE uuid=?";
 
 	private final SkyMines plugin;
+	private boolean loaded = false;
 
 	public SkyMineStorage(@Nonnull SkyMines plugin, @Nonnull ConnectionProvider connectionProvider) {
 		super(connectionProvider);
@@ -32,6 +33,9 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	}
 
 	public void loadMines() throws SQLException {
+		if (loaded) {
+			return;
+		}
 		try (Connection c = provider.getConnection()) {
 			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_SELECT_ALL))) {
 				ResultSet rs = ps.executeQuery();
@@ -48,6 +52,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				}
 			}
 		}
+		loaded = true;
 	}
 
 	@Override
@@ -103,5 +108,18 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				ps.executeUpdate();
 			}
 		}
+	}
+
+	/**
+	 * Gets whether the storage has finished loading.
+	 * <p>
+	 * This is important because we do not want to allow any new SkyMines from being
+	 * made before all the current ones are loaded.
+	 * Otherwise, duplicate SkyMines could be made.
+	 *
+	 * @return true if the storage is finished loading
+	 */
+	public boolean isLoaded() {
+		return loaded;
 	}
 }
