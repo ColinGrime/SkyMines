@@ -17,18 +17,17 @@ import java.util.UUID;
 
 public class SkyMineStorage extends SqlStorage<SkyMine> {
 
-	private static final String MINES_SELECT = "SELECT owner, structure, upgrades, home FROM 'skymines_mines' WHERE uuid=? LIMIT 1";
 	private static final String MINES_SELECT_ALL = "SELECT * FROM 'skymines_mines'";
+	private static final String MINES_EXIST = "SELECT 1 FROM 'skymines_mines' WHERE uuid=? LIMIT 1";
 	private static final String MINES_INSERT = "INSERT INTO 'skymines_mines' (uuid, owner, structure, upgrades, home) VALUES(?, ?, ?, ?, ?)";
-	private static final String MINES_UPDATE_UPGRADES = "UPDATE 'skymines_mines' SET upgrades=? WHERE uuid=?";
-	private static final String MINES_UPDATE_HOME = "UPDATE 'skymines_mines' SET home=? WHERE uuid=?";
+	private static final String MINES_UPDATE = "UPDATE 'skymines_mines' SET upgrades=?, home=? WHERE uuid=?";
 	private static final String MINES_DELETE = "DELETE FROM 'skymines_mines' WHERE uuid=?";
 
 	private final SkyMines plugin;
 	private boolean loaded = false;
 
 	public SkyMineStorage(@Nonnull SkyMines plugin, @Nonnull ConnectionProvider connectionProvider) {
-		super(connectionProvider);
+		super(plugin, connectionProvider);
 		this.plugin = plugin;
 	}
 
@@ -59,7 +58,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	public void save(@Nonnull SkyMine skyMine) throws SQLException {
 		boolean update;
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_SELECT))) {
+			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_EXIST))) {
 				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
 				update = ps.executeQuery().next();
 			}
@@ -74,14 +73,10 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 
 	private void updateMine(SkyMine skyMine) throws SQLException {
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_UPDATE_UPGRADES))) {
+			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_UPDATE))) {
 				ps.setString(1, SkyMineUpgrades.parse(skyMine.getUpgrades()));
-				DatabaseUtils.setUUID(ps, 2, skyMine.getUUID(), database);
-				ps.executeUpdate();
-			}
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_UPDATE_HOME))) {
-				ps.setString(1, Utils.parseLocation(skyMine.getHome()));
-				DatabaseUtils.setUUID(ps, 2, skyMine.getUUID(), database);
+				ps.setString(2, Utils.parseLocation(skyMine.getHome()));
+				DatabaseUtils.setUUID(ps, 3, skyMine.getUUID(), database);
 				ps.executeUpdate();
 			}
 		}
