@@ -69,7 +69,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// creates new skymine
 		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), structure, upgrades, home);
-		skyMine.reset(true);
 		plugin.getCooldownManager().getSkyMineCooldown().add(skyMine, skyMine.getUpgrades().getResetCooldownUpgrade().getResetCooldown());
 		return Optional.of(skyMine);
 	}
