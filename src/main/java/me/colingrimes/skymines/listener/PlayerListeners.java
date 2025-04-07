@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.listener;
 
+import me.colingrimes.midnight.event.PlayerInteractBlockEvent;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.bukkit.Inventories;
 import me.colingrimes.midnight.util.text.Text;
@@ -42,34 +43,9 @@ public class PlayerListeners implements Listener {
 			return;
 		}
 
-		SkyMineManager manager = plugin.getSkyMineManager();
 		Player player = event.getPlayer();
-		Block block = event.getClickedBlock();
-
-		// Access the SkyMine's panel through right-clicking the mine's parameter.
-		if (block != null) {
-			for (SkyMine skyMine : manager.getSkyMines(player)) {
-				if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
-					new MainPanel(plugin, player, skyMine).open();
-					event.setCancelled(true);
-					return;
-				}
-			}
-
-			if (player.hasPermission("skymines.admin.panel")) {
-				for (SkyMine skyMine : manager.getSkyMines()) {
-					if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
-						new MainPanel(plugin, player, skyMine).open();
-						Messages.SUCCESS_PANEL.send(player);
-						event.setCancelled(true);
-						return;
-					}
-				}
-			}
-			return;
-		}
-
 		ItemStack item = player.getInventory().getItemInMainHand();
+		SkyMineManager manager = plugin.getSkyMineManager();
 		SkyMineToken token = manager.getToken();
 		if (!token.isToken(item)) {
 			return;
@@ -127,6 +103,47 @@ public class PlayerListeners implements Listener {
 			event.setCancelled(true);
 		} else {
 			Messages.FAILURE_NO_SPACE.send(player);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerInteractBlock(@Nonnull PlayerInteractBlockEvent event) {
+		SkyMineManager manager = plugin.getSkyMineManager();
+		Player player = event.getPlayer();
+
+		// Check specific player's mine.
+		for (SkyMine skyMine : manager.getSkyMines(player)) {
+			if (!skyMine.getStructure().getParameter().contains(event.getLocation().toVector())) {
+				continue;
+			} else if (event.isRightClick()) {
+				new MainPanel(plugin, player, skyMine).open();
+				event.setCancelled(true);
+			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
+				player.teleport(skyMine.getHome());
+				Messages.SUCCESS_HOME.send(player);
+				event.setCancelled(true);
+			}
+			return;
+		}
+
+		if (!player.hasPermission("skymines.admin.panel")) {
+			return;
+		}
+
+		// Admins Only -- access to all mines.
+		for (SkyMine skyMine : manager.getSkyMines()) {
+			if (!skyMine.getStructure().getParameter().contains(event.getLocation().toVector())) {
+				continue;
+			} else if (event.isRightClick()) {
+				new MainPanel(plugin, player, skyMine).open();
+				Messages.SUCCESS_PANEL.send(player);
+				event.setCancelled(true);
+			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
+				player.teleport(skyMine.getHome());
+				Messages.SUCCESS_HOME.send(player);
+				event.setCancelled(true);
+			}
+			return;
 		}
 	}
 

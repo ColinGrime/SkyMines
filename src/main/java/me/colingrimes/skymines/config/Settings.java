@@ -31,6 +31,7 @@ public interface Settings {
 	Option<Integer> OPTIONS_PLACEMENT_COOLDOWN               = option("options.placement-cooldown", 10);
 	Option<Boolean> OPTIONS_PREVENT_TOKEN_DROP               = option("options.prevent-token-drop", true);
 	Option<Boolean> OPTIONS_OVERRIDE_TRANSPARENT_BLOCKS      = option("options.override-transparent-blocks", true);
+	Option<Boolean> OPTIONS_FAST_HOME                        = option("options.fast-home", true);
 	Option<Boolean> MISC_ENABLE_METRICS                      = option("misc.enable-metrics", true);
 
 	// SkyMines token item.

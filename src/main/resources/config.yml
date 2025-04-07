@@ -32,6 +32,8 @@ options:
   # If true, skymines can be placed over transparent blocks (grass, flowers, etc.)
   # This does not include chests.
   override-transparent-blocks: true
+  # If true, players can shift-left-click the mine border to instantly teleport to its home.
+  fast-home: true
 
 # Physical form of a skymine:
 token:
