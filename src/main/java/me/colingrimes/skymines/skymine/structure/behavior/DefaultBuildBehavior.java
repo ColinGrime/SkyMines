@@ -1,6 +1,6 @@
 package me.colingrimes.skymines.skymine.structure.behavior;
 
-import me.colingrimes.skymines.SkyMines;
+import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.structure.material.MaterialType;
 import me.colingrimes.skymines.skymine.structure.model.BlockInfo;
@@ -37,11 +37,10 @@ public class DefaultBuildBehavior implements BuildBehavior {
 			if (replaceBlocks || block.getType() == Material.AIR) {
 				buildTask.getBlocksToPlace().add(new BlockInfo(block, type.get()));
 			}
-			return true;
 		});
 
 		if (!buildTask.getBlocksToPlace().isEmpty()) {
-			buildTask.runTaskTimer(SkyMines.getInstance(), 0L, 1L);
+			Scheduler.sync().runRepeating(buildTask, 0L, 1L);
 		}
 	}
 }

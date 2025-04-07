@@ -1,19 +1,20 @@
 package me.colingrimes.skymines.task;
 
+import me.colingrimes.midnight.scheduler.task.Task;
 import me.colingrimes.skymines.skymine.structure.model.BlockInfo;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.function.Consumer;
 
-public class BuildTask extends BukkitRunnable {
+public class BuildTask implements Consumer<Task> {
 
 	private static final int MAX_MILLIS_PER_TICK = 15;
 	private final Deque<BlockInfo> blocksToPlace = new ArrayDeque<>();
 
 	@Override
-	public void run() {
+	public void accept(@Nonnull Task task) {
 		long stopTime = System.currentTimeMillis() + MAX_MILLIS_PER_TICK;
 
 		BlockInfo blockInfo;
@@ -23,7 +24,7 @@ public class BuildTask extends BukkitRunnable {
 
 		// nothing left to place, cancel task
 		if (blocksToPlace.isEmpty()) {
-			cancel();
+			task.stop();
 		}
 	}
 
