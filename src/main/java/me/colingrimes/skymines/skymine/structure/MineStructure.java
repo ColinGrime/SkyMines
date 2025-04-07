@@ -7,8 +7,8 @@ import me.colingrimes.skymines.skymine.structure.material.MaterialSingle;
 import me.colingrimes.skymines.skymine.structure.material.MaterialType;
 import me.colingrimes.skymines.skymine.structure.material.MaterialVariety;
 import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
-import me.colingrimes.skymines.skymine.structure.region.CuboidRegion;
-import me.colingrimes.skymines.skymine.structure.region.ParameterRegion;
+import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
+import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
 import me.colingrimes.skymines.util.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,31 +43,7 @@ public class MineStructure {
 		this.mineSize = mineSize;
 		this.borderType = borderType;
 		this.parameter = new ParameterRegion(startCorner.toVector(), endCorner.toVector());
-		this.inside = _getInside();
-	}
-
-	/**
-	 * Gets the mine structure's inside region.
-	 */
-	private CuboidRegion _getInside() {
-		int x1 = startCorner.getBlockX();
-		int y1 = startCorner.getBlockY();
-		int z1 = startCorner.getBlockZ();
-		int x2 = endCorner.getBlockX();
-		int y2 = endCorner.getBlockY();
-		int z2 = endCorner.getBlockZ();
-
-		int minX = Math.min(x1, x2);
-		int minY = Math.min(y1, y2);
-		int minZ = Math.min(z1, z2);
-		int maxX = minX == x1 ? x2 : x1;
-		int maxY = minY == y1 ? y2 : y1;
-		int maxZ = minZ == z1 ? z2 : z1;
-
-		CuboidRegion inside = new CuboidRegion();
-		inside.setMin(new Vector(minX + 1, minY + 1, minZ + 1));
-		inside.setMax(new Vector(maxX - 1, maxY, maxZ - 1));
-		return inside;
+		this.inside = new CuboidRegion(parameter.getMin().add(new Vector(1, 1, 1)), parameter.getMax().subtract(new Vector(1, 0, 1)));
 	}
 
 	/**
