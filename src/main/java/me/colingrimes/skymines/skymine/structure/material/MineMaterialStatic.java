@@ -4,11 +4,16 @@ import org.bukkit.Material;
 
 import javax.annotation.Nonnull;
 
-public class MaterialSingle implements MaterialType {
+/**
+ * A static material that does not change once set.
+ * <p>
+ * This is used for the walls of a mine.
+ */
+public class MineMaterialStatic implements MineMaterial {
 
 	private final Material material;
 
-	public MaterialSingle(@Nonnull Material material) {
+	public MineMaterialStatic(@Nonnull Material material) {
 		this.material = material;
 	}
 

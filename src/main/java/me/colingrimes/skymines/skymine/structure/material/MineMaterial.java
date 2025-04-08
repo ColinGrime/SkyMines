@@ -4,10 +4,15 @@ import org.bukkit.Material;
 
 import javax.annotation.Nonnull;
 
-public interface MaterialType {
+/**
+ * Responsible for getting the material type used in mine creation.
+ */
+public interface MineMaterial {
 
 	/**
-	 * @return a material
+	 * Gets a material.
+	 *
+	 * @return the material
 	 */
 	@Nonnull
 	Material get();
