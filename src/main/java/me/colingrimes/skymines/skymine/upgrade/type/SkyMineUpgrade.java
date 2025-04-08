@@ -1,7 +1,7 @@
-package me.colingrimes.skymines.skymine.upgrades.types;
+package me.colingrimes.skymines.skymine.upgrade.type;
 
 import me.colingrimes.midnight.util.text.Text;
-import me.colingrimes.skymines.skymine.upgrades.UpgradeType;
+import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.util.Common;
 import org.bukkit.entity.Player;
 
@@ -9,9 +9,13 @@ import javax.annotation.Nonnull;
 
 public abstract class SkyMineUpgrade {
 
-	private int level;
+	protected final UpgradeType type;
+	protected final String name;
+	protected int level;
 
-	public SkyMineUpgrade(int level) {
+	public SkyMineUpgrade(@Nonnull UpgradeType type, @Nonnull String name, int level) {
+		this.type = type;
+		this.name = name;
 		this.level = level;
 	}
 
@@ -21,7 +25,21 @@ public abstract class SkyMineUpgrade {
 	 * @return the type of upgrade
 	 */
 	@Nonnull
-	public abstract UpgradeType getType();
+	public UpgradeType getType() {
+		return type;
+	}
+
+	/**
+	 * Gets the name of the upgrade.
+	 * <p>
+	 * This is the name that is defined in the upgrades.yml file.
+	 *
+	 * @return the upgrade name
+	 */
+	@Nonnull
+	public String getName() {
+		return name;
+	}
 
 	/**
 	 * Gets the current level of the upgrade type.
