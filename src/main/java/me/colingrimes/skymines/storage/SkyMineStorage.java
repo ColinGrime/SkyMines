@@ -7,7 +7,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.structure.MineStructure;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import me.colingrimes.skymines.util.Utils;
 import org.bukkit.Location;
 
@@ -42,7 +42,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 					UUID uuid = DatabaseUtils.getUUID(rs, "uuid", database);
 					UUID owner = DatabaseUtils.getUUID(rs, "owner", database);
 					MineStructure structure = MineStructure.deserialize(rs.getString("structure"));
-					SkyMineUpgrades upgrades = SkyMineUpgrades.parse(rs.getString("upgrades"));
+					SkyMineUpgrades upgrades = SkyMineUpgrades.deserialize(rs.getString("upgrades"));
 					Location home = Utils.parseLocation(rs.getString("home"));
 					if (uuid != null && owner != null && structure != null && home != null) {
 						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, upgrades, home);
@@ -74,7 +74,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	private void updateMine(SkyMine skyMine) throws SQLException {
 		try (Connection c = provider.getConnection()) {
 			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_UPDATE))) {
-				ps.setString(1, SkyMineUpgrades.parse(skyMine.getUpgrades()));
+				ps.setString(1, skyMine.getUpgrades().serialize());
 				ps.setString(2, Utils.parseLocation(skyMine.getHome()));
 				DatabaseUtils.setUUID(ps, 3, skyMine.getUUID(), database);
 				ps.executeUpdate();
@@ -88,7 +88,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
 				DatabaseUtils.setUUID(ps, 2, skyMine.getOwner(), database);
 				ps.setString(3, skyMine.getStructure().serialize());
-				ps.setString(4, SkyMineUpgrades.parse(skyMine.getUpgrades()));
+				ps.setString(4, skyMine.getUpgrades().serialize());
 				ps.setString(5, Utils.parseLocation(skyMine.getHome()));
 				ps.executeUpdate();
 			}

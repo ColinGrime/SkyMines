@@ -6,7 +6,7 @@ import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.factory.SkyMineFactory;
 import me.colingrimes.skymines.skymine.structure.MineSize;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

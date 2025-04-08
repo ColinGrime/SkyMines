@@ -7,7 +7,7 @@ import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
-import me.colingrimes.skymines.panel.UpgradePanel;
+import me.colingrimes.skymines.menu.UpgradeMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
 
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ public class SkyMineUpgrades implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_UPGRADES);
 		if (skyMine != null) {
-			new UpgradePanel(sender.player(), skyMine).open();
+			new UpgradeMenu(sender.player(), skyMine).open();
 		}
 	}
 

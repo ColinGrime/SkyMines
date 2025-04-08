@@ -1,8 +1,8 @@
 package me.colingrimes.skymines.skymine;
 
 import me.colingrimes.skymines.skymine.structure.MineStructure;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
-import me.colingrimes.skymines.skymine.upgrades.types.BlockVarietyUpgrade;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -73,7 +73,7 @@ public interface SkyMine {
 	void setHome(@Nonnull Location home);
 
 	/**
-	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 * Resets the skymine depending on the {@link CompositionUpgrade#getLevel()}.
 	 * This will fill up the inside of the skymine with random blocks.
 	 * <p>
 	 * If the owner is currently on cooldown, and {@code ignoreCooldown} is false, then nothing will happen.

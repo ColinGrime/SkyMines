@@ -1,4 +1,4 @@
-package me.colingrimes.skymines.skymine.upgrades;
+package me.colingrimes.skymines.skymine.upgrade;
 
 import me.colingrimes.midnight.util.text.Parser;
 
@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 public enum UpgradeType {
 
-	BlockVariety("Block Variety"),
+	Composition("Composition"),
 	ResetCooldown("Reset Cooldown");
 
 	private final String name;

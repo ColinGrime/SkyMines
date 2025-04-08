@@ -3,9 +3,9 @@ package me.colingrimes.skymines.skymine.structure;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
-import me.colingrimes.skymines.skymine.structure.material.MaterialSingle;
-import me.colingrimes.skymines.skymine.structure.material.MaterialType;
-import me.colingrimes.skymines.skymine.structure.material.MaterialVariety;
+import me.colingrimes.skymines.skymine.structure.material.MineMaterialStatic;
+import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
+import me.colingrimes.skymines.skymine.structure.material.MineMaterialDynamic;
 import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
 import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
 import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
@@ -91,15 +91,15 @@ public class MineStructure {
 	}
 
 	public void buildParameter() {
-		getBehavior().build(world, parameter, new MaterialSingle(borderType));
+		getBehavior().build(world, parameter, new MineMaterialStatic(borderType));
 	}
 
-	public void buildInside(@Nonnull MaterialVariety blockVariety) {
+	public void buildInside(@Nonnull MineMaterialDynamic blockVariety) {
 		getBehavior().build(world, inside, blockVariety, Settings.OPTIONS_REPLACE_BLOCKS.get());
 	}
 
 	public void destroy() {
-		MaterialType air = new MaterialSingle(Material.AIR);
+		MineMaterial air = new MineMaterialStatic(Material.AIR);
 		getBehavior().build(world, parameter, air);
 		getBehavior().build(world, inside, air);
 	}

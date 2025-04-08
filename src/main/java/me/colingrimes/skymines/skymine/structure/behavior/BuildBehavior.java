@@ -1,6 +1,6 @@
 package me.colingrimes.skymines.skymine.structure.behavior;
 
-import me.colingrimes.skymines.skymine.structure.material.MaterialType;
+import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.structure.region.Region;
 import org.bukkit.World;
 
@@ -21,7 +21,7 @@ public interface BuildBehavior {
 	 * @param region any type of region
 	 * @param type material type
 	 */
-	default void build(@Nonnull World world, @Nonnull Region region, @Nonnull MaterialType type) {
+	default void build(@Nonnull World world, @Nonnull Region region, @Nonnull MineMaterial type) {
 		build(world, region, type, true);
 	}
 
@@ -31,5 +31,5 @@ public interface BuildBehavior {
 	 * @param type material type
 	 * @param replaceBlocks true if blocks should be replaced
 	 */
-	void build(@Nonnull World world, @Nonnull Region region, @Nonnull MaterialType type, boolean replaceBlocks);
+	void build(@Nonnull World world, @Nonnull Region region, @Nonnull MineMaterial type, boolean replaceBlocks);
 }

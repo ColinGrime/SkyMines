@@ -62,7 +62,7 @@ public class MineSize {
 	 */
 	@Nullable
 	public static MineSize deserialize(@Nullable String text) {
-		if (text == null || text.isEmpty()) {
+		if (text == null || text.isEmpty() || text.split(":").length != 3) {
 			return null;
 		}
 

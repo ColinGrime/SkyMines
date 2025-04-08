@@ -2,7 +2,7 @@ package me.colingrimes.skymines.skymine.factory;
 
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.structure.MineSize;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

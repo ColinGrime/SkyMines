@@ -7,7 +7,7 @@ import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
-import me.colingrimes.skymines.panel.MainPanel;
+import me.colingrimes.skymines.menu.MainMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
 
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ public class SkyMinePanel implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_PANEL);
 		if (skyMine != null) {
-			new MainPanel(plugin, sender.player(), skyMine).open();
+			new MainMenu(plugin, sender.player(), skyMine).open();
 		}
 	}
 

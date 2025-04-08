@@ -2,7 +2,7 @@ package me.colingrimes.skymines.skymine.structure.behavior;
 
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.skymines.config.Settings;
-import me.colingrimes.skymines.skymine.structure.material.MaterialType;
+import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.structure.model.BlockInfo;
 import me.colingrimes.skymines.skymine.structure.region.Region;
 import me.colingrimes.skymines.task.BuildTask;
@@ -30,12 +30,12 @@ public class DefaultBuildBehavior implements BuildBehavior {
 	}
 
 	@Override
-	public void build(@Nonnull World world, @Nonnull Region region, @Nonnull MaterialType type, boolean replaceBlocks) {
+	public void build(@Nonnull World world, @Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks) {
 		BuildTask buildTask = new BuildTask();
 		region.handler((x, y, z) -> {
 			Block block = world.getBlockAt(x, y, z);
 			if (replaceBlocks || block.getType() == Material.AIR) {
-				buildTask.getBlocksToPlace().add(new BlockInfo(block, type.get()));
+				buildTask.getBlocksToPlace().add(new BlockInfo(block, material.get()));
 			}
 		});
 

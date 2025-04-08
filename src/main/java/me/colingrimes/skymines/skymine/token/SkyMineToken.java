@@ -1,7 +1,7 @@
 package me.colingrimes.skymines.skymine.token;
 
 import me.colingrimes.skymines.skymine.structure.MineSize;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
