@@ -1,0 +1,75 @@
+#----------------------------------------------------------------------------------#
+# Options for mine upgrades...                                                     #
+#                                                                                  #
+# Upgrade types: composition, reset-cooldown                                       #
+# By default, all upgrades are available to players.                               #
+#                                                                                  #
+# Want to require permission to upgrade a mine? Simply negative the permission.    #
+# -> ex. the whole type: "-skymines.upgrades.composition"                          #
+# -> ex. a specific level: "-skymines.upgrades.composition.2"                      #
+#                                                                                  #
+# ^ After negating permission, the player can no longer upgrade the mine until     #
+# you remove the negation or add the "skymines.upgrades.composition.2" permission. #
+#----------------------------------------------------------------------------------#
+# Below, you can define unique paths for each upgrade type.                        #
+#                                                                                  #
+# Then, in the tokens.yml file, you can create SkyMine tokens and have each token  #
+# use different upgrades and have different costs for each one.                    #
+#----------------------------------------------------------------------------------#
+
+# Upgrade the composition of a mine.
+composition:
+  # The name of this upgrade to reference in the tokens.yml file.
+  default:
+    # Level of the upgrade.
+    1:
+      # Format: {type} {percentage}
+      # No, it doesn't have to add up to 100%.
+      upgrade:
+        - STONE 90%
+        - IRON_ORE 10%
+        - GOLD_ORE 5%
+    2:
+      # Cost to buy the upgrade, or -1 for free.
+      cost: 100000
+      upgrade:
+        - STONE 70%
+        - IRON_ORE 15%
+        - GOLD_ORE 10%
+        - REDSTONE_ORE 5%
+        - LAPIS_ORE 5%
+    3:
+      cost: 250000
+      upgrade:
+        - STONE 50%
+        - IRON_ORE 20%
+        - GOLD_ORE 15%
+        - REDSTONE_ORE 7.5%
+        - LAPIS_ORE 7.5%
+        - DIAMOND_ORE 2%
+    4:
+      cost: 750000
+      upgrade:
+        - STONE 30%
+        - IRON_ORE 25%
+        - GOLD_ORE 25%
+        - REDSOTNE_ORE 10%
+        - LAPIS_ORE 10%
+        - DIAMOND_ORE 5%
+        - EMERALD_ORE 5%
+
+# Decrease the cooldown until a mine can be reset.
+reset-cooldown:
+  default:
+    1:
+      # You can put [seconds/minutes/hours/etc] if you want.
+      upgrade: 5 minutes
+    2:
+      cost: 50000
+      upgrade: 2 minutes
+    3:
+      cost: 100000
+      upgrade: 1 minute
+    4:
+      cost: 150000
+      upgrade: 30 seconds
