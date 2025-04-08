@@ -1,0 +1,74 @@
+# Main Menu for the mines.
+main-menu:
+  name: "&8Main Menu"
+  rows: 3
+  fill: GRAY_STAINED_GLASS_PANE # Optional material to fill the GUI after all other items are placed.
+  slots:
+    11:
+      type: BLUE_BED
+      name: "&aSkyMine Home"
+      lore:
+        - "&7On Click → &eTeleport to Mine"
+        - ""
+        - "&7Tip: Use &f/sm sethome <id> &7to set a home."
+      # Command to run. There are 4 special commands: HOME, RESET, UPGRADES, PICKUP
+      command: HOME
+    13:
+      type: RESPAWN_ANCHOR
+      name: "&aSkyMine Reset &7({time} left)"
+      lore:
+        - "&7On Click → &eReset the Mine"
+      command: RESET
+    15:
+      type: BUDDING_AMETHYST
+      name: "&aSkyMine Upgrades"
+      lore:
+        - "&7On Click → &eOpen the Mine"s Upgrades"
+      command: UPGRADES
+    17:
+      type: BARRIER
+      name: "&cSkyMine Pickup"
+      lore:
+        - "&7On Click → &ePickup the Mine"
+      command: PICKUP
+
+# Upgrade Menu for the mines.
+upgrade-menu:
+  name: "&8Upgrade Menu"
+  rows: 3
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    13:
+      # Instead of type/name/lore, you can refer to an entire upgrade below.
+      upgrade: composition
+    15:
+      upgrade: reset-cooldown
+
+# Use this for the upgrade slots:
+upgrades:
+  composition:
+    type: AMETHYST_CLUSTER
+    name:
+      # This is the default name of the upgrade.
+      default: "&bComposition &7(&e{level} &7→ &e{next-level}&7)"
+      # This is used when the upgrade is maxed out.
+      max: "&bComposition &7(&eMAXED&7)"
+    lore:
+      # This is used when an already existing material has a different percentage.
+      change: "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}"
+      # This is used when a new material is available.
+      new: "&7(&a+&7) &a{type} &7→ &e{percentage}%"
+      # This is used when the upgrade is maxed out.
+      max: "&7(&c✯&7) &c{type} &7→ &e{percentage}%"
+  reset-cooldown:
+    type: CLOCK
+    name:
+      # This is the default name of the upgrade.
+      default: "&cReset Cooldown &7(&e{level} &7→ &e{next-level}&7)"
+      # This is used when the upgrade is maxed out.
+      max: "&cReset Cooldown &7(&eMAXED&7)"
+    lore:
+      # This is used for past and future cooldowns.
+      default: "&7({level}) {amount} minutes"
+      # This is used for the next cooldown available.
+      next: "&d→ &7(&e{level}&7) &e{amount} seconds"
