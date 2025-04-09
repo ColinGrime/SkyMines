@@ -24,7 +24,7 @@ public interface Messages {
 	Message<?> SUCCESS_UPGRADE = message("success.upgrade", "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a.");
 	Message<?> SUCCESS_HOME    = message("success.home", "&2&l✓ &aYou have been teleported to your &eSkyMine&a.");
 	Message<?> SUCCESS_SETHOME = message("success.sethome", "&2&l✓ &aYou have changed your &eSkyMine's &ahome location.");
-	Message<?> SUCCESS_RESET   = message("success.reset", "&2&l✓ &aThe &eSkyMine &ahas been reset.");
+	Message<?> SUCCESS_RESET   = message("success.reset", "&2&l✓ &aYou have reset your &eSkyMine&a.");
 	Message<?> SUCCESS_PICKUP  = message("success.pickup", "&2&l✓ &aYou have picked up your &eSkyMine&a.");
 	Message<?> SUCCESS_PLACE   = message("success.place", "&2&l✓ &aYou have placed your &eSkyMine&a.");
 
@@ -92,8 +92,10 @@ public interface Messages {
 	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------");
 	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");
-	Message<?> SUCCESS_PANEL                     = message("admin.success.panel", "&2&l✓ &aYou have accessed another player's &eSkyMine&a.");
 	Message<?> SUCCESS_GIVE                      = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
+	Message<?> SUCCESS_PANEL                     = message("admin.success.panel", "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a.");
+	Message<?> SUCCESS_HOME_ADMIN                = message("admin.success.home", "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a.");
+	Message<?> SUCCESS_RESET_ADMIN               = message("admin.success.reset", "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine&a.");
 	Message<?> SUCCESS_PICKUP_ADMIN              = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a.");
 	Message<?> SUCCESS_REMOVE                    = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a.");
 	Message<?> SUCCESS_RELOADED                  = message("admin.success.reloaded", "&2&l✓ &eSkyMines &ahas been reloaded.");
@@ -103,7 +105,6 @@ public interface Messages {
 	Message<?> FAILURE_NO_SKYMINE_FOUND          = message("admin.failure.no-skymine-found", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
 	Message<?> FAILURE_NO_SKYMINES_FOUND         = message("admin.failure.no-skymines-found", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
 	Message<?> FAILURE_INVALID_AMOUNT            = message("admin.failure.invalid-amount", "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount.");
-	Message<?> FAILURE_INVALID_MATERIAL          = message("admin.failure.invalid-material", "&4&l❌ &cThe material '&e{material}&c' is an invalid border type.");
 	Message<?> USAGE_SKYMINES_ADMIN_COMMAND      = message("admin.usage.skymines-admin-command",
 			"&7&m---------&r &e&lSkyMine &cAdmin Commands &7&m---------",
 			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
