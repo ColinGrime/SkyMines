@@ -1,6 +1,7 @@
 package me.colingrimes.skymines.skymine.manager;
 
 import me.colingrimes.midnight.util.io.Logger;
+import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.factory.SkyMineFactory;
@@ -115,8 +116,8 @@ public class SkyMineManager {
 	 * @return skymine if one exists
 	 */
 	@Nonnull
-	public Optional<SkyMine> getSkyMine(@Nonnull UUID uuid, String id) {
-		if (!id.matches("\\d+")) {
+	public Optional<SkyMine> getSkyMine(@Nonnull UUID uuid, @Nonnull String id) {
+		if (!Types.isInteger(id)) {
 			return Optional.empty();
 		}
 

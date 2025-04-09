@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.skymine.structure.material;
 
+import me.colingrimes.midnight.util.misc.Types;
 import org.bukkit.Material;
 
 import javax.annotation.Nonnull;
@@ -32,7 +33,7 @@ public class MineMaterialDynamic implements MineMaterial {
 		for (String entry : configMaterials) {
 			Material material = Material.getMaterial(entry.split(" ")[0].toUpperCase());
 			String chance = entry.split(" ")[1].replace("%", "");
-			if (material != null && chance.matches("\\d+(\\.\\d+)?")) {
+			if (material != null && Types.isDouble(chance)) {
 				addMaterial(material, Double.parseDouble(chance));
 			}
 		}

@@ -3,6 +3,7 @@ package me.colingrimes.skymines.listener;
 import me.colingrimes.midnight.event.PlayerInteractBlockEvent;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.bukkit.Inventories;
+import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.api.SkyMineBlockBreakEvent;
@@ -135,7 +136,7 @@ public class PlayerListeners implements Listener {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
-				Messages.SUCCESS_PANEL.send(player);
+				Messages.SUCCESS_PANEL.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(player);
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome());

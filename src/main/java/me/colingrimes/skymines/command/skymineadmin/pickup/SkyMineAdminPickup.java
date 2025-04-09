@@ -17,21 +17,18 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		Optional<UUID> uuid = UUIDs.fromName(args.get(0));
+		Optional<UUID> uuid = UUIDs.fromName(args.getFirst());
 		if (uuid.isEmpty()) {
-			Messages.FAILURE_NO_PLAYER_FOUND.replace("{player}", args.get(0)).send(sender);
+			Messages.FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
 		if (skyMine.isPresent()) {
 			skyMine.get().pickup(sender.player());
-			Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", args.get(0)).send(sender);
+			Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", args.getFirst()).send(sender);
 		} else {
-			Messages.FAILURE_NO_SKYMINE_FOUND
-					.replace("{player}", args.get(0))
-					.replace("{id}", args.get(1))
-					.send(sender);
+			Messages.FAILURE_NO_SKYMINE_FOUND.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
 		}
 	}
 

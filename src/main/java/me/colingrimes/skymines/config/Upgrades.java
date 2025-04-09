@@ -2,6 +2,7 @@ package me.colingrimes.skymines.config;
 
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
+import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.midnight.util.text.Parser;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterialDynamic;
@@ -49,7 +50,7 @@ public interface Upgrades {
 
 		public Composition(@Nonnull ConfigurationSection sec) {
 			for (String level : sec.getKeys(false)) {
-				if (level.matches("\\d+")) {
+				if (Types.isInteger(level)) {
 					composition.put(Integer.parseInt(level), new MineMaterialDynamic(sec.getStringList(level + ".upgrade")));
 					costs.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
 				}
@@ -79,7 +80,7 @@ public interface Upgrades {
 
 		public ResetCooldown(@Nonnull ConfigurationSection sec) {
 			for (String level : sec.getKeys(false)) {
-				if (level.matches("\\d+")) {
+				if (Types.isInteger(level)) {
 					resetCooldown.put(Integer.parseInt(level), Parser.parseDuration(sec.getString(level + ".upgrade")));
 					costs.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
 				}
