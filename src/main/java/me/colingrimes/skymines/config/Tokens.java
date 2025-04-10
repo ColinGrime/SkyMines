@@ -2,8 +2,8 @@ package me.colingrimes.skymines.config;
 
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
+import me.colingrimes.midnight.geometry.Size;
 import me.colingrimes.midnight.util.bukkit.Items;
-import me.colingrimes.skymines.skymine.structure.MineSize;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -34,14 +34,14 @@ public interface Tokens {
 	class Token {
 		private final String id;
 		private final ItemStack item;
-		private final MineSize mineSize;
+		private final Size defaultSize;
 		private final Material borderType;
 		private final Map<UpgradeType, String> upgrades = new HashMap<>();
 
 		public Token(@Nonnull String id, @Nonnull ConfigurationSection sec) {
 			this.id = id;
 			this.item = Items.create().config(sec.getConfigurationSection("item")).build();
-			this.mineSize = MineSize.deserialize(String.join(":", sec.getStringList("mine-size")));
+			this.defaultSize = Size.of(sec.getStringList("default-size"));
 			this.borderType = Material.getMaterial(sec.getString("border-type", "BEDROCK"));
 			for (String type : Objects.requireNonNull(sec.getConfigurationSection("upgrades")).getKeys(false)) {
 				UpgradeType upgradeType = UpgradeType.parse(type);
@@ -58,22 +58,22 @@ public interface Tokens {
 
 		@Nonnull
 		public ItemStack getItem() {
-			return item.getItemMeta() != null && item.getItemMeta().hasDisplayName() ? item : Tokens.DEFAULT_ITEM.get();
+			return item.getItemMeta() != null && item.getItemMeta().hasDisplayName() ? item.clone() : Tokens.DEFAULT_ITEM.get().clone();
 		}
 
 		@Nonnull
-		public Map<UpgradeType, String> getUpgrades() {
-			return upgrades;
-		}
-
-		@Nonnull
-		public MineSize getMineSize() {
-			return mineSize != null ? mineSize : new MineSize(10, 10, 10);
+		public Size getDefaultSize() {
+			return defaultSize != null ? defaultSize : Size.of(10);
 		}
 
 		@Nonnull
 		public Material getBorderType() {
 			return borderType != null ? borderType : Material.BEDROCK;
+		}
+
+		@Nonnull
+		public Map<UpgradeType, String> getUpgrades() {
+			return upgrades;
 		}
 	}
 }

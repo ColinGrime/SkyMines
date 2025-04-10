@@ -1,11 +1,17 @@
 package me.colingrimes.skymines.skymine.structure;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import me.colingrimes.midnight.geometry.Position;
+import me.colingrimes.midnight.geometry.Size;
+import me.colingrimes.midnight.serialize.Json;
+import me.colingrimes.midnight.serialize.Serializable;
 import me.colingrimes.midnight.util.Common;
+import me.colingrimes.midnight.util.misc.Validator;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterialStatic;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
-import me.colingrimes.skymines.skymine.structure.material.MineMaterialDynamic;
 import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
 import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
 import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
@@ -18,32 +24,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class MineStructure {
+public class MineStructure implements Serializable {
 
 	private final World world;
-	private final Location startCorner;
-	private final Location endCorner;
-	private final MineSize mineSize;
+	private final Position corner1;
+	private final Position corner2;
+	private final Size mineSize;
 	private final Material borderType;
 
 	private final ParameterRegion parameter;
 	private final CuboidRegion inside;
 
-	public MineStructure(@Nonnull Location startCorner, @Nonnull Location endCorner, @Nonnull MineSize mineSize, @Nonnull Material borderType) {
-		this.world = startCorner.getWorld();
-		this.startCorner = startCorner;
-		this.endCorner = endCorner;
+	public MineStructure(@Nonnull Position corner1, @Nonnull Position corner2, @Nonnull Size mineSize, @Nonnull Material borderType) {
+		this.world = corner1.getWorld();
+		this.corner1 = corner1;
+		this.corner2 = corner2;
 		this.mineSize = mineSize;
 		this.borderType = borderType;
-		this.parameter = new ParameterRegion(startCorner.toVector(), endCorner.toVector());
-		this.inside = new CuboidRegion(parameter.getMin().add(new Vector(1, 1, 1)), parameter.getMax().subtract(new Vector(1, 0, 1)));
+		this.parameter = new ParameterRegion(corner1, corner2);
+		this.inside = new CuboidRegion(parameter.getMin().add(1, 1, 1), parameter.getMax().subtract(1, 1, 1));
 	}
 
 	/**
@@ -59,12 +65,12 @@ public class MineStructure {
 		}
 
 		// all major points around the mine
-		int x1 = startCorner.getBlockX();
-		int y1 = startCorner.getBlockY();
-		int z1 = startCorner.getBlockZ();
-		int x2 = endCorner.getBlockX();
-		int y2 = endCorner.getBlockY();
-		int z2 = endCorner.getBlockZ();
+		int x1 = corner1.getBlockX();
+		int y1 = corner1.getBlockY();
+		int z1 = corner1.getBlockZ();
+		int x2 = corner2.getBlockX();
+		int y2 = corner2.getBlockY();
+		int z2 = corner2.getBlockZ();
 
 		List<Location> locationsToCheck = new ArrayList<>();
 		locationsToCheck.add(new Location(world, x1, y1, z1));
@@ -94,7 +100,7 @@ public class MineStructure {
 		getBehavior().build(world, parameter, new MineMaterialStatic(borderType));
 	}
 
-	public void buildInside(@Nonnull MineMaterialDynamic blockVariety) {
+	public void buildInside(@Nonnull MineMaterial blockVariety) {
 		getBehavior().build(world, inside, blockVariety, Settings.OPTIONS_REPLACE_BLOCKS.get());
 	}
 
@@ -110,7 +116,7 @@ public class MineStructure {
 	}
 
 	@Nonnull
-	public MineSize getMineSize() {
+	public Size getMineSize() {
 		return mineSize;
 	}
 
@@ -129,18 +135,25 @@ public class MineStructure {
 		return inside;
 	}
 
-	/**
-	 * Serializes the mine structure into a string.
-	 *
-	 * @return a string representing the mine structure
-	 */
 	@Nonnull
-	public String serialize() {
-		String corner1 = Utils.parseLocation(startCorner);
-		String corner2 = Utils.parseLocation(endCorner);
-		String size = mineSize.serialize();
-		String border = borderType.name();
-		return corner1 + '\n' + corner2 + '\n' + size + '\n' + border;
+	@Override
+	public JsonElement serialize() {
+		return Json.create()
+				.add("corner1", corner1.serialize())
+				.add("corner2", corner2.serialize())
+				.add("mineSize", mineSize.serialize())
+				.add("borderType", borderType.name())
+				.build();
+	}
+
+	@Nonnull
+	public static MineStructure deserialize(@Nonnull JsonElement element) {
+		JsonObject object = Validator.checkJson(element, "corner1", "corner2", "mineSize", "borderType");
+		Position corner1 = Position.deserialize(object.get("corner1"));
+		Position corner2 = Position.deserialize(object.get("corner2"));
+		Size mineSize = Size.deserialize(object.get("mineSize"));
+		Material borderType = Material.getMaterial(object.get("borderType").getAsString());
+		return new MineStructure(corner1, corner2, mineSize, Objects.requireNonNull(borderType));
 	}
 
 	/**
@@ -149,8 +162,9 @@ public class MineStructure {
 	 * @param text the text to parse
 	 * @return the mine structure if available
 	 */
+	@Deprecated
 	@Nullable
-	public static MineStructure deserialize(@Nullable String text) {
+	public static MineStructure oldDeserialize(@Nullable String text) {
 		if (text == null || text.isEmpty()) {
 			return null;
 		}
@@ -162,12 +176,12 @@ public class MineStructure {
 
 		Location startCorner = Utils.parseLocation(texts[0]);
 		Location endCorner = Utils.parseLocation(texts[1]);
-		MineSize size = MineSize.deserialize(texts[2]);
+		Size size = Size.of(texts[2]);
 		Material borderType = Material.getMaterial(texts[3]);
 		if (startCorner == null || endCorner == null || size == null || borderType == null) {
 			return null;
 		}
 
-		return new MineStructure(startCorner, endCorner, size, borderType);
+		return new MineStructure(Position.of(startCorner), Position.of(endCorner), size, borderType);
 	}
 }
