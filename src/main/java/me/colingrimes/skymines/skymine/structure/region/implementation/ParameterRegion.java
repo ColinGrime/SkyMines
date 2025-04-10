@@ -1,9 +1,9 @@
 package me.colingrimes.skymines.skymine.structure.region.implementation;
 
+import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.skymines.skymine.structure.region.Region;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriConsumer;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriPredicate;
-import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -17,31 +17,31 @@ public class ParameterRegion extends AbstractRegion {
 
 	private final List<Region> parameterSides = new ArrayList<>();
 
-	public ParameterRegion(@Nonnull Vector pt1, @Nonnull Vector pt2) {
-		setPoints(pt1, pt2);
+	public ParameterRegion(@Nonnull Position pos1, @Nonnull Position pos2) {
+		set(pos1, pos2);
 	}
 
 	@Override
-	public void setPoints(@Nonnull Vector pt1, @Nonnull Vector pt2) {
-		super.setPoints(pt1, pt2);
+	public void set(@Nonnull Position pos1, @Nonnull Position pos2) {
+		super.set(pos1, pos2);
 
 		// get the points of the mine
-		int x1 = pt1.getBlockX();
-		int z1 = pt1.getBlockZ();
-		int x2 = pt2.getBlockX();
-		int z2 = pt2.getBlockZ();
+		int x1 = pos1.getBlockX();
+		int z1 = pos1.getBlockZ();
+		int x2 = pos2.getBlockX();
+		int z2 = pos2.getBlockZ();
 
 		// the 5 walls of the mine
-		parameterSides.add(new CuboidRegion(new Vector(x1, min.getBlockY(), z1), new Vector(x2, min.getBlockY(), z2)));
-		parameterSides.add(new CuboidRegion(new Vector(x1, min.getBlockY(), z1), new Vector(x2, max.getBlockY(), z1)));
-		parameterSides.add(new CuboidRegion(new Vector(x2, min.getBlockY(), z1), new Vector(x2, max.getBlockY(), z2)));
-		parameterSides.add(new CuboidRegion(new Vector(x1, min.getBlockY(), z1), new Vector(x1, max.getBlockY(), z2)));
-		parameterSides.add(new CuboidRegion(new Vector(x1, min.getBlockY(), z2), new Vector(x2, max.getBlockY(), z2)));
+		parameterSides.add(new CuboidRegion(Position.of(pos1.getWorld(), x1, min.getBlockY(), z1), Position.of(pos1.getWorld(), x2, min.getBlockY(), z2)));
+		parameterSides.add(new CuboidRegion(Position.of(pos1.getWorld(), x1, min.getBlockY(), z1), Position.of(pos1.getWorld(), x2, max.getBlockY(), z1)));
+		parameterSides.add(new CuboidRegion(Position.of(pos1.getWorld(), x2, min.getBlockY(), z1), Position.of(pos1.getWorld(), x2, max.getBlockY(), z2)));
+		parameterSides.add(new CuboidRegion(Position.of(pos1.getWorld(), x1, min.getBlockY(), z1), Position.of(pos1.getWorld(), x1, max.getBlockY(), z2)));
+		parameterSides.add(new CuboidRegion(Position.of(pos1.getWorld(), x1, min.getBlockY(), z2), Position.of(pos1.getWorld(), x2, max.getBlockY(), z2)));
 	}
 
 	@Override
-	public boolean containsWithin(@Nonnull Vector pt, int blocksAway) {
-		return parameterSides.stream().anyMatch(region -> region.containsWithin(pt, blocksAway));
+	public boolean containsWithin(@Nonnull Position pos, int blocksAway) {
+		return parameterSides.stream().anyMatch(region -> region.containsWithin(pos, blocksAway));
 	}
 
 	@Override

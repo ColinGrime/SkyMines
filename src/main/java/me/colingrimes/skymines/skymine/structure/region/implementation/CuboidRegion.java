@@ -1,22 +1,22 @@
 package me.colingrimes.skymines.skymine.structure.region.implementation;
 
+import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriConsumer;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriPredicate;
-import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 
 public class CuboidRegion extends AbstractRegion {
 
-	public CuboidRegion(@Nonnull Vector pt1, @Nonnull Vector pt2) {
-		setPoints(pt1, pt2);
+	public CuboidRegion(@Nonnull Position pos1, @Nonnull Position pos2) {
+		set(pos1, pos2);
 	}
 
 	@Override
-	public boolean containsWithin(@Nonnull Vector pt, int blocksAway) {
-		int x = pt.getBlockX();
-		int y = pt.getBlockY();
-		int z = pt.getBlockZ();
+	public boolean containsWithin(@Nonnull Position pos, int blocksAway) {
+		int x = pos.getBlockX();
+		int y = pos.getBlockY();
+		int z = pos.getBlockZ();
 
 		return x >= min.getBlockX() - blocksAway && x <= max.getBlockX() + blocksAway
 				&& y >= min.getBlockY() - blocksAway && y <= max.getBlockY() + blocksAway

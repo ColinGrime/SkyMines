@@ -1,10 +1,10 @@
 package me.colingrimes.skymines.skymine.structure.region;
 
+import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriConsumer;
 import me.colingrimes.skymines.skymine.structure.region.functional.TriPredicate;
 import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
 import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
-import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 
@@ -16,60 +16,60 @@ import javax.annotation.Nonnull;
 public interface Region {
 
 	/**
-	 * Gets the minimum point of the region.
+	 * Sets the two positions of the region.
 	 *
-	 * @return the minimum point
+	 * @param pos1 the first position
+	 * @param pos2 the second position
+	 */
+	void set(@Nonnull Position pos1, @Nonnull Position pos2);
+
+	/**
+	 * Gets the minimum position of the region.
+	 *
+	 * @return the minimum position
 	 */
 	@Nonnull
-	Vector getMin();
+	Position getMin();
 
 	/**
-	 * Gets the maximum point of the region.
+	 * Gets the maximum position of the region.
 	 *
-	 * @return the maximum point
+	 * @return the maximum position
 	 */
 	@Nonnull
-	Vector getMax();
+	Position getMax();
 
 	/**
-	 * Sets the points of the region.
+	 * Checks if the region contains the specified position.
 	 *
-	 * @param pt1 first point
-	 * @param pt2 second point
+	 * @param pos the position
+	 * @return true if the position is within the region
 	 */
-	void setPoints(@Nonnull Vector pt1, @Nonnull Vector pt2);
-
-	/**
-	 * Checks if the region contains the specified point.
-	 *
-	 * @param pt the point
-	 * @return true if the point is within the region
-	 */
-	default boolean contains(@Nonnull Vector pt) {
-		return containsWithin(pt, 0);
+	default boolean contains(@Nonnull Position pos) {
+		return containsWithin(pos, 0);
 	}
 
 	/**
-	 * Checks if the region is within the specified number of blocks away from the point.
+	 * Checks if the region is within the specified number of blocks away from the position.
 	 *
-	 * @param pt the point
-	 * @param blocksAway the number of blocks away from the point to check
-	 * @return true if the point is within {@code blocksAway} blocks
+	 * @param pos the position
+	 * @param blocksAway the number of blocks away from the position to check
+	 * @return true if the position is within {@code blocksAway} blocks
 	 */
-	boolean containsWithin(@Nonnull Vector pt, int blocksAway);
+	boolean containsWithin(@Nonnull Position pos, int blocksAway);
 
 	/**
-	 * Performs mass actions on all points in the region.
+	 * Performs mass actions on all positions in the region.
 	 *
-	 * @param action the action to perform on all points
+	 * @param action the action to perform on all positions
 	 */
 	void handler(@Nonnull TriConsumer<Integer, Integer, Integer> action);
 
 	/**
-	 * Performs mass actions on all points in the region.
+	 * Performs mass actions on all positions in the region.
 	 * Stops early if one of the predicates returns false.
 	 *
-	 * @param action the action to perform on all points
+	 * @param action the action to perform on all positions
 	 * @return true if the action was successful
 	 */
 	boolean handler(@Nonnull TriPredicate<Integer, Integer, Integer> action);
