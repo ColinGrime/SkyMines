@@ -13,13 +13,13 @@
 #----------------------------------------------------------------------------------#
 # Below, you can define unique paths for each upgrade type.                        #
 #                                                                                  #
-# Then, in the tokens.yml file, you can create SkyMine tokens and have each token  #
+# Then, in the mines.yml file, you can create unique SkyMines and have each mine   #
 # use different upgrades and have different costs for each one.                    #
 #----------------------------------------------------------------------------------#
 
 # Upgrade the composition of a mine.
 composition:
-  # The name of this upgrade to reference in the tokens.yml file.
+  # The name of this upgrade to reference in the mines.yml file.
   default:
     # Level of the upgrade.
     1:

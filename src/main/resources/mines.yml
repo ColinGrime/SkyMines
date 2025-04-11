@@ -1,21 +1,21 @@
 # Placeholder for the size of the mine.
 size-placeholder: "&7[&a{length}&7x&a{height}&7x&a{width}&7]"
 
-# The default item to reference below.
-default-item:
+# The default token item to reference below.
+default-token:
   type: TRIPWIRE_HOOK
   name: "&e&lSkyMine Token {size}"
   lore:
     - "&7Right Click → &ePlaces Structure"
 
-# SkyMine tokens represent the physical item forms of a mine.
-tokens:
-  # The name of this token to reference in the give command.
+# Here, you can create custom mines and assign a name to each one.
+mines:
+  # The name of this mine to reference in the give command.
   # Example: /sma give <player> default
   default:
-    item: default
+    token: default
     # The default size of the mine.
-    # If you want a different size for this token, just do /sma give <player> default <LxHxW>
+    # If you want a different size for this mine, just do /sma give <player> default <LxHxW>
     default-size: [10, 10, 10]
     # The material that the mine border is made of.
     border-type: BEDROCK
@@ -25,7 +25,7 @@ tokens:
       reset-cooldown: default
   # This one would be /sma give <player> big-mine.
   big-mine:
-    item:
+    token:
       type: TRIPWIRE_HOOK
       name: "&e&lBig Mine {size}"
       lore:

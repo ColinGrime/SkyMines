@@ -15,32 +15,32 @@ import java.util.*;
 import static me.colingrimes.midnight.config.option.OptionFactory.item;
 import static me.colingrimes.midnight.config.option.OptionFactory.option;
 
-@Configuration("tokens.yml")
-public interface Tokens {
+@Configuration("mines.yml")
+public interface Mines {
 
 	Option<String> SIZE_PLACEHOLDER = option("size-placeholder", "&7[&a{length}&7x&a{height}&7x&a{width}&7]");
-	Option<ItemStack> DEFAULT_ITEM = item("default-item");
-	Option<Map<String, Token>> TOKENS = option("tokens", sec -> {
-		Map<String, Token> tokens = new HashMap<>();
+	Option<ItemStack> DEFAULT_TOKEN = item("default-token");
+	Option<Map<String, Mine>> MINES = option("mines", sec -> {
+		Map<String, Mine> tokens = new HashMap<>();
 		for (String name : sec.getKeys(false)) {
 			ConfigurationSection s = sec.getConfigurationSection(name);
 			if (s != null) {
-				tokens.put(name, new Token(name, s));
+				tokens.put(name, new Mine(name, s));
 			}
 		}
 		return tokens;
 	});
 
-	class Token {
+	class Mine {
 		private final String id;
-		private final ItemStack item;
+		private final ItemStack token;
 		private final Size defaultSize;
 		private final Material borderType;
 		private final Map<UpgradeType, String> upgrades = new HashMap<>();
 
-		public Token(@Nonnull String id, @Nonnull ConfigurationSection sec) {
+		public Mine(@Nonnull String id, @Nonnull ConfigurationSection sec) {
 			this.id = id;
-			this.item = Items.create().config(sec.getConfigurationSection("item")).build();
+			this.token = Items.create().config(sec.getConfigurationSection("token")).build();
 			this.defaultSize = Size.of(sec.getStringList("default-size"));
 			this.borderType = Material.getMaterial(sec.getString("border-type", "BEDROCK"));
 			for (String type : Objects.requireNonNull(sec.getConfigurationSection("upgrades")).getKeys(false)) {
@@ -57,8 +57,8 @@ public interface Tokens {
 		}
 
 		@Nonnull
-		public ItemStack getItem() {
-			return item.getItemMeta() != null && item.getItemMeta().hasDisplayName() ? item.clone() : Tokens.DEFAULT_ITEM.get().clone();
+		public ItemStack getToken() {
+			return token.getItemMeta() != null && token.getItemMeta().hasDisplayName() ? token.clone() : Mines.DEFAULT_TOKEN.get().clone();
 		}
 
 		@Nonnull
