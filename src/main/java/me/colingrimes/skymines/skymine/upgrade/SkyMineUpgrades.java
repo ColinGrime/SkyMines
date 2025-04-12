@@ -1,25 +1,32 @@
 package me.colingrimes.skymines.skymine.upgrade;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import me.colingrimes.midnight.serialize.Json;
+import me.colingrimes.midnight.serialize.Serializable;
+import me.colingrimes.midnight.util.misc.Validator;
 import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
 import me.colingrimes.skymines.skymine.upgrade.type.ResetCooldownUpgrade;
 import me.colingrimes.skymines.skymine.upgrade.type.SkyMineUpgrade;
 
 import javax.annotation.Nonnull;
 
-public class SkyMineUpgrades {
+public class SkyMineUpgrades implements Serializable {
 
+	private final String identifier;
 	private final CompositionUpgrade composition;
 	private final ResetCooldownUpgrade resetCooldown;
 
-	public SkyMineUpgrades() {
-		this(1, 1);
+	public SkyMineUpgrades(@Nonnull String identifier) {
+		this(identifier, 1, 1);
 	}
 
-	public SkyMineUpgrades(int compositionLevel, int resetCooldownLevel) {
-		this(new CompositionUpgrade(compositionLevel), new ResetCooldownUpgrade(resetCooldownLevel));
+	public SkyMineUpgrades(@Nonnull String identifier, int compositionLevel, int resetCooldownLevel) {
+		this(identifier, new CompositionUpgrade(identifier, compositionLevel), new ResetCooldownUpgrade(identifier, resetCooldownLevel));
 	}
 
-	public SkyMineUpgrades(@Nonnull CompositionUpgrade composition, @Nonnull ResetCooldownUpgrade resetCooldown) {
+	public SkyMineUpgrades(@Nonnull String identifier, @Nonnull CompositionUpgrade composition, @Nonnull ResetCooldownUpgrade resetCooldown) {
+		this.identifier = identifier;
 		this.composition = composition;
 		this.resetCooldown = resetCooldown;
 	}
@@ -59,38 +66,22 @@ public class SkyMineUpgrades {
 	}
 
 	@Nonnull
-	public String serialize() {
-		return composition.getLevel() + ":" + resetCooldown.getLevel();
+	@Override
+	public JsonElement serialize() {
+		return Json.create()
+				.add("identifier", identifier)
+				.add("composition", composition.getLevel())
+				.add("resetCooldown", resetCooldown.getLevel())
+				.build();
 	}
 
 	@Nonnull
-	public static SkyMineUpgrades deserialize(@Nonnull String text) {
-		if (!text.contains("\n")) {
-			return deserializeOld(text);
-		}
-
-		String[] texts = text.split(":");
-		String compositionString = texts[0];
-		String resetCooldownString = texts[1];
-
-		String compositionName = compositionString.split(":")[0];
-		String resetCooldownName = resetCooldownString.split(":")[0];
-
-		int compositionLevel = 1;
-		int resetCooldownLevel = 1;
-
-		try {
-			compositionLevel = Integer.parseInt(compositionString.split(":")[1]);
-			resetCooldownLevel = Integer.parseInt(resetCooldownString.split(":")[1]);
-		} catch (NumberFormatException ignored) {}
-
-
-		return new SkyMineUpgrades(
-				new CompositionUpgrade(compositionName, compositionLevel),
-				new ResetCooldownUpgrade(resetCooldownName, resetCooldownLevel)
-		);
+	public static SkyMineUpgrades deserialize(@Nonnull JsonElement element) {
+		JsonObject object = Validator.checkJson(element, "identifier", "composition", "resetCooldown");
+		return new SkyMineUpgrades(object.get("identifier").getAsString(), object.get("composition").getAsInt(), object.get("resetCooldown").getAsInt());
 	}
 
+	@Deprecated
 	@Nonnull
 	private static SkyMineUpgrades deserializeOld(@Nonnull String text) {
 		String[] texts = text.split(":");
@@ -103,6 +94,6 @@ public class SkyMineUpgrades {
 			resetCooldownLevel = Integer.parseInt(texts[1]);
 		} catch (NumberFormatException ignored) {}
 
-		return new SkyMineUpgrades(compositionLevel, resetCooldownLevel);
+		return new SkyMineUpgrades("default", compositionLevel, resetCooldownLevel);
 	}
 }

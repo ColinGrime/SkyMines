@@ -10,12 +10,12 @@ import javax.annotation.Nonnull;
 public abstract class SkyMineUpgrade {
 
 	protected final UpgradeType type;
-	protected final String name;
+	protected final String identifier;
 	protected int level;
 
-	public SkyMineUpgrade(@Nonnull UpgradeType type, @Nonnull String name, int level) {
+	public SkyMineUpgrade(@Nonnull UpgradeType type, @Nonnull String identifier, int level) {
 		this.type = type;
-		this.name = name;
+		this.identifier = identifier;
 		this.level = level;
 	}
 
@@ -30,15 +30,13 @@ public abstract class SkyMineUpgrade {
 	}
 
 	/**
-	 * Gets the name of the upgrade.
-	 * <p>
-	 * This is the name that is defined in the upgrades.yml file.
+	 * Gets the identifier of the mine to get the upgrade data.
 	 *
 	 * @return the upgrade name
 	 */
 	@Nonnull
-	public String getName() {
-		return name;
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**
