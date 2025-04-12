@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.storage;
 
+import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.midnight.storage.sql.SqlStorage;
 import me.colingrimes.midnight.storage.sql.connection.ConnectionProvider;
 import me.colingrimes.midnight.util.io.DatabaseUtils;
@@ -8,8 +9,6 @@ import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.structure.MineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
-import me.colingrimes.skymines.util.Utils;
-import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import java.sql.*;
@@ -18,10 +17,10 @@ import java.util.UUID;
 public class SkyMineStorage extends SqlStorage<SkyMine> {
 
 	private static final String MINES_SELECT_ALL = "SELECT * FROM 'skymines_mines'";
-	private static final String MINES_EXIST = "SELECT 1 FROM 'skymines_mines' WHERE uuid=? LIMIT 1";
-	private static final String MINES_INSERT = "INSERT INTO 'skymines_mines' (uuid, owner, structure, upgrades, home) VALUES(?, ?, ?, ?, ?)";
-	private static final String MINES_UPDATE = "UPDATE 'skymines_mines' SET upgrades=?, home=? WHERE uuid=?";
-	private static final String MINES_DELETE = "DELETE FROM 'skymines_mines' WHERE uuid=?";
+	private static final String MINES_EXIST      = "SELECT 1 FROM 'skymines_mines' WHERE uuid=? LIMIT 1";
+	private static final String MINES_INSERT     = "INSERT INTO 'skymines_mines' (uuid, owner, identifier, structure, upgrades, home) VALUES(?, ?, ?, ?, ?, ?)";
+	private static final String MINES_UPDATE     = "UPDATE 'skymines_mines' SET upgrades=?, home=? WHERE uuid=?";
+	private static final String MINES_DELETE     = "DELETE FROM 'skymines_mines' WHERE uuid=?";
 
 	private final SkyMines plugin;
 	private boolean loaded = false;
@@ -36,16 +35,17 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 			return;
 		}
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_SELECT_ALL))) {
+			try (PreparedStatement ps = prepare(c, MINES_SELECT_ALL)) {
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
-					UUID uuid = DatabaseUtils.getUUID(rs, "uuid", database);
-					UUID owner = DatabaseUtils.getUUID(rs, "owner", database);
-					MineStructure structure = MineStructure.deserialize(rs.getString("structure"));
-					SkyMineUpgrades upgrades = SkyMineUpgrades.deserialize(rs.getString("upgrades"));
-					Location home = Utils.parseLocation(rs.getString("home"));
-					if (uuid != null && owner != null && structure != null && home != null) {
-						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, structure, upgrades, home);
+					UUID uuid = DatabaseUtils.getUUID(type, rs, "uuid");
+					UUID owner = DatabaseUtils.getUUID(type, rs, "owner");
+					String identifier = rs.getString("identifier");
+					MineStructure structure = DatabaseUtils.getJson(type, rs, "structure", MineStructure.class);
+					SkyMineUpgrades upgrades = DatabaseUtils.getJson(type, rs, "upgrades", SkyMineUpgrades.class);
+					Pose home = DatabaseUtils.getJson(type, rs, "home", Pose.class);
+					if (uuid != null && owner != null && identifier != null && structure != null && upgrades != null && home != null) {
+						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, identifier, structure, upgrades, home);
 						plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 					}
 				}
@@ -58,8 +58,8 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	public void save(@Nonnull SkyMine skyMine) throws SQLException {
 		boolean update;
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_EXIST))) {
-				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
+			try (PreparedStatement ps = prepare(c, MINES_EXIST)) {
+				DatabaseUtils.setUUID(type, ps, 1, skyMine.getUUID());
 				update = ps.executeQuery().next();
 			}
 		}
@@ -73,10 +73,10 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 
 	private void updateMine(SkyMine skyMine) throws SQLException {
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_UPDATE))) {
-				ps.setString(1, skyMine.getUpgrades().serialize());
-				ps.setString(2, Utils.parseLocation(skyMine.getHome()));
-				DatabaseUtils.setUUID(ps, 3, skyMine.getUUID(), database);
+			try (PreparedStatement ps = prepare(c, MINES_UPDATE)) {
+				DatabaseUtils.setJson(type, ps, 1, skyMine.getUpgrades());
+				DatabaseUtils.setJson(type, ps, 2, skyMine.getHome());
+				DatabaseUtils.setUUID(type, ps, 3, skyMine.getUUID());
 				ps.executeUpdate();
 			}
 		}
@@ -84,12 +84,13 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 
 	private void insertMine(SkyMine skyMine) throws SQLException {
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_INSERT))) {
-				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
-				DatabaseUtils.setUUID(ps, 2, skyMine.getOwner(), database);
-				ps.setString(3, skyMine.getStructure().serialize());
-				ps.setString(4, skyMine.getUpgrades().serialize());
-				ps.setString(5, Utils.parseLocation(skyMine.getHome()));
+			try (PreparedStatement ps = prepare(c, MINES_INSERT)) {
+				DatabaseUtils.setUUID(type, ps, 1, skyMine.getUUID());
+				DatabaseUtils.setUUID(type, ps, 2, skyMine.getOwner());
+				ps.setString(3, skyMine.getIdentifier());
+				DatabaseUtils.setJson(type, ps, 4, skyMine.getStructure());
+				DatabaseUtils.setJson(type, ps, 5, skyMine.getUpgrades());
+				DatabaseUtils.setJson(type, ps, 6, skyMine.getHome());
 				ps.executeUpdate();
 			}
 		}
@@ -98,8 +99,8 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	@Override
 	public void delete(@Nonnull SkyMine skyMine) throws SQLException {
 		try (Connection c = provider.getConnection()) {
-			try (PreparedStatement ps = c.prepareStatement(processor.apply(MINES_DELETE))) {
-				DatabaseUtils.setUUID(ps, 1, skyMine.getUUID(), database);
+			try (PreparedStatement ps = prepare(c, MINES_DELETE)) {
+				DatabaseUtils.setUUID(type, ps, 1, skyMine.getUUID());
 				ps.executeUpdate();
 			}
 		}
@@ -108,9 +109,8 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 	/**
 	 * Gets whether the storage has finished loading.
 	 * <p>
-	 * This is important because we do not want to allow any new SkyMines from being
-	 * made before all the current ones are loaded.
-	 * Otherwise, duplicate SkyMines could be made.
+	 * This is important because we do not want to allow any new SkyMines from being made
+	 * before all the current ones are loaded. Otherwise, duplicate SkyMines could be made.
 	 *
 	 * @return true if the storage is finished loading
 	 */
