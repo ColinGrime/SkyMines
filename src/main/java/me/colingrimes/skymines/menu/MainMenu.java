@@ -57,10 +57,10 @@ public class MainMenu extends Gui {
 	 */
 	private void performPlayerAction(@Nonnull String action) {
 		switch (action) {
-			case "HOME" -> Players.command(getPlayer(), "/skymine home " + skyMine.getId());
-			case "RESET" -> Players.command(getPlayer(), "/skymine reset " + skyMine.getId());
-			case "UPGRADES" -> Players.command(getPlayer(), "/skymine upgrades " + skyMine.getId());
-			case "PICKUP" -> Players.command(getPlayer(), "/skymine pickup " + skyMine.getId());
+			case "HOME" -> Players.command(getPlayer(), "/skymine home " + skyMine.getIndex());
+			case "RESET" -> Players.command(getPlayer(), "/skymine reset " + skyMine.getIndex());
+			case "UPGRADES" -> Players.command(getPlayer(), "/skymine upgrades " + skyMine.getIndex());
+			case "PICKUP" -> Players.command(getPlayer(), "/skymine pickup " + skyMine.getIndex());
 		}
 	}
 
@@ -74,7 +74,7 @@ public class MainMenu extends Gui {
 	private void performAdminAction(@Nonnull String action) {
 		switch (action) {
 			case "HOME" -> {
-				getPlayer().teleport(skyMine.getHome());
+				getPlayer().teleport(skyMine.getHome().toLocation());
 				Messages.SUCCESS_HOME_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
 			}
 			case "RESET" -> {
@@ -86,7 +86,7 @@ public class MainMenu extends Gui {
 
 				Messages.SUCCESS_RESET_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
 				if (Settings.OPTIONS_TELEPORT_HOME_ON_RESET.get()) {
-					getPlayer().teleport(skyMine.getHome());
+					getPlayer().teleport(skyMine.getHome().toLocation());
 				}
 			}
 			case "UPGRADES" -> new UpgradeMenu(getPlayer(), skyMine).open();

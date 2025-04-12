@@ -21,7 +21,7 @@ public interface Menus {
 	Option<ConfigurableInventory> UPGRADE_MENU = inventory("upgrade-menu");
 	Option<Map<Integer, UpgradeType>> UPGRADE_MENU_SLOTS = option("upgrade-menu.slots", sec -> Types.mapSlotKeys(sec, (slot -> UpgradeType.parse(sec.getString(slot + ".upgrade")))));
 	Option<Composition> UPGRADE_MENU_COMPOSITION = option("upgrades.composition", Composition::new);
-	Option<ResetCooldown> UPGRADE_MENU_RESET_COOLDOWN = option("upgrades.rset-cooldown", ResetCooldown::new);
+	Option<ResetCooldown> UPGRADE_MENU_RESET_COOLDOWN = option("upgrades.reset-cooldown", ResetCooldown::new);
 
 	class Composition {
 		private final Material material;

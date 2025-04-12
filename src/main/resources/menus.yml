@@ -23,7 +23,7 @@ main-menu:
       type: BUDDING_AMETHYST
       name: "&aSkyMine Upgrades"
       lore:
-        - "&7On Click → &eOpen the Mine"s Upgrades"
+        - "&7On Click → &eOpen the Mine's Upgrades"
       command: UPGRADES
     17:
       type: BARRIER
