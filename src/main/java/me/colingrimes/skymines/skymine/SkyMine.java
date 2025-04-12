@@ -2,7 +2,7 @@ package me.colingrimes.skymines.skymine;
 
 import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.skymines.config.Mines;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
 import org.bukkit.entity.Player;
@@ -64,7 +64,7 @@ public interface SkyMine {
 	 * @return structure of the skymine
 	 */
 	@Nonnull
-	MineStructure getStructure();
+	SkyMineStructure getStructure();
 
 	/**
 	 * Gets the skymine's current upgrades. Used for everything upgrade-related.

@@ -105,11 +105,11 @@ public abstract class SkyMineUpgrade {
 	 * Checks if the specified player has permission to upgrade.
 	 * This method has special permission handling which checks the negation of permissions.
 	 * <p>
-	 * It will first check if the whole type has been negated (e.g. -skymines.upgrades.block-variety).
-	 * If it is negated, then the player must have the upgrade permission to upgrade it (e.g. skymines.upgrades.block-variety).
+	 * It will first check if the whole type has been negated (e.g. -skymines.upgrades.composition).
+	 * If it is negated, then the player must have the upgrade permission to upgrade it (e.g. skymines.upgrades.composition).
 	 * <p>
-	 * It will then check if a specific level has been negated (e.g. -skymines.upgrades.block-variety.2).
-	 * If it is negated, then the player must have the upgrade level permission to upgrade it (e.g. skymines.upgrades.block-variety.2).
+	 * It will then check if a specific level has been negated (e.g. -skymines.upgrades.composition.2).
+	 * If it is negated, then the player must have the upgrade level permission to upgrade it (e.g. skymines.upgrades.composition.2).
 	 *
 	 * @param player the player to check
 	 * @return true if the player can upgrade this type

@@ -11,7 +11,7 @@ import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.manager.CooldownManager;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,17 +33,17 @@ public class DefaultSkyMine implements SkyMine {
 	private final UUID uuid;
 	private final UUID owner;
 	private final String identifier;
-	private final MineStructure structure;
+	private final SkyMineStructure structure;
 	private final SkyMineUpgrades upgrades;
 	private Pose home;
 
 	// This is used for new skymines -- will generate random UUIDs for them.
-	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull MineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
+	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
 		this(plugin, UUID.randomUUID(), owner, identifier, structure, upgrades, home);
 	}
 
 	// This is used when deserializing the skymine data back into skymines.
-	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull MineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
+	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
 		this.plugin = plugin;
 		this.manager = plugin.getSkyMineManager();
 		this.cooldowns = plugin.getCooldownManager();
@@ -92,7 +92,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	@Nonnull
-	public MineStructure getStructure() {
+	public SkyMineStructure getStructure() {
 		return structure;
 	}
 

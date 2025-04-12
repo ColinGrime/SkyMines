@@ -7,7 +7,7 @@ import me.colingrimes.midnight.util.io.DatabaseUtils;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 
 import javax.annotation.Nonnull;
@@ -41,7 +41,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 					UUID uuid = DatabaseUtils.getUUID(type, rs, "uuid");
 					UUID owner = DatabaseUtils.getUUID(type, rs, "owner");
 					String identifier = rs.getString("identifier");
-					MineStructure structure = DatabaseUtils.getJson(type, rs, "structure", MineStructure.class);
+					SkyMineStructure structure = DatabaseUtils.getJson(type, rs, "structure", SkyMineStructure.class);
 					SkyMineUpgrades upgrades = DatabaseUtils.getJson(type, rs, "upgrades", SkyMineUpgrades.class);
 					Pose home = DatabaseUtils.getJson(type, rs, "home", Pose.class);
 					if (uuid != null && owner != null && identifier != null && structure != null && upgrades != null && home != null) {

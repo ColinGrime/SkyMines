@@ -7,7 +7,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Location;
@@ -66,7 +66,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			corner2 = corner1.add(width, -height, length);
 
 		// creates and builds structure
-		MineStructure structure = new MineStructure(corner1, corner2, size, mine.getBorderType());
+		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, size, mine.getBorderType());
 
 		// check for access and blocks in the way
 		if (!structure.doBlockCheck(owner)) {

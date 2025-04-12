@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MineStructure implements Serializable {
+public class SkyMineStructure implements Serializable {
 
 	private final World world;
 	private final Position corner1;
@@ -42,7 +42,7 @@ public class MineStructure implements Serializable {
 	private final ParameterRegion parameter;
 	private final CuboidRegion inside;
 
-	public MineStructure(@Nonnull Position corner1, @Nonnull Position corner2, @Nonnull Size mineSize, @Nonnull Material borderType) {
+	public SkyMineStructure(@Nonnull Position corner1, @Nonnull Position corner2, @Nonnull Size mineSize, @Nonnull Material borderType) {
 		this.world = corner1.getWorld();
 		this.corner1 = corner1;
 		this.corner2 = corner2;
@@ -147,13 +147,13 @@ public class MineStructure implements Serializable {
 	}
 
 	@Nonnull
-	public static MineStructure deserialize(@Nonnull JsonElement element) {
+	public static SkyMineStructure deserialize(@Nonnull JsonElement element) {
 		JsonObject object = Validator.checkJson(element, "corner1", "corner2", "mineSize", "borderType");
 		Position corner1 = Position.deserialize(object.get("corner1"));
 		Position corner2 = Position.deserialize(object.get("corner2"));
 		Size mineSize = Size.deserialize(object.get("mineSize"));
 		Material borderType = Material.getMaterial(object.get("borderType").getAsString());
-		return new MineStructure(corner1, corner2, mineSize, Objects.requireNonNull(borderType));
+		return new SkyMineStructure(corner1, corner2, mineSize, Objects.requireNonNull(borderType));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class MineStructure implements Serializable {
 	 */
 	@Deprecated
 	@Nullable
-	public static MineStructure deserializeOld(@Nullable String text) {
+	public static SkyMineStructure deserializeOld(@Nullable String text) {
 		if (text == null || text.isEmpty()) {
 			return null;
 		}
@@ -182,6 +182,6 @@ public class MineStructure implements Serializable {
 			return null;
 		}
 
-		return new MineStructure(Position.of(startCorner), Position.of(endCorner), size, borderType);
+		return new SkyMineStructure(Position.of(startCorner), Position.of(endCorner), size, borderType);
 	}
 }
