@@ -1,6 +1,7 @@
 package me.colingrimes.skymines.skymine.upgrade.type;
 
 import me.colingrimes.midnight.util.text.Text;
+import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.util.Common;
 import org.bukkit.entity.Player;
@@ -37,6 +38,16 @@ public abstract class SkyMineUpgrade {
 	@Nonnull
 	public String getIdentifier() {
 		return identifier;
+	}
+
+	/**
+	 * Gets the upgrade identifier to get the upgrade data.
+	 *
+	 * @return the upgrade identifier
+	 */
+	@Nonnull
+	protected String getUpgradeIdentifier() {
+		return Mines.MINES.get().get(identifier).getUpgradeId(type);
 	}
 
 	/**
