@@ -3,6 +3,7 @@ package me.colingrimes.skymines;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.storage.sql.connection.ConnectionFactory;
 import me.colingrimes.midnight.storage.sql.connection.ConnectionProvider;
+import me.colingrimes.midnight.update.UpdateCheckerSpigot;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.listener.ParameterListeners;
 import me.colingrimes.skymines.listener.PlayerListeners;
@@ -14,7 +15,6 @@ import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
 import me.colingrimes.skymines.skymine.structure.behavior.DefaultBuildBehavior;
 import me.colingrimes.skymines.skymine.token.DefaultSkyMineToken;
 import me.colingrimes.skymines.storage.SkyMineStorage;
-import me.colingrimes.skymines.updater.SpigotUpdater;
 import me.colingrimes.midnight.Midnight;
 import me.colingrimes.midnight.libs.bstats.bukkit.Metrics;
 import me.colingrimes.midnight.util.Common;
@@ -56,8 +56,7 @@ public class SkyMines extends Midnight {
 		}
 
 		// Check for updates.
-		SpigotUpdater updater = new SpigotUpdater(this);
-		Scheduler.async().run(updater::checkForUpdate);
+		new UpdateCheckerSpigot(this, 101373);
 	}
 
 	@Override
