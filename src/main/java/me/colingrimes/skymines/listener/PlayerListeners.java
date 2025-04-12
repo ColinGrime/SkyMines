@@ -1,6 +1,7 @@
 package me.colingrimes.skymines.listener;
 
 import me.colingrimes.midnight.event.PlayerInteractBlockEvent;
+import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.bukkit.Inventories;
 import me.colingrimes.midnight.util.bukkit.Players;
@@ -12,10 +13,7 @@ import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.menu.MainMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
-import me.colingrimes.skymines.skymine.structure.MineSize;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
-import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -92,11 +90,7 @@ public class PlayerListeners implements Listener {
 			return;
 		}
 
-		MineSize size = token.getMineSize(item).orElseGet(() -> new MineSize(10, 10, 10));
-		SkyMineUpgrades upgrades = token.getUpgrades(item);
-		Material borderType = token.getBorderType(item).orElse(Material.BEDROCK);
-
-		if (manager.createSkyMine(player, player.getLocation().subtract(0, 1, 0), size, borderType, upgrades)) {
+		if (manager.createSkyMine(player, item)) {
 			plugin.getCooldownManager().getPlacementCooldown().add(player, Duration.ofSeconds(Settings.OPTIONS_PLACEMENT_COOLDOWN.get()));
 			Inventories.removeSingle(player.getInventory(), item);
 			Messages.SUCCESS_PLACE.send(player);
@@ -113,13 +107,13 @@ public class PlayerListeners implements Listener {
 
 		// Check specific player's mine.
 		for (SkyMine skyMine : manager.getSkyMines(player)) {
-			if (!skyMine.getStructure().getParameter().contains(event.getLocation().toVector())) {
+			if (!skyMine.getStructure().getParameter().contains(Position.of(event.getLocation()))) {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
-				player.teleport(skyMine.getHome());
+				player.teleport(skyMine.getHome().toLocation());
 				Messages.SUCCESS_HOME.send(player);
 				event.setCancelled(true);
 			}
@@ -132,14 +126,14 @@ public class PlayerListeners implements Listener {
 
 		// Admins Only -- access to all mines.
 		for (SkyMine skyMine : manager.getSkyMines()) {
-			if (!skyMine.getStructure().getParameter().contains(event.getLocation().toVector())) {
+			if (!skyMine.getStructure().getParameter().contains(Position.of(event.getLocation()))) {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
 				Messages.SUCCESS_PANEL.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(player);
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
-				player.teleport(skyMine.getHome());
+				player.teleport(skyMine.getHome().toLocation());
 				Messages.SUCCESS_HOME.send(player);
 				event.setCancelled(true);
 			}
@@ -159,7 +153,7 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onPlayerBlockBreak(@Nonnull BlockBreakEvent event) {
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
-			if (skyMine.getStructure().getInside().contains(event.getBlock().getLocation().toVector())) {
+			if (skyMine.getStructure().getInside().contains(Position.of(event.getBlock().getLocation()))) {
 				Common.call(new SkyMineBlockBreakEvent(event, skyMine));
 				return;
 			}

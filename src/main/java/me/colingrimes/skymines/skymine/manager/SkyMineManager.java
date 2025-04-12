@@ -5,12 +5,9 @@ import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.factory.SkyMineFactory;
-import me.colingrimes.skymines.skymine.structure.MineSize;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
-import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -47,14 +44,11 @@ public class SkyMineManager {
 	 * Creates a skymine if there's space available.
 	 *
 	 * @param player the player
-	 * @param location location of the skymine
-	 * @param size size of the skymine
-	 * @param borderType the material used to create the border of the skymine
-	 * @param upgrades upgrades of the skymine
+	 * @param token the token
 	 * @return true if the skymine was successfully created
 	 */
-	public boolean createSkyMine(@Nonnull Player player, @Nonnull Location location, @Nonnull MineSize size, @Nonnull Material borderType, @Nonnull SkyMineUpgrades upgrades) {
-		Optional<SkyMine> skyMine = factory.createSkyMine(player, location, size, borderType, upgrades);
+	public boolean createSkyMine(@Nonnull Player player, @Nonnull ItemStack token) {
+		Optional<SkyMine> skyMine = factory.createSkyMine(player, token);
 		if (skyMine.isEmpty()) {
 			return false;
 		}
