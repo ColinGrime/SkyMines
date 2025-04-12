@@ -1,9 +1,9 @@
 package me.colingrimes.skymines.skymine.structure.region.implementation;
 
+import me.colingrimes.midnight.functional.TriConsumer;
+import me.colingrimes.midnight.functional.TriPredicate;
 import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.skymines.skymine.structure.region.Region;
-import me.colingrimes.skymines.skymine.structure.region.functional.TriConsumer;
-import me.colingrimes.skymines.skymine.structure.region.functional.TriPredicate;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

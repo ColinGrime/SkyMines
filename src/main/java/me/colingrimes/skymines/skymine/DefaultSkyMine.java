@@ -13,7 +13,6 @@ import me.colingrimes.skymines.skymine.manager.CooldownManager;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
 import me.colingrimes.skymines.skymine.structure.MineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
-import me.colingrimes.midnight.util.io.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -175,15 +174,8 @@ public class DefaultSkyMine implements SkyMine {
 		manager.removeSkyMine(owner, this);
 	}
 
-
 	@Override
 	public void save() {
-		Scheduler.async().run(() -> {
-			try {
-				plugin.getStorage().save(this);
-			} catch (Exception e) {
-				Logger.severe("SkyMine has failed to save. Please report this to the developer:", e);
-			}
-		});
+		Scheduler.async().run(() -> plugin.getStorage().save(this), "SkyMine has failed to save. Please report this to the developer:");
 	}
 }

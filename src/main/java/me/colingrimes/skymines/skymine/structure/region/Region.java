@@ -1,8 +1,8 @@
 package me.colingrimes.skymines.skymine.structure.region;
 
+import me.colingrimes.midnight.functional.TriConsumer;
+import me.colingrimes.midnight.functional.TriPredicate;
 import me.colingrimes.midnight.geometry.Position;
-import me.colingrimes.skymines.skymine.structure.region.functional.TriConsumer;
-import me.colingrimes.skymines.skymine.structure.region.functional.TriPredicate;
 import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
 import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
 

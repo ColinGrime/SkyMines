@@ -1,9 +1,9 @@
 package me.colingrimes.skymines.skymine.structure.behavior;
 
+import me.colingrimes.midnight.model.DeferredBlock;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
-import me.colingrimes.skymines.skymine.structure.model.BlockInfo;
 import me.colingrimes.skymines.skymine.structure.region.Region;
 import me.colingrimes.skymines.task.BuildTask;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ public class DefaultBuildBehavior implements BuildBehavior {
 		region.handler((x, y, z) -> {
 			Block block = world.getBlockAt(x, y, z);
 			if (replaceBlocks || block.getType() == Material.AIR) {
-				buildTask.getBlocksToPlace().add(new BlockInfo(block, material.get()));
+				buildTask.getBlocksToPlace().add(new DeferredBlock(block, material.get()));
 			}
 		});
 
