@@ -32,6 +32,8 @@ failure:
   on-pickup-cooldown: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
   on-placement-cooldown: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
   already-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
+  invalid-mine: "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist."
+  invalid-token: "&4&l❌ &cThe &eSkyMine Token &cyou are trying to use is invalid."
   invalid-placement: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
   not-loaded: "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading."
 

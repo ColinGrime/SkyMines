@@ -44,6 +44,8 @@ public interface Messages {
 	Message<?> FAILURE_ON_PICKUP_COOLDOWN    = message("failure.on-pickup-cooldown", "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c.");
 	Message<?> FAILURE_ON_PLACEMENT_COOLDOWN = message("failure.on-placement-cooldown", "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c.");
 	Message<?> FAILURE_ALREADY_MAXED         = message("failure.already-maxed", "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out.");
+	Message<?> FAILURE_INVALID_MINE          = message("failure.invalid-mine", "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist.");
+	Message<?> FAILURE_INVALID_TOKEN         = message("failure.invalid-token", "&4&l❌ &cThe &eSkyMine Token &cyou are trying to use is invalid.");
 	Message<?> FAILURE_INVALID_PLACEMENT     = message("failure.invalid-placement", "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c.");
 	Message<?> FAILURE_NOT_LOADED            = message("failure.not-loaded", "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading.");
 
