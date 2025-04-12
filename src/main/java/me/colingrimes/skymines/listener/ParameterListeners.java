@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.listener;
 
+import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.skymine.SkyMine;
 import org.bukkit.block.Block;
@@ -72,7 +73,7 @@ public class ParameterListeners implements Listener {
 		}
 
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
-			if (skyMine.getStructure().getParameter().contains(block.getLocation().toVector())) {
+			if (skyMine.getStructure().getParameter().contains(Position.of(block.getLocation()))) {
 				event.setCancelled(true);
 				return true;
 			}

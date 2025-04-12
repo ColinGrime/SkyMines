@@ -49,7 +49,7 @@ public class MineStructure implements Serializable {
 		this.mineSize = mineSize;
 		this.borderType = borderType;
 		this.parameter = new ParameterRegion(corner1, corner2);
-		this.inside = new CuboidRegion(parameter.getMin().add(1, 1, 1), parameter.getMax().subtract(1, 1, 1));
+		this.inside = new CuboidRegion(parameter.getMin().add(1, 1, 1), parameter.getMax().subtract(1, 0, 1));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class MineStructure implements Serializable {
 	 */
 	@Deprecated
 	@Nullable
-	public static MineStructure oldDeserialize(@Nullable String text) {
+	public static MineStructure deserializeOld(@Nullable String text) {
 		if (text == null || text.isEmpty()) {
 			return null;
 		}

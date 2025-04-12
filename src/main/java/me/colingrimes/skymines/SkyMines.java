@@ -43,7 +43,7 @@ public class SkyMines extends Midnight {
 		}
 
 		instance = this;
-		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken(this));
+		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken());
 		cooldownManager = new CooldownManager();
 		buildBehavior =  new DefaultBuildBehavior();
 

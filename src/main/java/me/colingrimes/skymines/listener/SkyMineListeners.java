@@ -15,7 +15,7 @@ public class SkyMineListeners implements Listener {
 	public void onCooldownFinish(@Nonnull SkyMineCooldownFinishEvent event) {
 		if (Settings.OPTIONS_NOTIFY_ON_RESET_COOLDOWN_FINISH.get()) {
 			Players.get(event.getSkyMine().getOwner()).ifPresent(player -> {
-				Messages.GENERAL_RESET_COOLDOWN_FINISH.replace("{id}", event.getSkyMine().getId()).send(player);
+				Messages.GENERAL_RESET_COOLDOWN_FINISH.replace("{id}", event.getSkyMine().getIndex()).send(player);
 			});
 		}
 	}

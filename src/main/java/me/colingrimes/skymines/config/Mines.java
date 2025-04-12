@@ -75,5 +75,10 @@ public interface Mines {
 		public Map<UpgradeType, String> getUpgrades() {
 			return upgrades;
 		}
+
+		@Nonnull
+		public String getUpgradeId(@Nonnull UpgradeType type) {
+			return upgrades.get(type);
+		}
 	}
 }

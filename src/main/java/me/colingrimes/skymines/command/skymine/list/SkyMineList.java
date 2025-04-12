@@ -27,7 +27,7 @@ public class SkyMineList implements Command<SkyMines> {
 			Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.send(sender);
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
-			Location loc = skyMines.get(i - 1).getHome();
+			Location loc = skyMines.get(i - 1).getHome().toLocation();
 			String message = Messages.GENERAL_LIST_SKYMINES_REPEATING_MESSAGE
 					.replace("{id}", i)
 					.replace("{x}", loc.getBlockX())

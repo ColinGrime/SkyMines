@@ -36,7 +36,7 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 			Messages.LOOKUP_SKYMINES_TOP_MESSAGE.replace("{player}", args.getFirst()).send(sender);
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
-			Location location = skyMines.get(i - 1).getHome();
+			Location location = skyMines.get(i - 1).getHome().toLocation();
 			Messages.LOOKUP_SKYMINES_REPEATING_MESSAGE
 					.replace("{id}", i)
 					.replace("{world}", Objects.requireNonNull(location.getWorld()).getName())
