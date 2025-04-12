@@ -1,8 +1,8 @@
 package me.colingrimes.skymines.skymine.token;
 
-import me.colingrimes.skymines.skymine.structure.MineSize;
+import me.colingrimes.midnight.geometry.Size;
+import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -14,29 +14,31 @@ import java.util.Optional;
 public interface SkyMineToken {
 
 	/**
-	 * Gets the skymine token with the specified size and border material.
+	 * Gets the skymine token with the specified identifier and mine size.
+	 * <p>
+	 * There must be a matching mine identifier in the mines.yml file.
 	 *
-	 * @param size size of the mine
-	 * @param borderType border type of the mine
-	 * @return skymine item
+	 * @param identifier the mine identifier
+	 * @param mineSize the mine size
+	 * @return skymine item if available
 	 */
 	@Nonnull
-	ItemStack getToken(@Nonnull MineSize size, @Nonnull Material borderType);
+	Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize);
 
 	/**
-	 * Gets the skymine token with the specified size, border material, and upgrades.
+	 * Gets the skymine token with the specified identifier, mine size, and upgrades.
 	 * This is used when you pick up a skymine to ensure the upgrades are reflected.
 	 *
-	 * @param size size of the mine
-	 * @param borderType border type of the mine
-	 * @param upgrades upgrades of the mine
-	 * @return skymine item
+	 * @param identifier the mine identifier
+	 * @param mineSize the mine size
+	 * @param upgrades the upgrades of the mine
+	 * @return skymine item if available
 	 */
 	@Nonnull
-	ItemStack getToken(@Nonnull MineSize size, @Nonnull Material borderType, @Nonnull SkyMineUpgrades upgrades);
+	Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize, @Nonnull SkyMineUpgrades upgrades);
 
 	/**
-	 * Checks if the provided item is a SkyMine token.
+	 * Checks if the provided item is a skymine token.
 	 *
 	 * @param item the item to check
 	 * @return true if the item is a skymine token
@@ -44,22 +46,22 @@ public interface SkyMineToken {
 	boolean isToken(@Nonnull ItemStack item);
 
 	/**
-	 * Gets the {@link MineSize} based on the item.
+	 * Gets the {@link Mines.Mine} configuration data based on the item.
+	 *
+	 * @param item the item
+	 * @return configuration data if available
+	 */
+	@Nonnull
+	Optional<Mines.Mine> getMine(@Nonnull ItemStack item);
+
+	/**
+	 * Gets the {@link Size} based on the item.
 	 *
 	 * @param item the item
 	 * @return size of the skymine if available
 	 */
 	@Nonnull
-	Optional<MineSize> getMineSize(@Nonnull ItemStack item);
-
-	/**
-	 * Gets the border material based on the item.
-	 *
-	 * @param item the item
-	 * @return border type of the skymine if available
-	 */
-	@Nonnull
-	Optional<Material> getBorderType(@Nonnull ItemStack item);
+	Optional<Size> getMineSize(@Nonnull ItemStack item);
 
 	/**
 	 * Gets the {@link SkyMineUpgrades} based on the item.
