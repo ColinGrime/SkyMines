@@ -2,16 +2,12 @@ package me.colingrimes.skymines.config;
 
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
-import me.colingrimes.midnight.util.misc.Types;
-import me.colingrimes.midnight.util.text.Parser;
-import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
-import me.colingrimes.skymines.skymine.structure.material.MineMaterialDynamic;
-import org.bukkit.configuration.ConfigurationSection;
+import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
+import me.colingrimes.skymines.skymine.upgrade.data.CompositionData;
+import me.colingrimes.skymines.skymine.upgrade.data.ResetCooldownData;
+import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
 
 import javax.annotation.Nonnull;
-import java.time.Duration;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import static me.colingrimes.midnight.config.option.OptionFactory.keys;
@@ -19,66 +15,21 @@ import static me.colingrimes.midnight.config.option.OptionFactory.keys;
 @Configuration("upgrades.yml")
 public interface Upgrades {
 
-	Option<Map<String, Composition>> COMPOSITION = keys("composition", Composition::new);
-	Option<Map<String, ResetCooldown>> RESET_COOLDOWN = keys("reset-cooldown", ResetCooldown::new);
+	Option<Map<String, CompositionData>> COMPOSITION = keys("composition", CompositionData::new);
+	Option<Map<String, ResetCooldownData>> RESET_COOLDOWN = keys("reset-cooldown", ResetCooldownData::new);
 
-	class Composition {
-		private final Map<Integer, MineMaterial> composition = new HashMap<>();
-		private final Map<Integer, Double> costs = new HashMap<>();
-		private final int maxLevel;
-
-		public Composition(@Nonnull ConfigurationSection sec) {
-			for (String level : sec.getKeys(false)) {
-				if (Types.isInteger(level)) {
-					composition.put(Integer.parseInt(level), new MineMaterialDynamic(sec.getStringList(level + ".upgrade")));
-					costs.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
-				}
-			}
-			maxLevel = Collections.max(composition.keySet());
-		}
-
-		@Nonnull
-		public Map<Integer, MineMaterial> getComposition() {
-			return composition;
-		}
-
-		@Nonnull
-		public Map<Integer, Double> getCosts() {
-			return costs;
-		}
-
-		public int getMaxLevel() {
-			return maxLevel;
-		}
-	}
-
-	class ResetCooldown {
-		private final Map<Integer, Duration> resetCooldown = new HashMap<>();
-		private final Map<Integer, Double> costs = new HashMap<>();
-		private final int maxLevel;
-
-		public ResetCooldown(@Nonnull ConfigurationSection sec) {
-			for (String level : sec.getKeys(false)) {
-				if (Types.isInteger(level)) {
-					resetCooldown.put(Integer.parseInt(level), Parser.parseDuration(sec.getString(level + ".upgrade")));
-					costs.put(Integer.parseInt(level), sec.getDouble(level + ".cost"));
-				}
-			}
-			maxLevel = Collections.max(resetCooldown.keySet());
-		}
-
-		@Nonnull
-		public Map<Integer, Duration> getResetCooldown() {
-			return resetCooldown;
-		}
-
-		@Nonnull
-		public Map<Integer, Double> getCosts() {
-			return costs;
-		}
-
-		public int getMaxLevel() {
-			return maxLevel;
-		}
+	/**
+	 * Gets the {@link UpgradeData} for the specified type and identifier.
+	 *
+	 * @param type the upgrade type
+	 * @param identifier the upgrade identifier
+	 * @return the upgrade data
+	 */
+	@Nonnull
+	static UpgradeData getUpgradeData(@Nonnull UpgradeType type, @Nonnull String identifier) {
+		return switch (type) {
+			case Composition -> COMPOSITION.get().get(identifier);
+			case ResetCooldown -> RESET_COOLDOWN.get().get(identifier);
+		};
 	}
 }

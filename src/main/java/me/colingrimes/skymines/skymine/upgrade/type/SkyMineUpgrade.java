@@ -2,6 +2,7 @@ package me.colingrimes.skymines.skymine.upgrade.type;
 
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.config.Mines;
+import me.colingrimes.skymines.config.Upgrades;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.util.Common;
 import org.bukkit.entity.Player;
@@ -46,36 +47,40 @@ public abstract class SkyMineUpgrade {
 	 * @return the upgrade identifier
 	 */
 	@Nonnull
-	protected String getUpgradeIdentifier() {
+	public String getUpgradeIdentifier() {
 		return Mines.MINES.get().get(identifier).getUpgradeId(type);
 	}
 
 	/**
-	 * Gets the current level of the upgrade type.
+	 * Gets the current level of the upgrade.
 	 *
-	 * @return the level of the upgrade type
+	 * @return the current level
 	 */
 	public int getLevel() {
 		return level;
 	}
 
 	/**
-	 * Gets the max level of the type.
+	 * Gets the max level of the upgrade.
 	 *
-	 * @return max level of the upgrade type
+	 * @return the max level
 	 */
-	public abstract int getMaxLevel();
+	public int getMaxLevel() {
+		return Upgrades.getUpgradeData(type, getUpgradeIdentifier()).getMaxLevel();
+	}
 
 	/**
 	 * Gets the cost to upgrade to the specified level.
 	 *
 	 * @param level the level
-	 * @return amount of money required to level up (from the previous level)
+	 * @return the amount of money required to level up (from the previous level)
 	 */
-	public abstract double getCost(int level);
+	public double getCost(int level) {
+		return Upgrades.getUpgradeData(type, getUpgradeIdentifier()).getCost(level);
+	}
 
 	/**
-	 * Checks if this upgrade type can still be upgraded based on its current level and the max level of its type.
+	 * Checks if this upgrade can still be upgraded based on its current and max level.
 	 *
 	 * @return true if it can be further upgraded
 	 */
