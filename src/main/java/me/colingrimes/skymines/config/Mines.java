@@ -12,24 +12,14 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-import static me.colingrimes.midnight.config.option.OptionFactory.item;
-import static me.colingrimes.midnight.config.option.OptionFactory.option;
+import static me.colingrimes.midnight.config.option.OptionFactory.*;
 
 @Configuration("mines.yml")
 public interface Mines {
 
 	Option<String> SIZE_PLACEHOLDER = option("size-placeholder", "&7[&a{length}&7x&a{height}&7x&a{width}&7]");
 	Option<ItemStack> DEFAULT_TOKEN = item("default-token");
-	Option<Map<String, Mine>> MINES = option("mines", sec -> {
-		Map<String, Mine> tokens = new HashMap<>();
-		for (String name : sec.getKeys(false)) {
-			ConfigurationSection s = sec.getConfigurationSection(name);
-			if (s != null) {
-				tokens.put(name, new Mine(name, s));
-			}
-		}
-		return tokens;
-	});
+	Option<Map<String, Mine>> MINES = keys("mines", Mine::new);
 
 	class Mine {
 		private final String id;
@@ -38,7 +28,7 @@ public interface Mines {
 		private final Material borderType;
 		private final Map<UpgradeType, String> upgrades = new HashMap<>();
 
-		public Mine(@Nonnull String id, @Nonnull ConfigurationSection sec) {
+		public Mine(@Nonnull ConfigurationSection sec, @Nonnull String id) {
 			this.id = id;
 			this.token = Items.create().config(sec.getConfigurationSection("token")).build();
 			this.defaultSize = Size.of(sec.getStringList("default-size"));

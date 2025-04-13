@@ -14,34 +14,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.colingrimes.midnight.config.option.OptionFactory.option;
+import static me.colingrimes.midnight.config.option.OptionFactory.keys;
 
 @Configuration("upgrades.yml")
 public interface Upgrades {
 
-	// Composition configurations.
-	Option<Map<String, Composition>> COMPOSITION = option("composition", sec -> {
-		Map<String, Composition> compositions = new HashMap<>();
-		for (String name : sec.getKeys(false)) {
-			ConfigurationSection s = sec.getConfigurationSection(name);
-			if (s != null) {
-				compositions.put(name, new Composition(s));
-			}
-		}
-		return compositions;
-	});
-
-	// Reset Cooldown configurations.
-	Option<Map<String, ResetCooldown>> RESET_COOLDOWN = option("reset-cooldown", sec -> {
-		Map<String, ResetCooldown> resetCooldowns = new HashMap<>();
-		for (String name : sec.getKeys(false)) {
-			ConfigurationSection s = sec.getConfigurationSection(name);
-			if (s != null) {
-				resetCooldowns.put(name, new ResetCooldown(s));
-			}
-		}
-		return resetCooldowns;
-	});
+	Option<Map<String, Composition>> COMPOSITION = keys("composition", Composition::new);
+	Option<Map<String, ResetCooldown>> RESET_COOLDOWN = keys("reset-cooldown", ResetCooldown::new);
 
 	class Composition {
 		private final Map<Integer, MineMaterial> composition = new HashMap<>();

@@ -4,22 +4,20 @@ import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
 import me.colingrimes.midnight.config.util.ConfigurableInventory;
-import me.colingrimes.midnight.util.misc.Types;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-import static me.colingrimes.midnight.config.option.OptionFactory.inventory;
-import static me.colingrimes.midnight.config.option.OptionFactory.option;
+import static me.colingrimes.midnight.config.option.OptionFactory.*;
 
 @Configuration("menus.yml")
 public interface Menus {
 
 	Option<ConfigurableInventory> MAIN_MENU = inventory("main-menu");
 	Option<ConfigurableInventory> UPGRADE_MENU = inventory("upgrade-menu");
-	Option<Map<Integer, UpgradeType>> UPGRADE_MENU_SLOTS = option("upgrade-menu.slots", sec -> Types.mapSlotKeys(sec, (slot -> UpgradeType.parse(sec.getString(slot + ".upgrade")))));
+	Option<Map<Integer, UpgradeType>> UPGRADE_MENU_SLOTS = slots("upgrade-menu.slots", sec -> UpgradeType.parse(sec.getString("upgrade")));
 	Option<Composition> UPGRADE_MENU_COMPOSITION = option("upgrades.composition", Composition::new);
 	Option<ResetCooldown> UPGRADE_MENU_RESET_COOLDOWN = option("upgrades.reset-cooldown", ResetCooldown::new);
 

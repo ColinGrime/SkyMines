@@ -30,7 +30,6 @@ composition:
         - IRON_ORE 10%
         - GOLD_ORE 5%
     2:
-      # Cost to buy the upgrade, or -1 for free.
       cost: 100000
       upgrade:
         - STONE 70%
