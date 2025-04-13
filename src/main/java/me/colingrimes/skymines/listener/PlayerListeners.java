@@ -49,6 +49,12 @@ public class PlayerListeners implements Listener {
 			return;
 		}
 
+		// Check if the token is valid.
+		if (!token.isValidToken(item)) {
+			Messages.FAILURE_INVALID_MINE.replace("{id}", token.getMineIdentifier(item)).send(player);
+			return;
+		}
+
 		// Add throttle to ensure lag/placement spam is accounted for.
 		if (plugin.getCooldownManager().getThrottle().onCooldown(player)) {
 			return;
@@ -71,7 +77,7 @@ public class PlayerListeners implements Listener {
 		// Check: cooldown when you pick up a skymine.
 		if (plugin.getCooldownManager().getPickupCooldown().onCooldown(player)) {
 			Messages.FAILURE_ON_PICKUP_COOLDOWN
-					.replace("{time}", Text.formatTime(plugin.getCooldownManager().getPickupCooldown().getTimeLeft(player)))
+					.replace("{time}", Text.format(plugin.getCooldownManager().getPickupCooldown().getTimeLeft(player)))
 					.send(player);
 			return;
 		}
@@ -85,7 +91,7 @@ public class PlayerListeners implements Listener {
 		//
 		if (plugin.getCooldownManager().getPlacementCooldown().onCooldown(player)) {
 			Messages.FAILURE_ON_PLACEMENT_COOLDOWN
-						.replace("{time}", Text.formatTime(plugin.getCooldownManager().getPlacementCooldown().getTimeLeft(player)))
+						.replace("{time}", Text.format(plugin.getCooldownManager().getPlacementCooldown().getTimeLeft(player)))
 					.send(player);
 			return;
 		}
