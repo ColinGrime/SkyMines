@@ -1,13 +1,20 @@
 package me.colingrimes.skymines.config;
 
+import me.colingrimes.midnight.util.bukkit.Items;
+import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
 import me.colingrimes.midnight.config.util.ConfigurableInventory;
+import me.colingrimes.skymines.skymine.upgrade.data.CompositionData;
+import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
+import me.colingrimes.skymines.skymine.upgrade.type.ResetCooldownUpgrade;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.Map;
 
 import static me.colingrimes.midnight.config.option.OptionFactory.*;
@@ -25,47 +32,31 @@ public interface Menus {
 		private final Material material;
 		private final String nameDefault;
 		private final String nameMax;
-		private final String loreChange;
-		private final String loreNew;
-		private final String loreMax;
+		private final Map<CompositionData.MaterialDiff, String> loreDiff = new HashMap<>();
 
-		public Composition(@Nonnull ConfigurationSection sec) {
-			this.material = Material.getMaterial(sec.getString("type", "AMETHYST_CLUSTER").toUpperCase());
-			this.nameDefault = sec.getString("name.default");
-			this.nameMax = sec.getString("name.max");
-			this.loreChange = sec.getString("lore.change");
-			this.loreNew = sec.getString("lore.new");
-			this.loreMax = sec.getString("lore.max");
+		public Composition(@Nonnull ConfigurationSection section) {
+			this.material = Material.getMaterial(section.getString("type", "AMETHYST_CLUSTER").toUpperCase());
+			this.nameDefault = section.getString("name.default");
+			this.nameMax = section.getString("name.max");
+			for (var diff : CompositionData.MaterialDiff.values()) {
+				loreDiff.put(diff, section.getString("lore." + diff.name().toLowerCase(), diff.getDefaultLore()));
+			}
 		}
 
 		@Nonnull
-		public Material getMaterial() {
-			return material;
+		public ItemStack getMenuItem(@Nonnull SkyMine skyMine) {
+			CompositionUpgrade upgrade = skyMine.getUpgrades().getComposition();
+			return Items.of(material)
+					.name(upgrade.canBeUpgraded() ? nameDefault : nameMax)
+					.lore(Upgrades.COMPOSITION.get().get(upgrade.getUpgradeIdentifier()).getLore(upgrade.getLevel()))
+					.placeholder("{level}", upgrade.getLevel())
+					.placeholder("{next-level}", upgrade.getLevel() + 1)
+					.build();
 		}
 
 		@Nonnull
-		public String getNameDefault() {
-			return nameDefault;
-		}
-
-		@Nonnull
-		public String getNameMax() {
-			return nameMax;
-		}
-
-		@Nonnull
-		public String getLoreChange() {
-			return loreChange;
-		}
-
-		@Nonnull
-		public String getLoreNew() {
-			return loreNew;
-		}
-
-		@Nonnull
-		public String getLoreMax() {
-			return loreMax;
+		public String getLore(@Nonnull CompositionData.MaterialDiff diff) {
+			return loreDiff.getOrDefault(diff, diff.getDefaultLore());
 		}
 	}
 
@@ -76,27 +67,23 @@ public interface Menus {
 		private final String loreDefault;
 		private final String loreNext;
 
-		public ResetCooldown(@Nonnull ConfigurationSection sec) {
-			this.material = Material.getMaterial(sec.getString("type", "CLOCK").toUpperCase());
-			this.nameDefault = sec.getString("name.default");
-			this.nameMax = sec.getString("name.max");
-			this.loreDefault = sec.getString("lore.default");
-			this.loreNext = sec.getString("lore.next");
+		public ResetCooldown(@Nonnull ConfigurationSection section) {
+			this.material = Material.getMaterial(section.getString("type", "CLOCK").toUpperCase());
+			this.nameDefault = section.getString("name.default");
+			this.nameMax = section.getString("name.max");
+			this.loreDefault = section.getString("lore.default");
+			this.loreNext = section.getString("lore.next");
 		}
 
 		@Nonnull
-		public Material getMaterial() {
-			return material;
-		}
-
-		@Nonnull
-		public String getNameDefault() {
-			return nameDefault;
-		}
-
-		@Nonnull
-		public String getNameMax() {
-			return nameMax;
+		public ItemStack getMenuItem(@Nonnull SkyMine skyMine) {
+			ResetCooldownUpgrade upgrade = skyMine.getUpgrades().getResetCooldown();
+			return Items.of(material)
+					.name(upgrade.canBeUpgraded() ? nameDefault : nameMax)
+					.lore(Upgrades.RESET_COOLDOWN.get().get(upgrade.getUpgradeIdentifier()).getLore(upgrade.getLevel()))
+					.placeholder("{level}", upgrade.getLevel())
+					.placeholder("{next-level}", upgrade.getLevel() + 1)
+					.build();
 		}
 
 		@Nonnull

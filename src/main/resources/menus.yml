@@ -1,8 +1,19 @@
+#----------------------------------------------------------------------------------#
+# This file contains most of the data used to create the various menus.            #
+#----------------------------------------------------------------------------------#
+# The upgrade menu is a bit complicated because it has to support                  #
+# every combination of upgrade data you give it in the upgrades.yml file.          #
+#                                                                                  #
+# As a result, I have slightly limited the amount of data that can be customized.  #
+# If you have any questions, please go to the Discord.                             #
+#----------------------------------------------------------------------------------#
+
 # Main Menu for the mines.
 main-menu:
   name: "&8Main Menu"
   rows: 3
-  fill: GRAY_STAINED_GLASS_PANE # Optional material to fill the GUI after all other items are placed.
+  # Optional material to fill the GUI after all other items are placed.
+  fill: GRAY_STAINED_GLASS_PANE
   slots:
     11:
       type: BLUE_BED
@@ -49,26 +60,30 @@ upgrades:
   composition:
     type: AMETHYST_CLUSTER
     name:
-      # This is the default name of the upgrade.
+      # The default name of the upgrade.
       default: "&bComposition &7(&e{level} &7→ &e{next-level}&7)"
-      # This is used when the upgrade is maxed out.
+      # The name used when the upgrade is maxed out.
       max: "&bComposition &7(&eMAXED&7)"
     lore:
-      # This is used when an already existing material has a different percentage.
-      change: "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}"
-      # This is used when a new material is available.
-      new: "&7(&a+&7) &a{type} &7→ &e{percentage}%"
-      # This is used when the upgrade is maxed out.
+      # The next level introduces a new material.
+      add: "&7(&a+&7) &a{type} &7→ &e{percentage}%"
+      # The next level removes a previously existing material.
+      remove: "&7(&c-&7) &a{type}"
+      # The material percentage is different when going to the next level.
+      change: "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"
+      # The material percentage is the same in both levels.
+      same: "&7(&b=) &f{type} &7→ &e{percentage}%"
+      # The material is already maxed out. There is no next level.
       max: "&7(&c✯&7) &c{type} &7→ &e{percentage}%"
   reset-cooldown:
     type: CLOCK
     name:
-      # This is the default name of the upgrade.
+      # The default name of the upgrade.
       default: "&cReset Cooldown &7(&e{level} &7→ &e{next-level}&7)"
-      # This is used when the upgrade is maxed out.
+      # The name used when the upgrade is maxed out.
       max: "&cReset Cooldown &7(&eMAXED&7)"
     lore:
-      # This is used for past and future cooldowns.
-      default: "&7({level}) {amount} minutes"
-      # This is used for the next cooldown available.
-      next: "&d→ &7(&e{level}&7) &e{amount} seconds"
+      # The default lore of the upgrade.
+      default: "&7({level}) {time}"
+      # The lore used for the next cooldown available.
+      next: "&d→ &7(&e{level}&7) &e{time}"
