@@ -1,6 +1,7 @@
 #----------------------------------------------------------------------------------#
-# Options for mine upgrades...                                                     #
-#                                                                                  #
+# This file allows you to create unique upgrade paths for each upgrade type.       #
+# These can then be referenced in the mines.yml file.                              #
+#----------------------------------------------------------------------------------#                                                                      #
 # Upgrade types: composition, reset-cooldown                                       #
 # By default, all upgrades are available to players.                               #
 #                                                                                  #
@@ -10,11 +11,6 @@
 #                                                                                  #
 # ^ After negating permission, the player can no longer upgrade the mine until     #
 # you remove the negation or add the "skymines.upgrades.composition.2" permission. #
-#----------------------------------------------------------------------------------#
-# Below, you can define unique paths for each upgrade type.                        #
-#                                                                                  #
-# Then, in the mines.yml file, you can create unique SkyMines and have each mine   #
-# use different upgrades and have different costs for each one.                    #
 #----------------------------------------------------------------------------------#
 
 # Upgrade the composition of a mine.
