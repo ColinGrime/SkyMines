@@ -1,12 +1,12 @@
-#----------------------------------------------------------------------------------#
-# This file contains most of the data used to create the various menus.            #
-#----------------------------------------------------------------------------------#
-# The upgrade menu is a bit complicated because it has to support                  #
-# every combination of upgrade data you give it in the upgrades.yml file.          #
-#                                                                                  #
-# As a result, I have slightly limited the amount of data that can be customized.  #
-# If you have any questions, please go to the Discord.                             #
-#----------------------------------------------------------------------------------#
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ This file contains most of the data used to create the various menus.           ┃
+#┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃
+#┃ The upgrade menu is a bit complicated because it has to support                 ┃
+#┃ every combination of upgrade data you give it in the upgrades.yml file.         ┃
+#┃                                                                                 ┃
+#┃ As a result, I have slightly limited the amount of data that can be customized. ┃
+#┃ If you have any questions, please go to the Discord.                            ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘
 
 # Main Menu for the mines.
 main-menu:

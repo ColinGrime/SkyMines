@@ -11,7 +11,7 @@ public interface Messages {
 	/**************************************************
 	 *                 General Messages               *
 	 **************************************************/
-	Message<?> GENERAL_LIST_SKYMINES_TOP_MESSAGE       = message("general.list-skymines.top-message", "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------");
+	Message<?> GENERAL_LIST_SKYMINES_TOP_MESSAGE       = message("general.list-skymines.top-message", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> GENERAL_LIST_SKYMINES_REPEATING_MESSAGE = message("general.list-skymines.repeating-message", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE    = message("general.list-skymines.bottom-message");
 	Message<?> GENERAL_RESET_COOLDOWN_FINISH           = message("general.reset-cooldown-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
@@ -52,7 +52,7 @@ public interface Messages {
 	 *                  Usage Messages                *
 	 **************************************************/
 	Message<?> USAGE_SKYMINES_COMMAND  = message("usage.skymines-command",
-			"&7&m--------------&r &e&lSkyMine &aCommands &7&m--------------",
+			"&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━",
 			"&7- &a/sm list &e: &7Lists all mines.",
 			"&7- &a/sm panel <id> &e: &7Opens the mine's main panel.",
 			"&7- &a/sm upgrades <id> &e: &7Opens the mine's upgrade panel.",
@@ -60,7 +60,7 @@ public interface Messages {
 			"&7- &a/sm sethome <id> &e: &7Sets the mine's home.",
 			"&7- &a/sm reset <id> &e: &7Resets the mine.",
 			"&7- &a/sm pickup <id> &e: &7Picks up the mine.",
-			"&7&m---------------------------------------------"
+			"&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
 	Message<?> USAGE_SKYMINES_PANEL    = message("usage.skymines-panel",
 			"&eUsage: &a/sm panel <id>",
@@ -90,7 +90,7 @@ public interface Messages {
 	/**************************************************
 	 *                  Admin Messages                *
 	 **************************************************/
-	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------");
+	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");
 	Message<?> SUCCESS_GIVE                      = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
@@ -107,13 +107,13 @@ public interface Messages {
 	Message<?> FAILURE_NO_SKYMINES_FOUND         = message("admin.failure.no-skymines-found", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
 	Message<?> FAILURE_INVALID_AMOUNT            = message("admin.failure.invalid-amount", "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount.");
 	Message<?> USAGE_SKYMINES_ADMIN_COMMAND      = message("admin.usage.skymines-admin-command",
-			"&7&m---------&r &e&lSkyMine &cAdmin Commands &7&m---------",
+			"&7&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &7&l&m━━━━━━━━━━━━━",
 			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
 			"&7- &c/sma lookup <player> &e: &7Lookup a player's mines.",
 			"&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines.",
 			"&7- &c/sma remove <player> <id> &e: &7Remove a player's mines.",
 			"&7- &c/sma reload &e: &7Reloads config files.",
-			"&7&m---------------------------------------------"
+			"&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
 	Message<?> USAGE_SKYMINES_GIVE               = message("admin.usage.skymines-give",
 			"&eUsage: &c/sma give <player> <LxHxW> <amount> <material>",

@@ -1,17 +1,17 @@
-#----------------------------------------------------------------------------------#
-# This file allows you to create unique upgrade paths for each upgrade type.       #
-# These can then be referenced in the mines.yml file.                              #
-#----------------------------------------------------------------------------------#                                                                      #
-# Upgrade types: composition, reset-cooldown                                       #
-# By default, all upgrades are available to players.                               #
-#                                                                                  #
-# Want to require permission to upgrade a mine? Simply negative the permission.    #
-# -> ex. the whole type: "-skymines.upgrades.composition"                          #
-# -> ex. a specific level: "-skymines.upgrades.composition.2"                      #
-#                                                                                  #
-# ^ After negating permission, the player can no longer upgrade the mine until     #
-# you remove the negation or add the "skymines.upgrades.composition.2" permission. #
-#----------------------------------------------------------------------------------#
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ This file allows you to create unique upgrade paths for each upgrade type.       ┃
+#┃ These can then be referenced in the mines.yml file.                              ┃
+#┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃
+#┃ Upgrade types: composition, reset-cooldown                                       ┃
+#┃ By default, all upgrades are available to players.                               ┃
+#┃                                                                                  ┃
+#┃ Want to require permission to upgrade a mine? Simply negative the permission.    ┃
+#┃ -> ex. the whole type: "-skymines.upgrades.composition"                          ┃
+#┃ -> ex. a specific level: "-skymines.upgrades.composition.2"                      ┃
+#┃                                                                                  ┃
+#┃ ^ After negating permission, the player can no longer upgrade the mine until     ┃
+#┃ you remove the negation or add the "skymines.upgrades.composition.2" permission. ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘
 
 # Upgrade the composition of a mine.
 composition:

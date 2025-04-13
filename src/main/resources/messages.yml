@@ -1,9 +1,9 @@
 # General messages:
 general:
   list-skymines:
-    top-message: "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------"
+    top-message: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
     repeating-message: "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
-    bottom-message: "&7&m---------------------------------------------"
+    bottom-message: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   reset-cooldown-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
   pickup-cooldown-finish: "&aYou are free to place &eSkyMines &aagain."
 
@@ -39,7 +39,7 @@ failure:
 # Usage messages (for commands):
 usage:
   skymines-command:
-    - "&7&m--------------&r &e&lSkyMine &aCommands &7&m--------------"
+    - "&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━"
     - "&7- &a/sm list &e: &7Lists all mines."
     - "&7- &a/sm panel <id> &e: &7Opens the mine's main panel."
     - "&7- &a/sm upgrades <id> &e: &7Opens the mine's upgrade panel."
@@ -47,7 +47,7 @@ usage:
     - "&7- &a/sm sethome <id> &e: &7Sets the mine's home."
     - "&7- &a/sm reset <id> &e: &7Resets the mine."
     - "&7- &a/sm pickup <id> &e: &7Picks up the mine."
-    - "&7&m---------------------------------------------"
+    - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   skymines-panel:
     - "&eUsage: &a/sm panel <id>"
     - "&a► &7Opens up the specified mine's main panel."
@@ -71,9 +71,9 @@ usage:
 admin:
   general:
     lookup-skymines:
-      top-message: "&7&m----------------&7 &e&lSkyMine &aList &7&m----------------"
+      top-message: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
       repeating-message: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
-      bottom-message: "&7&m---------------------------------------------"
+      bottom-message: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   success:
     give: "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a."
     panel: "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a."
@@ -92,13 +92,13 @@ admin:
     invalid-material: "&4&l❌ &cThe material '&e{material}&c' is an invalid border type."
   usage:
     skymines-admin-command:
-      - "&7&m-----------&r &e&lSkyMine &cAdmin Commands &7&m-----------"
+      - "&7&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &7&l&m━━━━━━━━━━━━━"
       - "&7- &c/sma give <player> <LxHxW> <amount> <material>"
       - "&7- &c/sma lookup <player> &e: &7Lookup a player's mines."
       - "&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines."
       - "&7- &c/sma remove <player> <id> &e: &7Remove a player's mines."
       - "&7- &c/sma reload &e: &7Reloads config files."
-      - "&7&m---------------------------------------------"
+      - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     skymines-give:
       - "&eUsage: &c/sma give <player> <LxHxW> <amount> <material>"
       - "&c► &7Gives the player mine tokens with the size and border."
