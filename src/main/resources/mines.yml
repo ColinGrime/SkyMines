@@ -7,6 +7,7 @@
 size-placeholder: "&7[&a{length}&7x&a{height}&7x&a{width}&7]"
 
 # The default token item to reference below.
+# This is also used if there is no defined token item for a mine.
 default-token:
   type: TRIPWIRE_HOOK
   name: "&e&lSkyMine Token {size}"

@@ -71,26 +71,20 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 			amount = args.getInt(3).get();
 		}
 
-		Optional<ItemStack> tokenItem = plugin.getSkyMineManager().getToken().getToken(mine.getId(), size);
-		if (tokenItem.isEmpty()) {
-			Messages.FAILURE_INVALID_MINE.replace("{id}", args.getOrDefault(1, "default")).send(sender);
-			return;
-		}
-
 		// Gives the specified amount of tokens to the player.
-		ItemStack item = tokenItem.get();
-		item.setAmount(amount);
-		Inventories.give(receiver.get(), item, true);
+		ItemStack token = plugin.getSkyMineManager().getToken().getToken(mine.getId(), size);
+		token.setAmount(amount);
+		Inventories.give(receiver.get(), token, true);
 
-		// Sets the name of the item.
-		ItemMeta meta = item.getItemMeta();
+		// Sets the name of the token.
+		ItemMeta meta = token.getItemMeta();
 		String name = "Name not loaded.";
 		if (meta != null) {
 			name = meta.getDisplayName();
 		}
 
 		// Send messages.
-		Placeholders placeholders = Placeholders.of("{token}", name).add("{amount}", item.getAmount());
+		Placeholders placeholders = Placeholders.of("{token}", name).add("{amount}", token.getAmount());
 		Messages.SUCCESS_RECEIVE.replace(placeholders).send(receiver.get());
 		if (!sender.isPlayer() || !sender.player().equals(receiver.get())) {
 			Messages.SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);

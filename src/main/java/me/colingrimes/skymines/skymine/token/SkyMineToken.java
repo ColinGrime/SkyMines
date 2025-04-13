@@ -6,12 +6,32 @@ import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
- * Responsible for the creation and parsing of the physical skymine token item.
+ * Responsible for the creation, validation, and parsing of the physical skymine token item.
  */
 public interface SkyMineToken {
+
+	/**
+	 * Checks if the provided item is a skymine token.
+	 *
+	 * @param item the item to check
+	 * @return true if the item is a skymine token
+	 */
+	boolean isToken(@Nonnull ItemStack item);
+
+	/**
+	 * Checks if the provided item is a valid skymine token.
+	 * <p>
+	 * To be valid, {@link SkyMineToken#isToken(ItemStack)} must first be true.
+	 * If the token has an attached skymine identifier, it must also be present in the mines.yml file.
+	 * If the token does not have any identifier, it will return true assuming a default mine is configured.
+	 *
+	 * @param item the item to check
+	 * @return true if the item is a valid skymine token
+	 */
+	boolean isValidToken(@Nonnull ItemStack item);
 
 	/**
 	 * Gets the skymine token with the specified identifier and mine size.
@@ -23,7 +43,7 @@ public interface SkyMineToken {
 	 * @return skymine item if available
 	 */
 	@Nonnull
-	Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize);
+	ItemStack getToken(@Nonnull String identifier, @Nonnull Size mineSize);
 
 	/**
 	 * Gets the skymine token with the specified identifier, mine size, and upgrades.
@@ -35,40 +55,44 @@ public interface SkyMineToken {
 	 * @return skymine item if available
 	 */
 	@Nonnull
-	Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize, @Nonnull SkyMineUpgrades upgrades);
+	ItemStack getToken(@Nonnull String identifier, @Nonnull Size mineSize, @Nonnull SkyMineUpgrades upgrades);
 
 	/**
-	 * Checks if the provided item is a skymine token.
+	 * Gets the {@link Mines.Mine} configuration data based on the token.
+	 * If the token has an attached skymine identifier, it must also be present in the mines.yml file.
+	 * If the token does not have any identifier, it will return the default mine data assuming a default mine is configured.
 	 *
-	 * @param item the item to check
-	 * @return true if the item is a skymine token
-	 */
-	boolean isToken(@Nonnull ItemStack item);
-
-	/**
-	 * Gets the {@link Mines.Mine} configuration data based on the item.
-	 *
-	 * @param item the item
+	 * @param token the token
 	 * @return configuration data if available
 	 */
-	@Nonnull
-	Optional<Mines.Mine> getMine(@Nonnull ItemStack item);
+	@Nullable
+	Mines.Mine getMine(@Nonnull ItemStack token);
 
 	/**
-	 * Gets the {@link Size} based on the item.
+	 * Gets the mine identifier based on the token.
+	 * If the token does not have any identifier, it will return "default".
 	 *
-	 * @param item the item
-	 * @return size of the skymine if available
+	 * @param token the token
+	 * @return mine identifier
 	 */
 	@Nonnull
-	Optional<Size> getMineSize(@Nonnull ItemStack item);
+	String getMineIdentifier(@Nonnull ItemStack token);
 
 	/**
-	 * Gets the {@link SkyMineUpgrades} based on the item.
+	 * Gets the {@link Size} based on the token.
 	 *
-	 * @param item the item
-	 * @return upgrades of the skymine if available
+	 * @param token the token
+	 * @return size of the skymine
 	 */
 	@Nonnull
-	SkyMineUpgrades getUpgrades(@Nonnull ItemStack item);
+	Size getMineSize(@Nonnull ItemStack token);
+
+	/**
+	 * Gets the {@link SkyMineUpgrades} based on the token.
+	 *
+	 * @param token the token
+	 * @return upgrades of the skymine
+	 */
+	@Nonnull
+	SkyMineUpgrades getUpgrades(@Nonnull ItemStack token);
 }

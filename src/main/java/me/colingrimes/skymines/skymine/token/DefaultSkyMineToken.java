@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.skymine.token;
 
+import com.google.common.base.Preconditions;
 import me.colingrimes.midnight.geometry.Size;
 import me.colingrimes.midnight.serialize.Json;
 import me.colingrimes.skymines.config.Mines;
@@ -14,67 +15,74 @@ import java.util.Optional;
 
 public class DefaultSkyMineToken implements SkyMineToken {
 
-	@Nonnull
-	@Override
-	public Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize) {
-		return getToken(identifier, mineSize, new SkyMineUpgrades(identifier));
-	}
-
-	@Nonnull
-	@Override
-	public Optional<ItemStack> getToken(@Nonnull String identifier, @Nonnull Size mineSize, @Nonnull SkyMineUpgrades upgrades) {
-		Mines.Mine mine = Mines.MINES.get().get(identifier);
-		if (mine == null) {
-			return Optional.empty();
-		}
-
-		String size = Mines.SIZE_PLACEHOLDER.get()
-				.replace("{length}", String.valueOf(mineSize.getLength()))
-				.replace("{height}", String.valueOf(mineSize.getHeight()))
-				.replace("{width}", String.valueOf(mineSize.getWidth()));
-		return Optional.of(Items.of(mine.getToken())
-				.placeholder("{size}", size)
-				.nbt("skymine", true)
-				.nbt("skymine-id", identifier)
-				.nbt("skymine-size", Json.toString(mineSize.serialize()))
-				.nbt("skymine-upgrades", Json.toString(upgrades))
-				.build());
-	}
-
 	@Override
 	public boolean isToken(@Nullable ItemStack item) {
 		return NBT.getTag(item, "skymine", Boolean.class).orElse(false);
 	}
 
+	@Override
+	public boolean isValidToken(@Nonnull ItemStack item) {
+		return isToken(item) && getMine(item) != null;
+	}
+
 	@Nonnull
 	@Override
-	public Optional<Mines.Mine> getMine(@Nonnull ItemStack item) {
-		return NBT.getTag(item, "skymine-id").map(s -> Mines.MINES.get().get(s));
+	public ItemStack getToken(@Nonnull String identifier, @Nonnull Size mineSize) {
+		return getToken(identifier, mineSize, new SkyMineUpgrades(identifier));
+	}
+
+	@Nonnull
+	@Override
+	public ItemStack getToken(@Nonnull String identifier, @Nonnull Size mineSize, @Nonnull SkyMineUpgrades upgrades) {
+		Mines.Mine mine = Mines.MINES.get().get(identifier);
+		String size = Mines.SIZE_PLACEHOLDER.get()
+				.replace("{length}", String.valueOf(mineSize.getLength()))
+				.replace("{height}", String.valueOf(mineSize.getHeight()))
+				.replace("{width}", String.valueOf(mineSize.getWidth()));
+		return Items.of(mine != null ? mine.getToken() : Mines.DEFAULT_TOKEN.get())
+				.placeholder("{size}", size)
+				.nbt("skymine", true)
+				.nbt("skymine-id", identifier)
+				.nbt("skymine-size", Json.toString(mineSize.serialize()))
+				.nbt("skymine-upgrades", Json.toString(upgrades))
+				.build();
+	}
+
+	@Nullable
+	@Override
+	public Mines.Mine getMine(@Nonnull ItemStack token) {
+		return Mines.MINES.get().get(getMineIdentifier(token));
+	}
+
+	@Nonnull
+	@Override
+	public String getMineIdentifier(@Nonnull ItemStack token) {
+		return NBT.getTag(token, "skymine-id").orElse("default");
 	}
 
 	@Override
 	@Nonnull
-	public Optional<Size> getMineSize(@Nullable ItemStack item) {
-		Optional<String> size = NBT.getTag(item, "skymine-size");
+	public Size getMineSize(@Nullable ItemStack token) {
+		Optional<String> size = NBT.getTag(token, "skymine-size");
 		if (size.isEmpty()) {
-			return Optional.empty();
+			throw new IllegalArgumentException("SkyMine token does not have an attached size.");
 		} else if (Json.isJson(size.get())) {
-			return Optional.of(Size.deserialize(Json.toElement(size.get())));
+			return Size.deserialize(Json.toElement(size.get()));
 		} else {
-			return Optional.ofNullable(Size.of(size.get()));
+			return Preconditions.checkNotNull(Size.of(size.get()), "SkyMine token does not have a valid size.");
 		}
 	}
 
 	@Override
 	@Nonnull
-	public SkyMineUpgrades getUpgrades(@Nullable ItemStack item) {
-		Optional<SkyMineUpgrades> upgrades = NBT.getTag(item, "skymine-upgrades").map(u -> SkyMineUpgrades.deserialize(Json.toElement(u)));
+	public SkyMineUpgrades getUpgrades(@Nullable ItemStack token) {
+		Optional<SkyMineUpgrades> upgrades = NBT.getTag(token, "skymine-upgrades").map(u -> SkyMineUpgrades.deserialize(Json.toElement(u)));
 		if (upgrades.isPresent()) {
 			return upgrades.get();
 		}
 
-		int compositionLevel = NBT.getTag(item, "skymine-blockvariety", Integer.class).orElse(1);
-		int resetCooldownLevel = NBT.getTag(item, "skymine-resetcooldown", Integer.class).orElse(1);
+		int compositionLevel = NBT.getTag(token, "skymine-blockvariety", Integer.class).orElse(1);
+		int resetCooldownLevel = NBT.getTag(token, "skymine-resetcooldown", Integer.class).orElse(1);
 		return new SkyMineUpgrades("default", compositionLevel, resetCooldownLevel);
 	}
 }

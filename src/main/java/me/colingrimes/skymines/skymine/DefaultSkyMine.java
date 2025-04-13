@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -139,8 +138,8 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		Optional<ItemStack> token = manager.getToken().getToken(identifier, structure.getMineSize(), upgrades);
-		if (token.isEmpty() || !player.getInventory().addItem(token.get()).isEmpty()) {
+		ItemStack token = manager.getToken().getToken(identifier, structure.getMineSize(), upgrades);
+		if (!player.getInventory().addItem(token).isEmpty()) {
 			return false;
 		}
 

@@ -29,10 +29,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 	@Nonnull
 	public Optional<SkyMine> createSkyMine(@Nonnull Player owner, @Nonnull ItemStack token) {
 		SkyMineToken tokenProvider = plugin.getSkyMineManager().getToken();
-		Mines.Mine mine = tokenProvider.getMine(token).orElse(Mines.MINES.get().get("default"));
-		Size size = tokenProvider.getMineSize(token).orElseGet(() -> Size.of(10));
-		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
-
+		Mines.Mine mine = tokenProvider.getMine(token);
 		if (mine == null) {
 			return Optional.empty();
 		}
@@ -42,6 +39,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			yaw += 360;
 		}
 
+		Size size = tokenProvider.getMineSize(token);
 		int length = size.getLength() + 1;
 		int height = size.getHeight();
 		int width = size.getWidth() + 1;
@@ -74,6 +72,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		}
 
 		// build the mine
+		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
 		structure.buildParameter();
 		structure.buildInside(upgrades.getComposition().getComposition());
 
