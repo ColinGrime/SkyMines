@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,11 +61,25 @@ public class CompositionData extends UpgradeData {
 			for (String entry : configMaterials) {
 				Material material = Material.getMaterial(entry.split(" ")[0].toUpperCase());
 				String chance = entry.split(" ")[1].replace("%", "");
-				if (material != null && Types.isDouble(chance)) {
+				if (isValidMaterial(material) && Types.isDouble(chance)) {
 					composition.addMaterial(material, Double.parseDouble(chance));
 					materialPercentages.put(material, Double.parseDouble(chance));
 				}
 			}
+		}
+
+		/**
+		 * Checks if the specified material is a valid material for the inner mine.
+		 *
+		 * @param material the material
+		 * @return true if the material is valid
+		 */
+		private boolean isValidMaterial(@Nullable Material material) {
+			return material != null
+					&& material.isBlock()
+					&& material.isSolid()
+					&& !material.hasGravity()
+					&& !material.isAir();
 		}
 
 		@Nonnull

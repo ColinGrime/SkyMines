@@ -36,6 +36,9 @@ public class MineMaterialDynamic implements MineMaterial {
 	@Nonnull
 	@Override
 	public Material get(){
+		if (materialRandomizer.isEmpty()) {
+			return Material.AIR;
+		}
 		return materialRandomizer.higherEntry(random.nextDouble() * totalPercentages).getValue();
 	}
 }
