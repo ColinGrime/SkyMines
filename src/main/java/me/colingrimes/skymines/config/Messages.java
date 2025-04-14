@@ -90,6 +90,10 @@ public interface Messages {
 	/**************************************************
 	 *                  Admin Messages                *
 	 **************************************************/
+	Message<?> GENERAL_LIST_SKYMINES             = message("admin.general.list-skymines",
+			"&6Loaded SkyMines:",
+			"&8- {skymines}"
+	);
 	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");

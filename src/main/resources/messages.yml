@@ -70,6 +70,9 @@ usage:
 # Only Admins should have access...
 admin:
   general:
+    list-skymines:
+      - "&6Loaded SkyMines:"
+      - "&8- {skymines}"
     lookup-skymines:
       top-message: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
       repeating-message: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
