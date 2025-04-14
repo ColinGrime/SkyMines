@@ -72,7 +72,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		}
 
 		// Gives the specified amount of tokens to the player.
-		ItemStack token = plugin.getSkyMineManager().getToken().getToken(mine.getId(), size);
+		ItemStack token = plugin.getSkyMineManager().getToken().getToken(mine.getIdentifier(), size);
 		token.setAmount(amount);
 		Inventories.give(receiver.get(), token, true);
 

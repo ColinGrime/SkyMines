@@ -81,7 +81,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new skymine
-		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getId(), structure, upgrades, Pose.of(home));
+		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, upgrades, Pose.of(home));
 		plugin.getCooldownManager().getSkyMineCooldown().add(skyMine, skyMine.getUpgrades().getResetCooldown().getResetCooldown());
 		return Optional.of(skyMine);
 	}
