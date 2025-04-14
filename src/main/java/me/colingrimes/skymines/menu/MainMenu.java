@@ -75,7 +75,7 @@ public class MainMenu extends Gui {
 		switch (action) {
 			case "HOME" -> {
 				getPlayer().teleport(skyMine.getHome().toLocation());
-				Messages.SUCCESS_HOME_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
+				Messages.SUCCESS_HOME_ADMIN.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
 			}
 			case "RESET" -> {
 				if (!skyMine.isEnabled()) {
@@ -88,7 +88,7 @@ public class MainMenu extends Gui {
 					return;
 				}
 
-				Messages.SUCCESS_RESET_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
+				Messages.SUCCESS_RESET_ADMIN.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
 				if (Settings.OPTIONS_TELEPORT_HOME_ON_RESET.get()) {
 					getPlayer().teleport(skyMine.getHome().toLocation());
 				}
@@ -102,7 +102,7 @@ public class MainMenu extends Gui {
 			}
 			case "PICKUP" -> {
 				if (skyMine.pickup(getPlayer())) {
-					Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
+					Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
 				} else {
 					Messages.FAILURE_NO_INVENTORY_SPACE.send(getPlayer());
 				}
