@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,25 +60,18 @@ public class CompositionData extends UpgradeData {
 			for (String entry : configMaterials) {
 				Material material = Material.getMaterial(entry.split(" ")[0].toUpperCase());
 				String chance = entry.split(" ")[1].replace("%", "");
-				if (isValidMaterial(material) && Types.isDouble(chance)) {
-					composition.addMaterial(material, Double.parseDouble(chance));
-					materialPercentages.put(material, Double.parseDouble(chance));
+				if (!Types.isDouble(chance)) {
+					continue;
 				}
-			}
-		}
 
-		/**
-		 * Checks if the specified material is a valid material for the inner mine.
-		 *
-		 * @param material the material
-		 * @return true if the material is valid
-		 */
-		private boolean isValidMaterial(@Nullable Material material) {
-			return material != null
-					&& material.isBlock()
-					&& material.isSolid()
-					&& !material.hasGravity()
-					&& !material.isAir();
+				// If material is invalid, we are going to pretend its AIR.
+				if (material == null || !material.isBlock()) {
+					material = Material.AIR;
+				}
+
+				composition.addMaterial(material, Double.parseDouble(chance));
+				materialPercentages.put(material, materialPercentages.getOrDefault(material, 0.0) + Double.parseDouble(chance));
+			}
 		}
 
 		@Nonnull
@@ -166,7 +158,7 @@ public class CompositionData extends UpgradeData {
 		/**
 		 * The next level removes a previously existing material.
 		 */
-		REMOVE(-1, "&7(&c-&7) &a{type}"),
+		REMOVE(-1, "&7(&c-&7) &c{type}"),
 		/**
 		 * The material percentage is different when going to the next level.
 		 */
