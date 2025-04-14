@@ -1,8 +1,8 @@
 package me.colingrimes.skymines.skymine.upgrade.type;
 
-import me.colingrimes.skymines.config.Upgrades;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
+import me.colingrimes.skymines.skymine.upgrade.data.CompositionData;
 
 import javax.annotation.Nonnull;
 
@@ -14,6 +14,6 @@ public class CompositionUpgrade extends SkyMineUpgrade {
 
 	@Nonnull
 	public MineMaterial getComposition() {
-		return Upgrades.COMPOSITION.get().get(getUpgradeIdentifier()).getComposition(level);
+		return ((CompositionData) getUpgradeData()).getComposition(level);
 	}
 }

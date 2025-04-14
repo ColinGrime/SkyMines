@@ -2,9 +2,9 @@ package me.colingrimes.skymines.skymine.upgrade.type;
 
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.config.Mines;
-import me.colingrimes.skymines.config.Upgrades;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.util.Common;
+import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
@@ -47,8 +47,8 @@ public abstract class SkyMineUpgrade {
 	 * @return the upgrade identifier
 	 */
 	@Nonnull
-	public String getUpgradeIdentifier() {
-		return Mines.MINES.get().get(identifier).getUpgradeId(type);
+	public UpgradeData getUpgradeData() {
+		return Mines.MINES.get().get(identifier).getUpgradeData(type);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public abstract class SkyMineUpgrade {
 	 * @return the max level
 	 */
 	public int getMaxLevel() {
-		return Upgrades.getUpgradeData(type, getUpgradeIdentifier()).getMaxLevel();
+		return getUpgradeData().getMaxLevel();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public abstract class SkyMineUpgrade {
 	 * @return the amount of money required to level up (from the previous level)
 	 */
 	public double getCost(int level) {
-		return Upgrades.getUpgradeData(type, getUpgradeIdentifier()).getCost(level);
+		return getUpgradeData().getCost(level);
 	}
 
 	/**

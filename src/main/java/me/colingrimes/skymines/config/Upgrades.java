@@ -7,7 +7,7 @@ import me.colingrimes.skymines.skymine.upgrade.data.CompositionData;
 import me.colingrimes.skymines.skymine.upgrade.data.ResetCooldownData;
 import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 
 import static me.colingrimes.midnight.config.option.OptionFactory.keys;
@@ -25,8 +25,11 @@ public interface Upgrades {
 	 * @param identifier the upgrade identifier
 	 * @return the upgrade data
 	 */
-	@Nonnull
-	static UpgradeData getUpgradeData(@Nonnull UpgradeType type, @Nonnull String identifier) {
+	@Nullable
+	static UpgradeData getUpgradeData(@Nullable UpgradeType type, @Nullable String identifier) {
+		if (type == null || identifier == null || identifier.isEmpty()) {
+			return null;
+		}
 		return switch (type) {
 			case Composition -> COMPOSITION.get().get(identifier);
 			case ResetCooldown -> RESET_COOLDOWN.get().get(identifier);

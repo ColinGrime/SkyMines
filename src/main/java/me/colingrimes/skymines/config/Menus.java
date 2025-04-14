@@ -48,7 +48,7 @@ public interface Menus {
 			CompositionUpgrade upgrade = skyMine.getUpgrades().getComposition();
 			return Items.of(material)
 					.name(upgrade.canBeUpgraded() ? nameDefault : nameMax)
-					.lore(Upgrades.COMPOSITION.get().get(upgrade.getUpgradeIdentifier()).getLore(upgrade.getLevel()))
+					.lore(upgrade.getUpgradeData().getLore(upgrade.getLevel()))
 					.placeholder("{level}", upgrade.getLevel())
 					.placeholder("{next-level}", upgrade.getLevel() + 1)
 					.build();
@@ -80,7 +80,7 @@ public interface Menus {
 			ResetCooldownUpgrade upgrade = skyMine.getUpgrades().getResetCooldown();
 			return Items.of(material)
 					.name(upgrade.canBeUpgraded() ? nameDefault : nameMax)
-					.lore(Upgrades.RESET_COOLDOWN.get().get(upgrade.getUpgradeIdentifier()).getLore(upgrade.getLevel()))
+					.lore(upgrade.getUpgradeData().getLore(upgrade.getLevel()))
 					.placeholder("{level}", upgrade.getLevel())
 					.placeholder("{next-level}", upgrade.getLevel() + 1)
 					.build();
