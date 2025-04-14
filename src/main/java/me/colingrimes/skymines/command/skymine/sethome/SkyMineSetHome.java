@@ -29,7 +29,7 @@ public class SkyMineSetHome implements Command<SkyMines> {
 		if (skyMine.setHome(Pose.of(sender.location()))) {
 			Messages.SUCCESS_SETHOME.send(sender);
 		} else {
-			Messages.FAILURE_TOO_FAR_AWAY.send(sender);
+			Messages.FAILURE_SKYMINE_SETHOME_DISTANCE.send(sender);
 		}
 	}
 

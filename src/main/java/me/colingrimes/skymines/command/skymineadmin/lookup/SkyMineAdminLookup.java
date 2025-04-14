@@ -22,13 +22,13 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		Optional<UUID> uuid = UUIDs.fromName(args.getFirst());
 		if (uuid.isEmpty()) {
-			Messages.ADMIN_FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_FAILURE_MISC_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(uuid.get());
 		if (skyMines.isEmpty()) {
-			Messages.ADMIN_FAILURE_NO_SKYMINES_FOUND.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_FAILURE_SKYMINE_NONE_OWNED.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 

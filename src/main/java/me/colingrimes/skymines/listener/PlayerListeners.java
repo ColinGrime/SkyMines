@@ -51,7 +51,7 @@ public class PlayerListeners implements Listener {
 
 		// Check if the token is valid.
 		if (!token.isValidToken(item)) {
-			Messages.FAILURE_INVALID_MINE.replace("{id}", token.getMineIdentifier(item)).send(player);
+			Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", token.getMineIdentifier(item)).send(player);
 			return;
 		}
 
@@ -64,19 +64,19 @@ public class PlayerListeners implements Listener {
 
 		// Make sure all SkyMines are loaded.
 		if (!plugin.getStorage().isLoaded()) {
-			Messages.FAILURE_NOT_LOADED.send(player);
+			Messages.FAILURE_SKYMINE_NOT_LOADED.send(player);
 			return;
 		}
 
 		// Check: max skymines.
 		if (manager.getSkyMines(player).size() >= Settings.OPTIONS_MAX_PER_PLAYER.get()) {
-			Messages.FAILURE_MAX_AMOUNT.send(player);
+			Messages.FAILURE_SKYMINE_MAX_OWNED.send(player);
 			return;
 		}
 
 		// Check: cooldown when you pick up a skymine.
 		if (plugin.getCooldownManager().getPickupCooldown().onCooldown(player)) {
-			Messages.FAILURE_ON_PICKUP_COOLDOWN
+			Messages.FAILURE_COOLDOWN_PICKUP
 					.replace("{time}", Text.format(plugin.getCooldownManager().getPickupCooldown().getTimeLeft(player)))
 					.send(player);
 			return;
@@ -90,7 +90,7 @@ public class PlayerListeners implements Listener {
 		//  once that's complete + profiled over many large structures, consider deprecating this.
 		//
 		if (plugin.getCooldownManager().getPlacementCooldown().onCooldown(player)) {
-			Messages.FAILURE_ON_PLACEMENT_COOLDOWN
+			Messages.FAILURE_COOLDOWN_PLACEMENT
 						.replace("{time}", Text.format(plugin.getCooldownManager().getPlacementCooldown().getTimeLeft(player)))
 					.send(player);
 			return;
@@ -102,7 +102,7 @@ public class PlayerListeners implements Listener {
 			Messages.SUCCESS_PLACE.send(player);
 			event.setCancelled(true);
 		} else {
-			Messages.FAILURE_NO_SPACE.send(player);
+			Messages.FAILURE_SKYMINE_NO_SPACE.send(player);
 		}
 	}
 
@@ -151,7 +151,7 @@ public class PlayerListeners implements Listener {
 	public void onPlayerBlockPlace(@Nonnull BlockPlaceEvent event) {
 		// prevents tokens from being placed down
 		if (plugin.getSkyMineManager().getToken().isToken(event.getItemInHand())) {
-			Messages.FAILURE_INVALID_PLACEMENT.send(event.getPlayer());
+			Messages.FAILURE_TOKEN_NO_PLACE.send(event.getPlayer());
 			event.setCancelled(true);
 		}
 	}
@@ -174,7 +174,7 @@ public class PlayerListeners implements Listener {
 
 		// Checks if the dropped item was a skymine token.
 		if (plugin.getSkyMineManager().getToken().isToken(event.getItemDrop().getItemStack())) {
-			Messages.FAILURE_NO_DROP.send(event.getPlayer());
+			Messages.FAILURE_TOKEN_NO_DROP.send(event.getPlayer());
 			event.setCancelled(true);
 		}
 	}

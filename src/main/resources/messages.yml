@@ -20,22 +20,26 @@ success:
 
 # Failure messages:
 failure:
-  max-amount: "&4&l❌ &cMaximum amount of mines reached."
-  too-far-away: "&4&l❌ &cYou are too far away from this &eSkyMine&c."
-  no-space: "&4&l❌ &cThere is no space here to place a &eSkyMine&c."
-  no-inventory-space: "&4&l❌ &cYou do not have enough inventory space."
-  no-funds: "&4&l❌ &cYou do not have enough money to purchase this upgrade."
-  no-skymine: "&4&l❌ &cNo mine &cexists with the ID '&e{id}&c'."
-  no-skymines: "&4&l❌ &cYou currently do not own any mines."
-  no-permission: "&4&l❌ You lack the required permission for this action."
-  no-drop: "&4&l❌ &cYou are not allowed to drop your &eSkyMine Token&c."
-  on-reset-cooldown: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
-  on-pickup-cooldown: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
-  on-placement-cooldown: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
-  already-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
-  invalid-mine: "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist."
-  invalid-placement: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
-  not-loaded: "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading."
+  skymine:
+    not-loaded: "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading."
+    invalid-index: "&4&l❌ &cNo mine &cexists with the ID '&e{id}&c'."
+    invalid-identifier: "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist."
+    none-owned: "&4&l❌ &cYou currently do not own any mines."
+    max-owned: "&4&l❌ &cMaximum amount of mines reached."
+    no-space: "&4&l❌ &cThere is no space here to place a &eSkyMine&c."
+    upgrade-funds: "&4&l❌ &cYou do not have enough money to purchase this upgrade."
+    upgrade-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
+    sethome-distance: "&4&l❌ &cYou are too far away from this &eSkyMine &cto set a home here."
+  token:
+    no-inventory-space: "&4&l❌ &cYou do not have enough inventory space."
+    no-drop: "&4&l❌ &cYou are not allowed to drop your &eSkyMine Token&c."
+    no-place: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
+  cooldown:
+    reset: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
+    pickup: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
+    placement: "&4&l❌ &cThe cooldown to attempt &eSkyMine &cplacement is &e{time}&c."
+  misc:
+    no-permission: "&4&l❌ You lack the required permission for this action."
 
 # Usage messages (for commands):
 usage:
@@ -97,14 +101,16 @@ admin:
     remove: "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a."
     reloaded: "&2&l✓ &eSkyMines &ahas been reloaded."
   failure:
-    too-small: "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small."
-    too-big: "&4&l❌ &cSides are not permitted to exceed 100 blocks."
-    no-player-found: "&4&l❌ &cThe player &e{player} &cdoes not exist."
-    no-skymine-found: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'."
-    no-skymines-found: "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c."
-    invalid-amount: "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount."
-    invalid-material: "&4&l❌ &cThe material '&e{material}&c' is an invalid border type."
-    debug-no-mine: "&4&l❌ &cYou are not looking at a valid &eSkyMine&c."
+    skymine:
+      invalid-index: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'."
+      none-owned: "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c."
+      debug: "&4&l❌ &cYou are not looking at a valid &eSkyMine&c."
+    give:
+      too-small: "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small."
+      too-big: "&4&l❌ &cSides are not permitted to exceed 100 blocks."
+      invalid-amount: "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount."
+    misc:
+      no-player-found: "&4&l❌ &cThe player &e{player} &cdoes not exist."
   usage:
     skymine:
       - "&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━"

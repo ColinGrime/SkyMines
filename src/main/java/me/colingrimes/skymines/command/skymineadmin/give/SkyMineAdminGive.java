@@ -26,7 +26,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		Optional<Player> receiver = args.getPlayer(0);
 		if (receiver.isEmpty()) {
-			Messages.ADMIN_FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_FAILURE_MISC_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
@@ -36,7 +36,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		}
 
 		if (mine == null) {
-			Messages.FAILURE_INVALID_MINE.replace("{id}", args.getOrDefault(1, "default")).send(sender);
+			Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", args.getOrDefault(1, "default")).send(sender);
 			return;
 		}
 
@@ -48,11 +48,11 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 				return;
 			}
 			if (size.getLength() < 1 || size.getHeight() < 1 || size.getWidth() < 1) {
-				Messages.ADMIN_FAILURE_TOO_SMALL.send(sender);
+				Messages.ADMIN_FAILURE_GIVE_TOO_SMALL.send(sender);
 				return;
 			}
 			if (size.getLength() > 100 || size.getHeight() > 100 || size.getWidth() > 100) {
-				Messages.ADMIN_FAILURE_TOO_BIG.send(sender);
+				Messages.ADMIN_FAILURE_GIVE_TOO_BIG.send(sender);
 				return;
 			}
 		}
@@ -65,7 +65,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		int amount = 1;
 		if (args.size() >= 4) {
 			if (args.getInt(3).isEmpty()) {
-				Messages.ADMIN_FAILURE_INVALID_AMOUNT.replace("{amount}", args.get(2)).send(sender);
+				Messages.ADMIN_FAILURE_GIVE_INVALID_AMOUNT.replace("{amount}", args.get(2)).send(sender);
 				return;
 			}
 			amount = args.getInt(3).get();

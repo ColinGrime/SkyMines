@@ -19,7 +19,7 @@ public class SkyMineList implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(sender.player());
 		if (skyMines.isEmpty()) {
-			Messages.FAILURE_NO_SKYMINES.send(sender);
+			Messages.FAILURE_SKYMINE_NONE_OWNED.send(sender);
 			return;
 		}
 

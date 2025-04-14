@@ -28,7 +28,7 @@ public class SkyMineUpgrades implements Command<SkyMines> {
 
 		// Check if the mine is disabled.
 		if (!skyMine.isEnabled()) {
-			Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(sender);
+			Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(sender);
 			return;
 		}
 

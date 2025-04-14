@@ -55,9 +55,9 @@ public class UpgradeMenu extends Gui {
 	 */
 	private void attemptUpgrade(@Nonnull Player player, @Nonnull SkyMineUpgrade upgrade) {
 		if (!upgrade.canBeUpgraded()) {
-			Messages.FAILURE_ALREADY_MAXED.send(player);
+			Messages.FAILURE_SKYMINE_UPGRADE_MAXED.send(player);
 		} else if (!upgrade.hasPermission(player)) {
-			Messages.FAILURE_NO_PERMISSION.send(player);
+			Messages.FAILURE_MISC_NO_PERMISSION.send(player);
 		} else if (upgrade.levelUp(player)) {
 			Messages.SUCCESS_UPGRADE
 					.replace("{upgrade}", upgrade.getType().getName())
@@ -70,7 +70,7 @@ public class UpgradeMenu extends Gui {
 				skyMine.reset(true);
 			}
 		} else {
-			Messages.FAILURE_NO_FUNDS.send(player);
+			Messages.FAILURE_SKYMINE_UPGRADE_FUNDS.send(player);
 		}
 	}
 }

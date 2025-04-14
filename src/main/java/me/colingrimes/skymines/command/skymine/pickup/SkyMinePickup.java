@@ -29,7 +29,7 @@ public class SkyMinePickup implements Command<SkyMines> {
 		if (skyMine.pickup(sender.player())) {
 			Messages.SUCCESS_PICKUP.send(sender);
 		} else {
-			Messages.FAILURE_NO_INVENTORY_SPACE.send(sender);
+			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
 		}
 	}
 

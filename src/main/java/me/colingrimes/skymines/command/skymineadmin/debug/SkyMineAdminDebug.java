@@ -26,7 +26,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		Location eye = sender.player().getEyeLocation();
 		RayTraceResult result = sender.world().rayTrace(eye, eye.getDirection(), 100, FluidCollisionMode.NEVER, true, 0, e -> !e.equals(sender.player()));
 		if (result == null || result.getHitBlock() == null) {
-			Messages.ADMIN_FAILURE_DEBUG_NO_MINE.send(sender);
+			Messages.ADMIN_FAILURE_SKYMINE_DEBUG.send(sender);
 			return;
 		}
 
@@ -52,7 +52,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		}
 
 		// No mine was found.
-		Messages.ADMIN_FAILURE_DEBUG_NO_MINE.send(sender);
+		Messages.ADMIN_FAILURE_SKYMINE_DEBUG.send(sender);
 	}
 
 	@Override

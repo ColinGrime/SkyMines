@@ -79,12 +79,12 @@ public class MainMenu extends Gui {
 			}
 			case "RESET" -> {
 				if (!skyMine.isEnabled()) {
-					Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
+					Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
 					return;
 				}
 				if (!skyMine.reset(false)) {
 					Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-					Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.format(time)).send(getPlayer());
+					Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(time)).send(getPlayer());
 					return;
 				}
 
@@ -95,7 +95,7 @@ public class MainMenu extends Gui {
 			}
 			case "UPGRADES" -> {
 				if (!skyMine.isEnabled()) {
-					Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
+					Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
 					return;
 				}
 				new UpgradeMenu(getPlayer(), skyMine).open();
@@ -104,7 +104,7 @@ public class MainMenu extends Gui {
 				if (skyMine.pickup(getPlayer())) {
 					Messages.ADMIN_SUCCESS_PICKUP.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
 				} else {
-					Messages.FAILURE_NO_INVENTORY_SPACE.send(getPlayer());
+					Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(getPlayer());
 				}
 			}
 		}

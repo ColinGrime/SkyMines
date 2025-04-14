@@ -37,7 +37,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.getFirst());
 		if (skyMine.isEmpty()) {
-			Messages.FAILURE_NO_SKYMINE.replace("{id}", args.getFirst()).send(sender);
+			Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
 			return null;
 		}
 
