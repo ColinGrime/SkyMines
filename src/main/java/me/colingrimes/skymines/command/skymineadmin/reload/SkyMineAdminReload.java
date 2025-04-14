@@ -14,7 +14,7 @@ public class SkyMineAdminReload implements Command<SkyMines> {
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		plugin.getConfigurationManager().reload();
-		Messages.SUCCESS_RELOADED.send(sender);
+		Messages.ADMIN_SUCCESS_RELOADED.send(sender);
 	}
 
 	@Override

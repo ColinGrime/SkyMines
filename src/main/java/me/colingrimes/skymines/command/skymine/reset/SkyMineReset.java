@@ -23,7 +23,7 @@ public class SkyMineReset implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_RESET);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_RESET);
 		if (skyMine == null) {
 			return;
 		}
@@ -56,7 +56,7 @@ public class SkyMineReset implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_RESET);
+		properties.setUsage(Messages.USAGE_SKYMINE_RESET);
 		properties.setPlayerRequired(true);
 	}
 }

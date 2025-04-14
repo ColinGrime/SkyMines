@@ -19,22 +19,22 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		Optional<UUID> uuid = UUIDs.fromName(args.getFirst());
 		if (uuid.isEmpty()) {
-			Messages.FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
 		if (skyMine.isPresent()) {
 			skyMine.get().pickup(sender.player());
-			Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_SUCCESS_PICKUP.replace("{player}", args.getFirst()).send(sender);
 		} else {
-			Messages.FAILURE_NO_SKYMINE_FOUND.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
+			Messages.ADMIN_FAILURE_NO_SKYMINE_FOUND.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
 		}
 	}
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_PICKUP_ADMIN);
+		properties.setUsage(Messages.ADMIN_USAGE_SKYMINE_PICKUP);
 		properties.setPermission("skymines.admin.pickup");
 		properties.setArgumentsRequired(2);
 	}

@@ -26,7 +26,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		Location eye = sender.player().getEyeLocation();
 		RayTraceResult result = sender.world().rayTrace(eye, eye.getDirection(), 100, FluidCollisionMode.NEVER, true, 0, e -> !e.equals(sender.player()));
 		if (result == null || result.getHitBlock() == null) {
-			Messages.FAILURE_DEBUG_NO_MINE.send(sender);
+			Messages.ADMIN_FAILURE_DEBUG_NO_MINE.send(sender);
 			return;
 		}
 
@@ -37,7 +37,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 				boolean enabled = skyMine.isEnabled();
 				JsonObject upgradeJson = (JsonObject) skyMine.getUpgrades().serialize();
 				upgradeJson.remove("identifier");
-				Messages.DEBUG_SKYMINE
+				Messages.ADMIN_GENERAL_SKYMINE_DEBUG
 						.replace("{owner}", Players.getName(skyMine.getOwner()))
 						.replace("{index}", skyMine.getIndex())
 						.replace("{identifier}", (enabled ? "&a" : "&c") + skyMine.getIdentifier())
@@ -52,7 +52,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		}
 
 		// No mine was found.
-		Messages.FAILURE_DEBUG_NO_MINE.send(sender);
+		Messages.ADMIN_FAILURE_DEBUG_NO_MINE.send(sender);
 	}
 
 	@Override

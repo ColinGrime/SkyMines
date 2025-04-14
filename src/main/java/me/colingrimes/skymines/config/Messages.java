@@ -11,11 +11,11 @@ public interface Messages {
 	/**************************************************
 	 *                 General Messages               *
 	 **************************************************/
-	Message<?> GENERAL_LIST_SKYMINES_TOP_MESSAGE       = message("general.list-skymines.top-message", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
-	Message<?> GENERAL_LIST_SKYMINES_REPEATING_MESSAGE = message("general.list-skymines.repeating-message", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
-	Message<?> GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE    = message("general.list-skymines.bottom-message");
-	Message<?> GENERAL_RESET_COOLDOWN_FINISH           = message("general.reset-cooldown-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
-	Message<?> GENERAL_PICKUP_COOLDOWN_FINISH          = message("general.pickup-cooldown-finish", "&aYou are free to place &eSkyMines &aagain.");
+	Message<?> GENERAL_SKYMINE_LIST_TOP       = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
+	Message<?> GENERAL_SKYMINE_LIST_REPEATING = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> GENERAL_SKYMINE_LIST_BOTTOM    = message("general.skymine-list.bottom");
+	Message<?> GENERAL_COOLDOWN_RESET_FINISH  = message("general.cooldown.reset-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
+	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH = message("general.cooldown.pickup-finish", "&aYou are free to place &eSkyMines &aagain.");
 
 	/**************************************************
 	 *                 Success Messages               *
@@ -51,7 +51,7 @@ public interface Messages {
 	/**************************************************
 	 *                  Usage Messages                *
 	 **************************************************/
-	Message<?> USAGE_SKYMINES_COMMAND  = message("usage.skymines-command",
+	Message<?> USAGE_SKYMINE = message("usage.skymine",
 			"&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━",
 			"&7- &a/sm list &e: &7Lists all mines.",
 			"&7- &a/sm panel <id> &e: &7Opens the mine's main panel.",
@@ -62,27 +62,27 @@ public interface Messages {
 			"&7- &a/sm pickup <id> &e: &7Picks up the mine.",
 			"&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
-	Message<?> USAGE_SKYMINES_PANEL    = message("usage.skymines-panel",
+	Message<?> USAGE_SKYMINE_PANEL = message("usage.skymine-panel",
 			"&eUsage: &a/sm panel <id>",
 			"&a► &7Opens up the specified mine's main panel."
 	);
-	Message<?> USAGE_SKYMINES_UPGRADES = message("usage.skymines-upgrades",
+	Message<?> USAGE_SKYMINE_UPGRADES = message("usage.skymine-upgrades",
 			"&eUsage: &a/sm upgrades <id>",
 			"&a► &7Opens up the specified mine's upgrade panel."
 	);
-	Message<?> USAGE_SKYMINES_HOME     = message("usage.skymines-home",
+	Message<?> USAGE_SKYMINE_HOME = message("usage.skymine-home",
 			"&eUsage: &a/sm home <id>",
 			"&a► &7Teleports to the specified mine's home."
 	);
-	Message<?> USAGE_SKYMINES_SETHOME  = message("usage.skymines-sethome",
+	Message<?> USAGE_SKYMINE_SETHOME = message("usage.skymine-sethome",
 			"&eUsage: &a/sm sethome <id>",
 			"&a► &7Sets the specified mine's home."
 	);
-	Message<?> USAGE_SKYMINES_RESET    = message("usage.skymines-reset",
+	Message<?> USAGE_SKYMINE_RESET = message("usage.skymine-reset",
 			"&eUsage: &a/sm reset <id>",
 			"&a► &7Resets the specified mine."
 	);
-	Message<?> USAGE_SKYMINES_PICKUP   = message("usage.skymines-pickup",
+	Message<?> USAGE_SKYMINE_PICKUP = message("usage.skymine-pickup",
 			"&eUsage: &a/sm pickup <id>",
 			"&a► &7Picks up the specified mine."
 	);
@@ -90,14 +90,14 @@ public interface Messages {
 	/**************************************************
 	 *                  Admin Messages                *
 	 **************************************************/
-	Message<?> GENERAL_LIST_SKYMINES             = message("admin.general.list-skymines",
+	Message<?> ADMIN_GENERAL_SKYMINE_LIST = message("admin.general.skymine-list",
 			"&6Loaded SkyMines:",
 			"&8- {skymines}"
 	);
-	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━");
-	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
-	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");
-	Message<?> DEBUG_SKYMINE                     = message("admin.general.debug",
+	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_TOP = message("admin.general.skymine-lookup.top", "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━");
+	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_REPEATING = message("admin.general.skymine-lookup.repeating", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM = message("admin.general.skymine-lookup.bottom");
+	Message<?> ADMIN_GENERAL_SKYMINE_DEBUG = message("admin.general.skymine-debug",
 			"&8&l&m━━━━━━━━━━━━━━━&7 &e&lSkyMine &cDebug &8&l&m━━━━━━━━━━━━━━━",
 			"&7Owner: &a{owner}",
 			"&7Index: &a{index}",
@@ -108,42 +108,44 @@ public interface Messages {
 			"&7UUID: &a{uuid}",
 			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
-	Message<?> SUCCESS_GIVE                      = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
-	Message<?> SUCCESS_PANEL                     = message("admin.success.panel", "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a.");
-	Message<?> SUCCESS_HOME_ADMIN                = message("admin.success.home", "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a.");
-	Message<?> SUCCESS_RESET_ADMIN               = message("admin.success.reset", "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine&a.");
-	Message<?> SUCCESS_PICKUP_ADMIN              = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a.");
-	Message<?> SUCCESS_REMOVE                    = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a.");
-	Message<?> SUCCESS_RELOADED                  = message("admin.success.reloaded", "&2&l✓ &eSkyMines &ahas been reloaded.");
-	Message<?> FAILURE_TOO_SMALL                 = message("admin.failure.too-small", "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small.");
-	Message<?> FAILURE_TOO_BIG                   = message("admin.failure.too-big", "&4&l❌ &cSides are not permitted to exceed 100 blocks.");
-	Message<?> FAILURE_NO_PLAYER_FOUND           = message("admin.failure.no-player-found", "&4&l❌ &cThe player &e{player} &cdoes not exist.");
-	Message<?> FAILURE_NO_SKYMINE_FOUND          = message("admin.failure.no-skymine-found", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
-	Message<?> FAILURE_NO_SKYMINES_FOUND         = message("admin.failure.no-skymines-found", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
-	Message<?> FAILURE_INVALID_AMOUNT            = message("admin.failure.invalid-amount", "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount.");
-	Message<?> FAILURE_DEBUG_NO_MINE             = message("admin.failure.debug-no-mine", "&4&l❌ &cYou are not looking at a valid &eSkyMine&c.");
-	Message<?> USAGE_SKYMINES_ADMIN_COMMAND      = message("admin.usage.skymines-admin-command",
+	Message<?> ADMIN_SUCCESS_GIVE = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
+	Message<?> ADMIN_SUCCESS_PANEL = message("admin.success.panel", "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_HOME      = message("admin.success.home", "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_RESET = message("admin.success.reset", "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_PICKUP = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_REMOVE = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_RELOADED = message("admin.success.reloaded", "&2&l✓ &eSkyMines &ahas been reloaded.");
+	Message<?> ADMIN_FAILURE_TOO_SMALL = message("admin.failure.too-small", "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small.");
+	Message<?> ADMIN_FAILURE_TOO_BIG = message("admin.failure.too-big", "&4&l❌ &cSides are not permitted to exceed 100 blocks.");
+	Message<?> ADMIN_FAILURE_NO_PLAYER_FOUND = message("admin.failure.no-player-found", "&4&l❌ &cThe player &e{player} &cdoes not exist.");
+	Message<?> ADMIN_FAILURE_NO_SKYMINE_FOUND = message("admin.failure.no-skymine-found", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
+	Message<?> ADMIN_FAILURE_NO_SKYMINES_FOUND = message("admin.failure.no-skymines-found", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
+	Message<?> ADMIN_FAILURE_INVALID_AMOUNT = message("admin.failure.invalid-amount", "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount.");
+	Message<?> ADMIN_FAILURE_DEBUG_NO_MINE = message("admin.failure.debug-no-mine", "&4&l❌ &cYou are not looking at a valid &eSkyMine&c.");
+	Message<?> ADMIN_USAGE_SKYMINE = message("admin.usage.skymine",
 			"&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━",
+			"&7- &c/sma list &e: &7Lists all enabled/disabled mines.",
 			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
 			"&7- &c/sma lookup <player> &e: &7Lookup a player's mines.",
 			"&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines.",
 			"&7- &c/sma remove <player> <id> &e: &7Remove a player's mines.",
+			"&7- &c/sma debug &e: &7Displays information for the selected mine.",
 			"&7- &c/sma reload &e: &7Reloads config files.",
 			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
-	Message<?> USAGE_SKYMINES_GIVE               = message("admin.usage.skymines-give",
+	Message<?> ADMIN_USAGE_SKYMINE_GIVE = message("admin.usage.skymine-give",
 			"&eUsage: &c/sma give <player> <LxHxW> <amount> <material>",
 			"&c► &7Gives the player mine tokens with the size and border."
 	);
-	Message<?> USAGE_SKYMINES_LOOKUP             = message("admin.usage.skymines-lookup",
+	Message<?> ADMIN_USAGE_SKYMINE_LOOKUP = message("admin.usage.skymine-lookup",
 			"&eUsage: &c/sma lookup <player>",
 			"&c► &7Lookup the specified player's list of mines."
 	);
-	Message<?> USAGE_SKYMINES_PICKUP_ADMIN       = message("admin.usage.skymines-pickup",
+	Message<?> ADMIN_USAGE_SKYMINE_PICKUP = message("admin.usage.skymine-pickup",
 			"&eUsage: &c/sma pickup <player> <id>",
 			"&c► &7Pickup the specified player's mine."
 	);
-	Message<?> USAGE_SKYMINES_REMOVE             = message("admin.usage.skymines-remove",
+	Message<?> ADMIN_USAGE_SKYMINE_REMOVE = message("admin.usage.skymine-remove",
 			"&eUsage: &c/sma remove <player> <id>",
 			"&c► &7Remove the specified player's mine."
 	);

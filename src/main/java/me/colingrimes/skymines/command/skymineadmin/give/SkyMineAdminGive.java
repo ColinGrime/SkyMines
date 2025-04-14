@@ -26,7 +26,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		Optional<Player> receiver = args.getPlayer(0);
 		if (receiver.isEmpty()) {
-			Messages.FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
+			Messages.ADMIN_FAILURE_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
@@ -44,15 +44,15 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		if (args.size() >= 3) {
 			size = Size.of(args.get(2));
 			if (size == null) {
-				Messages.USAGE_SKYMINES_GIVE.send(sender);
+				Messages.ADMIN_USAGE_SKYMINE_GIVE.send(sender);
 				return;
 			}
 			if (size.getLength() < 1 || size.getHeight() < 1 || size.getWidth() < 1) {
-				Messages.FAILURE_TOO_SMALL.send(sender);
+				Messages.ADMIN_FAILURE_TOO_SMALL.send(sender);
 				return;
 			}
 			if (size.getLength() > 100 || size.getHeight() > 100 || size.getWidth() > 100) {
-				Messages.FAILURE_TOO_BIG.send(sender);
+				Messages.ADMIN_FAILURE_TOO_BIG.send(sender);
 				return;
 			}
 		}
@@ -65,7 +65,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		int amount = 1;
 		if (args.size() >= 4) {
 			if (args.getInt(3).isEmpty()) {
-				Messages.FAILURE_INVALID_AMOUNT.replace("{amount}", args.get(2)).send(sender);
+				Messages.ADMIN_FAILURE_INVALID_AMOUNT.replace("{amount}", args.get(2)).send(sender);
 				return;
 			}
 			amount = args.getInt(3).get();
@@ -87,7 +87,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 		Placeholders placeholders = Placeholders.of("{token}", name).add("{amount}", token.getAmount());
 		Messages.SUCCESS_RECEIVE.replace(placeholders).send(receiver.get());
 		if (!sender.isPlayer() || !sender.player().equals(receiver.get())) {
-			Messages.SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);
+			Messages.ADMIN_SUCCESS_GIVE.replace(placeholders).replace("{player}", receiver.get().getName()).send(sender);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class SkyMineAdminGive implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_GIVE);
+		properties.setUsage(Messages.ADMIN_USAGE_SKYMINE_GIVE);
 		properties.setPermission("skymines.admin.give");
 		properties.setArgumentsRequired(1);
 	}

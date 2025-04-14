@@ -23,12 +23,12 @@ public class SkyMineList implements Command<SkyMines> {
 			return;
 		}
 
-		if (!Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.toText().isEmpty()) {
-			Messages.GENERAL_LIST_SKYMINES_TOP_MESSAGE.send(sender);
+		if (!Messages.GENERAL_SKYMINE_LIST_TOP.toText().isEmpty()) {
+			Messages.GENERAL_SKYMINE_LIST_TOP.send(sender);
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
 			Location loc = skyMines.get(i - 1).getHome().toLocation();
-			String message = Messages.GENERAL_LIST_SKYMINES_REPEATING_MESSAGE
+			String message = Messages.GENERAL_SKYMINE_LIST_REPEATING
 					.replace("{id}", i)
 					.replace("{x}", loc.getBlockX())
 					.replace("{y}", loc.getBlockY())
@@ -36,8 +36,8 @@ public class SkyMineList implements Command<SkyMines> {
 					.toText();
 			Markdown.of("[" + message + "](/skymines_home_" + i + " &cGo Home!)").send(sender);
 		}
-		if (!Messages.GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE.toText().isEmpty()) {
-			Messages.GENERAL_LIST_SKYMINES_BOTTOM_MESSAGE.send(sender);
+		if (!Messages.GENERAL_SKYMINE_LIST_BOTTOM.toText().isEmpty()) {
+			Messages.GENERAL_SKYMINE_LIST_BOTTOM.send(sender);
 		}
 	}
 

@@ -11,7 +11,7 @@ public class SkyMineAdmin implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_ADMIN_COMMAND);
+		properties.setUsage(Messages.ADMIN_USAGE_SKYMINE);
 		properties.setPermission("skymines.admin");
 		properties.setAliases("skyminesadmin", "smadmin", "sma");
 	}

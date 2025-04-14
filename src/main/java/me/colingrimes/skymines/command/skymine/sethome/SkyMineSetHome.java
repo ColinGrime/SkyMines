@@ -21,7 +21,7 @@ public class SkyMineSetHome implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_SETHOME);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_SETHOME);
 		if (skyMine == null) {
 			return;
 		}
@@ -42,7 +42,7 @@ public class SkyMineSetHome implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_SETHOME);
+		properties.setUsage(Messages.USAGE_SKYMINE_SETHOME);
 		properties.setPermission("skymines.sethome");
 		properties.setPlayerRequired(true);
 	}

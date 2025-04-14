@@ -21,7 +21,7 @@ public class SkyMinePanel implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_PANEL);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_PANEL);
 		if (skyMine != null) {
 			new MainMenu(plugin, sender.player(), skyMine).open();
 		}
@@ -36,7 +36,7 @@ public class SkyMinePanel implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_PANEL);
+		properties.setUsage(Messages.USAGE_SKYMINE_PANEL);
 		properties.setPlayerRequired(true);
 	}
 }

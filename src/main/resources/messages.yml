@@ -1,11 +1,12 @@
 # General messages:
 general:
-  list-skymines:
-    top-message: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
-    repeating-message: "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
-    bottom-message: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  reset-cooldown-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
-  pickup-cooldown-finish: "&aYou are free to place &eSkyMines &aagain."
+  skymine-list:
+    top: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
+    repeating: "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+    bottom: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  cooldown:
+    reset-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
+    pickup-finish: "&aYou are free to place &eSkyMines &aagain."
 
 # Success messages:
 success:
@@ -38,7 +39,7 @@ failure:
 
 # Usage messages (for commands):
 usage:
-  skymines-command:
+  skymine:
     - "&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━"
     - "&7- &a/sm list &e: &7Lists all mines."
     - "&7- &a/sm panel <id> &e: &7Opens the mine's main panel."
@@ -48,36 +49,36 @@ usage:
     - "&7- &a/sm reset <id> &e: &7Resets the mine."
     - "&7- &a/sm pickup <id> &e: &7Picks up the mine."
     - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  skymines-panel:
+  skymine-panel:
     - "&eUsage: &a/sm panel <id>"
     - "&a► &7Opens up the specified mine's main panel."
-  skymines-upgrades:
+  skymine-upgrades:
     - "&eUsage: &a/sm upgrades <id>"
     - "&a► &7Opens up the specified mine's upgrade panel."
-  skymines-home:
+  skymine-home:
     - "&eUsage: &a/sm home <id>"
     - "&a► &7Teleports to the specified mine's home."
-  skymines-sethome:
+  skymine-sethome:
     - "&eUsage: &a/sm sethome <id>"
     - "&a► &7Sets the specified mine's home."
-  skymines-reset:
+  skymine-reset:
     - "&eUsage: &a/sm reset <id>"
     - "&a► &7Resets the specified mine."
-  skymines-pickup:
+  skymine-pickup:
     - "&eUsage: &a/sm pickup <id>"
     - "&a► &7Picks up the specified mine."
 
 # Admin messages:
 admin:
   general:
-    list-skymines:
+    skymine-list:
       - "&6Loaded SkyMines:"
       - "&8- {skymines}"
-    lookup-skymines:
-      top-message: "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━"
-      repeating-message: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
-      bottom-message: "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    debug:
+    skymine-lookup:
+      top: "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━"
+      repeating: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
+      bottom: "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    skymine-debug:
       - "&8&l&m━━━━━━━━━━━━━━━&7 &e&lSkyMine &cDebug &8&l&m━━━━━━━━━━━━━━━"
       - "&7Owner: &a{owner}"
       - "&7Index: &a{index}"
@@ -105,23 +106,25 @@ admin:
     invalid-material: "&4&l❌ &cThe material '&e{material}&c' is an invalid border type."
     debug-no-mine: "&4&l❌ &cYou are not looking at a valid &eSkyMine&c."
   usage:
-    skymines-admin-command:
+    skymine:
       - "&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━"
+      - "&7- &c/sma list &e: &7Lists all enabled/disabled mines."
       - "&7- &c/sma give <player> <LxHxW> <amount> <material>"
       - "&7- &c/sma lookup <player> &e: &7Lookup a player's mines."
       - "&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines."
       - "&7- &c/sma remove <player> <id> &e: &7Remove a player's mines."
+      - "&7- &c/sma debug &e: &7Displays information for the selected mine."
       - "&7- &c/sma reload &e: &7Reloads config files."
       - "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    skymines-give:
+    skymine-give:
       - "&eUsage: &c/sma give <player> <LxHxW> <amount> <material>"
       - "&c► &7Gives the player mine tokens with the size and border."
-    skymines-lookup:
+    skymine-lookup:
       - "&eUsage: &c/sma lookup <player>"
       - "&c► &7Lookup the specified player's list of mines."
-    skymines-pickup:
+    skymine-pickup:
       - "&eUsage: &c/sma pickup <player> <id>"
       - "&c► &7Pickup the specified player's mine."
-    skymines-remove:
+    skymine-remove:
       - "&eUsage: &c/sma remove <player> <id>"
       - "&c► &7Remove the specified player's mine."

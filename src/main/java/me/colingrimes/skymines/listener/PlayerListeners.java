@@ -136,7 +136,7 @@ public class PlayerListeners implements Listener {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
-				Messages.SUCCESS_PANEL.replace("{player}", Players.getName(skyMine.getOwner())).send(player);
+				Messages.ADMIN_SUCCESS_PANEL.replace("{player}", Players.getName(skyMine.getOwner())).send(player);
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome().toLocation());

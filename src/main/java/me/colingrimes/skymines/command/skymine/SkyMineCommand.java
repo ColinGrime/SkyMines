@@ -17,7 +17,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_COMMAND);
+		properties.setUsage(Messages.USAGE_SKYMINE);
 		properties.setAliases("skymines", "sm");
 		properties.setPlayerRequired(true);
 	}
