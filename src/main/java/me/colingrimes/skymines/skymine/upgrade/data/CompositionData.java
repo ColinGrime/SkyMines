@@ -17,10 +17,28 @@ import java.util.stream.Collectors;
 public class CompositionData extends UpgradeData {
 
 	private final Map<Integer, Level> levels;
+	private Boolean valid = null;
 
 	public CompositionData(@Nonnull ConfigurationSection section) {
 		super(section);
 		this.levels = Configs.mapIntegerKeys(section, Level::new);
+	}
+
+	@Override
+	public boolean isValid() {
+		if (valid != null) {
+			return valid;
+		}
+
+		for (int i=1; i<=Math.max(1, getMaxLevel()); i++) {
+			if (!levels.containsKey(i) || levels.get(i).materialPercentages.isEmpty()) {
+				valid = false;
+				return false;
+			}
+		}
+
+		valid = true;
+		return true;
 	}
 
 	@Nonnull

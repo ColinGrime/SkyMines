@@ -18,6 +18,15 @@ public abstract class UpgradeData {
 	}
 
 	/**
+	 * Gets whether the upgrade data is valid.
+	 * <p>
+	 * Invalid upgrade data should not be used.
+	 *
+	 * @return true if the upgrade data is valid
+	 */
+	public abstract boolean isValid();
+
+	/**
 	 * Gets the max level of the upgrade.
 	 *
 	 * @return the max level

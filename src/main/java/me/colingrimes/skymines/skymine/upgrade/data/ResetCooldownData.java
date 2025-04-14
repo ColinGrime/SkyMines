@@ -16,10 +16,28 @@ import java.util.Map;
 public class ResetCooldownData extends UpgradeData {
 
 	private final Map<Integer, Duration> resetCooldown;
+	private Boolean valid = null;
 
 	public ResetCooldownData(@Nonnull ConfigurationSection section) {
 		super(section);
 		this.resetCooldown = Configs.mapIntegerKeys(section, sec -> Parser.parseDuration(sec.getString("upgrade")));
+	}
+
+	@Override
+	public boolean isValid() {
+		if (valid != null) {
+			return valid;
+		}
+
+		for (int i=1; i<=Math.max(1, getMaxLevel()); i++) {
+			if (!resetCooldown.containsKey(i) || resetCooldown.get(i) == null) {
+				valid = false;
+				return false;
+			}
+		}
+
+		valid = true;
+		return true;
 	}
 
 	@Nonnull
