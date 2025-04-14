@@ -55,6 +55,11 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return getMine() != null;
+	}
+
+	@Override
 	@Nonnull
 	public UUID getUUID() {
 		return uuid;

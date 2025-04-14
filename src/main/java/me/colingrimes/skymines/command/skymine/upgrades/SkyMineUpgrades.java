@@ -22,9 +22,17 @@ public class SkyMineUpgrades implements Command<SkyMines> {
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_UPGRADES);
-		if (skyMine != null) {
-			new UpgradeMenu(sender.player(), skyMine).open();
+		if (skyMine == null) {
+			return;
 		}
+
+		// Check if the mine is disabled.
+		if (!skyMine.isEnabled()) {
+			Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(sender);
+			return;
+		}
+
+		new UpgradeMenu(sender.player(), skyMine).open();
 	}
 
 	@Nullable

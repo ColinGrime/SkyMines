@@ -28,10 +28,16 @@ public class SkyMineReset implements Command<SkyMines> {
 			return;
 		}
 
+		// Check if the mine is disabled.
+		if (!skyMine.isEnabled()) {
+			Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(sender);
+			return;
+		}
+
 		// Check if SkyMine was successfully reset.
 		if (!skyMine.reset(false)) {
 			Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-			Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.formatTime(time)).send(sender);
+			Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.format(time)).send(sender);
 			return;
 		}
 

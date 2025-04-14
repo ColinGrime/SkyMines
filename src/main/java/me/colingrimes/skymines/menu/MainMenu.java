@@ -32,7 +32,7 @@ public class MainMenu extends Gui {
 		ConfigurableInventory panel = Menus.MAIN_MENU.get();
 		panel.getItems().forEach((i, item) -> {
 			Duration duration = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-			getSlot(i).setItem(Items.of(item.clone()).placeholder("{time}", Text.formatTime(duration)).build());
+			getSlot(i).setItem(Items.of(item.clone()).placeholder("{time}", Text.format(duration)).build());
 
 			String command = panel.getCommand(i);
 			if (command == null || command.isEmpty()) {
@@ -78,9 +78,13 @@ public class MainMenu extends Gui {
 				Messages.SUCCESS_HOME_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());
 			}
 			case "RESET" -> {
+				if (!skyMine.isEnabled()) {
+					Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
+					return;
+				}
 				if (!skyMine.reset(false)) {
 					Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-					Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.formatTime(time)).send(getPlayer());
+					Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.format(time)).send(getPlayer());
 					return;
 				}
 
@@ -89,7 +93,13 @@ public class MainMenu extends Gui {
 					getPlayer().teleport(skyMine.getHome().toLocation());
 				}
 			}
-			case "UPGRADES" -> new UpgradeMenu(getPlayer(), skyMine).open();
+			case "UPGRADES" -> {
+				if (!skyMine.isEnabled()) {
+					Messages.FAILURE_INVALID_MINE.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
+					return;
+				}
+				new UpgradeMenu(getPlayer(), skyMine).open();
+			}
 			case "PICKUP" -> {
 				if (skyMine.pickup(getPlayer())) {
 					Messages.SUCCESS_PICKUP_ADMIN.replace("{player}", Players.get(skyMine.getOwner()).get().getName()).send(getPlayer());

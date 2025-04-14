@@ -14,6 +14,14 @@ import java.util.UUID;
 public interface SkyMine {
 
 	/**
+	 * Gets whether the skymine is enabled.
+	 * If the skymine doesn't have a valid {@link Mines.Mine} configuration data, it will return false.
+	 *
+	 * @return true if the skymine is enabled
+	 */
+	boolean isEnabled();
+
+	/**
 	 * Gets the UUID of the skymine.
 	 *
 	 * @return UUID of the skymine
@@ -41,9 +49,10 @@ public interface SkyMine {
 	/**
 	 * Gets the {@link Mines.Mine} configuration data of the mine.
 	 *
-	 * @return the mine data if available
+	 * @return the mine data or null if there is no data associated with the identifier
 	 */
-	@Nullable Mines.Mine getMine();
+	@Nullable
+	Mines.Mine getMine();
 
 	/**
 	 * Gets the current index of the skymine.
