@@ -28,7 +28,7 @@ public class ResetCooldownData extends UpgradeData {
 		List<String> lores = new ArrayList<>();
 		for (int i=1; i<=getMaxLevel(); i++) {
 			Placeholders placeholders = Placeholders.of("{level}", i).add("{time}", Text.formatApprox(resetCooldown.get(i)));
-			if (i == level + 1) {
+			if (i == level + 1 || (i == level && level == getMaxLevel())) {
 				String next = Menus.UPGRADE_MENU_RESET_COOLDOWN.get().getLoreNext();
 				lores.add(placeholders.apply(next).toText());
 			} else {
@@ -56,6 +56,4 @@ public class ResetCooldownData extends UpgradeData {
 	public Duration getResetCooldown(int level) {
 		return resetCooldown.get(level);
 	}
-
-
 }

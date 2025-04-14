@@ -85,5 +85,5 @@ upgrades:
     lore:
       # The default lore of the upgrade.
       default: "&7({level}) {time}"
-      # The lore used for the next cooldown available.
+      # The lore used for the next (and maxed) cooldown available.
       next: "&d→ &7(&e{level}&7) &e{time}"
