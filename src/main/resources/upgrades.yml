@@ -48,7 +48,7 @@ composition:
         - STONE 30%
         - IRON_ORE 25%
         - GOLD_ORE 25%
-        - REDSOTNE_ORE 10%
+        - REDSTONE_ORE 10%
         - LAPIS_ORE 10%
         - DIAMOND_ORE 5%
         - EMERALD_ORE 5%
