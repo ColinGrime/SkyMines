@@ -56,7 +56,7 @@ public interface Menus {
 
 		@Nonnull
 		public String getLore(@Nonnull CompositionData.MaterialDiff diff) {
-			return loreDiff.getOrDefault(diff, diff.getDefaultLore());
+			return loreDiff.get(diff);
 		}
 	}
 

@@ -68,7 +68,7 @@ upgrades:
       # The next level introduces a new material.
       add: "&7(&a+&7) &a{type} &7→ &e{percentage}%"
       # The next level removes a previously existing material.
-      remove: "&7(&c-&7) &a{type}"
+      remove: "&7(&c-&7) &c{type}"
       # The material percentage is different when going to the next level.
       change: "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"
       # The material percentage is the same in both levels.
