@@ -94,9 +94,20 @@ public interface Messages {
 			"&6Loaded SkyMines:",
 			"&8- {skymines}"
 	);
-	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
+	Message<?> LOOKUP_SKYMINES_TOP_MESSAGE       = message("admin.general.lookup-skymines.top-message", "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> LOOKUP_SKYMINES_REPEATING_MESSAGE = message("admin.general.lookup-skymines.repeating-message", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> LOOKUP_SKYMINES_BOTTOM_MESSAGE    = message("admin.general.lookup-skymines.bottom-message");
+	Message<?> DEBUG_SKYMINE                     = message("admin.general.debug",
+			"&8&l&m━━━━━━━━━━━━━━━&7 &e&lSkyMine &cDebug &8&l&m━━━━━━━━━━━━━━━",
+			"&7Owner: &a{owner}",
+			"&7Index: &a{index}",
+			"&7Mine: {identifier} &7({enabled}&7)",
+			"&7Border: &a{type}",
+			"&7Size: &a{size}",
+			"&7Upgrades: &a{upgrades}",
+			"&7UUID: &a{uuid}",
+			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	);
 	Message<?> SUCCESS_GIVE                      = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
 	Message<?> SUCCESS_PANEL                     = message("admin.success.panel", "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a.");
 	Message<?> SUCCESS_HOME_ADMIN                = message("admin.success.home", "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a.");
@@ -110,14 +121,15 @@ public interface Messages {
 	Message<?> FAILURE_NO_SKYMINE_FOUND          = message("admin.failure.no-skymine-found", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
 	Message<?> FAILURE_NO_SKYMINES_FOUND         = message("admin.failure.no-skymines-found", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
 	Message<?> FAILURE_INVALID_AMOUNT            = message("admin.failure.invalid-amount", "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount.");
+	Message<?> FAILURE_DEBUG_NO_MINE             = message("admin.failure.debug-no-mine", "&4&l❌ &cYou are not looking at a valid &eSkyMine&c.");
 	Message<?> USAGE_SKYMINES_ADMIN_COMMAND      = message("admin.usage.skymines-admin-command",
-			"&7&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &7&l&m━━━━━━━━━━━━━",
+			"&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━",
 			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
 			"&7- &c/sma lookup <player> &e: &7Lookup a player's mines.",
 			"&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines.",
 			"&7- &c/sma remove <player> <id> &e: &7Remove a player's mines.",
 			"&7- &c/sma reload &e: &7Reloads config files.",
-			"&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
 	Message<?> USAGE_SKYMINES_GIVE               = message("admin.usage.skymines-give",
 			"&eUsage: &c/sma give <player> <LxHxW> <amount> <material>",

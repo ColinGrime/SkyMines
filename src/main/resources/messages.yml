@@ -67,16 +67,26 @@ usage:
     - "&eUsage: &a/sm pickup <id>"
     - "&a► &7Picks up the specified mine."
 
-# Only Admins should have access...
+# Admin messages:
 admin:
   general:
     list-skymines:
       - "&6Loaded SkyMines:"
       - "&8- {skymines}"
     lookup-skymines:
-      top-message: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
+      top-message: "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━"
       repeating-message: "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
-      bottom-message: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      bottom-message: "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    debug:
+      - "&8&l&m━━━━━━━━━━━━━━━&7 &e&lSkyMine &cDebug &8&l&m━━━━━━━━━━━━━━━"
+      - "&7Owner: &a{owner}"
+      - "&7Index: &a{index}"
+      - "&7Mine: {identifier} &7({enabled}&7)"
+      - "&7Border: &a{type}"
+      - "&7Size: &a{size}"
+      - "&7Upgrades: &a{upgrades}"
+      - "&7UUID: &a{uuid}"
+      - "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   success:
     give: "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a."
     panel: "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a."
@@ -93,15 +103,16 @@ admin:
     no-skymines-found: "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c."
     invalid-amount: "&4&l❌ &cThe amount '&e{amount}&c' is an invalid amount."
     invalid-material: "&4&l❌ &cThe material '&e{material}&c' is an invalid border type."
+    debug-no-mine: "&4&l❌ &cYou are not looking at a valid &eSkyMine&c."
   usage:
     skymines-admin-command:
-      - "&7&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &7&l&m━━━━━━━━━━━━━"
+      - "&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━"
       - "&7- &c/sma give <player> <LxHxW> <amount> <material>"
       - "&7- &c/sma lookup <player> &e: &7Lookup a player's mines."
       - "&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines."
       - "&7- &c/sma remove <player> <id> &e: &7Remove a player's mines."
       - "&7- &c/sma reload &e: &7Reloads config files."
-      - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      - "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     skymines-give:
       - "&eUsage: &c/sma give <player> <LxHxW> <amount> <material>"
       - "&c► &7Gives the player mine tokens with the size and border."
