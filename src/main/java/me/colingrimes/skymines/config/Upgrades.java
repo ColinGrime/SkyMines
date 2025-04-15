@@ -13,8 +13,8 @@ import static me.colingrimes.midnight.config.option.OptionFactory.keys;
 @Configuration("upgrades.yml")
 public interface Upgrades {
 
-	Option<Map<String, UpgradeData>> COMPOSITION = keys("composition", UpgradeData::of);
-	Option<Map<String, UpgradeData>> RESET_COOLDOWN = keys("reset-cooldown", UpgradeData::of);
+	Option<Map<String, UpgradeData>> COMPOSITION = keys("composition", (section) -> UpgradeData.of(UpgradeType.Composition, section));
+	Option<Map<String, UpgradeData>> RESET_COOLDOWN = keys("reset-cooldown", (section) -> UpgradeData.of(UpgradeType.ResetCooldown, section));
 
 	/**
 	 * Gets the {@link UpgradeData} for the specified type and identifier.

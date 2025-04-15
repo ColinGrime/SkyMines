@@ -1,6 +1,7 @@
 package me.colingrimes.skymines.skymine.upgrade.data;
 
 import me.colingrimes.midnight.config.util.Configs;
+import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
@@ -21,16 +22,15 @@ public abstract class UpgradeData {
 	 * The data will also be validated corresponding to the upgrade type to ensure the
 	 * upgrade data can be used properly. It will return {@code null} if it's invalid.
 	 *
+	 * @param type the upgrade type
 	 * @param section the configuration section
-	 * @param key the key
 	 * @return the upgrade data or null if invalid
 	 */
 	@Nullable
-	public static UpgradeData of(@Nonnull ConfigurationSection section, @Nonnull String key) {
-		return switch (key) {
-			case "composition" -> CompositionData.of(section);
-			case "reset-cooldown" -> ResetCooldownData.of(section);
-			default -> null;
+	public static UpgradeData of(@Nonnull UpgradeType type, @Nonnull ConfigurationSection section) {
+		return switch (type) {
+			case Composition -> CompositionData.of(section);
+			case ResetCooldown -> ResetCooldownData.of(section);
 		};
 	}
 
