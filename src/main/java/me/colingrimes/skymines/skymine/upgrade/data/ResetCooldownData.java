@@ -8,6 +8,7 @@ import me.colingrimes.skymines.config.Menus;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +17,28 @@ import java.util.Map;
 public class ResetCooldownData extends UpgradeData {
 
 	private final Map<Integer, Duration> resetCooldown;
-	private Boolean valid = null;
 
-	public ResetCooldownData(@Nonnull ConfigurationSection section) {
-		super(section);
-		this.resetCooldown = Configs.mapIntegerKeys(section, sec -> Parser.parseDuration(sec.getString("upgrade")));
-	}
-
-	@Override
-	public boolean isValid() {
-		if (valid != null) {
-			return valid;
-		}
-
-		for (int i=1; i<=Math.max(1, getMaxLevel()); i++) {
-			if (!resetCooldown.containsKey(i) || resetCooldown.get(i) == null) {
-				valid = false;
-				return false;
+	/**
+	 * Constructs the {@link ResetCooldownData} with the given configuration section.
+	 * It will also validate the given data and will return {@code null} if it's invalid.
+	 *
+	 * @param section the configuration section
+	 * @return the reset cooldown data or null if invalid
+	 */
+	@Nullable
+	public static ResetCooldownData of(@Nonnull ConfigurationSection section) {
+		ResetCooldownData data = new ResetCooldownData(section);
+		for (int i=1; i<=Math.max(1, data.getMaxLevel()); i++) {
+			if (!data.resetCooldown.containsKey(i) || data.resetCooldown.get(i) == null) {
+				return null;
 			}
 		}
+		return data;
+	}
 
-		valid = true;
-		return true;
+	private ResetCooldownData(@Nonnull ConfigurationSection section) {
+		super(section);
+		this.resetCooldown = Configs.mapIntegerKeys(section, sec -> Parser.parseDuration(sec.getString("upgrade")));
 	}
 
 	@Nonnull

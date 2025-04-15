@@ -42,7 +42,7 @@ public interface Mines {
 			Map<UpgradeType, UpgradeData> upgrades = new HashMap<>();
 			for (UpgradeType type : UpgradeType.values()) {
 				UpgradeData upgradeData = Upgrades.getUpgradeData(type, section.getString("upgrades." + type.getPath()));
-				if (upgradeData != null && upgradeData.isValid()) {
+				if (upgradeData != null) {
 					upgrades.put(type, upgradeData);
 				} else {
 					// Don't load in mines without valid upgrade data.

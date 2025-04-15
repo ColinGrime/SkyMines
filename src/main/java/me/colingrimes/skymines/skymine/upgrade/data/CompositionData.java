@@ -11,34 +11,35 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CompositionData extends UpgradeData {
 
 	private final Map<Integer, Level> levels;
-	private Boolean valid = null;
 
-	public CompositionData(@Nonnull ConfigurationSection section) {
-		super(section);
-		this.levels = Configs.mapIntegerKeys(section, Level::new);
-	}
-
-	@Override
-	public boolean isValid() {
-		if (valid != null) {
-			return valid;
-		}
-
-		for (int i=1; i<=Math.max(1, getMaxLevel()); i++) {
-			if (!levels.containsKey(i) || levels.get(i).materialPercentages.isEmpty()) {
-				valid = false;
-				return false;
+	/**
+	 * Constructs the {@link CompositionData} with the given configuration section.
+	 * It will also validate the given data and will return {@code null} if it's invalid.
+	 *
+	 * @param section the configuration section
+	 * @return the composition data or null if invalid
+	 */
+	@Nullable
+	public static CompositionData of(@Nonnull ConfigurationSection section) {
+		CompositionData data = new CompositionData(section);
+		for (int i=1; i<=Math.max(1, data.getMaxLevel()); i++) {
+			if (!data.levels.containsKey(i) || data.levels.get(i).materialPercentages.isEmpty()) {
+				return null;
 			}
 		}
+		return data;
+	}
 
-		valid = true;
-		return true;
+	private CompositionData(@Nonnull ConfigurationSection section) {
+		super(section);
+		this.levels = Configs.mapIntegerKeys(section, Level::new);
 	}
 
 	@Nonnull

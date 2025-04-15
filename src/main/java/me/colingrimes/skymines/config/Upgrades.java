@@ -3,8 +3,6 @@ package me.colingrimes.skymines.config;
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
-import me.colingrimes.skymines.skymine.upgrade.data.CompositionData;
-import me.colingrimes.skymines.skymine.upgrade.data.ResetCooldownData;
 import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
 
 import javax.annotation.Nullable;
@@ -15,8 +13,8 @@ import static me.colingrimes.midnight.config.option.OptionFactory.keys;
 @Configuration("upgrades.yml")
 public interface Upgrades {
 
-	Option<Map<String, CompositionData>> COMPOSITION = keys("composition", CompositionData::new);
-	Option<Map<String, ResetCooldownData>> RESET_COOLDOWN = keys("reset-cooldown", ResetCooldownData::new);
+	Option<Map<String, UpgradeData>> COMPOSITION = keys("composition", UpgradeData::of);
+	Option<Map<String, UpgradeData>> RESET_COOLDOWN = keys("reset-cooldown", UpgradeData::of);
 
 	/**
 	 * Gets the {@link UpgradeData} for the specified type and identifier.
