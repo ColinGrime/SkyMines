@@ -24,7 +24,11 @@ public class SkyMineAdminList implements Command<SkyMines> {
 				skyMines.add("&c" + identifier);
 			}
 		}
-		Messages.ADMIN_GENERAL_SKYMINE_LIST.replace("{skymines}", String.join("&f, ", skyMines)).send(sender);
+
+		Messages.ADMIN_GENERAL_SKYMINE_LIST
+				.replace("{amount}", Mines.MINES.get().size())
+				.replace("{skymines}", String.join("&f, ", skyMines))
+				.send(sender);
 	}
 
 	@Override

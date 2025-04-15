@@ -90,10 +90,7 @@ public interface Messages {
 	/**************************************************
 	 *                  Admin Messages                *
 	 **************************************************/
-	Message<?> ADMIN_GENERAL_SKYMINE_LIST = message("admin.general.skymine-list",
-			"&6Loaded SkyMines:",
-			"&8- {skymines}"
-	);
+	Message<?> ADMIN_GENERAL_SKYMINE_LIST = message("admin.general.skymine-list", "&6Loaded SkyMines &7(&f{amount}&7): {skymines}");
 	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_TOP       = message("admin.general.skymine-lookup.top", "&8&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &cList &8&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_REPEATING = message("admin.general.skymine-lookup.repeating", "&7→ [#{id}] &eLocated in '&a{world}&e' &eworld. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
 	Message<?> ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM    = message("admin.general.skymine-lookup.bottom");
@@ -124,11 +121,11 @@ public interface Messages {
 	Message<?> ADMIN_FAILURE_MISC_NO_PLAYER_FOUND  = message("admin.failure.misc.no-player-found", "&4&l❌ &cThe player &e{player} &cdoes not exist.");
 	Message<?> ADMIN_USAGE_SKYMINE = message("admin.usage.skymine",
 			"&8&l&m━━━━━━━━━━━━━&7 &e&lSkyMine &cAdmin Commands &8&l&m━━━━━━━━━━━━━",
-			"&7- &c/sma list &e: &7Lists all enabled/disabled mines.",
-			"&7- &c/sma give <player> <LxHxW> <amount> <material>",
+			"&7- &c/sma give <player> <mine> <LxHxW> <amount>",
 			"&7- &c/sma lookup <player> &e: &7Lookup a player's mines.",
 			"&7- &c/sma pickup <player> <id> &e: &7Pickup a player's mines.",
 			"&7- &c/sma remove <player> <id> &e: &7Remove a player's mines.",
+			"&7- &c/sma list &e: &7Lists all enabled/disabled mines.",
 			"&7- &c/sma debug &e: &7Displays information for the selected mine.",
 			"&7- &c/sma reload &e: &7Reloads config files.",
 			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
