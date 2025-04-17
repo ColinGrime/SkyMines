@@ -133,7 +133,7 @@ public class DefaultSkyMine implements SkyMine {
 			cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
 		}
 
-		structure.buildMine(upgrades.getComposition().getComposition());
+		structure.build(upgrades.getComposition().getComposition());
 		return true;
 	}
 

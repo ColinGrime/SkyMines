@@ -73,8 +73,7 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 		// build the mine
 		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
-		structure.buildBorders();
-		structure.buildMine(upgrades.getComposition().getComposition());
+		structure.build(upgrades.getComposition().getComposition());
 
 		// creates the home of the mine
 		Location home = owner.getLocation().clone().add(0, 1, 0);

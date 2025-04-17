@@ -111,6 +111,17 @@ public class SkyMineStructure extends Region implements Serializable {
 	}
 
 	/**
+	 * Builds the entire mine structure.
+	 * This includes the inner region and the borders of the mine.
+	 *
+	 * @param material the material of the inner region
+	 */
+	public void build(@Nonnull MineMaterial material) {
+		buildMine(material);
+		buildBorders();
+	}
+
+	/**
 	 * Builds the inner region of the mine.
 	 *
 	 * @param material the material to build
