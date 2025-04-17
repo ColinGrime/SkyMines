@@ -47,7 +47,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 						UUID owner = DatabaseUtils.getUUID(type, rs, "owner");
 						SkyMineStructure structure = SkyMineStructure.deserializeOld(rs.getString("structure"));
 						SkyMineUpgrades upgrades = SkyMineUpgrades.deserializeOld(rs.getString("upgrades"));
-						Location home = Utils.parseLocation(rs.getString("home"));
+						Location home = Utils.deserializeLocation(rs.getString("home"));
 						if (uuid != null && owner != null && structure != null && home != null) {
 							SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, "default", structure, upgrades, Pose.of(home));
 							plugin.getSkyMineManager().addSkyMine(owner, skyMine);

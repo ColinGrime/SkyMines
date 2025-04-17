@@ -228,8 +228,8 @@ public class SkyMineStructure extends Region implements Serializable {
 			return null;
 		}
 
-		Location startCorner = Utils.parseLocation(texts[0]);
-		Location endCorner = Utils.parseLocation(texts[1]);
+		Location startCorner = Utils.deserializeLocation(texts[0]);
+		Location endCorner = Utils.deserializeLocation(texts[1]);
 		// Size size = Size.of(texts[2]);
 		Material borderType = Material.getMaterial(texts[3]);
 		if (startCorner == null || endCorner == null || borderType == null) {
