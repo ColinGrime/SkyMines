@@ -83,7 +83,7 @@ public class SkyMineUpgrades implements Serializable {
 
 	@Deprecated
 	@Nonnull
-	private static SkyMineUpgrades deserializeOld(@Nonnull String text) {
+	public static SkyMineUpgrades deserializeOld(@Nonnull String text) {
 		String[] texts = text.split(":");
 
 		int compositionLevel = 1;

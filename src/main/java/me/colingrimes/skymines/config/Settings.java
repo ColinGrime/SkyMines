@@ -2,7 +2,7 @@ package me.colingrimes.skymines.config;
 
 import me.colingrimes.midnight.config.annotation.Configuration;
 import me.colingrimes.midnight.config.option.Option;
-import me.colingrimes.midnight.storage.sql.DatabaseCredentials;
+import me.colingrimes.midnight.storage.database.DatabaseCredentials;
 
 import static me.colingrimes.midnight.config.option.OptionFactory.database;
 import static me.colingrimes.midnight.config.option.OptionFactory.option;

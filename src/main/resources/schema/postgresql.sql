@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS skymines_mines (
+CREATE TABLE IF NOT EXISTS skymines_mines_v2 (
     uuid       UUID  NOT NULL PRIMARY KEY,
     owner      UUID  NOT NULL,
     identifier TEXT  NOT NULL,

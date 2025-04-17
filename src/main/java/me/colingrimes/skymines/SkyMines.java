@@ -82,7 +82,9 @@ public class SkyMines extends Midnight {
 			ConnectionProvider connectionProvider = new ConnectionFactory(this).createConnection(Settings.DATABASE_CREDENTIALS.get());
 			storage = new SkyMineStorage(this, connectionProvider);
 			storage.init();
-			Timer.time(this, "Mines have been loaded", () -> storage.loadMines());
+			if (skyMineManager.getSkyMines().isEmpty()) {
+				Timer.time(this, "Mines have been loaded", () -> storage.loadMines());
+			}
 		} catch (Exception e) {
 			Logger.severe(this, "Storage has failed to initialize. Please report this to the developer:", e);
 			Common.disable(this);
