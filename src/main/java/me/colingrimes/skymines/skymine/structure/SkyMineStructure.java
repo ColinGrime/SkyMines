@@ -3,6 +3,7 @@ package me.colingrimes.skymines.skymine.structure;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.colingrimes.midnight.geometry.Position;
+import me.colingrimes.midnight.geometry.Region;
 import me.colingrimes.midnight.geometry.Size;
 import me.colingrimes.midnight.serialize.Json;
 import me.colingrimes.midnight.serialize.Serializable;
@@ -10,15 +11,13 @@ import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.misc.Validator;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
+import me.colingrimes.skymines.skymine.structure.border.BorderRegion;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterialStatic;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
-import me.colingrimes.skymines.skymine.structure.region.implementation.CuboidRegion;
-import me.colingrimes.skymines.skymine.structure.region.implementation.ParameterRegion;
 import me.colingrimes.skymines.util.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -31,63 +30,78 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SkyMineStructure implements Serializable {
+public class SkyMineStructure extends Region implements Serializable {
 
-	private final World world;
-	private final Position corner1;
-	private final Position corner2;
-	private final Size mineSize;
+	private final Region inner;
+	private final BorderRegion border;
 	private final Material borderType;
 
-	private final ParameterRegion parameter;
-	private final CuboidRegion inside;
-
-	public SkyMineStructure(@Nonnull Position corner1, @Nonnull Position corner2, @Nonnull Size mineSize, @Nonnull Material borderType) {
-		this.world = corner1.getWorld();
-		this.corner1 = corner1;
-		this.corner2 = corner2;
-		this.mineSize = mineSize;
+	public SkyMineStructure(@Nonnull Position pos1, @Nonnull Position pos2, @Nonnull Material borderType) {
+		super(pos1, pos2);
+		this.inner = Region.of(min.add(1, 1, 1), max.subtract(1, 0, 1));
+		this.border = new BorderRegion(pos1, pos2);
 		this.borderType = borderType;
-		this.parameter = new ParameterRegion(corner1, corner2);
-		this.inside = new CuboidRegion(parameter.getMin().add(1, 1, 1), parameter.getMax().subtract(1, 0, 1));
 	}
 
 	/**
-	 * Checks if the player has access to build.
-	 * Also checks if there are blocks in the way.
-	 *
-	 * @param player player to check against
-	 * @return true if player can build here and there are no blocks in the way
+	 * Checks if the player can build this structure.
+	 * <p>
+	 * This method performs a number of checks to determine whether the mine can be safely built.
+	 * It does <b>not</b> guarantee absolute validity, as it does not check every block within the region.
+	 * <p>
+	 * The following checks are performed:
+	 * <ul>
+	 *     <li>All blocks must be air or transparent blocks.</li>
+	 *     <li>15 critical points within the mine are validated for player access:
+	 *         <ul>
+	 *             <li>8 corners of the region</li>
+	 *             <li>6 face centers (center of each wall)</li>
+	 *             <li>1 center point (middle of the entire region)</li>
+	 *         </ul>
+	 *     </li>
+	 * </ul>
 	 */
-	public boolean doBlockCheck(@Nonnull Player player) {
-		if (!getBehavior().isClear(world, parameter)) {
+	public boolean canBuild(@Nonnull Player player) {
+		if (!getBehavior().canBuild(this)) {
 			return false;
 		}
 
-		// all major points around the mine
-		int x1 = corner1.getBlockX();
-		int y1 = corner1.getBlockY();
-		int z1 = corner1.getBlockZ();
-		int x2 = corner2.getBlockX();
-		int y2 = corner2.getBlockY();
-		int z2 = corner2.getBlockZ();
+		List<Position> critical = new ArrayList<>();
 
-		List<Location> locationsToCheck = new ArrayList<>();
-		locationsToCheck.add(new Location(world, x1, y1, z1));
-		locationsToCheck.add(new Location(world, x1, y1, z2));
-		locationsToCheck.add(new Location(world, x1, y2, z1));
-		locationsToCheck.add(new Location(world, x1, y2, z2));
-		locationsToCheck.add(new Location(world, x2, y1, z1));
-		locationsToCheck.add(new Location(world, x2, y1, z2));
-		locationsToCheck.add(new Location(world, x2, y2, z1));
-		locationsToCheck.add(new Location(world, x2, y2, z2));
+		int x1 = min.getBlockX(), y1 = min.getBlockY(), z1 = min.getBlockZ();
+		int x2 = max.getBlockX(), y2 = max.getBlockY(), z2 = max.getBlockZ();
+		int midX = (x1 + x2) / 2;
+		int midY = (y1 + y2) / 2;
+		int midZ = (z1 + z2) / 2;
 
-		for (Location location : locationsToCheck) {
-			Block block = location.getBlock();
+		// 8 corners
+		critical.add(Position.of(getWorld(), x1, y1, z1));
+		critical.add(Position.of(getWorld(), x1, y1, z2));
+		critical.add(Position.of(getWorld(), x1, y2, z1));
+		critical.add(Position.of(getWorld(), x1, y2, z2));
+		critical.add(Position.of(getWorld(), x2, y1, z1));
+		critical.add(Position.of(getWorld(), x2, y1, z2));
+		critical.add(Position.of(getWorld(), x2, y2, z1));
+		critical.add(Position.of(getWorld(), x2, y2, z2));
+
+		// 6 face centers
+		critical.add(Position.of(getWorld(), midX, y1, midZ));
+		critical.add(Position.of(getWorld(), midX, y2, midZ));
+		critical.add(Position.of(getWorld(), x1, midY, midZ));
+		critical.add(Position.of(getWorld(), x2, midY, midZ));
+		critical.add(Position.of(getWorld(), midX, midY, z1));
+		critical.add(Position.of(getWorld(), midX, midY, z2));
+
+		// 1 center
+		critical.add(Position.of(getWorld(), midX, midY, midZ));
+
+		// Validate for player access.
+		for (Position pos : critical) {
+			Block block = pos.toBlock();
 			BlockPlaceEvent fakeEvent = new BlockPlaceEvent(block, block.getState(), block, new ItemStack(Material.STONE), player, true, EquipmentSlot.HAND);
 			Common.call(fakeEvent);
 
-			// player can't build here
+			// Player has no permission to build here.
 			if (fakeEvent.isCancelled()) {
 				return false;
 			}
@@ -96,64 +110,93 @@ public class SkyMineStructure implements Serializable {
 		return true;
 	}
 
-	public void buildParameter() {
-		getBehavior().build(world, parameter, new MineMaterialStatic(borderType));
+	/**
+	 * Builds the inner region of the mine.
+	 *
+	 * @param material the material to build
+	 */
+	public void buildMine(@Nonnull MineMaterial material) {
+		getBehavior().build(inner, material, Settings.OPTIONS_REPLACE_BLOCKS.get());
 	}
 
-	public void buildInside(@Nonnull MineMaterial blockVariety) {
-		getBehavior().build(world, inside, blockVariety, Settings.OPTIONS_REPLACE_BLOCKS.get());
+	/**
+	 * Builds the borders of the mine.
+	 */
+	public void buildBorders() {
+		getBehavior().build(border, new MineMaterialStatic(borderType));
 	}
 
+	/**
+	 * Destroys the entire {@link SkyMineStructure} including the inner mine and the 5 borders.
+	 */
 	public void destroy() {
-		MineMaterial air = new MineMaterialStatic(Material.AIR);
-		getBehavior().build(world, parameter, air);
-		getBehavior().build(world, inside, air);
+		getBehavior().build(this, new MineMaterialStatic(Material.AIR));
 	}
 
+	/**
+	 * Gets the inner region of the mine.
+	 *
+	 * @return the inner region
+	 */
+	@Nonnull
+	public Region getInnerRegion() {
+		return inner;
+	}
+
+	/**
+	 * Gets the region that represents the 5 borders.
+	 *
+	 * @return the border region
+	 */
+	@Nonnull
+	public BorderRegion getBorderRegion() {
+		return border;
+	}
+
+	/**
+	 * Gets the border material type.
+	 *
+	 * @return the border type
+	 */
+	@Nonnull
+	public Material getBorderType() {
+		return borderType;
+	}
+
+	/**
+	 * Gets the mine size.
+	 * The mine size is equal to the size of the inner region.
+	 *
+	 * @return the mine size
+	 */
+	@Nonnull
+	public Size getMineSize() {
+		return inner.getSize();
+	}
+
+	/**
+	 * Gets the build behavior that will be used to construct the regions.
+	 *
+	 * @return the build behavior
+	 */
 	@Nonnull
 	private BuildBehavior getBehavior() {
 		return SkyMines.getInstance().getBuildbehavior();
 	}
 
 	@Nonnull
-	public Size getMineSize() {
-		return mineSize;
-	}
-
-	@Nonnull
-	public Material getBorderType() {
-		return borderType;
-	}
-
-	@Nonnull
-	public ParameterRegion getParameter() {
-		return parameter;
-	}
-
-	@Nonnull
-	public CuboidRegion getInside() {
-		return inside;
-	}
-
-	@Nonnull
 	@Override
 	public JsonElement serialize() {
-		return Json.create()
-				.add("corner1", corner1.serialize())
-				.add("corner2", corner2.serialize())
-				.add("mineSize", mineSize.serialize())
-				.add("borderType", borderType.name())
-				.build();
+		return Json.of(super.serialize()).add("borderType", borderType.name()).build();
 	}
 
 	@Nonnull
 	public static SkyMineStructure deserialize(@Nonnull JsonElement element) {
-		JsonObject object = Validator.checkJson(element, "corner1", "corner2", "mineSize", "borderType");
-		Position corner1 = Position.deserialize(object.get("corner1"));
-		Position corner2 = Position.deserialize(object.get("corner2"));
-		Size mineSize = Size.deserialize(object.get("mineSize"));
+		JsonObject object = Validator.checkJson(element, "min", "max", "borderType");
+		Position min = Position.deserialize(object.get("min"));
+		Position max = Position.deserialize(object.get("max"));
 		Material borderType = Material.getMaterial(object.get("borderType").getAsString());
-		return new SkyMineStructure(corner1, corner2, mineSize, Objects.requireNonNull(borderType));
+		return new SkyMineStructure(min, max, Objects.requireNonNull(borderType));
 	}
 
 	/**
@@ -176,12 +219,12 @@ public class SkyMineStructure implements Serializable {
 
 		Location startCorner = Utils.parseLocation(texts[0]);
 		Location endCorner = Utils.parseLocation(texts[1]);
-		Size size = Size.of(texts[2]);
+		// Size size = Size.of(texts[2]);
 		Material borderType = Material.getMaterial(texts[3]);
-		if (startCorner == null || endCorner == null || size == null || borderType == null) {
+		if (startCorner == null || endCorner == null || borderType == null) {
 			return null;
 		}
 
-		return new SkyMineStructure(Position.of(startCorner), Position.of(endCorner), size, borderType);
+		return new SkyMineStructure(Position.of(startCorner), Position.of(endCorner), borderType);
 	}
 }

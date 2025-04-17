@@ -1,35 +1,38 @@
 package me.colingrimes.skymines.skymine.structure.behavior;
 
+import me.colingrimes.midnight.geometry.Region;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
-import me.colingrimes.skymines.skymine.structure.region.Region;
-import org.bukkit.World;
 
 import javax.annotation.Nonnull;
 
 public interface BuildBehavior {
 
 	/**
-	 * Checks if the area is all air.
-	 * @param world any world
-	 * @param region any type of region
-	 * @return true if the area is clear
+	 * Checks if the area can be built on. An area can be built on if it's all air.
+	 * However, there's an additional check for transparent blocks if enabled.
+	 *
+	 * @param region the region to check
+	 * @return true if the region can be built on
 	 */
-	boolean isClear(@Nonnull World world, @Nonnull Region region);
+	boolean canBuild(@Nonnull Region region);
 
 	/**
-	 * @param world world that the region is in
-	 * @param region any type of region
-	 * @param type material type
+	 * Replaces every block in the {@link Region} with the specified {@link MineMaterial}.
+	 *
+	 * @param region the region to build
+	 * @param mineMaterial the material
 	 */
-	default void build(@Nonnull World world, @Nonnull Region region, @Nonnull MineMaterial type) {
-		build(world, region, type, true);
+	default void build(@Nonnull Region region, @Nonnull MineMaterial mineMaterial) {
+		build(region, mineMaterial, false);
 	}
 
 	/**
-	 * @param world world that the region is in
-	 * @param region any type of region
-	 * @param type material type
-	 * @param replaceBlocks true if blocks should be replaced
+	 * Replaces every block in the {@link Region} with the specified {@link MineMaterial}.
+	 * If {@code onlyAir} is true, the blocks must be air.
+	 *
+	 * @param region the region
+	 * @param material the material
+	 * @param onlyAir true if only air should be replaced
 	 */
-	void build(@Nonnull World world, @Nonnull Region region, @Nonnull MineMaterial type, boolean replaceBlocks);
+	void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean onlyAir);
 }

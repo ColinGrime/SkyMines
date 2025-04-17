@@ -73,7 +73,7 @@ public class ParameterListeners implements Listener {
 		}
 
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
-			if (skyMine.getStructure().getParameter().contains(Position.of(block.getLocation()))) {
+			if (skyMine.getStructure().getBorderRegion().contains(Position.of(block.getLocation()))) {
 				event.setCancelled(true);
 				return true;
 			}

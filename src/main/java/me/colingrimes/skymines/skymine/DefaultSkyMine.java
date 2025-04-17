@@ -114,7 +114,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public boolean setHome(@Nonnull Pose home) {
-		if (!structure.getInside().containsWithin(home.getPosition(), 5)) {
+		if (!structure.getInnerRegion().containsWithin(home.getPosition(), 5)) {
 			return false;
 		}
 
@@ -133,7 +133,7 @@ public class DefaultSkyMine implements SkyMine {
 			cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
 		}
 
-		structure.buildInside(upgrades.getComposition().getComposition());
+		structure.buildMine(upgrades.getComposition().getComposition());
 		return true;
 	}
 

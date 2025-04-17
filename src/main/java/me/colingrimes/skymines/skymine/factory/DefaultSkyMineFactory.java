@@ -64,17 +64,17 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 			corner2 = corner1.add(width, -height, length);
 
 		// creates and builds structure
-		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, size, mine.getBorderType());
+		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, mine.getBorderType());
 
 		// check for access and blocks in the way
-		if (!structure.doBlockCheck(owner)) {
+		if (!structure.canBuild(owner)) {
 			return Optional.empty();
 		}
 
 		// build the mine
 		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
-		structure.buildParameter();
-		structure.buildInside(upgrades.getComposition().getComposition());
+		structure.buildBorders();
+		structure.buildMine(upgrades.getComposition().getComposition());
 
 		// creates the home of the mine
 		Location home = owner.getLocation().clone().add(0, 1, 0);

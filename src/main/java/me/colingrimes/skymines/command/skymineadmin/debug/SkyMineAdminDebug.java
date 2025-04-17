@@ -33,7 +33,7 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		Position position = Position.of(result.getHitBlock().getLocation());
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
 			SkyMineStructure structure = skyMine.getStructure();
-			if (structure.getParameter().contains(position) || structure.getInside().contains(position)) {
+			if (structure.contains(position)) {
 				boolean enabled = skyMine.isEnabled();
 				JsonObject upgradeJson = (JsonObject) skyMine.getUpgrades().serialize();
 				upgradeJson.remove("identifier");

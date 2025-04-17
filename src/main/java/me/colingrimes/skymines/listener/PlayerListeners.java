@@ -113,7 +113,7 @@ public class PlayerListeners implements Listener {
 
 		// Check specific player's mine.
 		for (SkyMine skyMine : manager.getSkyMines(player)) {
-			if (!skyMine.getStructure().getParameter().contains(Position.of(event.getLocation()))) {
+			if (!skyMine.getStructure().getBorderRegion().contains(Position.of(event.getLocation()))) {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
@@ -132,7 +132,7 @@ public class PlayerListeners implements Listener {
 
 		// Admins Only -- access to all mines.
 		for (SkyMine skyMine : manager.getSkyMines()) {
-			if (!skyMine.getStructure().getParameter().contains(Position.of(event.getLocation()))) {
+			if (!skyMine.getStructure().getBorderRegion().contains(Position.of(event.getLocation()))) {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
@@ -159,7 +159,7 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onPlayerBlockBreak(@Nonnull BlockBreakEvent event) {
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
-			if (skyMine.getStructure().getInside().contains(Position.of(event.getBlock().getLocation()))) {
+			if (skyMine.getStructure().getInnerRegion().contains(Position.of(event.getBlock().getLocation()))) {
 				Common.call(new SkyMineBlockBreakEvent(event, skyMine));
 				return;
 			}
