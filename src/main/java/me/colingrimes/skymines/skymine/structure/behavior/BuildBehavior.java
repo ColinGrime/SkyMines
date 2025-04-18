@@ -23,16 +23,16 @@ public interface BuildBehavior {
 	 * @param mineMaterial the material
 	 */
 	default void build(@Nonnull Region region, @Nonnull MineMaterial mineMaterial) {
-		build(region, mineMaterial, false);
+		build(region, mineMaterial, true);
 	}
 
 	/**
 	 * Replaces every block in the {@link Region} with the specified {@link MineMaterial}.
-	 * If {@code onlyAir} is true, the blocks must be air.
+	 * If {@code replaceBlocks} is false, the blocks must be air.
 	 *
 	 * @param region the region
 	 * @param material the material
-	 * @param onlyAir true if only air should be replaced
+	 * @param replaceBlocks true if only air should be replaced
 	 */
-	void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean onlyAir);
+	void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks);
 }

@@ -29,11 +29,11 @@ public class DefaultBuildBehavior implements BuildBehavior {
 	}
 
 	@Override
-	public void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean onlyAir) {
+	public void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks) {
 		BuildTask buildTask = new BuildTask();
 		region.handler((x, y, z) -> {
 			Block block = region.getWorld().getBlockAt(x, y, z);
-			if (!onlyAir || block.getType() == Material.AIR) {
+			if (replaceBlocks || block.getType() == Material.AIR) {
 				buildTask.getBlocksToPlace().add(new DeferredBlock(block, material.get()));
 			}
 		});
