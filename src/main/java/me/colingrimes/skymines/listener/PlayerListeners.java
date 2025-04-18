@@ -108,6 +108,12 @@ public class PlayerListeners implements Listener {
 
 	@EventHandler
 	public void onPlayerInteractBlock(@Nonnull PlayerInteractBlockEvent event) {
+		// Ignore SHIFT-RIGHT-CLICK (they can still place blocks on the mine border).
+		// Ignore regular LEFT-CLICK (quick action is SHIFT-LEFT-CLICK only).
+		if (event.isShiftRightClick() || (event.isLeftClick() && !event.isShiftLeftClick())) {
+			return;
+		}
+
 		SkyMineManager manager = plugin.getSkyMineManager();
 		Player player = event.getPlayer();
 
