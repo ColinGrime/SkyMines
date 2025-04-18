@@ -17,6 +17,7 @@ import me.colingrimes.skymines.skymine.token.SkyMineToken;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -36,7 +37,7 @@ public class PlayerListeners implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(@Nonnull PlayerInteractEvent event) {
-		if (event.getHand() == EquipmentSlot.OFF_HAND || !event.getAction().name().contains("RIGHT_CLICK")) {
+		if (event.getHand() == EquipmentSlot.OFF_HAND || event.getAction() != Action.RIGHT_CLICK_AIR) {
 			return;
 		}
 
