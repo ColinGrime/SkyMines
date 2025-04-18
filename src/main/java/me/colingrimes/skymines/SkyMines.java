@@ -5,7 +5,7 @@ import me.colingrimes.midnight.storage.sql.connection.ConnectionFactory;
 import me.colingrimes.midnight.storage.sql.connection.ConnectionProvider;
 import me.colingrimes.midnight.update.UpdateCheckerSpigot;
 import me.colingrimes.skymines.config.Settings;
-import me.colingrimes.skymines.listener.ParameterListeners;
+import me.colingrimes.skymines.listener.BorderProtection;
 import me.colingrimes.skymines.listener.PlayerListeners;
 import me.colingrimes.skymines.listener.SkyMineListeners;
 import me.colingrimes.skymines.skymine.factory.DefaultSkyMineFactory;
@@ -71,7 +71,7 @@ public class SkyMines extends Midnight {
 	protected void registerListeners(@Nonnull List<Listener> listeners) {
 		listeners.add(new PlayerListeners(this));
 		listeners.add(new SkyMineListeners());
-		listeners.add(new ParameterListeners(this));
+		listeners.add(new BorderProtection(this));
 	}
 
 	/**
