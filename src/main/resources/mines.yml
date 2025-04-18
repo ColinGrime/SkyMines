@@ -29,18 +29,18 @@ mines:
     upgrades:
       composition: default
       reset-cooldown: default
-  # This one would be /sma give <player> big-mine.
-  big-mine:
+  # This one would be /sma give <player> vip-mine.
+  vip-mine:
     token:
-      type: TRIPWIRE_HOOK
-      name: "&e&lBig Mine {size}"
+      type: OMINOUS_TRIAL_KEY
+      name: "&a&lV&b&lI&c&lP &e&lMine {size}"
       lore:
-        - "&7Right Click → &ePlaces Structure"
+        - "&7Right Click → &ePlaces VIP Mine"
     default-size: [20, 20, 20]
-    border-type: BEDROCK
+    border-type: NETHERITE_BLOCK
     upgrades:
-      composition: default
-      reset-cooldown: default
+      composition: vip-composition
+      reset-cooldown: vip-reset
 
 #┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
 #┃ TECHNICAL NOTE:                                                                          ┃

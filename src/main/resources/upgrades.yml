@@ -52,6 +52,25 @@ composition:
         - LAPIS_ORE 10%
         - DIAMOND_ORE 5%
         - EMERALD_ORE 5%
+  vip-composition:
+    1:
+      upgrade:
+        - IRON_ORE 25%
+        - GOLD_ORE 25%
+        - DIAMOND_ORE 25%
+        - EMERALD_ORE 25%
+    2:
+      upgrade:
+        - GOLD_ORE 33%
+        - DIAMOND_ORE 33%
+        - EMERALD_ORE 33%
+      cost: 1000000
+    3:
+      upgrade:
+        - DIAMOND_BLOCK 33%
+        - EMERALD_BLOCK 33%
+        - ANCIENT_DEBRIS 33%
+      cost: 10000000
 
 # Decrease the cooldown until a mine can be reset.
 reset-cooldown:
@@ -68,3 +87,6 @@ reset-cooldown:
     4:
       cost: 150000
       upgrade: 30 seconds
+  vip-reset:
+    1:
+      upgrade: 0 seconds
