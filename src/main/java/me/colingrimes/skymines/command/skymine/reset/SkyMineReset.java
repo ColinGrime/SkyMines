@@ -42,7 +42,7 @@ public class SkyMineReset implements Command<SkyMines> {
 		}
 
 		Messages.SUCCESS_RESET.send(sender);
-		if (Settings.OPTIONS_TELEPORT_HOME_ON_RESET.get()) {
+		if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
 			sender.player().teleport(skyMine.getHome().toLocation());
 		}
 	}

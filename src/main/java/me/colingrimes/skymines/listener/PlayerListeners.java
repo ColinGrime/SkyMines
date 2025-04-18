@@ -25,7 +25,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.time.Duration;
 
 public class PlayerListeners implements Listener {
 
@@ -69,7 +68,7 @@ public class PlayerListeners implements Listener {
 		}
 
 		// Check: max skymines.
-		if (manager.getSkyMines(player).size() >= Settings.OPTIONS_MAX_PER_PLAYER.get()) {
+		if (manager.getSkyMines(player).size() >= Settings.OPTION_SKYMINE_MAX_PER_PLAYER.get()) {
 			Messages.FAILURE_SKYMINE_MAX_OWNED.send(player);
 			return;
 		}
@@ -82,22 +81,7 @@ public class PlayerListeners implements Listener {
 			return;
 		}
 
-		// Check: cooldown when you place down a skymine.
-		//
-		// TODO this was originally made to prevent lag from spamming skymine placement,
-		//  but it's only per-player and who's really going to have that many large skymines at once?
-		//  Build task needs to be updated anyways to evenly spread out build over ticks,
-		//  once that's complete + profiled over many large structures, consider deprecating this.
-		//
-		if (plugin.getCooldownManager().getPlacementCooldown().onCooldown(player)) {
-			Messages.FAILURE_COOLDOWN_PLACEMENT
-						.replace("{time}", Text.format(plugin.getCooldownManager().getPlacementCooldown().getTimeLeft(player)))
-					.send(player);
-			return;
-		}
-
 		if (manager.createSkyMine(player, item)) {
-			plugin.getCooldownManager().getPlacementCooldown().add(player, Duration.ofSeconds(Settings.OPTIONS_PLACEMENT_COOLDOWN.get()));
 			Inventories.removeSingle(player.getInventory(), item);
 			Messages.SUCCESS_PLACE.send(player);
 			event.setCancelled(true);
@@ -124,7 +108,7 @@ public class PlayerListeners implements Listener {
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
 				event.setCancelled(true);
-			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
+			} else if (player.isSneaking() && Settings.OPTION_SKYMINE_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome().toLocation());
 				Messages.SUCCESS_HOME.send(player);
 				event.setCancelled(true);
@@ -144,7 +128,7 @@ public class PlayerListeners implements Listener {
 				new MainMenu(plugin, player, skyMine).open();
 				Messages.ADMIN_SUCCESS_PANEL.replace("{player}", Players.getName(skyMine.getOwner())).send(player);
 				event.setCancelled(true);
-			} else if (player.isSneaking() && Settings.OPTIONS_FAST_HOME.get()) {
+			} else if (player.isSneaking() && Settings.OPTION_SKYMINE_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome().toLocation());
 				Messages.SUCCESS_HOME.send(player);
 				event.setCancelled(true);
@@ -174,7 +158,7 @@ public class PlayerListeners implements Listener {
 
 	@EventHandler
 	public void onPlayerDropItem(@Nonnull PlayerDropItemEvent event) {
-		if (!Settings.OPTIONS_PREVENT_TOKEN_DROP.get()) {
+		if (!Settings.OPTION_TOKEN_PREVENT_DROP.get()) {
 			return;
 		}
 

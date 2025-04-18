@@ -1,39 +1,43 @@
-# Save your skymines:
-save:
-  # Options: PostgreSQL, MySQL, SQLite
-  type: SQLite
+# Storage options to save the skymines.
+storage:
+  type: SQLite # Options: PostgreSQL, MySQL, SQLite
   host: "localhost"
   port: 3306
   database: "minecraft"
   username: "root"
   password: ""
 
-# Various options for skymines:
-options:
-  # Maximum amount of skymines per player.
-  max-per-player: 10
-  # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
-  replace-blocks: false
-  # Should the owner of the mine be teleported to the mine's home on reset?
-  teleport-home-on-reset: true
-  # Should the mine be reset when you upgrade it?
-  reset-on-upgrade: true
-  # Should the owner of the mine be notified when it can be reset again?
-  notify-on-reset-cooldown-finish: true
-  # Should a player be notified when they can place skymines again? (see pickup-cooldown below)
-  notify-on-pickup-cooldown-finish: true
-  # Cooldown (in seconds) players have to wait if they picked up a skymine.
-  # Additional option: 'dynamic' - the cooldown to place it back down would be the current time left to reset the mine.
-  pickup-cooldown: dynamic
-  # Cooldown (in seconds) players have to wait to attempt skymine placement again (for performance reasons).
-  placement-cooldown: 10
-  # If true, players can no longer drop their skymine token.
-  prevent-token-drop: true
-  # If true, skymines can be placed over transparent blocks (grass, flowers, etc.)
-  # This does not include chests.
-  override-transparent-blocks: true
-  # If true, players can shift-left-click the mine border to instantly teleport to its home.
-  fast-home: true
+# Various options to change the different behaviors of the plugin.
+option:
+  skymine:
+    # Maximum amount of skymines per player.
+    max-per-player: 10
+    # If true, skymines can be placed over transparent blocks (grass, flowers, etc.)
+    # This does not include chests.
+    override-transparent-blocks: true
+    # If true, players can shift-left-click their mine border to instantly teleport to its home.
+    fast-home: true
+    # If true, skymine creation ignores physics, allowing them to be created much faster.
+    # If you are having any problems with physics/lighting due to skymines, feel free to disable this.
+    ignore-physics: true
+  token:
+    # If true, players can no longer drop their skymine token.
+    prevent-drop: true
+  reset:
+    # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
+    replace-blocks: false
+    # Should the owner of the mine be teleported to the mine's home on reset?
+    teleport-home: true
+    # Should the mine be reset when you upgrade it?
+    on-upgrade: true
+  cooldown:
+    # Cooldown (in seconds) players have to wait if they picked up a skymine.
+    # Additional option: 'dynamic' - the cooldown to place it back down would be the current time left to reset the mine.
+    pickup-cooldown: dynamic
+    # Should the owner of the mine be notified when it can be reset again?
+    notify-on-reset-finish: true
+    # Should a player be notified when they can place skymines again? (see pickup-cooldown above)
+    notify-on-pickup-finish: true
 
 misc:
   # Allows us to collect anonymous data about the plugin.

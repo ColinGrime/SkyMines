@@ -127,7 +127,7 @@ public class SkyMineStructure extends Region implements Serializable {
 	 * @param material the material to build
 	 */
 	public void buildMine(@Nonnull MineMaterial material) {
-		getBehavior().build(inner, material, Settings.OPTIONS_REPLACE_BLOCKS.get());
+		getBehavior().build(inner, material, Settings.OPTION_RESET_REPLACE_BLOCKS.get());
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class SkyMineStructure extends Region implements Serializable {
 	}
 
 	/**
-	 * Gets the region that represents the 5 borders.
+	 * Gets the region that represents the 5 borders of the mine.
 	 *
 	 * @return the border region
 	 */

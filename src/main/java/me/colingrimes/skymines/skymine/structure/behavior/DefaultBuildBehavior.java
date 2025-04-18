@@ -21,7 +21,7 @@ public class DefaultBuildBehavior implements BuildBehavior {
 				return true;
 			}
 
-			boolean tryOverride = Settings.OPTIONS_OVERRIDE_TRANSPARENT_BLOCKS.get();
+			boolean tryOverride = Settings.OPTION_SKYMINE_OVERRIDE_TRANSPARENT_BLOCKS.get();
 
 			// checks for transparent blocks
 			return tryOverride && !type.isOccluding() && !type.name().endsWith("CHEST");

@@ -150,8 +150,8 @@ public class DefaultSkyMine implements SkyMine {
 
 		// Calculate pickup cooldown.
 		int pickupCooldown;
-		if (Types.isInteger(Settings.OPTIONS_PICKUP_COOLDOWN.get())) {
-			pickupCooldown = Integer.parseInt(Settings.OPTIONS_PICKUP_COOLDOWN.get());
+		if (Types.isInteger(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get())) {
+			pickupCooldown = Integer.parseInt(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get());
 		} else {
 			pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
 		}
@@ -163,7 +163,7 @@ public class DefaultSkyMine implements SkyMine {
 
 		// Add the pickup cooldown to the player.
 		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
-			if (Settings.OPTIONS_NOTIFY_ON_PICKUP_COOLDOWN_FINISH.get()) {
+			if (Settings.OPTION_COOLDOWN_NOTIFY_ON_PICKUP_FINISH.get()) {
 				Messages.GENERAL_COOLDOWN_PICKUP_FINISH.send(player);
 			}
 		});

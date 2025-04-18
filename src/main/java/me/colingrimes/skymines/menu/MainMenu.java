@@ -89,7 +89,7 @@ public class MainMenu extends Gui {
 				}
 
 				Messages.ADMIN_SUCCESS_RESET.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
-				if (Settings.OPTIONS_TELEPORT_HOME_ON_RESET.get()) {
+				if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
 					getPlayer().teleport(skyMine.getHome().toLocation());
 				}
 			}
