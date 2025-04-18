@@ -121,7 +121,7 @@ admin:
       - "&7- &c/sma reload &e: &7Reloads config files."
       - "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     skymine-give:
-      - "&eUsage: &c/sma give <player> <LxHxW> <amount> <material>"
+      - "&eUsage: &c/sma give <player> <mine> <LxHxW> <amount>"
       - "&c► &7Gives the player mine tokens with the size and border."
     skymine-lookup:
       - "&eUsage: &c/sma lookup <player>"

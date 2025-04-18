@@ -131,7 +131,7 @@ public interface Messages {
 			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
 	Message<?> ADMIN_USAGE_SKYMINE_GIVE = message("admin.usage.skymine-give",
-			"&eUsage: &c/sma give <player> <LxHxW> <amount> <material>",
+			"&eUsage: &c/sma give <player> <mine> <LxHxW> <amount>",
 			"&c► &7Gives the player mine tokens with the size and border."
 	);
 	Message<?> ADMIN_USAGE_SKYMINE_LOOKUP = message("admin.usage.skymine-lookup",
