@@ -31,7 +31,7 @@ main-menu:
         - "&7On Click → &eReset the Mine"
       command: RESET
     15:
-      type: BUDDING_AMETHYST
+      type: ANVIL
       name: "&aSkyMine Upgrades"
       lore:
         - "&7On Click → &eOpen the Mine's Upgrades"
