@@ -1,7 +1,7 @@
 package me.colingrimes.skymines.skymine.upgrade.type;
 
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
-import me.colingrimes.skymines.skymine.upgrade.data.ResetCooldownData;
+import me.colingrimes.skymines.data.upgrade.UpgradeDataResetCooldown;
 
 import javax.annotation.Nonnull;
 import java.time.Duration;
@@ -14,6 +14,6 @@ public class ResetCooldownUpgrade extends SkyMineUpgrade {
 
 	@Nonnull
 	public Duration getResetCooldown() {
-		return ((ResetCooldownData) getUpgradeData()).getResetCooldown(level);
+		return ((UpgradeDataResetCooldown) getUpgradeData()).getResetCooldown(level);
 	}
 }

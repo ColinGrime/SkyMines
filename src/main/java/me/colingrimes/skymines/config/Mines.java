@@ -6,7 +6,7 @@ import me.colingrimes.midnight.geometry.Size;
 import me.colingrimes.midnight.util.bukkit.Items;
 import me.colingrimes.midnight.util.io.Logger;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
-import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
+import me.colingrimes.skymines.data.UpgradeData;
 import me.colingrimes.skymines.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

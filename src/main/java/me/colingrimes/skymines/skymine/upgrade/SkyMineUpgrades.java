@@ -34,12 +34,12 @@ public class SkyMineUpgrades implements Serializable {
 	/**
 	 * Gets the upgrade instance associated with the specified upgrade type.
 	 *
-	 * @param upgradeType the upgrade type
+	 * @param type the upgrade type
 	 * @return the upgrade associated with the upgrade type
 	 */
 	@Nonnull
-	public SkyMineUpgrade getUpgrade(UpgradeType upgradeType) {
-		return switch (upgradeType) {
+	public SkyMineUpgrade getUpgrade(UpgradeType type) {
+		return switch (type) {
 			case Composition -> composition;
 			case ResetCooldown -> resetCooldown;
 		};

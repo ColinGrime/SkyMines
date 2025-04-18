@@ -4,7 +4,7 @@ import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.midnight.util.Common;
-import me.colingrimes.skymines.skymine.upgrade.data.UpgradeData;
+import me.colingrimes.skymines.data.UpgradeData;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;

@@ -1,6 +1,8 @@
-package me.colingrimes.skymines.skymine.upgrade.data;
+package me.colingrimes.skymines.data;
 
 import me.colingrimes.midnight.config.util.Configs;
+import me.colingrimes.skymines.data.upgrade.UpgradeDataComposition;
+import me.colingrimes.skymines.data.upgrade.UpgradeDataResetCooldown;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -15,9 +17,9 @@ public abstract class UpgradeData {
 	private final Map<Integer, Double> costs;
 
 	/**
-	 * Constructs the {@link UpgradeData} with the given configuration section and key.
-	 * It will generate a {@link CompositionData} object if the key is {@code composition}
-	 * or a {@link ResetCooldownData} object if the key is {@code reset-cooldown}.
+	 * Constructs the {@link UpgradeData} with the given type and configuration section.
+	 * It will generate a {@link UpgradeDataComposition} object if the type is {@code Composition}
+	 * or a {@link UpgradeDataResetCooldown} object if the type is {@code ResetCooldown}.
 	 * <p>
 	 * The data will also be validated corresponding to the upgrade type to ensure the
 	 * upgrade data can be used properly. It will return {@code null} if it's invalid.
@@ -29,12 +31,12 @@ public abstract class UpgradeData {
 	@Nullable
 	public static UpgradeData of(@Nonnull UpgradeType type, @Nonnull ConfigurationSection section) {
 		return switch (type) {
-			case Composition -> CompositionData.of(section);
-			case ResetCooldown -> ResetCooldownData.of(section);
+			case Composition -> UpgradeDataComposition.of(section);
+			case ResetCooldown -> UpgradeDataResetCooldown.of(section);
 		};
 	}
 
-	UpgradeData(@Nonnull ConfigurationSection section) {
+	protected UpgradeData(@Nonnull ConfigurationSection section) {
 		this.maxLevel = section.getKeys(false).size();
 		this.costs = Configs.mapIntegerKeys(section, sec -> sec.getDouble("cost"));
 	}

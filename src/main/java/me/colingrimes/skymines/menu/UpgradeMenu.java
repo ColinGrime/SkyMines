@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
 
 public class UpgradeMenu extends Gui {
 
@@ -31,29 +30,22 @@ public class UpgradeMenu extends Gui {
 		Menus.UPGRADE_MENU.get().getItems().forEach((i, item) -> getSlot(i).setItem(item));
 
 		// Setup upgrade slots.
-		Menus.UPGRADE_MENU_SLOTS.get().entrySet().stream()
-				.filter(e -> e.getValue() == UpgradeType.Composition)
-				.map(Map.Entry::getKey)
-				.forEach(slot -> getSlot(slot).setItem(Menus.UPGRADE_MENU_COMPOSITION.get().getMenuItem(skyMine)).bind(ClickType.LEFT, e -> {
-					attemptUpgrade(getPlayer(), upgrades.getUpgrade(UpgradeType.Composition));
-					close();
-				}));
-		Menus.UPGRADE_MENU_SLOTS.get().entrySet().stream()
-				.filter(e -> e.getValue() == UpgradeType.ResetCooldown)
-				.map(Map.Entry::getKey)
-				.forEach(slot -> getSlot(slot).setItem(Menus.UPGRADE_MENU_RESET_COOLDOWN.get().getMenuItem(skyMine)).bind(ClickType.LEFT, e -> {
-					attemptUpgrade(getPlayer(), upgrades.getUpgrade(UpgradeType.ResetCooldown));
-					close();
-				}));
+		for (var upgradeSlot : Menus.UPGRADE_MENU_SLOTS.get().entrySet()) {
+			getSlot(upgradeSlot.getKey()).setItem(Menus.getMenuData(upgradeSlot.getValue()).getMenuItem(skyMine)).bind(ClickType.LEFT, e -> {
+				attemptUpgrade(upgradeSlot.getValue());
+				close();
+			});
+		}
 	}
 
 	/**
-	 * Attempts to upgrade the specified skymine upgrade.
+	 * Attempts to upgrade the specified upgrade type.
 	 *
-	 * @param player the player
-	 * @param upgrade the upgrade
+	 * @param type the ugprade type
 	 */
-	private void attemptUpgrade(@Nonnull Player player, @Nonnull SkyMineUpgrade upgrade) {
+	private void attemptUpgrade(@Nonnull UpgradeType type) {
+		Player player = getPlayer();
+		SkyMineUpgrade upgrade = upgrades.getUpgrade(type);
 		if (!upgrade.canBeUpgraded()) {
 			Messages.FAILURE_SKYMINE_UPGRADE_MAXED.send(player);
 		} else if (!upgrade.hasPermission(player)) {

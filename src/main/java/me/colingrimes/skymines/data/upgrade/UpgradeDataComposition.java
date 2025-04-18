@@ -1,10 +1,11 @@
-package me.colingrimes.skymines.skymine.upgrade.data;
+package me.colingrimes.skymines.data.upgrade;
 
 import me.colingrimes.midnight.config.util.Configs;
 import me.colingrimes.midnight.message.Placeholders;
 import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.config.Menus;
+import me.colingrimes.skymines.data.UpgradeData;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterial;
 import me.colingrimes.skymines.skymine.structure.material.MineMaterialDynamic;
 import org.bukkit.Material;
@@ -15,20 +16,20 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CompositionData extends UpgradeData {
+public class UpgradeDataComposition extends UpgradeData {
 
 	private final Map<Integer, Level> levels;
 
 	/**
-	 * Constructs the {@link CompositionData} with the given configuration section.
+	 * Constructs the {@link UpgradeDataComposition} with the given configuration section.
 	 * It will also validate the given data and will return {@code null} if it's invalid.
 	 *
 	 * @param section the configuration section
 	 * @return the composition data or null if invalid
 	 */
 	@Nullable
-	public static CompositionData of(@Nonnull ConfigurationSection section) {
-		CompositionData data = new CompositionData(section);
+	public static UpgradeDataComposition of(@Nonnull ConfigurationSection section) {
+		UpgradeDataComposition data = new UpgradeDataComposition(section);
 		for (int i=1; i<=Math.max(1, data.getMaxLevel()); i++) {
 			if (!data.levels.containsKey(i) || data.levels.get(i).materialPercentages.isEmpty()) {
 				return null;
@@ -37,7 +38,7 @@ public class CompositionData extends UpgradeData {
 		return data;
 	}
 
-	private CompositionData(@Nonnull ConfigurationSection section) {
+	private UpgradeDataComposition(@Nonnull ConfigurationSection section) {
 		super(section);
 		this.levels = Configs.mapIntegerKeys(section, Level::new);
 	}
