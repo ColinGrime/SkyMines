@@ -15,6 +15,7 @@ public interface Settings {
 	Option<Integer> OPTION_SKYMINE_MAX_PER_PLAYER              = option("option.skymine.max-per-player", 10);
 	Option<Boolean> OPTION_SKYMINE_OVERRIDE_TRANSPARENT_BLOCKS = option("option.skymine.override-transparent-blocks", true);
 	Option<Boolean> OPTION_SKYMINE_FAST_HOME                   = option("option.skymine.fast-home", true);
+	Option<Integer> OPTION_SKYMINE_SETHOME_DISTANCE            = option("option.skymine.sethome-distance", 5);
 	Option<Boolean> OPTION_SKYMINE_IGNORE_PHYSICS              = option("option.skymine.ignore-physics", true);
 	Option<Boolean> OPTION_TOKEN_PREVENT_DROP                  = option("option.token.prevent-drop", true);
 	Option<Boolean> OPTION_RESET_REPLACE_BLOCKS                = option("option.reset.replace-blocks", false);

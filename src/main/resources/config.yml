@@ -17,6 +17,8 @@ option:
     override-transparent-blocks: true
     # If true, players can shift-left-click their mine border to instantly teleport to its home.
     fast-home: true
+    # Maximum amount of blocks a player can be from the skymine to set its home.
+    sethome-distance: 5
     # If true, skymine creation ignores physics, allowing them to be created much faster.
     # If you are having any problems with physics/lighting due to skymines, feel free to disable this.
     ignore-physics: true

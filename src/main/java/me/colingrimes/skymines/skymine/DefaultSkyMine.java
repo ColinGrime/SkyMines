@@ -114,7 +114,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public boolean setHome(@Nonnull Pose home) {
-		if (!structure.getInnerRegion().containsWithin(home.getPosition(), 5)) {
+		if (!structure.containsWithin(home.getPosition(), Settings.OPTION_SKYMINE_SETHOME_DISTANCE.get())) {
 			return false;
 		}
 
