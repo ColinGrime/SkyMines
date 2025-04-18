@@ -80,12 +80,15 @@ Aliases: /skyminesadmin, /skymineadmin, /sma
   * Reloads all configuration files.
 
 ## Permissions:
+Player:
 * `skymines.home` - Teleport to your mine's home.
 * `skymines.sethome` - Set your mine's home.
 
-
+Admin:
 * `skymines.admin` - Access to the `/sma` command.
+* `skymines.admin.debug` - Access to the `/sma debug` command.
 * `skymines.admin.give` - Access to the `/sma give` command.
+* `skymines.admin.list` - Access to the `/sma list` command.
 * `skymines.admin.lookup` - Access to the `/sma lookup` command.
 * `skymines.admin.panel` - All skymine panels are accessible via right-click on mine wall.
 * `skymines.admin.pickup` - Access to the `/sma pickup` command.
