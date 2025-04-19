@@ -38,7 +38,7 @@ All menus, messages, and behaviors are configurable through the YAML files liste
 * [`upgrades.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/upgrades.yml) - Allows you to define custom upgrade types to associate with mines.
 * [`config.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/config.yml) - Allows you to change the various settings associated with this plugin.
 * [`messages.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/messages.yml) - Allows you to change practically all messages used in this plugin.
-* [`menus.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/panels.yml) - Allows you to change the GUI layouts used in this plugin.
+* [`menus.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/menus.yml) - Allows you to change the GUI layouts used in this plugin.
 
 ## Commands:
 Aliases: /skymines, /skymine, /sm
