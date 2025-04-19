@@ -182,11 +182,11 @@ public class UpgradeDataComposition extends UpgradeData {
 		/**
 		 * The material percentage is different when going to the next level.
 		 */
-		CHANGE(1, "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}"),
+		CHANGE(1, "&7(&dx&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"),
 		/**
 		 * The material percentage is the same in both levels.
 		 */
-		SAME(2, "&7(&b=) &f{type} &7→ &e{percentage}%"),
+		SAME(2, "&7(&b=&7) &b{type} &7→ &e{percentage}%"),
 		/**
 		 * The material is already maxed out. There is no next level.
 		 */

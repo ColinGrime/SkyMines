@@ -70,9 +70,9 @@ upgrades:
       # The next level removes a previously existing material.
       remove: "&7(&c-&7) &c{type}"
       # The material percentage is different when going to the next level.
-      change: "&7(&d*&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"
+      change: "&7(&dx&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"
       # The material percentage is the same in both levels.
-      same: "&7(&b=) &f{type} &7→ &e{percentage}%"
+      same: "&7(&b=&7) &b{type} &7→ &e{percentage}%"
       # The material is already maxed out. There is no next level.
       max: "&7(&c✯&7) &c{type} &7→ &e{percentage}%"
   reset-cooldown:
