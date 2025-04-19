@@ -38,7 +38,7 @@ failure:
     reset: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
     pickup: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
   misc:
-    no-permission: "&4&l❌ You lack the required permission for this action."
+    no-permission: "&4&l❌ &cYou lack the required permission for this action."
 
 # Usage messages (for commands):
 usage:

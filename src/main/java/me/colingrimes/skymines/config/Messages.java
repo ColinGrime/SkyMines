@@ -45,7 +45,7 @@ public interface Messages {
 	Message<?> FAILURE_TOKEN_NO_PLACE             = message("failure.token.no-place", "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c.");
 	Message<?> FAILURE_COOLDOWN_RESET             = message("failure.cooldown.reset", "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c.");
 	Message<?> FAILURE_COOLDOWN_PICKUP            = message("failure.cooldown.pickup", "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c.");
-	Message<?> FAILURE_MISC_NO_PERMISSION         = message("failure.misc.no-permission", "&4&l❌ You lack the required permission for this action.");
+	Message<?> FAILURE_MISC_NO_PERMISSION         = message("failure.misc.no-permission", "&4&l❌ &cYou lack the required permission for this action.");
 
 	/**************************************************
 	 *                  Usage Messages                *
