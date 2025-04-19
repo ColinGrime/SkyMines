@@ -1,0 +1,67 @@
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ This file allows you to create unique mines that have its own token item,  ┃
+#┃ border type, and upgrade paths. You can even define the default mine size. ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘
+
+# Placeholder for the size of the mine.
+size-placeholder: "&7[&a{length}&7x&a{height}&7x&a{width}&7]"
+
+# The default token item to reference below.
+# This is also used if there is no defined token item for a mine.
+default-token:
+  type: TRIPWIRE_HOOK
+  name: "&e&lSkyMine Token {size}"
+  lore:
+    - "&7Right Click → &ePlaces Structure"
+
+# Here, you can create custom mines with a unique identifier.
+mines:
+  # The identifier of this mine to reference in the give command.
+  # Example: /sma give <player> default
+  default:
+    token: default
+    # The default size of the mine.
+    # If you want a different size for this mine, just do /sma give <player> default <LxHxW>
+    default-size: [10, 10, 10]
+    # The material that the mine border is made of.
+    border-type: BEDROCK
+    # Here, you can reference your upgrades from the upgrades.yml file.
+    upgrades:
+      composition: default
+      reset-cooldown: default
+  # This one would be /sma give <player> vip-mine.
+  vip-mine:
+    token:
+      type: OMINOUS_TRIAL_KEY
+      name: "&a&lV&b&lI&c&lP &e&lMine {size}"
+      lore:
+        - "&7Right Click → &ePlaces VIP Mine"
+    default-size: [20, 20, 20]
+    border-type: NETHERITE_BLOCK
+    upgrades:
+      composition: vip-composition
+      reset-cooldown: vip-reset
+
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ TECHNICAL NOTE:                                                                          ┃
+#┃                                                                                          ┃
+#┃ A "default" mine isn't strictly required. However, in the case that a player has either: ┃
+#┃   1. A token that has the "skymine" NBT tag without a "skymine-identifier" NBT tag.      ┃
+#┃   2. An already placed down mine that has no data from the "identifier" DB column.       ┃
+#┃ Then, the default mine below will be used in its place.                                  ┃
+#┃ The above cases should only happen if you are migrating from SkyMines v1.                ┃
+#┃                                                                                          ┃
+#┃ This means that the default mine will NOT be used if an invalid identifier is attached   ┃
+#┃ to a token or saved in the database. I make no assumptions that you actually wanted to   ┃
+#┃ delete an existing mine path or that a non-existing identifier was somehow saved to the  ┃
+#┃ database. In any of these cases, it doesn't make sense to permanently convert a player's ┃
+#┃ mine to the default path. Instead, a warning message will be sent to the player telling  ┃
+#┃ them that the mine identifier does not exist (the message will contain the identifier).  ┃
+#┃ In addition, the mine will be disabled and can only be picked up.                        ┃
+#┃                                                                                          ┃
+#┃ Once you add back in a valid mine above with the same identifier from the warning        ┃
+#┃ message, the token/mine will start working again. This technically means it's possible   ┃
+#┃ to disable entire mines by deleting its path, but this wasn't the intended behavior! :)  ┃
+#┃                                                                                          ┃
+#┃ Phew! Sorry for the wall of text. If you have any questions, please go to the Discord.   ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘

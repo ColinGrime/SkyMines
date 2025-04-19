@@ -1,21 +1,23 @@
 package me.colingrimes.skymines.skymine;
 
+import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.util.Common;
+import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.api.SkyMineCooldownFinishEvent;
 import me.colingrimes.skymines.config.Messages;
+import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.manager.CooldownManager;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
-import me.colingrimes.midnight.util.io.Logger;
-import org.bukkit.Location;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
@@ -26,27 +28,35 @@ public class DefaultSkyMine implements SkyMine {
 	private final SkyMines plugin;
 	private final SkyMineManager manager;
 	private final CooldownManager cooldowns;
+
 	private final UUID uuid;
 	private final UUID owner;
-	private final MineStructure structure;
+	private final String identifier;
+	private final SkyMineStructure structure;
 	private final SkyMineUpgrades upgrades;
-	private Location home;
+	private Pose home;
 
 	// This is used for new skymines -- will generate random UUIDs for them.
-	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull MineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Location home) {
-		this(plugin, UUID.randomUUID(), owner, structure, upgrades, home);
+	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
+		this(plugin, UUID.randomUUID(), owner, identifier, structure, upgrades, home);
 	}
 
 	// This is used when deserializing the skymine data back into skymines.
-	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull MineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Location home) {
+	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
 		this.plugin = plugin;
 		this.manager = plugin.getSkyMineManager();
 		this.cooldowns = plugin.getCooldownManager();
 		this.uuid = uuid;
 		this.owner = owner;
+		this.identifier = identifier;
 		this.structure = structure;
 		this.upgrades = upgrades;
 		this.home = home;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return getMine() != null;
 	}
 
 	@Override
@@ -61,8 +71,20 @@ public class DefaultSkyMine implements SkyMine {
 		return owner;
 	}
 
+	@Nonnull
 	@Override
-	public int getId() {
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	@Nullable
+	@Override
+	public Mines.Mine getMine() {
+		return Mines.MINES.get().get(identifier);
+	}
+
+	@Override
+	public int getIndex() {
 		List<SkyMine> skyMines = manager.getSkyMines(owner);
 		for (int i=0; i<skyMines.size(); i++) {
 			if (skyMines.get(i).equals(this)) {
@@ -74,7 +96,7 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	@Nonnull
-	public MineStructure getStructure() {
+	public SkyMineStructure getStructure() {
 		return structure;
 	}
 
@@ -86,27 +108,32 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	@Nonnull
-	public Location getHome() {
+	public Pose getHome() {
 		return home;
 	}
 
 	@Override
-	public void setHome(@Nonnull Location home) {
+	public boolean setHome(@Nonnull Pose home) {
+		if (!structure.containsWithin(home.getPosition(), Settings.OPTION_SKYMINE_SETHOME_DISTANCE.get())) {
+			return false;
+		}
+
 		this.home = home;
 		save();
+		return true;
 	}
 
 	@Override
-	public boolean reset(boolean ignoreCooldown) {
-		if (!ignoreCooldown) {
+	public boolean reset(boolean force) {
+		if (!force) {
 			if (cooldowns.getSkyMineCooldown().onCooldown(this)) {
 				return false;
 			}
 			Consumer<SkyMine> action = skyMine -> Common.call(new SkyMineCooldownFinishEvent(skyMine));
-			cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldownUpgrade().getResetCooldown(), action);
+			cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
 		}
 
-		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
+		structure.build(upgrades.getComposition().getComposition());
 		return true;
 	}
 
@@ -116,15 +143,15 @@ public class DefaultSkyMine implements SkyMine {
 			return false;
 		}
 
-		ItemStack token = manager.getToken().getToken(structure.getMineSize(), structure.getBorderType(), upgrades);
+		ItemStack token = manager.getToken().getToken(identifier, structure.getMineSize(), upgrades);
 		if (!player.getInventory().addItem(token).isEmpty()) {
 			return false;
 		}
 
 		// Calculate pickup cooldown.
 		int pickupCooldown;
-		if (Settings.OPTIONS_PICKUP_COOLDOWN.get().matches("\\d+")) {
-			pickupCooldown = Integer.parseInt(Settings.OPTIONS_PICKUP_COOLDOWN.get());
+		if (Types.isInteger(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get())) {
+			pickupCooldown = Integer.parseInt(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get());
 		} else {
 			pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
 		}
@@ -136,8 +163,8 @@ public class DefaultSkyMine implements SkyMine {
 
 		// Add the pickup cooldown to the player.
 		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
-			if (Settings.OPTIONS_NOTIFY_ON_PICKUP_COOLDOWN_FINISH.get()) {
-				Messages.GENERAL_PICKUP_COOLDOWN_FINISH.send(player);
+			if (Settings.OPTION_COOLDOWN_NOTIFY_ON_PICKUP_FINISH.get()) {
+				Messages.GENERAL_COOLDOWN_PICKUP_FINISH.send(player);
 			}
 		});
 
@@ -151,15 +178,8 @@ public class DefaultSkyMine implements SkyMine {
 		manager.removeSkyMine(owner, this);
 	}
 
-
 	@Override
 	public void save() {
-		Scheduler.async().run(() -> {
-			try {
-				plugin.getStorage().save(this);
-			} catch (Exception e) {
-				Logger.severe("SkyMine has failed to save. Please report this to the developer:", e);
-			}
-		});
+		Scheduler.async().run(() -> plugin.getStorage().save(this), "SkyMine has failed to save. Please report this to the developer:");
 	}
 }

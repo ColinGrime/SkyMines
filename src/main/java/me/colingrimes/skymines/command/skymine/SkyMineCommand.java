@@ -17,7 +17,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_COMMAND);
+		properties.setUsage(Messages.USAGE_SKYMINE);
 		properties.setAliases("skymines", "sm");
 		properties.setPlayerRequired(true);
 	}
@@ -35,9 +35,9 @@ public class SkyMineCommand implements Command<SkyMines> {
 			return null;
 		}
 
-		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.get(0));
+		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.getFirst());
 		if (skyMine.isEmpty()) {
-			Messages.FAILURE_NO_SKYMINE.replace("{id}", args.get(0)).send(sender);
+			Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
 			return null;
 		}
 

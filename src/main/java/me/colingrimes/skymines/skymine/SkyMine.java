@@ -1,15 +1,25 @@
 package me.colingrimes.skymines.skymine;
 
-import me.colingrimes.skymines.skymine.structure.MineStructure;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
-import me.colingrimes.skymines.skymine.upgrades.types.BlockVarietyUpgrade;
-import org.bukkit.Location;
+import me.colingrimes.midnight.geometry.Pose;
+import me.colingrimes.skymines.config.Mines;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public interface SkyMine {
+
+	/**
+	 * Gets whether the skymine is enabled.
+	 * If the skymine doesn't have a valid {@link Mines.Mine} configuration data, it will return false.
+	 *
+	 * @return true if the skymine is enabled
+	 */
+	boolean isEnabled();
 
 	/**
 	 * Gets the UUID of the skymine.
@@ -28,15 +38,32 @@ public interface SkyMine {
 	UUID getOwner();
 
 	/**
-	 * Gets the current ID of the skymine.
-	 * This ID is subject to change (e.g. removing a skymine can change the IDs of all other skymines).
+	 * Gets the identifier of the skymine.
+	 * This is used to get the {@link Mines.Mine} configuration data of the mine.
+	 *
+	 * @return identifier of the skymine
+	 */
+	@Nonnull
+	String getIdentifier();
+
+	/**
+	 * Gets the {@link Mines.Mine} configuration data of the mine.
+	 *
+	 * @return the mine data or null if there is no data associated with the identifier
+	 */
+	@Nullable
+	Mines.Mine getMine();
+
+	/**
+	 * Gets the current index of the skymine.
+	 * This index is subject to change (e.g. removing a skymine can change the IDs of all other skymines).
 	 * <p>
 	 * This is used to target specific skymines for skymine-related commands.
 	 * It will always start at ID=1 and increment by 1 for each skymine a player owns.
 	 *
-	 * @return the ID of the skymine
+	 * @return the index of the skymine
 	 */
-	int getId();
+	int getIndex();
 
 	/**
 	 * Gets the structure of the skymine.
@@ -46,7 +73,7 @@ public interface SkyMine {
 	 * @return structure of the skymine
 	 */
 	@Nonnull
-	MineStructure getStructure();
+	SkyMineStructure getStructure();
 
 	/**
 	 * Gets the skymine's current upgrades. Used for everything upgrade-related.
@@ -63,28 +90,31 @@ public interface SkyMine {
 	 * @return home of the skymine
 	 */
 	@Nonnull
-	Location getHome();
+	Pose getHome();
 
 	/**
 	 * Sets the home of the skymine.
+	 * The home must be within 5 blocks of the skymine.
 	 *
-	 * @param home location to set the home
+	 * @param home pose to set the home
+	 * @return true if the home was successfully set
 	 */
-	void setHome(@Nonnull Location home);
+	boolean setHome(@Nonnull Pose home);
 
 	/**
-	 * Resets the skymine depending on the {@link BlockVarietyUpgrade#getLevel()}.
+	 * Resets the skymine depending on the {@link CompositionUpgrade#getLevel()}.
 	 * This will fill up the inside of the skymine with random blocks.
 	 * <p>
-	 * If the owner is currently on cooldown, and {@code ignoreCooldown} is false, then nothing will happen.
+	 * If the owner is currently on cooldown, and {@code force} is false, then nothing will happen.
 	 *
-	 * @param ignoreCooldown whether the cooldown should be ignored
+	 * @param force whether the cooldown should be ignored
 	 * @return true if the skymine was successfully reset
 	 */
-	boolean reset(boolean ignoreCooldown);
+	boolean reset(boolean force);
 
 	/**
 	 * Picks the skymine up. This only works if it's the owner who is requesting pickup.
+	 * However, this requirement can be bypassed if the player has the "skymines.admin.pickup" permission.
 	 * It will also return false if the owner's inventory is full.
 	 *
 	 * @param player any player

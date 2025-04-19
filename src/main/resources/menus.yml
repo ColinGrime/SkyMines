@@ -1,0 +1,89 @@
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ This file contains most of the data used to create the various menus.           ┃
+#┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃
+#┃ The upgrade menu is a bit complicated because it has to support                 ┃
+#┃ every combination of upgrade data you give it in the upgrades.yml file.         ┃
+#┃                                                                                 ┃
+#┃ As a result, I have slightly limited the amount of data that can be customized. ┃
+#┃ If you have any questions, please go to the Discord.                            ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘
+
+# Main Menu for the mines.
+main-menu:
+  name: "&8Main Menu"
+  rows: 3
+  # Optional material to fill the GUI after all other items are placed.
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    11:
+      type: BLUE_BED
+      name: "&aSkyMine Home"
+      lore:
+        - "&7On Click → &eTeleport to Mine"
+        - ""
+        - "&7Tip: Use &f/sm sethome <id> &7to set a home."
+      # Command to run. There are 4 special commands: HOME, RESET, UPGRADES, PICKUP
+      command: HOME
+    13:
+      type: RESPAWN_ANCHOR
+      name: "&aSkyMine Reset &7({time} left)"
+      lore:
+        - "&7On Click → &eReset the Mine"
+      command: RESET
+    15:
+      type: ANVIL
+      name: "&aSkyMine Upgrades"
+      lore:
+        - "&7On Click → &eOpen the Mine's Upgrades"
+      command: UPGRADES
+    17:
+      type: BARRIER
+      name: "&cSkyMine Pickup"
+      lore:
+        - "&7On Click → &ePickup the Mine"
+      command: PICKUP
+
+# Upgrade Menu for the mines.
+upgrade-menu:
+  name: "&8Upgrade Menu"
+  rows: 3
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    13:
+      # Instead of type/name/lore, you can refer to an entire upgrade below.
+      upgrade: composition
+    15:
+      upgrade: reset-cooldown
+
+# Use this for the upgrade slots:
+upgrades:
+  composition:
+    type: AMETHYST_CLUSTER
+    name:
+      # The default name of the upgrade.
+      default: "&bComposition &7(&e{level} &7→ &e{next-level}&7)"
+      # The name used when the upgrade is maxed out.
+      max: "&bComposition &7(&eMAXED&7)"
+    lore:
+      # The next level introduces a new material.
+      add: "&7(&a+&7) &a{type} &7→ &e{percentage}%"
+      # The next level removes a previously existing material.
+      remove: "&7(&c-&7) &c{type}"
+      # The material percentage is different when going to the next level.
+      change: "&7(&dx&7) &d{type}&7: &e{percentage}% &7→ &e{next-percentage}%"
+      # The material percentage is the same in both levels.
+      same: "&7(&b=&7) &b{type} &7→ &e{percentage}%"
+      # The material is already maxed out. There is no next level.
+      max: "&7(&c✯&7) &c{type} &7→ &e{percentage}%"
+  reset-cooldown:
+    type: CLOCK
+    name:
+      # The default name of the upgrade.
+      default: "&cReset Cooldown &7(&e{level} &7→ &e{next-level}&7)"
+      # The name used when the upgrade is maxed out.
+      max: "&cReset Cooldown &7(&eMAXED&7)"
+    lore:
+      # The default lore of the upgrade.
+      default: "&7({level}) {time}"
+      # The lore used for the next (and maxed) cooldown available.
+      next: "&d→ &7(&e{level}&7) &e{time}"

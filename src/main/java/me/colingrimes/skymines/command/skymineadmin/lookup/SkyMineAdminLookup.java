@@ -20,24 +20,24 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		Optional<UUID> uuid = UUIDs.fromName(args.get(0));
+		Optional<UUID> uuid = UUIDs.fromName(args.getFirst());
 		if (uuid.isEmpty()) {
-			Messages.FAILURE_NO_PLAYER_FOUND.replace("{player}", args.get(0)).send(sender);
+			Messages.ADMIN_FAILURE_MISC_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
 		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(uuid.get());
 		if (skyMines.isEmpty()) {
-			Messages.FAILURE_NO_SKYMINES_FOUND.replace("{player}", args.get(0)).send(sender);
+			Messages.ADMIN_FAILURE_SKYMINE_NONE_OWNED.replace("{player}", args.getFirst()).send(sender);
 			return;
 		}
 
-		if (!Messages.LOOKUP_SKYMINES_TOP_MESSAGE.toText().isEmpty()) {
-			Messages.LOOKUP_SKYMINES_TOP_MESSAGE.replace("{player}", args.get(0)).send(sender);
+		if (!Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_TOP.toText().isEmpty()) {
+			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_TOP.replace("{player}", args.getFirst()).send(sender);
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
-			Location location = skyMines.get(i - 1).getHome();
-			Messages.LOOKUP_SKYMINES_REPEATING_MESSAGE
+			Location location = skyMines.get(i - 1).getHome().toLocation();
+			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_REPEATING
 					.replace("{id}", i)
 					.replace("{world}", Objects.requireNonNull(location.getWorld()).getName())
 					.replace("{x}", location.getBlockX())
@@ -45,14 +45,14 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 					.replace("{z}", location.getBlockZ())
 					.send(sender);
 		}
-		if (!Messages.LOOKUP_SKYMINES_BOTTOM_MESSAGE.toText().isEmpty()) {
-			Messages.LOOKUP_SKYMINES_BOTTOM_MESSAGE.replace("{player}", args.get(0)).send(sender);
+		if (!Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.toText().isEmpty()) {
+			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.replace("{player}", args.getFirst()).send(sender);
 		}
 	}
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_LOOKUP);
+		properties.setUsage(Messages.ADMIN_USAGE_SKYMINE_LOOKUP);
 		properties.setPermission("skymines.admin.lookup");
 		properties.setArgumentsRequired(1);
 	}

@@ -20,7 +20,7 @@ public class SkyMinePickup implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_PICKUP);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_PICKUP);
 		if (skyMine == null) {
 			return;
 		}
@@ -29,7 +29,7 @@ public class SkyMinePickup implements Command<SkyMines> {
 		if (skyMine.pickup(sender.player())) {
 			Messages.SUCCESS_PICKUP.send(sender);
 		} else {
-			Messages.FAILURE_NO_INVENTORY_SPACE.send(sender);
+			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
 		}
 	}
 
@@ -42,7 +42,7 @@ public class SkyMinePickup implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_PICKUP);
+		properties.setUsage(Messages.USAGE_SKYMINE_PICKUP);
 		properties.setPlayerRequired(true);
 	}
 }

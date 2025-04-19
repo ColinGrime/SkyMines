@@ -1,14 +1,18 @@
 package me.colingrimes.skymines.skymine.factory;
 
+import me.colingrimes.midnight.geometry.Pose;
+import me.colingrimes.midnight.geometry.Position;
+import me.colingrimes.midnight.geometry.Size;
 import me.colingrimes.skymines.SkyMines;
+import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.skymine.structure.MineSize;
-import me.colingrimes.skymines.skymine.structure.MineStructure;
-import me.colingrimes.skymines.skymine.upgrades.SkyMineUpgrades;
+import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
+import me.colingrimes.skymines.skymine.token.SkyMineToken;
+import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -23,53 +27,61 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 
 	@Override
 	@Nonnull
-	public Optional<SkyMine> createSkyMine(@Nonnull Player owner, @Nonnull Location location, @Nonnull MineSize size, @Nonnull Material borderType, @Nonnull SkyMineUpgrades upgrades) {
+	public Optional<SkyMine> createSkyMine(@Nonnull Player owner, @Nonnull ItemStack token) {
+		SkyMineToken tokenProvider = plugin.getSkyMineManager().getToken();
+		Mines.Mine mine = tokenProvider.getMine(token);
+		if (mine == null) {
+			return Optional.empty();
+		}
+
 		float yaw = owner.getLocation().getYaw();
 		if (yaw < 0) {
 			yaw += 360;
 		}
 
-		int length = size.getLength();
+		Size size = tokenProvider.getMineSize(token);
+		int length = size.getLength() + 1;
 		int height = size.getHeight();
-		int width = size.getWidth();
-		Location endLoc;
+		int width = size.getWidth() + 1;
 
+		Position corner1 = Position.of(owner.getLocation().clone().subtract(0, 1, 0));
+		Position corner2;
 		if (yaw >= 0 && yaw <= 35)
-			endLoc = location.clone().add(-width, -height, length);
+			corner2 = corner1.add(-width, -height, length);
 		else if (yaw >= 35 && yaw <= 90)
-			endLoc = location.clone().add(-length, -height, width);
+			corner2 = corner1.add(-length, -height, width);
 		else if (yaw >= 90 && yaw <= 135)
-			endLoc = location.clone().add(-length, -height, -width);
+			corner2 = corner1.add(-length, -height, -width);
 		else if (yaw >= 135 && yaw <= 180)
-			endLoc = location.clone().add(-width, -height, -length);
+			corner2 = corner1.add(-width, -height, -length);
 		else if (yaw >= 180 && yaw <= 225)
-			endLoc = location.clone().add(width, -height, -length);
+			corner2 = corner1.add(width, -height, -length);
 		else if (yaw >= 225 && yaw <= 270)
-			endLoc = location.clone().add(length, -height, -width);
+			corner2 = corner1.add(length, -height, -width);
 		else if (yaw >= 270 && yaw <= 325)
-			endLoc = location.clone().add(length, -height, width);
+			corner2 = corner1.add(length, -height, width);
 		else
-			endLoc = location.clone().add(width, -height, length);
+			corner2 = corner1.add(width, -height, length);
 
 		// creates and builds structure
-		MineStructure structure = new MineStructure(location, endLoc, size, borderType);
+		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, mine.getBorderType());
 
 		// check for access and blocks in the way
-		if (!structure.doBlockCheck(owner)) {
+		if (!structure.canBuild(owner)) {
 			return Optional.empty();
 		}
 
 		// build the mine
-		structure.buildParameter();
-		structure.buildInside(upgrades.getBlockVarietyUpgrade().getBlockVariety());
+		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
+		structure.build(upgrades.getComposition().getComposition());
 
 		// creates the home of the mine
-		Location home = location.clone().add(0, 1, 0);
+		Location home = owner.getLocation().clone().add(0, 1, 0);
 		home.setYaw(yaw);
 
 		// creates new skymine
-		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), structure, upgrades, home);
-		plugin.getCooldownManager().getSkyMineCooldown().add(skyMine, skyMine.getUpgrades().getResetCooldownUpgrade().getResetCooldown());
+		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, upgrades, Pose.of(home));
+		plugin.getCooldownManager().getSkyMineCooldown().add(skyMine, skyMine.getUpgrades().getResetCooldown().getResetCooldown());
 		return Optional.of(skyMine);
 	}
 }

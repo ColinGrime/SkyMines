@@ -23,21 +23,27 @@ public class SkyMineReset implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINES_RESET);
+		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_RESET);
 		if (skyMine == null) {
+			return;
+		}
+
+		// Check if the mine is disabled.
+		if (!skyMine.isEnabled()) {
+			Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(sender);
 			return;
 		}
 
 		// Check if SkyMine was successfully reset.
 		if (!skyMine.reset(false)) {
 			Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-			Messages.FAILURE_ON_RESET_COOLDOWN.replace("{time}", Text.formatTime(time)).send(sender);
+			Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(time)).send(sender);
 			return;
 		}
 
 		Messages.SUCCESS_RESET.send(sender);
-		if (Settings.OPTIONS_TELEPORT_HOME_ON_RESET.get()) {
-			sender.player().teleport(skyMine.getHome());
+		if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
+			sender.player().teleport(skyMine.getHome().toLocation());
 		}
 	}
 
@@ -50,7 +56,7 @@ public class SkyMineReset implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
-		properties.setUsage(Messages.USAGE_SKYMINES_RESET);
+		properties.setUsage(Messages.USAGE_SKYMINE_RESET);
 		properties.setPlayerRequired(true);
 	}
 }
