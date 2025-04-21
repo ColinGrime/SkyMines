@@ -10,6 +10,7 @@ import me.colingrimes.skymines.listener.PlayerListeners;
 import me.colingrimes.skymines.listener.SkyMineListeners;
 import me.colingrimes.skymines.skymine.factory.DefaultSkyMineFactory;
 import me.colingrimes.skymines.skymine.manager.CooldownManager;
+import me.colingrimes.skymines.skymine.manager.HologramManager;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
 import me.colingrimes.skymines.skymine.structure.behavior.BuildBehavior;
 import me.colingrimes.skymines.skymine.structure.behavior.DefaultBuildBehavior;
@@ -31,6 +32,7 @@ public class SkyMines extends Midnight {
 	private static SkyMines instance;
 	private SkyMineManager skyMineManager;
 	private CooldownManager cooldownManager;
+	private HologramManager hologramManager;
 	private BuildBehavior buildBehavior;
 	private SkyMineStorage storage;
 
@@ -45,6 +47,7 @@ public class SkyMines extends Midnight {
 		instance = this;
 		skyMineManager = new SkyMineManager(this, new DefaultSkyMineFactory(this), new DefaultSkyMineToken());
 		cooldownManager = new CooldownManager();
+		hologramManager = new HologramManager(this);
 		buildBehavior =  new DefaultBuildBehavior();
 
 		// Load the database storage.
@@ -104,6 +107,11 @@ public class SkyMines extends Midnight {
 	@Nonnull
 	public CooldownManager getCooldownManager() {
 		return cooldownManager;
+	}
+
+	@Nonnull
+	public HologramManager getHologramManager() {
+		return hologramManager;
 	}
 
 	@Nonnull

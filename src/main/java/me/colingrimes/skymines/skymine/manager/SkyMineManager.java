@@ -166,6 +166,7 @@ public class SkyMineManager {
 		try {
 			getSkyMines(uuid).remove(skyMine);
 			plugin.getCooldownManager().getSkyMineCooldown().cancel(skyMine);
+			plugin.getHologramManager().removeHologram(skyMine);
 			plugin.getStorage().delete(skyMine);
 		} catch (Exception e) {
 			Logger.severe("SkyMine has failed to delete. Please report this to the developer:", e);
