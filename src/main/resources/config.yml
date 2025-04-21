@@ -30,7 +30,6 @@ option:
     # This also requires the player to have the "skymines.reset.automatic" permission.
     automatic: true
     # Should the owner of the mine be notified if the mine was automatically reset?
-    # If this is true, the automatic reset message will be sent instead of the reset finish message.
     automatic-notify: true
     # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
     replace-blocks: false
@@ -43,6 +42,7 @@ option:
     # Additional option: 'dynamic' - the cooldown to place it back down would be the current time left to reset the mine.
     pickup-cooldown: dynamic
     # Should the owner of the mine be notified when it can be reset again?
+    # If the mine is set to automatically reset, this notification will not be sent.
     notify-on-reset-finish: true
     # Should a player be notified when they can place skymines again? (see pickup-cooldown above)
     notify-on-pickup-finish: true
