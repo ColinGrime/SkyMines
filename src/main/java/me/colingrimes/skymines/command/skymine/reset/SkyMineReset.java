@@ -34,7 +34,7 @@ public class SkyMineReset implements Command<SkyMines> {
 			return;
 		}
 
-		// Check if SkyMine was successfully reset.
+		// Check if SkyMine failed to reset.
 		if (!skyMine.reset(false)) {
 			Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
 			Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(time)).send(sender);
@@ -43,7 +43,7 @@ public class SkyMineReset implements Command<SkyMines> {
 
 		Messages.SUCCESS_RESET.send(sender);
 		if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
-			sender.player().teleport(skyMine.getHome().toLocation());
+			skyMine.getStructure().getPlayers().forEach(p -> p.teleport(skyMine.getHome().toLocation()));
 		}
 	}
 
