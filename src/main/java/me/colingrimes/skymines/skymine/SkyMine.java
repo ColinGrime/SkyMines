@@ -15,7 +15,7 @@ public interface SkyMine {
 
 	/**
 	 * Gets whether the skymine is enabled.
-	 * If the skymine doesn't have a valid {@link Mines.Mine} configuration data, it will return false.
+	 * If the skymine doesn't have valid {@link Mines.Mine} configuration data, it will return {@code false}.
 	 *
 	 * @return true if the skymine is enabled
 	 */
@@ -47,14 +47,6 @@ public interface SkyMine {
 	String getIdentifier();
 
 	/**
-	 * Gets the {@link Mines.Mine} configuration data of the mine.
-	 *
-	 * @return the mine data or null if there is no data associated with the identifier
-	 */
-	@Nullable
-	Mines.Mine getMine();
-
-	/**
 	 * Gets the current index of the skymine.
 	 * This index is subject to change (e.g. removing a skymine can change the IDs of all other skymines).
 	 * <p>
@@ -64,6 +56,23 @@ public interface SkyMine {
 	 * @return the index of the skymine
 	 */
 	int getIndex();
+
+	/**
+	 * Gets the current name of the skymine.
+	 * The owner of the skymine is allowed to change this if they have access to the '/skymine name' command.
+	 *
+	 * @return name of the skymine
+	 */
+	@Nullable
+	String getName();
+
+	/**
+	 * Sets the name of the skymine.
+	 * This can be referenced in place of the index.
+	 *
+	 * @param name skymine name
+	 */
+	void setName(@Nonnull String name);
 
 	/**
 	 * Gets the structure of the skymine.

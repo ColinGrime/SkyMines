@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS skymines_mines_v2 (
     identifier TEXT        NOT NULL,
     structure  TEXT        NOT NULL,
     upgrades   TEXT        NOT NULL,
-    home       TEXT        NOT NULL
+    home       TEXT        NOT NULL,
+    name       TEXT        NULL
 );

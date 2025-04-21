@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS skymines_mines_v2 (
     structure  JSON        NOT NULL,
     upgrades   JSON        NOT NULL,
     home       JSON        NOT NULL,
+    name       TEXT        NULL,
     PRIMARY KEY (uuid)
 );

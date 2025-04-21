@@ -20,13 +20,15 @@ public interface Messages {
 	/**************************************************
 	 *                 Success Messages               *
 	 **************************************************/
-	Message<?> SUCCESS_RECEIVE = message("success.receive", "&2&l✓ &aYou have received &e{amount}x {token}&a.");
-	Message<?> SUCCESS_UPGRADE = message("success.upgrade", "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a.");
-	Message<?> SUCCESS_HOME    = message("success.home", "&2&l✓ &aYou have been teleported to your &eSkyMine&a.");
-	Message<?> SUCCESS_SETHOME = message("success.sethome", "&2&l✓ &aYou have changed your &eSkyMine's &ahome location.");
-	Message<?> SUCCESS_RESET   = message("success.reset", "&2&l✓ &aYou have reset your &eSkyMine&a.");
-	Message<?> SUCCESS_PICKUP  = message("success.pickup", "&2&l✓ &aYou have picked up your &eSkyMine&a.");
-	Message<?> SUCCESS_PLACE   = message("success.place", "&2&l✓ &aYou have placed your &eSkyMine&a.");
+	Message<?> SUCCESS_RECEIVE         = message("success.receive", "&2&l✓ &aYou have received &e{amount}x {token}&a.");
+	Message<?> SUCCESS_NAME            = message("success.name", "&2&l✓ &aThe &eSkyMine &ahas been named '&e{name}&a'.");
+	Message<?> SUCCESS_UPGRADE         = message("success.upgrade", "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a.");
+	Message<?> SUCCESS_HOME            = message("success.home", "&2&l✓ &aYou have been teleported to your &eSkyMine&a.");
+	Message<?> SUCCESS_SETHOME         = message("success.sethome", "&2&l✓ &aYou have changed your &eSkyMine's &ahome location.");
+	Message<?> SUCCESS_RESET           = message("success.reset", "&2&l✓ &aYou have reset your &eSkyMine&a.");
+	Message<?> SUCCESS_RESET_AUTOMATIC = message("success.reset-automatic", "&2&l✓ &aYour &eSkyMine &ahas been automatically reset.");
+	Message<?> SUCCESS_PICKUP          = message("success.pickup", "&2&l✓ &aYou have picked up your &eSkyMine&a.");
+	Message<?> SUCCESS_PLACE           = message("success.place", "&2&l✓ &aYou have placed your &eSkyMine&a.");
 
 	/**************************************************
 	 *                 Failure Messages               *
@@ -53,6 +55,7 @@ public interface Messages {
 	Message<?> USAGE_SKYMINE = message("usage.skymine",
 			"&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━",
 			"&7- &a/sm list &e: &7Lists all mines.",
+			"&7- &a/sm name <id> <name> &e: &7Name a mine.",
 			"&7- &a/sm panel <id> &e: &7Opens the mine's main panel.",
 			"&7- &a/sm upgrades <id> &e: &7Opens the mine's upgrade panel.",
 			"&7- &a/sm home <id> &e: &7Teleports to the mine's home.",
@@ -60,6 +63,10 @@ public interface Messages {
 			"&7- &a/sm reset <id> &e: &7Resets the mine.",
 			"&7- &a/sm pickup <id> &e: &7Picks up the mine.",
 			"&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	);
+	Message<?> USAGE_SKYMINE_NAME = message("usage.skymine-name",
+			"&eUsage: &a/sm name <id> <name>",
+			"&a► &7Attach a name to the specified mine."
 	);
 	Message<?> USAGE_SKYMINE_PANEL = message("usage.skymine-panel",
 			"&eUsage: &a/sm panel <id>",

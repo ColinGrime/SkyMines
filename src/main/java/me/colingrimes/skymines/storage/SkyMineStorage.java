@@ -21,8 +21,8 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 
 	private static final String MINES_SELECT_ALL = "SELECT * FROM 'skymines_mines_v2'";
 	private static final String MINES_EXIST      = "SELECT 1 FROM 'skymines_mines_v2' WHERE uuid=? LIMIT 1";
-	private static final String MINES_INSERT     = "INSERT INTO 'skymines_mines_v2' (uuid, owner, identifier, structure, upgrades, home) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String MINES_UPDATE     = "UPDATE 'skymines_mines_v2' SET upgrades=?, home=? WHERE uuid=?";
+	private static final String MINES_INSERT     = "INSERT INTO 'skymines_mines_v2' (uuid, owner, identifier, structure, upgrades, home, name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String MINES_UPDATE     = "UPDATE 'skymines_mines_v2' SET upgrades=?, home=?, name=? WHERE uuid=?";
 	private static final String MINES_DELETE     = "DELETE FROM 'skymines_mines_v2' WHERE uuid=?";
 
 	private final SkyMines plugin;
@@ -49,7 +49,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 						SkyMineUpgrades upgrades = SkyMineUpgrades.deserializeOld(rs.getString("upgrades"));
 						Location home = Utils.deserializeLocation(rs.getString("home"));
 						if (uuid != null && owner != null && structure != null && home != null) {
-							SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, "default", structure, upgrades, Pose.of(home));
+							SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, "default", structure, upgrades, Pose.of(home), null);
 							plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 						}
 					}
@@ -61,6 +61,19 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				Logger.log(plugin, "All mines have been migrated!");
 			}
 			setVersion(connection, 2);
+		}
+
+		// Add support for named skymines.
+		if (version == 2) {
+			if (!DatabaseUtils.columnExists(connection, "skymines_mines_v2", "name")) {
+				Logger.log(plugin, "Adding the 'name' column to the 'skymines_mines_v2' table...");
+				String MINES_ALTER = "ALTER TABLE 'skymines_mines_v2' ADD COLUMN 'name' TEXT";
+				try (Statement statement = connection.createStatement()) {
+					statement.executeUpdate(processor.apply(MINES_ALTER));
+				}
+				Logger.log(plugin, "Name column has been added!");
+			}
+			setVersion(connection, 3);
 		}
 	}
 
@@ -78,8 +91,9 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 					SkyMineStructure structure = DatabaseUtils.getJson(type, rs, "structure", SkyMineStructure.class);
 					SkyMineUpgrades upgrades = DatabaseUtils.getJson(type, rs, "upgrades", SkyMineUpgrades.class);
 					Pose home = DatabaseUtils.getJson(type, rs, "home", Pose.class);
+					String name = rs.getString("name");
 					if (uuid != null && owner != null && identifier != null && structure != null && upgrades != null && home != null) {
-						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, identifier, structure, upgrades, home);
+						SkyMine skyMine = new DefaultSkyMine(plugin, uuid, owner, identifier, structure, upgrades, home, name);
 						plugin.getSkyMineManager().addSkyMine(owner, skyMine);
 					}
 				}
@@ -110,7 +124,8 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 			try (PreparedStatement ps = prepare(c, MINES_UPDATE)) {
 				DatabaseUtils.setJson(type, ps, 1, skyMine.getUpgrades());
 				DatabaseUtils.setJson(type, ps, 2, skyMine.getHome());
-				DatabaseUtils.setUUID(type, ps, 3, skyMine.getUUID());
+				ps.setString(3, skyMine.getName());
+				DatabaseUtils.setUUID(type, ps, 4, skyMine.getUUID());
 				ps.executeUpdate();
 			}
 		}
@@ -125,6 +140,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				DatabaseUtils.setJson(type, ps, 4, skyMine.getStructure());
 				DatabaseUtils.setJson(type, ps, 5, skyMine.getUpgrades());
 				DatabaseUtils.setJson(type, ps, 6, skyMine.getHome());
+				ps.setString(7, skyMine.getName());
 				ps.executeUpdate();
 			}
 		}

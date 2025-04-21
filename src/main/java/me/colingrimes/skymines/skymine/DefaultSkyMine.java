@@ -35,14 +35,37 @@ public class DefaultSkyMine implements SkyMine {
 	private final SkyMineStructure structure;
 	private final SkyMineUpgrades upgrades;
 	private Pose home;
+	private String name;
 
-	// This is used for new skymines -- will generate random UUIDs for them.
+	/**
+	 * Constructs a new {@link SkyMine} with a random UUID.
+	 * This is used to create skymines from its token form.
+	 *
+	 * @param plugin the plugin
+	 * @param owner the UUID of the owner
+	 * @param identifier the identifier of the mine data
+	 * @param structure the structure of the mine
+	 * @param upgrades the mine's current upgrades
+	 * @param home the home of the mine
+	 */
 	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
-		this(plugin, UUID.randomUUID(), owner, identifier, structure, upgrades, home);
+		this(plugin, UUID.randomUUID(), owner, identifier, structure, upgrades, home, null);
 	}
 
-	// This is used when deserializing the skymine data back into skymines.
-	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
+	/**
+	 * Constructs a {@link SkyMine} that has an existing UUID.
+	 * This is used to load skymines from storage.
+	 *
+	 * @param plugin the plugin
+	 * @param uuid the UUID of the mine
+	 * @param owner the UUID of the owner
+	 * @param identifier the identifier of the mine data
+	 * @param structure the structure of the mine
+	 * @param upgrades the mine's current upgrades
+	 * @param home the home of the mine
+	 * @param name the name of the mine
+	 */
+	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID uuid, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home, @Nullable String name) {
 		this.plugin = plugin;
 		this.manager = plugin.getSkyMineManager();
 		this.cooldowns = plugin.getCooldownManager();
@@ -52,11 +75,13 @@ public class DefaultSkyMine implements SkyMine {
 		this.structure = structure;
 		this.upgrades = upgrades;
 		this.home = home;
+		this.name = name;
+		this.plugin.getHologramManager().addHologram(this);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return getMine() != null;
+		return Mines.MINES.get().containsKey(identifier);
 	}
 
 	@Override
@@ -77,12 +102,6 @@ public class DefaultSkyMine implements SkyMine {
 		return identifier;
 	}
 
-	@Nullable
-	@Override
-	public Mines.Mine getMine() {
-		return Mines.MINES.get().get(identifier);
-	}
-
 	@Override
 	public int getIndex() {
 		List<SkyMine> skyMines = manager.getSkyMines(owner);
@@ -92,6 +111,18 @@ public class DefaultSkyMine implements SkyMine {
 			}
 		}
 		return -1;
+	}
+
+	@Nullable
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(@Nonnull String name) {
+		this.name = name;
+		save();
 	}
 
 	@Override
