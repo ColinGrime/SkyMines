@@ -115,26 +115,29 @@ public class SkyMineStructure extends Region implements Serializable {
 	 * This includes the inner region and the borders of the mine.
 	 *
 	 * @param material the material of the inner region
+	 * @return the number of blocks changed
 	 */
-	public void build(@Nonnull MineMaterial material) {
-		buildMine(material);
-		buildBorders();
+	public int build(@Nonnull MineMaterial material) {
+		return buildMine(material) + buildBorders();
 	}
 
 	/**
 	 * Builds the inner region of the mine.
 	 *
 	 * @param material the material to build
+	 * @return the number of blocks changed
 	 */
-	public void buildMine(@Nonnull MineMaterial material) {
-		getBehavior().build(inner, material, Settings.OPTION_RESET_REPLACE_BLOCKS.get());
+	public int buildMine(@Nonnull MineMaterial material) {
+		return getBehavior().build(inner, material, Settings.OPTION_RESET_REPLACE_BLOCKS.get());
 	}
 
 	/**
 	 * Builds the borders of the mine.
+	 *
+	 * @return the number of blocks changed
 	 */
-	public void buildBorders() {
-		getBehavior().build(border, new MineMaterialStatic(borderType));
+	public int buildBorders() {
+		return getBehavior().build(border, new MineMaterialStatic(borderType));
 	}
 
 	/**

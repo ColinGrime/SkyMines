@@ -21,9 +21,10 @@ public interface BuildBehavior {
 	 *
 	 * @param region the region to build
 	 * @param mineMaterial the material
+	 * @return the number of blocks changed
 	 */
-	default void build(@Nonnull Region region, @Nonnull MineMaterial mineMaterial) {
-		build(region, mineMaterial, true);
+	default int build(@Nonnull Region region, @Nonnull MineMaterial mineMaterial) {
+		return build(region, mineMaterial, true);
 	}
 
 	/**
@@ -33,6 +34,7 @@ public interface BuildBehavior {
 	 * @param region the region
 	 * @param material the material
 	 * @param replaceBlocks true if only air should be replaced
+	 * @return the number of blocks changed
 	 */
-	void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks);
+	int build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks);
 }

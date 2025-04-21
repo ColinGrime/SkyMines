@@ -29,17 +29,26 @@ public class DefaultBuildBehavior implements BuildBehavior {
 	}
 
 	@Override
-	public void build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks) {
+	public int build(@Nonnull Region region, @Nonnull MineMaterial material, boolean replaceBlocks) {
+		int[] blocksChanged = {0};
 		BuildTask buildTask = new BuildTask();
 		region.handler((x, y, z) -> {
 			Block block = region.getWorld().getBlockAt(x, y, z);
-			if (replaceBlocks || block.getType() == Material.AIR) {
+			if (!replaceBlocks && block.getType() != Material.AIR) {
+				return;
+			}
+
+			Material change = material.get();
+			if (block.getType() != change) {
 				buildTask.getBlocksToPlace().add(new DeferredBlock(block, material.get()));
+				blocksChanged[0]++;
 			}
 		});
 
 		if (!buildTask.getBlocksToPlace().isEmpty()) {
 			Scheduler.sync().runRepeating(buildTask, 0L, 1L);
 		}
+
+		return blocksChanged[0];
 	}
 }
