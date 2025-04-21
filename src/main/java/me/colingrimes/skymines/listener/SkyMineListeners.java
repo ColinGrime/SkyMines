@@ -23,16 +23,21 @@ public class SkyMineListeners implements Listener {
 		}
 
 		// Automatic reset.
+		boolean notified = false;
 		if (Settings.OPTION_RESET_AUTOMATIC.get() && player.get().hasPermission("skymines.reset.automatic")) {
+			if (Settings.OPTION_RESET_AUTOMATIC_NOTIFY.get()) {
+				Messages.SUCCESS_RESET_AUTOMATIC.send(player.get());
+				notified = true;
+			}
+
 			skyMine.reset(false);
-			Messages.SUCCESS_RESET_AUTOMATIC.send(player.get());
 			if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
 				skyMine.getStructure().getPlayers().forEach(p -> p.teleport(skyMine.getHome().toLocation()));
 			}
 		}
 
 		// Notify on reset finish.
-		else if (Settings.OPTION_COOLDOWN_NOTIFY_ON_RESET_FINISH.get()) {
+		if (!notified && Settings.OPTION_COOLDOWN_NOTIFY_ON_RESET_FINISH.get()) {
 			Messages.GENERAL_COOLDOWN_RESET_FINISH.replace("{id}", skyMine.getIndex()).send(player.get());
 		}
 	}

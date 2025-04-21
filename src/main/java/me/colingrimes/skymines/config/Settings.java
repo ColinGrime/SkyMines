@@ -19,6 +19,7 @@ public interface Settings {
 	Option<Boolean> OPTION_SKYMINE_IGNORE_PHYSICS              = option("option.skymine.ignore-physics", true);
 	Option<Boolean> OPTION_TOKEN_PREVENT_DROP                  = option("option.token.prevent-drop", true);
 	Option<Boolean> OPTION_RESET_AUTOMATIC                     = option("option.reset.automatic", true);
+	Option<Boolean> OPTION_RESET_AUTOMATIC_NOTIFY              = option("option.reset.automatic-notify", true);
 	Option<Boolean> OPTION_RESET_REPLACE_BLOCKS                = option("option.reset.replace-blocks", false);
 	Option<Boolean> OPTION_RESET_TELEPORT_HOME                 = option("option.reset.teleport-home", true);
 	Option<Boolean> OPTION_RESET_ON_UPGRADE                    = option("option.reset.on-upgrade", true);
