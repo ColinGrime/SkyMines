@@ -30,6 +30,7 @@ option:
     # This also requires the player to have the "skymines.reset.automatic" permission.
     automatic: true
     # Should the owner of the mine be notified if the mine was automatically reset?
+    # Notifications will only be sent if at least 1 block was changed.
     automatic-notify: true
     # Should a mine reset replace blocks (inside the mine)? If false, only replaces AIR.
     replace-blocks: false

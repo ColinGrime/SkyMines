@@ -59,7 +59,7 @@ public class UpgradeMenu extends Gui {
 
 			// reset the mine on upgrade
 			if (Settings.OPTION_RESET_ON_UPGRADE.get()) {
-				skyMine.reset(true);
+				skyMine.reset();
 			}
 		} else {
 			Messages.FAILURE_SKYMINE_UPGRADE_FUNDS.send(player);

@@ -3,7 +3,9 @@ package me.colingrimes.skymines.skymine;
 import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.util.Common;
+import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.misc.Types;
+import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.api.SkyMineCooldownFinishEvent;
 import me.colingrimes.skymines.config.Messages;
@@ -11,6 +13,7 @@ import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.manager.CooldownManager;
 import me.colingrimes.skymines.skymine.manager.SkyMineManager;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.entity.Player;
@@ -77,6 +80,7 @@ public class DefaultSkyMine implements SkyMine {
 		this.home = home;
 		this.name = name;
 		this.plugin.getHologramManager().addHologram(this);
+		this.applyCooldown();
 	}
 
 	@Override
@@ -155,17 +159,47 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	@Override
-	public boolean reset(boolean force) {
-		if (!force) {
-			if (cooldowns.getSkyMineCooldown().onCooldown(this)) {
-				return false;
+	public int reset() {
+		return reset(ResetOptions.defaults());
+	}
+
+	@Override
+	public int reset(@Nonnull ResetOptions options) {
+		// Checks if the mine is disabled.
+		if (!isEnabled()) {
+			if (options.shouldNotify()) {
+				Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", identifier).send(options.getPlayer());
 			}
-			Consumer<SkyMine> action = skyMine -> Common.call(new SkyMineCooldownFinishEvent(skyMine));
-			cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
+			return 0;
 		}
 
-		structure.build(upgrades.getComposition().getComposition());
-		return true;
+		// Applies cooldown logic if necessary.
+		if (options.applyCooldowns()) {
+			Duration timeLeft = cooldowns.getSkyMineCooldown().getTimeLeft(this);
+			if (timeLeft.isPositive()) {
+				if (options.shouldNotify()) {
+					Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(timeLeft)).send(options.getPlayer());
+				}
+				return 0;
+			}
+			applyCooldown();
+		}
+
+		// Sends different success message depending on if the player is the owner of the mine.
+		if (options.shouldNotify()) {
+			if (options.getPlayer().getUniqueId().equals(owner)) {
+				Messages.SUCCESS_RESET.send(options.getPlayer());
+			} else {
+				Messages.ADMIN_SUCCESS_RESET.replace("{player}", Players.getName(owner)).send(options.getPlayer());
+			}
+		}
+
+		// Teleports all players to the mine's home.
+		if (options.shouldTeleport()) {
+			structure.getPlayers().forEach(p -> p.teleport(home.toLocation()));
+		}
+
+		return structure.build(upgrades.getComposition().getComposition());
 	}
 
 	@Override
@@ -212,5 +246,13 @@ public class DefaultSkyMine implements SkyMine {
 	@Override
 	public void save() {
 		Scheduler.async().run(() -> plugin.getStorage().save(this), "SkyMine has failed to save. Please report this to the developer:");
+	}
+
+	/**
+	 * Applies the reset cooldown to the mine.
+	 */
+	private void applyCooldown() {
+		Consumer<SkyMine> action = (skyMine) -> Common.call(new SkyMineCooldownFinishEvent(skyMine));
+		cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
 	}
 }

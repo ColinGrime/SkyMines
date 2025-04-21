@@ -4,12 +4,12 @@ import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.config.Menus;
-import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.midnight.config.util.ConfigurableInventory;
 import me.colingrimes.midnight.menu.Gui;
 import me.colingrimes.midnight.util.bukkit.Items;
 import me.colingrimes.midnight.util.bukkit.Players;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -77,22 +77,7 @@ public class MainMenu extends Gui {
 				getPlayer().teleport(skyMine.getHome().toLocation());
 				Messages.ADMIN_SUCCESS_HOME.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
 			}
-			case "RESET" -> {
-				if (!skyMine.isEnabled()) {
-					Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
-					return;
-				}
-				if (!skyMine.reset(false)) {
-					Duration time = plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine);
-					Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(time)).send(getPlayer());
-					return;
-				}
-
-				Messages.ADMIN_SUCCESS_RESET.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
-				if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
-					skyMine.getStructure().getPlayers().forEach(p -> p.teleport(skyMine.getHome().toLocation()));
-				}
-			}
+			case "RESET" -> skyMine.reset(ResetOptions.standard(getPlayer()));
 			case "UPGRADES" -> {
 				if (!skyMine.isEnabled()) {
 					Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(getPlayer());

@@ -5,6 +5,7 @@ import me.colingrimes.skymines.api.SkyMineCooldownFinishEvent;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,13 +25,8 @@ public class SkyMineListeners implements Listener {
 
 		// Automatic reset.
 		if (Settings.OPTION_RESET_AUTOMATIC.get() && player.get().hasPermission("skymines.reset.automatic")) {
-			if (Settings.OPTION_RESET_AUTOMATIC_NOTIFY.get()) {
+			if (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 && Settings.OPTION_RESET_AUTOMATIC_NOTIFY.get()) {
 				Messages.SUCCESS_RESET_AUTOMATIC.send(player.get());
-			}
-
-			skyMine.reset(false);
-			if (Settings.OPTION_RESET_TELEPORT_HOME.get()) {
-				skyMine.getStructure().getPlayers().forEach(p -> p.teleport(skyMine.getHome().toLocation()));
 			}
 		}
 

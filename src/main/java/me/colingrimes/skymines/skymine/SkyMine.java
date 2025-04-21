@@ -2,6 +2,7 @@ package me.colingrimes.skymines.skymine;
 
 import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.skymines.config.Mines;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import me.colingrimes.skymines.skymine.upgrade.type.CompositionUpgrade;
@@ -59,7 +60,7 @@ public interface SkyMine {
 
 	/**
 	 * Gets the current name of the skymine.
-	 * The owner of the skymine is allowed to change this if they have access to the '/skymine name' command.
+	 * The owner of the skymine is allowed to change this if they have access to the {@code /skymine home} command.
 	 *
 	 * @return name of the skymine
 	 */
@@ -111,15 +112,28 @@ public interface SkyMine {
 	boolean setHome(@Nonnull Pose home);
 
 	/**
-	 * Resets the skymine depending on the {@link CompositionUpgrade#getLevel()}.
-	 * This will fill up the inside of the skymine with random blocks.
-	 * <p>
-	 * If the owner is currently on cooldown, and {@code force} is false, then nothing will happen.
+	 * Resets the skymine. This performs the following actions:
+	 * <ul>
+	 *     <li>Fills up the inner mine with the mine material from {@link CompositionUpgrade#getComposition()}.</li>
+	 *     <li>Repairs the mine border if broken.</li>
+	 * </ul>
+	 * This is the default {@code reset()} method that will ignore cooldowns and other options.
 	 *
-	 * @param force whether the cooldown should be ignored
-	 * @return true if the skymine was successfully reset
+	 * @return the number of blocks changed
 	 */
-	boolean reset(boolean force);
+	int reset();
+
+	/**
+	 * Resets the skymine. This performs the following actions:
+	 * <ul>
+	 *     <li>Fills up the inner mine with the mine material from {@link CompositionUpgrade#getComposition()}.</li>
+	 *     <li>Repairs the mine border if broken.</li>
+	 * </ul>
+	 *
+	 * @param options the reset options
+	 * @return the number of blocks changed
+	 */
+	int reset(@Nonnull ResetOptions options);
 
 	/**
 	 * Picks the skymine up. This only works if it's the owner who is requesting pickup.

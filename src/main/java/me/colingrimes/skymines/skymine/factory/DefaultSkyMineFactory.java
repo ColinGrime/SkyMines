@@ -7,9 +7,9 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
-import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -63,25 +63,19 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		else
 			corner2 = corner1.add(width, -height, length);
 
-		// creates and builds structure
-		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, mine.getBorderType());
-
 		// check for access and blocks in the way
+		SkyMineStructure structure = new SkyMineStructure(corner1, corner2, mine.getBorderType());
 		if (!structure.canBuild(owner)) {
 			return Optional.empty();
 		}
-
-		// build the mine
-		SkyMineUpgrades upgrades = tokenProvider.getUpgrades(token);
-		structure.build(upgrades.getComposition().getComposition());
 
 		// creates the home of the mine
 		Location home = owner.getLocation().clone().add(0, 1, 0);
 		home.setYaw(yaw);
 
-		// creates new skymine
-		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, upgrades, Pose.of(home));
-		plugin.getCooldownManager().getSkyMineCooldown().add(skyMine, skyMine.getUpgrades().getResetCooldown().getResetCooldown());
+		// creates new skymine and builds the mine
+		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, tokenProvider.getUpgrades(token), Pose.of(home));
+		skyMine.reset(ResetOptions.create().cooldowns(true).build());
 		return Optional.of(skyMine);
 	}
 }
