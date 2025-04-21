@@ -1,7 +1,7 @@
 package me.colingrimes.skymines.api;
 
 import me.colingrimes.skymines.SkyMines;
-import me.colingrimes.skymines.skymine.manager.SkyMineManager;
+import me.colingrimes.skymines.manager.SkyMineManager;
 
 import javax.annotation.Nonnull;
 

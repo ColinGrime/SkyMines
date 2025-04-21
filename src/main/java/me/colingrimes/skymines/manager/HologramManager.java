@@ -1,4 +1,4 @@
-package me.colingrimes.skymines.skymine.manager;
+package me.colingrimes.skymines.manager;
 
 import me.colingrimes.midnight.geometry.Region;
 import me.colingrimes.midnight.hologram.Hologram;

@@ -1,4 +1,4 @@
-package me.colingrimes.skymines.skymine.manager;
+package me.colingrimes.skymines.manager;
 
 import me.colingrimes.midnight.util.io.Logger;
 import me.colingrimes.midnight.util.misc.Types;

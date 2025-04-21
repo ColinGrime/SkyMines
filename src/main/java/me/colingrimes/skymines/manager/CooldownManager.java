@@ -1,4 +1,4 @@
-package me.colingrimes.skymines.skymine.manager;
+package me.colingrimes.skymines.manager;
 
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.midnight.cache.Cooldown;

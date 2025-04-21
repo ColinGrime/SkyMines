@@ -12,7 +12,7 @@ import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.menu.MainMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.skymine.manager.SkyMineManager;
+import me.colingrimes.skymines.manager.SkyMineManager;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
