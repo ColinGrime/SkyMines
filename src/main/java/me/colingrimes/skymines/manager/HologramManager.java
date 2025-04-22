@@ -21,7 +21,11 @@ public class HologramManager {
 
 	public HologramManager(@Nonnull SkyMines plugin) {
 		this.plugin = plugin;
-		Scheduler.sync().runRepeating(() -> holograms.forEach(this::update), 0L, 10L);
+		Scheduler.sync().runRepeating(() -> {
+			if (plugin.getStorage().isLoaded()) {
+				holograms.forEach(this::update);
+			}
+		}, 10L, 10L);
 	}
 
 	private void update(@Nonnull SkyMine skyMine, @Nonnull Hologram hologram) {
