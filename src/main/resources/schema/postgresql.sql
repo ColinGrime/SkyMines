@@ -7,3 +7,9 @@ CREATE TABLE IF NOT EXISTS skymines_mines_v2 (
     home       JSONB NOT NULL,
     name       TEXT  NULL
 );
+
+CREATE TABLE IF NOT EXISTS skymines_players (
+    uuid                  UUID    NOT NULL PRIMARY KEY,
+    notifications_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    auto_reset_enabled    BOOLEAN NOT NULL DEFAULT FALSE
+);
