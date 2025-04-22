@@ -25,11 +25,12 @@ main-menu:
       # Command to run. There are 4 special commands: HOME, RESET, UPGRADES, PICKUP
       command: HOME
     13:
-      type: RESPAWN_ANCHOR
+      type: NETHERITE_PICKAXE
       name: "&aSkyMine Reset &7({time} left)"
       lore:
         - "&7On Click → &eReset the Mine"
       command: RESET
+      hide: true
     15:
       type: ANVIL
       name: "&aSkyMine Upgrades"
@@ -42,6 +43,27 @@ main-menu:
       lore:
         - "&7On Click → &ePickup the Mine"
       command: PICKUP
+
+# Settings Menu for player settings.
+settings-menu:
+  name: "&8Settings Menu"
+  rows: 3
+  fill: GRAY_STAINED_GLASS_PANE
+  slots:
+    13:
+      type: BOOK
+      name: "&aNotifications &7({enabled}&7)"
+      lore:
+        - "&7Toggles mine notifications."
+      # Command to run. There are 4 special commands: NOTIFY, AUTO_RESET
+      command: NOTIFY
+    15:
+      type: NETHERITE_PICKAXE
+      name: "&aAutomatic Mine Reset &7({enabled}&7)"
+      lore:
+        - "&7Toggles automatic mine resetting."
+      command: AUTO_RESET
+      hide: true
 
 # Upgrade Menu for the mines.
 upgrade-menu:

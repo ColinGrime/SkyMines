@@ -17,6 +17,7 @@ import static me.colingrimes.midnight.config.option.OptionFactory.*;
 public interface Menus {
 
 	Option<ConfigurableInventory> MAIN_MENU = inventory("main-menu");
+	Option<ConfigurableInventory> SETTINGS_MENU = inventory("settings-menu");
 	Option<ConfigurableInventory> UPGRADE_MENU = inventory("upgrade-menu");
 	Option<Map<Integer, UpgradeType>> UPGRADE_MENU_SLOTS = slots("upgrade-menu.slots", section -> UpgradeType.parse(section.getString("upgrade")));
 	Option<MenuDataComposition> UPGRADE_MENU_COMPOSITION = option("upgrades.composition", MenuDataComposition::new);

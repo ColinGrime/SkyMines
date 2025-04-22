@@ -5,6 +5,7 @@ general:
     repeating: "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)"
     bottom: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   cooldown:
+    reset-automatic: "&aYour &eSkyMine &ahas been automatically reset."
     reset-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
     pickup-finish: "&aYou are free to place &eSkyMines &aagain."
 
@@ -16,7 +17,6 @@ success:
   home: "&2&l✓ &aYou have been teleported to your &eSkyMine&a."
   sethome: "&2&l✓ &aYou have changed your &eSkyMine's &ahome location."
   reset: "&2&l✓ &aYou have reset your &eSkyMine&a."
-  reset-automatic: "&2&l✓ &aYour &eSkyMine &ahas been automatically reset."
   pickup: "&2&l✓ &aYou have picked up your &eSkyMine&a."
   place: "&2&l✓ &aYou have placed your &eSkyMine&a."
 

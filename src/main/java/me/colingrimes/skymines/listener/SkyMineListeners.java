@@ -1,9 +1,10 @@
 package me.colingrimes.skymines.listener;
 
 import me.colingrimes.midnight.util.bukkit.Players;
+import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.api.SkyMineCooldownFinishEvent;
 import me.colingrimes.skymines.config.Messages;
-import me.colingrimes.skymines.config.Settings;
+import me.colingrimes.skymines.player.PlayerSettings;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
 import org.bukkit.entity.Player;
@@ -15,6 +16,12 @@ import java.util.Optional;
 
 public class SkyMineListeners implements Listener {
 
+	private final SkyMines plugin;
+
+	public SkyMineListeners(@Nonnull SkyMines plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler
 	public void onCooldownFinish(@Nonnull SkyMineCooldownFinishEvent event) {
 		SkyMine skyMine = event.getSkyMine();
@@ -23,15 +30,17 @@ public class SkyMineListeners implements Listener {
 			return;
 		}
 
+		PlayerSettings settings = plugin.getPlayerManager().getSettings(player.get());
+
 		// Automatic reset.
-		if (Settings.OPTION_RESET_AUTOMATIC.get() && player.get().hasPermission("skymines.reset.automatic")) {
-			if (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 && Settings.OPTION_RESET_AUTOMATIC_NOTIFY.get()) {
-				Messages.SUCCESS_RESET_AUTOMATIC.send(player.get());
+		if (settings.shouldAutoReset()) {
+			if (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 && settings.shouldNotify()) {
+				Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC.send(player.get());
 			}
 		}
 
 		// Notify on reset finish (will not be sent if automatic reset is enabled).
-		else if (Settings.OPTION_COOLDOWN_NOTIFY_ON_RESET_FINISH.get()) {
+		else if (settings.shouldNotify()) {
 			Messages.GENERAL_COOLDOWN_RESET_FINISH.replace("{id}", skyMine.getIndex()).send(player.get());
 		}
 	}

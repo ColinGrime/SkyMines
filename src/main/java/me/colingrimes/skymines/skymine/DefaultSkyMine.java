@@ -228,7 +228,7 @@ public class DefaultSkyMine implements SkyMine {
 
 		// Add the pickup cooldown to the player.
 		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
-			if (Settings.OPTION_COOLDOWN_NOTIFY_ON_PICKUP_FINISH.get()) {
+			if (plugin.getPlayerManager().getSettings(p).shouldNotify()) {
 				Messages.GENERAL_COOLDOWN_PICKUP_FINISH.send(player);
 			}
 		});

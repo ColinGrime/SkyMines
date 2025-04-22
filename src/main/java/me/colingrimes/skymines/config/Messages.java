@@ -11,11 +11,12 @@ public interface Messages {
 	/**************************************************
 	 *                 General Messages               *
 	 **************************************************/
-	Message<?> GENERAL_SKYMINE_LIST_TOP       = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
-	Message<?> GENERAL_SKYMINE_LIST_REPEATING = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
-	Message<?> GENERAL_SKYMINE_LIST_BOTTOM    = message("general.skymine-list.bottom");
-	Message<?> GENERAL_COOLDOWN_RESET_FINISH  = message("general.cooldown.reset-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
-	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH = message("general.cooldown.pickup-finish", "&aYou are free to place &eSkyMines &aagain.");
+	Message<?> GENERAL_SKYMINE_LIST_TOP         = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
+	Message<?> GENERAL_SKYMINE_LIST_REPEATING   = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> GENERAL_SKYMINE_LIST_BOTTOM      = message("general.skymine-list.bottom");
+	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC = message("general.cooldown.reset-automatic", "&aYour &eSkyMine &ahas been automatically reset.");
+	Message<?> GENERAL_COOLDOWN_RESET_FINISH    = message("general.cooldown.reset-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
+	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH   = message("general.cooldown.pickup-finish", "&aYou are free to place &eSkyMines &aagain.");
 
 	/**************************************************
 	 *                 Success Messages               *
@@ -26,7 +27,6 @@ public interface Messages {
 	Message<?> SUCCESS_HOME            = message("success.home", "&2&l✓ &aYou have been teleported to your &eSkyMine&a.");
 	Message<?> SUCCESS_SETHOME         = message("success.sethome", "&2&l✓ &aYou have changed your &eSkyMine's &ahome location.");
 	Message<?> SUCCESS_RESET           = message("success.reset", "&2&l✓ &aYou have reset your &eSkyMine&a.");
-	Message<?> SUCCESS_RESET_AUTOMATIC = message("success.reset-automatic", "&2&l✓ &aYour &eSkyMine &ahas been automatically reset.");
 	Message<?> SUCCESS_PICKUP          = message("success.pickup", "&2&l✓ &aYou have picked up your &eSkyMine&a.");
 	Message<?> SUCCESS_PLACE           = message("success.place", "&2&l✓ &aYou have placed your &eSkyMine&a.");
 

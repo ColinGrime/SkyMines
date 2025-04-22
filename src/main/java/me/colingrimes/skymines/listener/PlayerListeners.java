@@ -2,6 +2,7 @@ package me.colingrimes.skymines.listener;
 
 import me.colingrimes.midnight.event.PlayerInteractBlockEvent;
 import me.colingrimes.midnight.geometry.Position;
+import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.bukkit.Inventories;
 import me.colingrimes.midnight.util.bukkit.Players;
@@ -22,6 +23,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -167,6 +169,14 @@ public class PlayerListeners implements Listener {
 		if (plugin.getSkyMineManager().getToken().isToken(event.getItemDrop().getItemStack())) {
 			Messages.FAILURE_TOKEN_NO_DROP.send(event.getPlayer());
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerJoin(@Nonnull PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		if (!plugin.getPlayerManager().contains(player.getUniqueId())) {
+			Scheduler.async().run(() -> plugin.getPlayerStorage().loadPlayer(player), "PlayerSettings have failed to load. Please report this to the developer:");
 		}
 	}
 }
