@@ -60,7 +60,7 @@ public interface SkyMine {
 
 	/**
 	 * Gets the current name of the skymine.
-	 * The owner of the skymine is allowed to change this if they have access to the {@code /skymine home} command.
+	 * The owner of the skymine is allowed to change this if they have access to the {@code /skymine name} command.
 	 *
 	 * @return name of the skymine
 	 */

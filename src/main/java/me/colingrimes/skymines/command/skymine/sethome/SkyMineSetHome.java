@@ -12,16 +12,13 @@ import me.colingrimes.skymines.skymine.SkyMine;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class SkyMineSetHome implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.forceSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_SETHOME);
+		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_SETHOME);
 		if (skyMine == null) {
 			return;
 		}
@@ -36,8 +33,7 @@ public class SkyMineSetHome implements Command<SkyMines> {
 	@Nullable
 	@Override
 	public List<String> tabComplete(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		List<SkyMine> skyMines = plugin.getSkyMineManager().getSkyMines(sender.player());
-		return skyMines.isEmpty() ? null : IntStream.rangeClosed(1, skyMines.size()).mapToObj(Integer::toString).collect(Collectors.toCollection(ArrayList::new));
+		return SkyMineCommand.getSkyMineTabCompletion(plugin, sender, args);
 	}
 
 	@Override

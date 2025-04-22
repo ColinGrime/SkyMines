@@ -91,38 +91,33 @@ public class SkyMineManager {
 	}
 
 	/**
-	 * Attempts to get a specific skymine of a player by ID.
+	 * Attempts to get a specific skymine of a player by name or ID.
 	 *
 	 * @param player the player
-	 * @param id the ID number of the skymine (>= 1)
+	 * @param nameOrId the name or ID number of the skymine (>= 1)
 	 * @return skymine if one exists
 	 */
 	@Nonnull
-	public Optional<SkyMine> getSkyMine(@Nonnull Player player, @Nonnull String id) {
-		return getSkyMine(player.getUniqueId(), id);
+	public Optional<SkyMine> getSkyMine(@Nonnull Player player, @Nonnull String nameOrId) {
+		return getSkyMine(player.getUniqueId(), nameOrId);
 	}
 
 	/**
-	 * Attempts to get a specific skymine of a UUID by ID.
+	 * Attempts to get a specific skymine of a UUID by name or ID.
 	 *
 	 * @param uuid uuid of player
-	 * @param id the ID number of the skymine (>= 1)
+	 * @param nameOrId the name or ID number of the skymine (>= 1)
 	 * @return skymine if one exists
 	 */
 	@Nonnull
-	public Optional<SkyMine> getSkyMine(@Nonnull UUID uuid, @Nonnull String id) {
-		if (!Types.isInteger(id)) {
-			return Optional.empty();
-		}
-
+	public Optional<SkyMine> getSkyMine(@Nonnull UUID uuid, @Nonnull String nameOrId) {
 		List<SkyMine> skyMines = getSkyMines(uuid);
-		int integerId = Integer.parseInt(id);
 		for (int i=0; i<skyMines.size(); i++) {
-			if (integerId == i + 1) {
-				return Optional.of(skyMines.get(i));
+			SkyMine skyMine = skyMines.get(i);
+			if (nameOrId.equalsIgnoreCase(skyMine.getName()) || (Types.isInteger(nameOrId) && Integer.parseInt(nameOrId) == i+1)) {
+				return Optional.of(skyMine);
 			}
 		}
-
 		return Optional.empty();
 	}
 
