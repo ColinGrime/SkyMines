@@ -74,6 +74,7 @@ public class UpgradeDataResetCooldown extends UpgradeData {
 	 */
 	@Nonnull
 	public Duration getResetCooldown(int level) {
-		return resetCooldown.get(level);
+		Duration duration = resetCooldown.get(level);
+		return duration.getSeconds() > 1 ? duration : Duration.ofSeconds(1);
 	}
 }
