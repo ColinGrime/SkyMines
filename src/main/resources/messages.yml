@@ -47,13 +47,14 @@ usage:
   skymine:
     - "&7&l&m━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aCommands &7&l&m━━━━━━━━━━━━━━━━"
     - "&7- &a/sm list &e: &7Lists all mines."
-    - "&7- &a/sm name <id> <name> &e: &7Name a mine."
+    - "&7- &a/sm name <id> <name> &e: &7Names the mine."
     - "&7- &a/sm panel <id> &e: &7Opens the mine's main panel."
     - "&7- &a/sm upgrades <id> &e: &7Opens the mine's upgrade panel."
     - "&7- &a/sm home <id> &e: &7Teleports to the mine's home."
     - "&7- &a/sm sethome <id> &e: &7Sets the mine's home."
     - "&7- &a/sm reset <id> &e: &7Resets the mine."
     - "&7- &a/sm pickup <id> &e: &7Picks up the mine."
+    - "&7- &a/sm settings &e: &7Opens the preferences menu."
     - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   skymine-name:
     - "&eUsage: &a/sm name <id> <name>"
