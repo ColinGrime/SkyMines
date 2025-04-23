@@ -1,5 +1,6 @@
 package me.colingrimes.skymines.menu;
 
+import me.colingrimes.midnight.message.Message;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
@@ -10,6 +11,7 @@ import me.colingrimes.midnight.menu.Gui;
 import me.colingrimes.midnight.util.bukkit.Items;
 import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -75,19 +77,20 @@ public class MainMenu extends Gui {
 		switch (action) {
 			case "HOME" -> {
 				getPlayer().teleport(skyMine.getHome().toLocation());
-				Messages.ADMIN_SUCCESS_HOME.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
+				MineUtils.placeholders(Messages.ADMIN_SUCCESS_HOME, skyMine).send(getPlayer());
 			}
 			case "RESET" -> skyMine.reset(ResetOptions.standard(getPlayer()));
 			case "UPGRADES" -> {
 				if (!skyMine.isEnabled()) {
-					Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER.replace("{id}", skyMine.getIdentifier()).send(getPlayer());
+					MineUtils.placeholders(Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER, skyMine).send(getPlayer());
 					return;
 				}
 				new UpgradeMenu(getPlayer(), skyMine).open();
 			}
 			case "PICKUP" -> {
+				Message<?> success = MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine);
 				if (skyMine.pickup(getPlayer())) {
-					Messages.ADMIN_SUCCESS_PICKUP.replace("{player}", Players.getName(skyMine.getOwner())).send(getPlayer());
+					success.send(getPlayer());
 				} else {
 					Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(getPlayer());
 				}

@@ -28,7 +28,7 @@ public class SkyMineList implements Command<SkyMines> {
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
 			String message = MineUtils.placeholders(Messages.GENERAL_SKYMINE_LIST_REPEATING, skyMines.get(i-1)).toText();
-			String hover = Messages.GENERAL_SKYMINE_LIST_REPEATING_HOVER.toText();
+			String hover = MineUtils.placeholders(Messages.GENERAL_SKYMINE_LIST_REPEATING_HOVER, skyMines.get(i-1)).toText();
 			Markdown.of("[" + message + "](/skymines_home_" + i + " " + hover + ")").send(sender);
 		}
 		if (!Messages.GENERAL_SKYMINE_LIST_BOTTOM.toText().isEmpty()) {

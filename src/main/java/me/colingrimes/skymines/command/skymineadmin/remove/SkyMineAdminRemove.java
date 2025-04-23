@@ -25,12 +25,13 @@ public class SkyMineAdminRemove implements Command<SkyMines> {
 		}
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
-		if (skyMine.isPresent()) {
-			skyMine.get().remove();
-			MineUtils.placeholders(Messages.ADMIN_SUCCESS_REMOVE, skyMine.get()).send(sender);
-		} else {
+		if (skyMine.isEmpty()) {
 			Messages.ADMIN_FAILURE_SKYMINE_INVALID_INDEX.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
+			return;
 		}
+
+		MineUtils.placeholders(Messages.ADMIN_SUCCESS_REMOVE, skyMine.get()).send(sender);
+		skyMine.get().remove();
 	}
 
 	@Override

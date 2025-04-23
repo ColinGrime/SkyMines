@@ -179,7 +179,7 @@ public class DefaultSkyMine implements SkyMine {
 			Duration timeLeft = cooldowns.getSkyMineCooldown().getTimeLeft(this);
 			if (timeLeft.isPositive()) {
 				if (options.shouldNotify()) {
-					Messages.FAILURE_COOLDOWN_RESET.replace("{time}", Text.format(timeLeft)).send(options.getPlayer());
+					MineUtils.placeholders(Messages.FAILURE_COOLDOWN_RESET, this).replace("{time}", Text.format(timeLeft)).send(options.getPlayer());
 				}
 				return 0;
 			}

@@ -20,8 +20,8 @@ public class SkyMineName implements Command<SkyMines> {
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_NAME);
 		if (skyMine != null) {
+			MineUtils.placeholders(Messages.SUCCESS_NAME.replace("{name}", args.get(1)), skyMine).send(sender);
 			skyMine.setName(args.get(1));
-			MineUtils.placeholders(Messages.SUCCESS_NAME, skyMine).send(sender);
 		}
 	}
 

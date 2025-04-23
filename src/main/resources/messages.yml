@@ -3,42 +3,43 @@ general:
   skymine-list:
     top: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
     repeating: "&7→ [{name}] &eClick to teleport home. &7(&a{name}&7)"
-    repeating-hover: "&cNavigate Home"
+    repeating-hover: "&cClick to Teleport Home"
     bottom: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   cooldown:
-    reset-automatic: "&aYour &eSkyMine &ahas been automatically reset."
-    reset-finish: "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down."
-    pickup-finish: "&aYou are free to place &eSkyMines &aagain."
+    reset-automatic: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been automatically reset."
+    reset-finish: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ais ready to be reset."
+    pickup-finish: "&2&l✓ &aYou are free to place &eSkyMines &aagain."
 
 # Success messages:
 success:
   receive: "&2&l✓ &aYou have received &e{amount}x {token}&a."
-  name: "&2&l✓ &aThe &eSkyMine &ahas been named '&e{name}&a'."
+  name: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been renamed &e{name}&a."
   upgrade: "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a."
-  home: "&2&l✓ &aYou have been teleported to your &eSkyMine&a."
-  sethome: "&2&l✓ &aYou have changed your &eSkyMine's &ahome location."
-  reset: "&2&l✓ &aYou have reset your &eSkyMine&a."
-  pickup: "&2&l✓ &aYou have picked up your &eSkyMine&a."
-  place: "&2&l✓ &aYou have placed your &eSkyMine&a."
+  home: "&2&l✓ &aYou have teleported to the &eSkyMine &7(&e{label}&7)."
+  sethome: "&2&l✓ &aThe new home has been set for &eSkyMine &7(&e{label}&7)&a."
+  reset: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been reset."
+  pickup: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been picked up."
+  place: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been placed."
 
 # Failure messages:
 failure:
   skymine:
     not-loaded: "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading."
-    invalid-index: "&4&l❌ &cNo mine &cexists with the ID '&e{id}&c'."
-    invalid-identifier: "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist."
+    invalid-name: "&4&l❌ &cThere is no &eSkyMine &cwith the name &e{name}&c."
+    invalid-index: "&4&l❌ &cThere is no &eSkyMine &cwith the ID &e{id}&c."
+    invalid-identifier: "&4&l❌ &cThere is no &eSkyMine &cidentifier called &e{id}&c."
     none-owned: "&4&l❌ &cYou currently do not own any mines."
     max-owned: "&4&l❌ &cMaximum amount of mines reached."
     no-space: "&4&l❌ &cThere is no space here to place a &eSkyMine&c."
     upgrade-funds: "&4&l❌ &cYou do not have enough money to purchase this upgrade."
     upgrade-maxed: "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out."
-    sethome-distance: "&4&l❌ &cYou are too far away from this &eSkyMine &cto set a home here."
+    sethome-distance: "&4&l❌ &cYou are too far away from the &eSkyMine &7(&e{label}&7)&c."
   token:
     no-inventory-space: "&4&l❌ &cYou do not have enough inventory space."
     no-drop: "&4&l❌ &cYou are not allowed to drop your &eSkyMine Token&c."
     no-place: "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c."
   cooldown:
-    reset: "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c."
+    reset: "&4&l❌ &cThe cooldown on the &eSkyMine &7(&e{label}&7) &cis &e{time}&c."
     pickup: "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c."
   misc:
     no-permission: "&4&l❌ &cYou lack the required permission for this action."
@@ -99,11 +100,11 @@ admin:
       - "&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   success:
     give: "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a."
-    panel: "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a."
-    home: "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a."
-    reset: "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine&a."
-    pickup: "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a."
-    remove: "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a."
+    panel: "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine &7(&e{label}&7)&a."
+    home: "&2&l✓ &aYou have teleported to &e{player}&a's &eSkyMine &7(&e{label}&7)&a."
+    reset: "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine &7(&e{label}&7)&a."
+    pickup: "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine &7(&e{label}&7)&a."
+    remove: "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine &7(&e{label}&7)&a."
     reloaded: "&2&l✓ &eSkyMines &ahas been reloaded."
   failure:
     skymine:

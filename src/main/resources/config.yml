@@ -44,7 +44,7 @@ option:
     lines:
       - "&7[&e&lSkyMine&7] &8- &a{label}"
       - "&9Owner: &e{player}"
-      - "&9Reset Timer: &c{reset-cooldown}"
+      - "&9Reset Timer: &c{time}"
 
 misc:
   # Allows us to collect anonymous data about the plugin.

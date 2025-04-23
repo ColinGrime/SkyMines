@@ -4,6 +4,7 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
+import me.colingrimes.midnight.message.Message;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
@@ -24,8 +25,9 @@ public class SkyMinePickup implements Command<SkyMines> {
 		}
 
 		// Attempt to pickup SkyMine.
+		Message<?> success = MineUtils.placeholders(Messages.SUCCESS_PICKUP, skyMine);
 		if (skyMine.pickup(sender.player())) {
-			MineUtils.placeholders(Messages.SUCCESS_PICKUP, skyMine).send(sender);
+			success.send(sender);
 		} else {
 			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
 		}

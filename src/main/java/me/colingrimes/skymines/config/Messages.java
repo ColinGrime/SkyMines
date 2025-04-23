@@ -13,40 +13,41 @@ public interface Messages {
 	 **************************************************/
 	Message<?> GENERAL_SKYMINE_LIST_TOP             = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
 	Message<?> GENERAL_SKYMINE_LIST_REPEATING       = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
-	Message<?> GENERAL_SKYMINE_LIST_REPEATING_HOVER = message("general.skymine-list.repeating-hover", "&cNavigate Home");
+	Message<?> GENERAL_SKYMINE_LIST_REPEATING_HOVER = message("general.skymine-list.repeating-hover", "&cClick to Teleport Home");
 	Message<?> GENERAL_SKYMINE_LIST_BOTTOM          = message("general.skymine-list.bottom");
-	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC     = message("general.cooldown.reset-automatic", "&aYour &eSkyMine &ahas been automatically reset.");
-	Message<?> GENERAL_COOLDOWN_RESET_FINISH        = message("general.cooldown.reset-finish", "&aThe &eSkyMine &awith the ID &e{id} &ahas just finished cooling down.");
-	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH       = message("general.cooldown.pickup-finish", "&aYou are free to place &eSkyMines &aagain.");
+	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC     = message("general.cooldown.reset-automatic", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been automatically reset.");
+	Message<?> GENERAL_COOLDOWN_RESET_FINISH        = message("general.cooldown.reset-finish", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ais ready to be reset.");
+	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH       = message("general.cooldown.pickup-finish", "&2&l✓ &aYou are free to place &eSkyMines &aagain.");
 
 	/**************************************************
 	 *                 Success Messages               *
 	 **************************************************/
 	Message<?> SUCCESS_RECEIVE         = message("success.receive", "&2&l✓ &aYou have received &e{amount}x {token}&a.");
-	Message<?> SUCCESS_NAME            = message("success.name", "&2&l✓ &aThe &eSkyMine &ahas been named '&e{name}&a'.");
+	Message<?> SUCCESS_NAME            = message("success.name", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been renamed &e{name}&a.");
 	Message<?> SUCCESS_UPGRADE         = message("success.upgrade", "&2&l✓ &aYou have upgraded &e{upgrade} &ato level &e{level}&a.");
-	Message<?> SUCCESS_HOME            = message("success.home", "&2&l✓ &aYou have been teleported to your &eSkyMine&a.");
-	Message<?> SUCCESS_SETHOME         = message("success.sethome", "&2&l✓ &aYou have changed your &eSkyMine's &ahome location.");
-	Message<?> SUCCESS_RESET           = message("success.reset", "&2&l✓ &aYou have reset your &eSkyMine&a.");
-	Message<?> SUCCESS_PICKUP          = message("success.pickup", "&2&l✓ &aYou have picked up your &eSkyMine&a.");
-	Message<?> SUCCESS_PLACE           = message("success.place", "&2&l✓ &aYou have placed your &eSkyMine&a.");
+	Message<?> SUCCESS_HOME            = message("success.home", "&2&l✓ &aYou have teleported to the &eSkyMine &7(&e{label}&7).");
+	Message<?> SUCCESS_SETHOME         = message("success.sethome", "&2&l✓ &aThe new home has been set for &eSkyMine &7(&e{label}&7)&a.");
+	Message<?> SUCCESS_RESET           = message("success.reset", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been reset.");
+	Message<?> SUCCESS_PICKUP          = message("success.pickup", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been picked up.");
+	Message<?> SUCCESS_PLACE           = message("success.place", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been placed.");
 
 	/**************************************************
 	 *                 Failure Messages               *
 	 **************************************************/
 	Message<?> FAILURE_SKYMINE_NOT_LOADED         = message("failure.skymine.not-loaded", "&4&l❌ &cPlease wait to until all &eSkyMines &chave finished loading.");
-	Message<?> FAILURE_SKYMINE_INVALID_INDEX      = message("failure.skymine.invalid-index", "&4&l❌ &cNo mine &cexists with the ID '&e{id}&c'.");
-	Message<?> FAILURE_SKYMINE_INVALID_IDENTIFIER = message("failure.skymine.invalid-identifier", "&4&l❌ &cThe &eSkyMine &cidentifier '&e{id}&c' does not exist.");
+	Message<?> FAILURE_SKYMINE_INVALID_NAME       = message("failure.skymine.invalid-name", "&4&l❌ &cThere is no &eSkyMine &cwith the name &e{name}&c.");
+	Message<?> FAILURE_SKYMINE_INVALID_INDEX      = message("failure.skymine.invalid-index", "&4&l❌ &cThere is no &eSkyMine &cwith the ID &e{id}&c.");
+	Message<?> FAILURE_SKYMINE_INVALID_IDENTIFIER = message("failure.skymine.invalid-identifier", "&4&l❌ &cThere is no &eSkyMine &cidentifier called &e{id}&c.");
 	Message<?> FAILURE_SKYMINE_NONE_OWNED         = message("failure.skymine.none-owned", "&4&l❌ &cYou currently do not own any mines.");
 	Message<?> FAILURE_SKYMINE_MAX_OWNED          = message("failure.skymine.max-owned", "&4&l❌ &cMaximum amount of mines reached.");
 	Message<?> FAILURE_SKYMINE_NO_SPACE           = message("failure.skymine.no-space", "&4&l❌ &cThere is no space here to place a &eSkyMine&c.");
 	Message<?> FAILURE_SKYMINE_UPGRADE_FUNDS      = message("failure.skymine.upgrade-funds", "&4&l❌ &cYou do not have enough money to purchase this upgrade.");
 	Message<?> FAILURE_SKYMINE_UPGRADE_MAXED      = message("failure.skymine.upgrade-maxed", "&4&l❌ &cThis &eSkyMine's &cupgrade is already maxed out.");
-	Message<?> FAILURE_SKYMINE_SETHOME_DISTANCE   = message("failure.skymine.sethome-distance", "&4&l❌ &cYou are too far away from this &eSkyMine&c.");
+	Message<?> FAILURE_SKYMINE_SETHOME_DISTANCE   = message("failure.skymine.sethome-distance", "&4&l❌ &cYou are too far away from the &eSkyMine &7(&e{label}&7)&c.");
 	Message<?> FAILURE_TOKEN_NO_INVENTORY_SPACE   = message("failure.token.no-inventory-space", "&4&l❌ &cYou do not have enough inventory space.");
 	Message<?> FAILURE_TOKEN_NO_DROP              = message("failure.token.no-drop", "&4&l❌ &cYou are not allowed to drop your &eSkyMine Token&c.");
 	Message<?> FAILURE_TOKEN_NO_PLACE             = message("failure.token.no-place", "&4&l❌ &cYou are forbidden from placing down your &eSkyMine Token&c.");
-	Message<?> FAILURE_COOLDOWN_RESET             = message("failure.cooldown.reset", "&4&l❌ &cThe cooldown on this &eSkyMine &cis &e{time}&c.");
+	Message<?> FAILURE_COOLDOWN_RESET             = message("failure.cooldown.reset", "&4&l❌ &cThe cooldown on the &eSkyMine &7(&e{label}&7) &cis &e{time}&c.");
 	Message<?> FAILURE_COOLDOWN_PICKUP            = message("failure.cooldown.pickup", "&4&l❌ &cDue to picking up a &eSkyMine&c, you must wait another &e{time}&c.");
 	Message<?> FAILURE_MISC_NO_PERMISSION         = message("failure.misc.no-permission", "&4&l❌ &cYou lack the required permission for this action.");
 
@@ -114,11 +115,11 @@ public interface Messages {
 			"&8&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	);
 	Message<?> ADMIN_SUCCESS_GIVE                  = message("admin.success.give", "&2&l✓ &aYou have given &e{amount}x {token} &ato &e{player}&a.");
-	Message<?> ADMIN_SUCCESS_PANEL                 = message("admin.success.panel", "&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine&a.");
-	Message<?> ADMIN_SUCCESS_HOME                  = message("admin.success.home", "&2&l✓ &aYou have been teleported to &e{player}&a's &eSkyMine&a.");
-	Message<?> ADMIN_SUCCESS_RESET                 = message("admin.success.reset", "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine&a.");
-	Message<?> ADMIN_SUCCESS_PICKUP                = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine&a.");
-	Message<?> ADMIN_SUCCESS_REMOVE                = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine&a.");
+	Message<?> ADMIN_SUCCESS_PANEL                 = message("admin.success.panel","&2&l✓ &aYou have accessed &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
+	Message<?> ADMIN_SUCCESS_HOME                  = message("admin.success.home", "&2&l✓ &aYou have teleported to &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
+	Message<?> ADMIN_SUCCESS_RESET                 = message("admin.success.reset", "&2&l✓ &aYou have reset &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
+	Message<?> ADMIN_SUCCESS_PICKUP                = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
+	Message<?> ADMIN_SUCCESS_REMOVE                = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
 	Message<?> ADMIN_SUCCESS_RELOADED              = message("admin.success.reloaded", "&2&l✓ &eSkyMines &ahas been reloaded.");
 	Message<?> ADMIN_FAILURE_SKYMINE_INVALID_INDEX = message("admin.failure.skymine.invalid-index", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
 	Message<?> ADMIN_FAILURE_SKYMINE_NONE_OWNED    = message("admin.failure.skymine.none-owned", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");

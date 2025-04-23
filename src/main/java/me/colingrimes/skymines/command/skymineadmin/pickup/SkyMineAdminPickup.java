@@ -4,6 +4,7 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
+import me.colingrimes.midnight.message.Message;
 import me.colingrimes.midnight.util.misc.UUIDs;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
@@ -25,11 +26,17 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 		}
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
-		if (skyMine.isPresent()) {
-			skyMine.get().pickup(sender.player());
-			MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine.get()).send(sender);
-		} else {
+		if (skyMine.isEmpty()) {
 			Messages.ADMIN_FAILURE_SKYMINE_INVALID_INDEX.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
+			return;
+		}
+
+		// Attempt to pickup SkyMine.
+		Message<?> success = MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine.get());
+		if (skyMine.get().pickup(sender.player())) {
+			success.send(sender);
+		} else {
+			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
 		}
 	}
 

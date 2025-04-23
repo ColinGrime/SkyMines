@@ -5,6 +5,7 @@ import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.midnight.message.Message;
+import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
@@ -45,7 +46,11 @@ public class SkyMineCommand implements Command<SkyMines> {
 
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.getFirst());
 		if (skyMine.isEmpty()) {
-			Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
+			if (Types.isInteger(args.getFirst())) {
+				Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
+			} else {
+				Messages.FAILURE_SKYMINE_INVALID_NAME.replace("{name}", args.getFirst()).send(sender);
+			}
 			return null;
 		}
 

@@ -15,6 +15,7 @@ import me.colingrimes.skymines.menu.MainMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.manager.SkyMineManager;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -86,7 +87,7 @@ public class PlayerListeners implements Listener {
 
 		if (manager.createSkyMine(player, item)) {
 			Inventories.removeSingle(player.getInventory(), item);
-			Messages.SUCCESS_PLACE.send(player);
+			MineUtils.placeholders(Messages.SUCCESS_PLACE, manager.getSkyMines(player).getLast()).send(player);
 			event.setCancelled(true);
 		} else {
 			Messages.FAILURE_SKYMINE_NO_SPACE.send(player);
@@ -113,7 +114,7 @@ public class PlayerListeners implements Listener {
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTION_SKYMINE_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome().toLocation());
-				Messages.SUCCESS_HOME.send(player);
+				MineUtils.placeholders(Messages.SUCCESS_HOME, skyMine).send(player);
 				event.setCancelled(true);
 			}
 			return;
@@ -129,11 +130,11 @@ public class PlayerListeners implements Listener {
 				continue;
 			} else if (event.isRightClick()) {
 				new MainMenu(plugin, player, skyMine).open();
-				Messages.ADMIN_SUCCESS_PANEL.replace("{player}", Players.getName(skyMine.getOwner())).send(player);
+				MineUtils.placeholders(Messages.ADMIN_SUCCESS_PANEL, skyMine).send(player);
 				event.setCancelled(true);
 			} else if (player.isSneaking() && Settings.OPTION_SKYMINE_FAST_HOME.get()) {
 				player.teleport(skyMine.getHome().toLocation());
-				Messages.SUCCESS_HOME.send(player);
+				MineUtils.placeholders(Messages.ADMIN_SUCCESS_HOME, skyMine).send(player);
 				event.setCancelled(true);
 			}
 			return;
