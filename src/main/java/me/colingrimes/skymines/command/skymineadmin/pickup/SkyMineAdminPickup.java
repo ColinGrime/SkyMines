@@ -8,6 +8,7 @@ import me.colingrimes.midnight.util.misc.UUIDs;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
 		if (skyMine.isPresent()) {
 			skyMine.get().pickup(sender.player());
-			Messages.ADMIN_SUCCESS_PICKUP.replace("{player}", args.getFirst()).send(sender);
+			MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine.get()).send(sender);
 		} else {
 			Messages.ADMIN_FAILURE_SKYMINE_INVALID_INDEX.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
 		}

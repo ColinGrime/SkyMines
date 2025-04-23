@@ -8,6 +8,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ public class SkyMineName implements Command<SkyMines> {
 		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_NAME);
 		if (skyMine != null) {
 			skyMine.setName(args.get(1));
-			Messages.SUCCESS_NAME.replace("{name}", args.get(1)).send(sender);
+			MineUtils.placeholders(Messages.SUCCESS_NAME, skyMine).send(sender);
 		}
 	}
 

@@ -2,27 +2,12 @@ package me.colingrimes.skymines.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public final class Utils {
-
-	/**
-	 * Checks if the specified material is a valid material for the border.
-	 *
-	 * @param material the material
-	 * @return true if the material is valid
-	 */
-	public static boolean isValidBorderType(@Nullable Material material) {
-		return material != null
-				&& material.isBlock()
-				&& material.isSolid()
-				&& !material.hasGravity()
-				&& !material.isAir();
-	}
 
 	/**
 	 * Deserializes the old {@link Location} format.

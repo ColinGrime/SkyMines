@@ -7,12 +7,12 @@ import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
 import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.midnight.serialize.Json;
-import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.util.RayTraceResult;
@@ -34,14 +34,9 @@ public class SkyMineAdminDebug implements Command<SkyMines> {
 		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines()) {
 			SkyMineStructure structure = skyMine.getStructure();
 			if (structure.contains(position)) {
-				boolean enabled = skyMine.isEnabled();
 				JsonObject upgradeJson = (JsonObject) skyMine.getUpgrades().serialize();
 				upgradeJson.remove("identifier");
-				Messages.ADMIN_GENERAL_SKYMINE_DEBUG
-						.replace("{owner}", Players.getName(skyMine.getOwner()))
-						.replace("{index}", skyMine.getIndex())
-						.replace("{identifier}", (enabled ? "&a" : "&c") + skyMine.getIdentifier())
-						.replace("{enabled}", enabled ? "&2Enabled" : "&4Disabled")
+				MineUtils.placeholders(Messages.ADMIN_GENERAL_SKYMINE_DEBUG.replace("{enabled}", skyMine.isEnabled() ? "&2Enabled" : "&4Disabled"), skyMine)
 						.replace("{type}", Text.format(skyMine.getStructure().getBorderType().name()))
 						.replace("{size}", Json.toString(skyMine.getStructure().getMineSize().serialize()))
 						.replace("{upgrades}", Json.toString(upgradeJson))

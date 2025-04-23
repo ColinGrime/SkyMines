@@ -8,6 +8,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ public class SkyMineHome implements Command<SkyMines> {
 		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_HOME);
 		if (skyMine != null) {
 			sender.player().teleport(skyMine.getHome().toLocation());
-			Messages.SUCCESS_HOME.send(sender);
+			MineUtils.placeholders(Messages.SUCCESS_HOME, skyMine).send(sender);
 		}
 	}
 

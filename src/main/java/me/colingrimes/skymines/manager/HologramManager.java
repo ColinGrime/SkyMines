@@ -3,11 +3,11 @@ package me.colingrimes.skymines.manager;
 import me.colingrimes.midnight.geometry.Region;
 import me.colingrimes.midnight.hologram.Hologram;
 import me.colingrimes.midnight.scheduler.Scheduler;
-import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -37,13 +37,9 @@ public class HologramManager {
 			hologram.spawn();
 		}
 
-		List<String> lines = List.of(Settings.OPTION_HOLOGRAM_LINES
-				.replace("{player}", Players.getName(skyMine.getOwner()))
-				.replace("{name}", skyMine.getName() != null ? skyMine.getName() : "#" + skyMine.getIndex())
-				.replace("{id}", skyMine.getIndex())
+		List<String> lines = MineUtils.placeholders(Settings.OPTION_HOLOGRAM_LINES, skyMine)
 				.replace("{reset-cooldown}", Text.format(plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine)))
-				.toText().split("\n")
-		);
+				.toTextList();
 		hologram.setLines(lines);
 	}
 

@@ -39,10 +39,10 @@ option:
   hologram:
     # Enables holograms for every placed skymine.
     toggle: true
-    # The hologram lines. Supported placeholders: {player}, {name}, {id}, {reset-cooldown}
-    # Placeholders will auto-update if they change. Also, {name} shows the skymine name if available, or the {id} if not.
+    # The hologram lines. Placeholders will auto-update if they change.
+    # Additional placeholder: {reset-cooldown}
     lines:
-      - "&7[&e&lSkyMine&7] &8- &a{name}"
+      - "&7[&e&lSkyMine&7] &8- &a{label}"
       - "&9Owner: &e{player}"
       - "&9Reset Timer: &c{reset-cooldown}"
 

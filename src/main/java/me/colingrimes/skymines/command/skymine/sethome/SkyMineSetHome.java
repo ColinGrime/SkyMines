@@ -9,6 +9,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,9 +25,9 @@ public class SkyMineSetHome implements Command<SkyMines> {
 		}
 
 		if (skyMine.setHome(Pose.of(sender.location()))) {
-			Messages.SUCCESS_SETHOME.send(sender);
+			MineUtils.placeholders(Messages.SUCCESS_SETHOME, skyMine).send(sender);
 		} else {
-			Messages.FAILURE_SKYMINE_SETHOME_DISTANCE.send(sender);
+			MineUtils.placeholders(Messages.FAILURE_SKYMINE_SETHOME_DISTANCE, skyMine).send(sender);
 		}
 	}
 

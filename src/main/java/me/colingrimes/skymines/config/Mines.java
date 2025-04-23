@@ -7,7 +7,7 @@ import me.colingrimes.midnight.util.bukkit.Items;
 import me.colingrimes.midnight.util.io.Logger;
 import me.colingrimes.skymines.skymine.upgrade.UpgradeType;
 import me.colingrimes.skymines.data.UpgradeData;
-import me.colingrimes.skymines.util.Utils;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -58,7 +58,7 @@ public interface Mines {
 			}
 
 			// Don't load in mines without a solid border type.
-			if (!Utils.isValidBorderType(borderType)) {
+			if (!MineUtils.isValidBorderType(borderType)) {
 				Logger.warn("[SkyMines] Mine identifier '" + identifier + "' does not have a solid (no gravity) border type.");
 				return null;
 			}

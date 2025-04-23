@@ -7,6 +7,7 @@ import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.player.PlayerSettings;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,13 +36,13 @@ public class SkyMineListeners implements Listener {
 		// Automatic reset.
 		if (settings.shouldAutoReset()) {
 			if (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 && settings.shouldNotify()) {
-				Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC.send(player.get());
+				MineUtils.placeholders(Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC, skyMine).send(player.get());
 			}
 		}
 
 		// Notify on reset finish (will not be sent if automatic reset is enabled).
 		else if (settings.shouldNotify()) {
-			Messages.GENERAL_COOLDOWN_RESET_FINISH.replace("{id}", skyMine.getIndex()).send(player.get());
+			MineUtils.placeholders(Messages.GENERAL_COOLDOWN_RESET_FINISH, skyMine).send(player.get());
 		}
 	}
 }

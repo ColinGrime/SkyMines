@@ -8,6 +8,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymine.SkyMineCommand;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +25,7 @@ public class SkyMinePickup implements Command<SkyMines> {
 
 		// Attempt to pickup SkyMine.
 		if (skyMine.pickup(sender.player())) {
-			Messages.SUCCESS_PICKUP.send(sender);
+			MineUtils.placeholders(Messages.SUCCESS_PICKUP, skyMine).send(sender);
 		} else {
 			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
 		}

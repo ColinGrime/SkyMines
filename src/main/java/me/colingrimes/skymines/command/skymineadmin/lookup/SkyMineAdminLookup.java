@@ -8,11 +8,10 @@ import me.colingrimes.midnight.util.misc.UUIDs;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
-import org.bukkit.Location;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,16 +34,9 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 		if (!Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_TOP.toText().isEmpty()) {
 			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_TOP.replace("{player}", args.getFirst()).send(sender);
 		}
-		for (int i=1; i<=skyMines.size(); i++) {
-			Location location = skyMines.get(i - 1).getHome().toLocation();
-			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_REPEATING
-					.replace("{id}", i)
-					.replace("{world}", Objects.requireNonNull(location.getWorld()).getName())
-					.replace("{x}", location.getBlockX())
-					.replace("{y}", location.getBlockY())
-					.replace("{z}", location.getBlockZ())
-					.send(sender);
-		}
+
+		skyMines.forEach(mine -> MineUtils.placeholders(Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_REPEATING, mine).send(sender));
+
 		if (!Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.toText().isEmpty()) {
 			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.replace("{player}", args.getFirst()).send(sender);
 		}
