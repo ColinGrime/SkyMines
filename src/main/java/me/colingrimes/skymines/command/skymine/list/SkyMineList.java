@@ -8,7 +8,7 @@ import me.colingrimes.midnight.util.text.Markdown;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
-import org.bukkit.Location;
+import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -27,14 +27,9 @@ public class SkyMineList implements Command<SkyMines> {
 			Messages.GENERAL_SKYMINE_LIST_TOP.send(sender);
 		}
 		for (int i=1; i<=skyMines.size(); i++) {
-			Location loc = skyMines.get(i - 1).getHome().toLocation();
-			String message = Messages.GENERAL_SKYMINE_LIST_REPEATING
-					.replace("{id}", i)
-					.replace("{x}", loc.getBlockX())
-					.replace("{y}", loc.getBlockY())
-					.replace("{z}", loc.getBlockZ())
-					.toText();
-			Markdown.of("[" + message + "](/skymines_home_" + i + " &cGo Home!)").send(sender);
+			String message = MineUtils.placeholders(Messages.GENERAL_SKYMINE_LIST_REPEATING, skyMines.get(i-1)).toText();
+			String hover = Messages.GENERAL_SKYMINE_LIST_REPEATING_HOVER.toText();
+			Markdown.of("[" + message + "](/skymines_home_" + i + " " + hover + ")").send(sender);
 		}
 		if (!Messages.GENERAL_SKYMINE_LIST_BOTTOM.toText().isEmpty()) {
 			Messages.GENERAL_SKYMINE_LIST_BOTTOM.send(sender);
