@@ -38,7 +38,7 @@ public class HologramManager {
 		}
 
 		List<String> lines = MineUtils.placeholders(Settings.OPTION_HOLOGRAM_LINES, skyMine)
-				.replace("{reset-cooldown}", Text.format(plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine)))
+				.replace("{time}", Text.format(plugin.getCooldownManager().getSkyMineCooldown().getTimeLeft(skyMine)))
 				.toTextList();
 		hologram.setLines(lines);
 	}
