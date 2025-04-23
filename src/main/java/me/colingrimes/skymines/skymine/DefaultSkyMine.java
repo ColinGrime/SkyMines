@@ -3,7 +3,6 @@ package me.colingrimes.skymines.skymine;
 import me.colingrimes.midnight.geometry.Pose;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.util.Common;
-import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
@@ -16,6 +15,7 @@ import me.colingrimes.skymines.manager.SkyMineManager;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.upgrade.SkyMineUpgrades;
+import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -188,9 +188,9 @@ public class DefaultSkyMine implements SkyMine {
 		// Sends different success message depending on if the player is the owner of the mine.
 		if (options.shouldNotify()) {
 			if (options.getPlayer().getUniqueId().equals(owner)) {
-				Messages.SUCCESS_RESET.send(options.getPlayer());
+				MineUtils.placeholders(Messages.SUCCESS_RESET, this).send(options.getPlayer());
 			} else {
-				Messages.ADMIN_SUCCESS_RESET.replace("{player}", Players.getName(owner)).send(options.getPlayer());
+				MineUtils.placeholders(Messages.ADMIN_SUCCESS_RESET, this).send(options.getPlayer());
 			}
 		}
 
@@ -249,9 +249,13 @@ public class DefaultSkyMine implements SkyMine {
 	}
 
 	/**
-	 * Applies the reset cooldown to the mine.
+	 * Applies the reset cooldown to the mine if it is enabled.
 	 */
 	private void applyCooldown() {
+		if (!isEnabled()) {
+			return;
+		}
+
 		Consumer<SkyMine> action = (skyMine) -> Common.call(new SkyMineCooldownFinishEvent(skyMine));
 		cooldowns.getSkyMineCooldown().add(this, getUpgrades().getResetCooldown().getResetCooldown(), action);
 	}
