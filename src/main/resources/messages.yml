@@ -20,7 +20,7 @@
 general:
   skymine-list:
     top: "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━"
-    repeating: "&7→ [{name}] &eClick to teleport home. &7(&a{name}&7)"
+    repeating: "&7→ [#{id}] &eClick to teleport home. &7(&a{name}&7)"
     repeating-hover: "&cClick to Teleport Home"
     bottom: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   cooldown:
