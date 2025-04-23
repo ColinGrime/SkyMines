@@ -1,3 +1,21 @@
+#┌━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┐
+#┃ This file contains nearly every message used in this plugin. ┃
+#┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃
+#┃ Placeholders available for messages involving SkyMines:      ┃
+#┃   1. {id} - Index of Mine                                    ┃
+#┃   2. {index} - Index of Mine                                 ┃
+#┃   3. {name} - Name of Mine (or "&8Unknown" if unavailable)   ┃
+#┃   4. {label} - Name of Mine (or "#{id}" if unavailable)      ┃
+#┃   5. {owner} - Owner's Name of Mine                          ┃
+#┃   6. {player} - Owner's Name of Mine                         ┃
+#┃   7. {enabled} - "&2Enabled" or "&cDisabled"                 ┃
+#┃   8. {identifier} - Identifier of Mine (color-coded)         ┃
+#┃   9. {x} - X coordinate of Mine Home                         ┃
+#┃  10. {y} - Y coordinate of Mine Home                         ┃
+#┃  11. {z} - Z coordinate of Mine Home                         ┃
+#┃  12. {world} - World of Mine                                 ┃
+#└━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┘
+
 # General messages:
 general:
   skymine-list:
