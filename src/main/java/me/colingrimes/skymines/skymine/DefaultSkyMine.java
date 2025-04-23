@@ -53,6 +53,7 @@ public class DefaultSkyMine implements SkyMine {
 	 */
 	public DefaultSkyMine(@Nonnull SkyMines plugin, @Nonnull UUID owner, @Nonnull String identifier, @Nonnull SkyMineStructure structure, @Nonnull SkyMineUpgrades upgrades, @Nonnull Pose home) {
 		this(plugin, UUID.randomUUID(), owner, identifier, structure, upgrades, home, null);
+		this.reset();
 	}
 
 	/**

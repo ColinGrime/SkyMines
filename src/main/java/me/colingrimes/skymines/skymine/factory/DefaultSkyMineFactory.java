@@ -7,7 +7,6 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Mines;
 import me.colingrimes.skymines.skymine.DefaultSkyMine;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.structure.SkyMineStructure;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
 import org.bukkit.Location;
@@ -74,8 +73,6 @@ public class DefaultSkyMineFactory implements SkyMineFactory {
 		home.setYaw(yaw);
 
 		// creates new skymine and builds the mine
-		SkyMine skyMine = new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, tokenProvider.getUpgrades(token), Pose.of(home));
-		skyMine.reset(ResetOptions.create().cooldowns(true).build());
-		return Optional.of(skyMine);
+		return Optional.of(new DefaultSkyMine(plugin, owner.getUniqueId(), mine.getIdentifier(), structure, tokenProvider.getUpgrades(token), Pose.of(home)));
 	}
 }
