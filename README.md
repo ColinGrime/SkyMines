@@ -19,6 +19,8 @@ All menus, messages, and behaviors are configurable through the YAML files liste
 * Mines are **personal** – only the owner of a mine can access and manage them.
 * Mines are **placed** using physical token items.
 * Mines are **accessed** via right-click on the wall or the `/sm panel` command.
+* Mines have **holograms** that can show its name, owner, and reset timer.
+* Mines have **homes** that can be set (players must be close to the mine).
 * Define **custom mine types** in `mines.yml`:
   * Customize token appearance.
   * Set default size and border type.
@@ -28,10 +30,22 @@ All menus, messages, and behaviors are configurable through the YAML files liste
   * Reset Cooldown – reduce time between resets.
 * Additionally, you can set an upgrade's cost and optional upgrade permission.
 * Upgrade menus are **dynamic**—no manual updates needed when editing upgrades.
-* Mines have their own homes that can be set (players must be close to the mine).
-* Mines can be personalized with the various options available in the `config.yml`.
+* Mines can be customized with the various options available in the `config.yml`.
 * All messages and panel slots are **configurable** in the `messages.yml` and `menus.yml` files.
 * **Multiple storage options**: PostgreSQL, MySQL, SQLite
+
+## Player Workflow
+* Players can receive **SkyMine Tokens** that hold the type and size of their mine.
+* Players can right-click a **SkyMine Token** over air to place it down.
+* Players can right-click the border of a **SkyMine** to open its Main Menu.
+* Players can then choose to Go Home, Reset Mine, Upgrade the Mine, or Pickup Mine.
+* Players can set the mine's home via the `/sm sethome [id]` command.
+* Players can set the mine's name via the `/sm name [id] [name]` command.
+* Players can list and teleport to their mines via the `/sm list` command.
+* Players can edit their mine preferences via the `/sm settings` command.
+  * `Notifications`: Toggle cooldown and other mine notifications.
+  * `Automatic Reset`: Toggle automatic resetting of mines (player must be online).
+* Players can shift-left-click the border of a **SkyMine** to instantly teleport to its home.
 
 ## Configurations:
 * [`mines.yml`](https://github.com/ColinGrime/SkyMines/blob/master/src/main/resources/mines.yml) - Allows you to define custom mine types with unique upgrade paths.
@@ -47,6 +61,8 @@ Aliases: /skymines, /skymine, /sm
   * View help information on skymine commands.
 * `/skymines list`
   * Lists the IDs of your skymines, along with an easy way to teleport to them.
+* `/skymines name [id] [name]`
+  * Attaches a name to the specified mine.
 * `/skymines panel [id]`
   * Opens up the main panel for the specified skymine.
 * `/skymines upgrades [id]`
@@ -59,6 +75,8 @@ Aliases: /skymines, /skymine, /sm
   * Resets the specified skymine.
 * `/skymines pickup [id]`
   * Picks up the specified skymine.
+* `/skymines settings`
+  * Opens up the preferences menu.
 
 ## Admin Commands:
 Aliases: /skyminesadmin, /skymineadmin, /sma
@@ -81,8 +99,12 @@ Aliases: /skyminesadmin, /skymineadmin, /sma
 
 ## Permissions:
 Player:
+* `skymines.name` - Set your mine's name.
 * `skymines.home` - Teleport to your mine's home.
 * `skymines.sethome` - Set your mine's home.
+* `skymines.settings` - Open the preference menu.
+* `skymines.settings.notify` - Toggle the `Notifications` setting.
+* `skymines.settings.autoreset` - Toggle the `Auto Reset` setting.
 
 Admin:
 * `skymines.admin` - Access to the `/sma` command.
@@ -97,4 +119,4 @@ Admin:
 
 ---
 
-README.md was last updated on v2.0.0.
+README.md was last updated on v2.1.0.
