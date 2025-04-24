@@ -4,7 +4,6 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
-import me.colingrimes.midnight.message.Message;
 import me.colingrimes.midnight.util.misc.Types;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
@@ -29,32 +28,27 @@ public class SkyMineCommand implements Command<SkyMines> {
 	 * Gets the {@link SkyMine} based on the first argument of the command.
 	 * The argument can be either a skymine name or index.
 	 * <p>
-	 * If one is not entered, it will send the specified usage message.
+	 * If one is not entered, it will send a failure message to the sender.
 	 *
 	 * @param plugin the plugin
 	 * @param sender the sender of the command
 	 * @param args the argument list
-	 * @param usageMessage the usage message to send if no skymine is found
 	 * @return a valid skymine if one was entered, null otherwise
 	 */
 	@Nullable
-	public static SkyMine getSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, ArgumentList args, @Nonnull Message<?> usageMessage) {
-		if (args.isEmpty()) {
-			usageMessage.send(sender);
-			return null;
-		}
-
+	public static SkyMine getSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, ArgumentList args) {
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.getFirst());
-		if (skyMine.isEmpty()) {
-			if (Types.isInteger(args.getFirst())) {
-				Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
-			} else {
-				Messages.FAILURE_SKYMINE_INVALID_NAME.replace("{name}", args.getFirst()).send(sender);
-			}
-			return null;
+		if (skyMine.isPresent()) {
+			return skyMine.get();
 		}
 
-		return skyMine.get();
+		// Send a failure message depending on if they attempted to send an ID or name.
+		if (Types.isInteger(args.getFirst())) {
+			Messages.FAILURE_SKYMINE_INVALID_INDEX.replace("{id}", args.getFirst()).send(sender);
+		} else {
+			Messages.FAILURE_SKYMINE_INVALID_NAME.replace("{name}", args.getFirst()).send(sender);
+		}
+		return null;
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class SkyMineHome implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_HOME);
+		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args);
 		if (skyMine != null) {
 			sender.player().teleport(skyMine.getHome().toLocation());
 			MineUtils.placeholders(Messages.SUCCESS_HOME, skyMine).send(sender);
@@ -35,6 +35,7 @@ public class SkyMineHome implements Command<SkyMines> {
 	public void configureProperties(@Nonnull CommandProperties properties) {
 		properties.setUsage(Messages.USAGE_SKYMINE_HOME);
 		properties.setPermission("skymines.home");
+		properties.setArgumentsRequired(1);
 		properties.setPlayerRequired(true);
 	}
 }

@@ -18,7 +18,7 @@ public class SkyMineUpgrades implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args, Messages.USAGE_SKYMINE_UPGRADES);
+		SkyMine skyMine = SkyMineCommand.getSkyMine(plugin, sender, args);
 		if (skyMine == null) {
 			return;
 		}
@@ -41,6 +41,7 @@ public class SkyMineUpgrades implements Command<SkyMines> {
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
 		properties.setUsage(Messages.USAGE_SKYMINE_UPGRADES);
+		properties.setArgumentsRequired(1);
 		properties.setPlayerRequired(true);
 	}
 }
