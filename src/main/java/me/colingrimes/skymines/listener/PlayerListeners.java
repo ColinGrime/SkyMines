@@ -5,7 +5,6 @@ import me.colingrimes.midnight.geometry.Position;
 import me.colingrimes.midnight.scheduler.Scheduler;
 import me.colingrimes.midnight.util.Common;
 import me.colingrimes.midnight.util.bukkit.Inventories;
-import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.api.SkyMineBlockBreakEvent;
@@ -14,6 +13,7 @@ import me.colingrimes.skymines.config.Settings;
 import me.colingrimes.skymines.menu.MainMenu;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.manager.SkyMineManager;
+import me.colingrimes.skymines.skymine.option.ResetOptions;
 import me.colingrimes.skymines.skymine.token.SkyMineToken;
 import me.colingrimes.skymines.util.MineUtils;
 import org.bukkit.entity.Player;
@@ -176,8 +176,18 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onPlayerJoin(@Nonnull PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		if (!plugin.getPlayerManager().contains(player.getUniqueId())) {
-			Scheduler.async().run(() -> plugin.getPlayerStorage().loadPlayer(player), "PlayerSettings have failed to load. Please report this to the developer:");
+		if (plugin.getPlayerManager().contains(player.getUniqueId())) {
+			resetMines(player);
+		} else {
+			Scheduler.async()
+					.run(() -> plugin.getPlayerStorage().loadPlayer(player), "PlayerSettings have failed to load. Please report this to the developer:")
+					.thenRun(() -> Scheduler.sync().run(() -> resetMines(player)));
+		}
+	}
+
+	private void resetMines(@Nonnull Player player) {
+		if (plugin.getPlayerManager().getSettings(player).shouldAutoReset()) {
+			plugin.getSkyMineManager().getSkyMines(player).forEach(mine -> mine.reset(ResetOptions.automatic(player)));
 		}
 	}
 }

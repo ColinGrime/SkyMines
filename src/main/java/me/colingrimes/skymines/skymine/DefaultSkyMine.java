@@ -174,6 +174,11 @@ public class DefaultSkyMine implements SkyMine {
 			return 0;
 		}
 
+		// If this is an automatic reset, make sure the player has it enabled.
+		if (options.isAutomatic() && !plugin.getPlayerManager().getSettings(options.getPlayer()).shouldAutoReset()) {
+			return 0;
+		}
+
 		// Applies cooldown logic if necessary.
 		if (options.applyCooldowns()) {
 			Duration timeLeft = cooldowns.getSkyMineCooldown().getTimeLeft(this);
@@ -200,7 +205,14 @@ public class DefaultSkyMine implements SkyMine {
 			structure.getPlayers().forEach(p -> p.teleport(home.toLocation()));
 		}
 
-		return structure.build(upgrades.getComposition().getComposition());
+		int count = structure.build(upgrades.getComposition().getComposition());
+
+		// Sends the automatic reset message if applicable.
+		if (options.isAutomatic() && plugin.getPlayerManager().getSettings(options.getPlayer()).shouldNotify() && count > 0) {
+			MineUtils.placeholders(Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC, this).send(options.getPlayer());
+		}
+
+		return count;
 	}
 
 	@Override

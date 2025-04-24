@@ -17,6 +17,7 @@ public class ResetOptions {
 	private final boolean notify;
 	private final boolean cooldowns;
 	private final boolean teleport;
+	private final boolean automatic;
 
 	/**
 	 * Constructs the default {@link ResetOptions}.
@@ -44,6 +45,21 @@ public class ResetOptions {
 	}
 
 	/**
+	 * Constructs the automatic {@link ResetOptions} for a regular player.
+	 *
+	 * @param player the player who initiated the reset
+	 * @return the automatic reset options
+	 */
+	@Nonnull
+	public static ResetOptions automatic(@Nonnull Player player) {
+		return create()
+				.player(player)
+				.cooldowns(true)
+				.automatic(true)
+				.build();
+	}
+
+	/**
 	 * Constructs a new {@link ResetOptions.Builder}.
 	 *
 	 * @return the reset options builder
@@ -58,6 +74,7 @@ public class ResetOptions {
 		this.notify = builder.notify;
 		this.cooldowns = builder.cooldowns;
 		this.teleport = builder.teleport;
+		this.automatic = builder.automatic;
 	}
 
 	/**
@@ -84,12 +101,12 @@ public class ResetOptions {
 	/**
 	 * Gets whether status messages should be sent to the player.
 	 * <p>
-	 * Requires the {@link ResetOptions#getPlayer()} to be non-null.
+	 * Requires the {@link ResetOptions#getPlayer()} to be non-null and {@link ResetOptions#isAutomatic()} to be false.
 	 *
 	 * @return true if the player should be notified
 	 */
 	public boolean shouldNotify() {
-		return notify && player != null;
+		return notify && player != null && !isAutomatic();
 	}
 
 	/**
@@ -112,11 +129,24 @@ public class ResetOptions {
 		return teleport;
 	}
 
+	/**
+	 * Gets whether this is an automatic reset.
+	 * If this is enabled, {@link ResetOptions#shouldNotify()} will always return false.
+	 * <p>
+	 * Requires the {@link ResetOptions#getPlayer()} to be non-null.
+	 *
+	 * @return true if it is an automatic reset
+	 */
+	public boolean isAutomatic() {
+		return automatic && player != null;
+	}
+
 	public static class Builder {
 		private Player player = null;
 		private boolean notify = false;
 		private boolean cooldowns = false;
 		private boolean teleport = Settings.OPTION_RESET_TELEPORT_HOME.get();
+		private boolean automatic = false;
 
 		@Nonnull
 		public Builder player(@Nonnull Player player) {
@@ -139,6 +169,12 @@ public class ResetOptions {
 		@Nonnull
 		public Builder teleport(boolean teleport) {
 			this.teleport = teleport;
+			return this;
+		}
+
+		@Nonnull
+		public Builder automatic(boolean automatic) {
+			this.automatic = automatic;
 			return this;
 		}
 

@@ -35,9 +35,7 @@ public class SkyMineListeners implements Listener {
 
 		// Automatic reset.
 		if (settings.shouldAutoReset()) {
-			if (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 && settings.shouldNotify()) {
-				MineUtils.placeholders(Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC, skyMine).send(player.get());
-			}
+			skyMine.reset(ResetOptions.automatic(player.get()));
 		}
 
 		// Notify on reset finish (will not be sent if automatic reset is enabled).
