@@ -1,6 +1,5 @@
 package me.colingrimes.skymines.menu;
 
-import me.colingrimes.midnight.message.Message;
 import me.colingrimes.midnight.util.text.Text;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
@@ -81,20 +80,13 @@ public class MainMenu extends Gui {
 			}
 			case "RESET" -> skyMine.reset(ResetOptions.standard(getPlayer()));
 			case "UPGRADES" -> {
-				if (!skyMine.isEnabled()) {
-					MineUtils.placeholders(Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER, skyMine).send(getPlayer());
-					return;
-				}
-				new UpgradeMenu(getPlayer(), skyMine).open();
-			}
-			case "PICKUP" -> {
-				Message<?> success = MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine);
-				if (skyMine.pickup(getPlayer())) {
-					success.send(getPlayer());
+				if (skyMine.isEnabled()) {
+					new UpgradeMenu(getPlayer(), skyMine).open();
 				} else {
-					Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(getPlayer());
+					MineUtils.placeholders(Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER, skyMine).send(getPlayer());
 				}
 			}
+			case "PICKUP" -> skyMine.pickup(getPlayer());
 		}
 	}
 }

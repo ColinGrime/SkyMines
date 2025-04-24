@@ -205,34 +205,45 @@ public class DefaultSkyMine implements SkyMine {
 
 	@Override
 	public boolean pickup(@Nonnull Player player) {
-		if (!owner.equals(player.getUniqueId()) && !player.hasPermission("skymines.admin.pickup")) {
+		boolean isOwner = owner.equals(player.getUniqueId());
+		if (!isOwner && !player.hasPermission("skymines.admin.pickup")) {
 			return false;
 		}
 
 		ItemStack token = manager.getToken().getToken(identifier, structure.getMineSize(), upgrades);
 		if (!player.getInventory().addItem(token).isEmpty()) {
+			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(player);
 			return false;
 		}
 
-		// Calculate pickup cooldown.
-		int pickupCooldown;
-		if (Types.isInteger(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get())) {
-			pickupCooldown = Integer.parseInt(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get());
-		} else {
-			pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
-		}
-
-		// Ensure if there's already an existing pickup cooldown, the maximum cooldown is applied.
-		if (cooldowns.getPickupCooldown().onCooldown(player)) {
-			pickupCooldown = Math.max(pickupCooldown, (int) cooldowns.getPickupCooldown().getTimeLeft(player).getSeconds());
-		}
-
-		// Add the pickup cooldown to the player.
-		cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
-			if (plugin.getPlayerManager().getSettings(p).shouldNotify()) {
-				Messages.GENERAL_COOLDOWN_PICKUP_FINISH.send(player);
+		// Applies pickup cooldown if it's the owner picking it up.
+		if (isOwner) {
+			int pickupCooldown;
+			if (Types.isInteger(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get())) {
+				pickupCooldown = Integer.parseInt(Settings.OPTION_COOLDOWN_PICKUP_COOLDOWN.get());
+			} else {
+				pickupCooldown = (int) cooldowns.getSkyMineCooldown().getTimeLeft(this).getSeconds();
 			}
-		});
+
+			// Ensure if there's already an existing pickup cooldown, the maximum cooldown is applied.
+			if (cooldowns.getPickupCooldown().onCooldown(player)) {
+				pickupCooldown = Math.max(pickupCooldown, (int) cooldowns.getPickupCooldown().getTimeLeft(player).getSeconds());
+			}
+
+			// Add the pickup cooldown to the player.
+			cooldowns.getPickupCooldown().add(player, Duration.ofSeconds(pickupCooldown), p -> {
+				if (plugin.getPlayerManager().getSettings(p).shouldNotify()) {
+					Messages.GENERAL_COOLDOWN_PICKUP_FINISH.send(player);
+				}
+			});
+		}
+
+		// Sends different success message depending on if the player is the owner of the mine.
+		if (isOwner) {
+			MineUtils.placeholders(Messages.SUCCESS_PICKUP, this).send(player);
+		} else {
+			MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, this).send(player);
+		}
 
 		remove();
 		return true;

@@ -4,12 +4,10 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
-import me.colingrimes.midnight.message.Message;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.command.skymineadmin.SkyMineAdmin;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
-import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,16 +18,8 @@ public class SkyMineAdminPickup implements Command<SkyMines> {
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		SkyMine skyMine = SkyMineAdmin.getSkyMine(plugin, sender, args);
-		if (skyMine == null) {
-			return;
-		}
-
-		// Attempt to pickup SkyMine.
-		Message<?> success = MineUtils.placeholders(Messages.ADMIN_SUCCESS_PICKUP, skyMine);
-		if (skyMine.pickup(sender.player())) {
-			success.send(sender);
-		} else {
-			Messages.FAILURE_TOKEN_NO_INVENTORY_SPACE.send(sender);
+		if (skyMine != null) {
+			skyMine.pickup(sender.player());
 		}
 	}
 
