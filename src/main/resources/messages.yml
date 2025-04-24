@@ -126,7 +126,8 @@ admin:
     reloaded: "&2&l✓ &eSkyMines &ahas been reloaded."
   failure:
     skymine:
-      invalid-index: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'."
+      invalid-name: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith the name &e{name}&c."
+      invalid-index: "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith the ID &e{id}&c."
       none-owned: "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c."
       debug: "&4&l❌ &cYou are not looking at a valid &eSkyMine&c."
     give:

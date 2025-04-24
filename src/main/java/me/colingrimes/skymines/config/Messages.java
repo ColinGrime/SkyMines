@@ -121,7 +121,8 @@ public interface Messages {
 	Message<?> ADMIN_SUCCESS_PICKUP                = message("admin.success.pickup", "&2&l✓ &aYou have picked up &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
 	Message<?> ADMIN_SUCCESS_REMOVE                = message("admin.success.remove", "&2&l✓ &aYou have removed &e{player}&a's &eSkyMine &7(&e{label}&7)&a.");
 	Message<?> ADMIN_SUCCESS_RELOADED              = message("admin.success.reloaded", "&2&l✓ &eSkyMines &ahas been reloaded.");
-	Message<?> ADMIN_FAILURE_SKYMINE_INVALID_INDEX = message("admin.failure.skymine.invalid-index", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith ID '&e{id}&c'.");
+	Message<?> ADMIN_FAILURE_SKYMINE_INVALID_NAME  = message("admin.failure.skymine.invalid-name", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith the name &e{name}&c.");
+	Message<?> ADMIN_FAILURE_SKYMINE_INVALID_INDEX = message("admin.failure.skymine.invalid-index", "&4&l❌ &e{player} &cdoes not have a &eSkyMine &cwith the ID &e{id}&c.");
 	Message<?> ADMIN_FAILURE_SKYMINE_NONE_OWNED    = message("admin.failure.skymine.none-owned", "&4&l❌ &e{player} &cdoes not have any &eSkyMines&c.");
 	Message<?> ADMIN_FAILURE_SKYMINE_DEBUG         = message("admin.failure.skymine.debug", "&4&l❌ &cYou are not looking at a valid &eSkyMine&c.");
 	Message<?> ADMIN_FAILURE_GIVE_TOO_SMALL        = message("admin.failure.give.too-small", "&4&l❌ &cThe &eSkyMine &cyou are trying to create is too small.");

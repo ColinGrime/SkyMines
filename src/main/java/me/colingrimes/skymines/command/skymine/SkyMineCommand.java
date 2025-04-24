@@ -28,7 +28,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 	 * Gets the {@link SkyMine} based on the first argument of the command.
 	 * The argument can be either a skymine name or index.
 	 * <p>
-	 * If one is not entered, it will send a failure message to the sender.
+	 * If one is not entered, a failure message will be sent to the sender.
 	 *
 	 * @param plugin the plugin
 	 * @param sender the sender of the command
@@ -36,7 +36,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 	 * @return a valid skymine if one was entered, null otherwise
 	 */
 	@Nullable
-	public static SkyMine getSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, ArgumentList args) {
+	public static SkyMine getSkyMine(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
 		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(sender.player(), args.getFirst());
 		if (skyMine.isPresent()) {
 			return skyMine.get();
@@ -48,6 +48,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 		} else {
 			Messages.FAILURE_SKYMINE_INVALID_NAME.replace("{name}", args.getFirst()).send(sender);
 		}
+
 		return null;
 	}
 
@@ -71,7 +72,7 @@ public class SkyMineCommand implements Command<SkyMines> {
 		}
 
 		List<String> tabCompletion = new ArrayList<>();
-		for (int i = 0; i < skyMines.size(); i++) {
+		for (int i=0; i<skyMines.size(); i++) {
 			SkyMine skyMine = skyMines.get(i);
 			if (skyMine.getName() != null) {
 				tabCompletion.add(skyMine.getName());

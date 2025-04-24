@@ -4,34 +4,31 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
-import me.colingrimes.midnight.util.misc.UUIDs;
 import me.colingrimes.skymines.SkyMines;
+import me.colingrimes.skymines.command.skymineadmin.SkyMineAdmin;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.util.MineUtils;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
-import java.util.UUID;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SkyMineAdminRemove implements Command<SkyMines> {
 
 	@Override
 	public void execute(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
-		Optional<UUID> uuid = UUIDs.fromName(args.getFirst());
-		if (uuid.isEmpty()) {
-			Messages.ADMIN_FAILURE_MISC_NO_PLAYER_FOUND.replace("{player}", args.getFirst()).send(sender);
-			return;
+		SkyMine skyMine = SkyMineAdmin.getSkyMine(plugin, sender, args);
+		if (skyMine != null) {
+			MineUtils.placeholders(Messages.ADMIN_SUCCESS_REMOVE, skyMine).send(sender);
+			skyMine.remove();
 		}
+	}
 
-		Optional<SkyMine> skyMine = plugin.getSkyMineManager().getSkyMine(uuid.get(), args.get(1));
-		if (skyMine.isEmpty()) {
-			Messages.ADMIN_FAILURE_SKYMINE_INVALID_INDEX.replace("{player}", args.get(0)).replace("{id}", args.get(1)).send(sender);
-			return;
-		}
-
-		MineUtils.placeholders(Messages.ADMIN_SUCCESS_REMOVE, skyMine.get()).send(sender);
-		skyMine.get().remove();
+	@Nullable
+	@Override
+	public List<String> tabComplete(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
+		return SkyMineAdmin.getSkyMineTabCompletion(plugin, args);
 	}
 
 	@Override

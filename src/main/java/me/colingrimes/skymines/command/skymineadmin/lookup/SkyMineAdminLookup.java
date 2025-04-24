@@ -4,13 +4,16 @@ import me.colingrimes.midnight.command.Command;
 import me.colingrimes.midnight.command.handler.util.ArgumentList;
 import me.colingrimes.midnight.command.handler.util.CommandProperties;
 import me.colingrimes.midnight.command.handler.util.Sender;
+import me.colingrimes.midnight.util.bukkit.Players;
 import me.colingrimes.midnight.util.misc.UUIDs;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.util.MineUtils;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,6 +43,15 @@ public class SkyMineAdminLookup implements Command<SkyMines> {
 		if (!Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.toText().isEmpty()) {
 			Messages.ADMIN_GENERAL_SKYMINE_LOOKUP_BOTTOM.replace("{player}", args.getFirst()).send(sender);
 		}
+	}
+
+	@Nullable
+	@Override
+	public List<String> tabComplete(@Nonnull SkyMines plugin, @Nonnull Sender sender, @Nonnull ArgumentList args) {
+		if (args.size() == 1) {
+			return Players.filter(p -> p.getName().startsWith(args.getFirst())).map(Player::getName).toList();
+		}
+		return null;
 	}
 
 	@Override
