@@ -18,6 +18,7 @@ public class SkyMineSettings implements Command<SkyMines> {
 
 	@Override
 	public void configureProperties(@Nonnull CommandProperties properties) {
+		properties.setPermission("skymines.settings");
 		properties.setPlayerRequired(true);
 	}
 }

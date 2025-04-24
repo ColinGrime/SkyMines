@@ -6,6 +6,7 @@ import me.colingrimes.midnight.menu.Slot;
 import me.colingrimes.midnight.util.bukkit.Items;
 import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Menus;
+import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.player.PlayerSettings;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
 import org.bukkit.entity.Player;
@@ -38,6 +39,14 @@ public class SettingsMenu extends Gui {
 
 			setItem(getSlot(i), item, command);
 			getSlot(i).bind(ClickType.LEFT, e -> {
+				boolean isNotify = command.equals("NOTIFY");
+				boolean isAutoReset = command.equals("AUTO_RESET");
+				if ((isNotify && !player.hasPermission("skymines.settings.notify")) || (isAutoReset && !player.hasPermission("skymines.settings.autoreset"))) {
+					Messages.FAILURE_MISC_NO_PERMISSION.send(player);
+					close();
+					return;
+				}
+
 				switch (command) {
 					case "NOTIFY" -> settings.setNotify(!settings.shouldNotify());
 					case "AUTO_RESET" -> {
