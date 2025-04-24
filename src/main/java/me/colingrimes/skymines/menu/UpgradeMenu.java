@@ -44,7 +44,6 @@ public class UpgradeMenu extends Gui {
 	 * @param type the ugprade type
 	 */
 	private void attemptUpgrade(@Nonnull UpgradeType type) {
-		Player player = getPlayer();
 		SkyMineUpgrade upgrade = upgrades.getUpgrade(type);
 		if (!upgrade.canBeUpgraded()) {
 			Messages.FAILURE_SKYMINE_UPGRADE_MAXED.send(player);

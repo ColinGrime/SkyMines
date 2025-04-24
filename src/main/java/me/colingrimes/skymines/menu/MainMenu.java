@@ -42,9 +42,9 @@ public class MainMenu extends Gui {
 
 			getSlot(i).bind(ClickType.LEFT, e -> {
 				close();
-				if (getPlayer().getUniqueId().equals(skyMine.getOwner())) {
+				if (player.getUniqueId().equals(skyMine.getOwner())) {
 					performPlayerAction(command);
-				} else if (getPlayer().hasPermission("skymines.admin.panel")) {
+				} else if (player.hasPermission("skymines.admin.panel")) {
 					performAdminAction(command);
 				}
 			});
@@ -58,10 +58,10 @@ public class MainMenu extends Gui {
 	 */
 	private void performPlayerAction(@Nonnull String action) {
 		switch (action) {
-			case "HOME" -> Players.command(getPlayer(), "/skymine home " + skyMine.getIndex());
-			case "RESET" -> Players.command(getPlayer(), "/skymine reset " + skyMine.getIndex());
-			case "UPGRADES" -> Players.command(getPlayer(), "/skymine upgrades " + skyMine.getIndex());
-			case "PICKUP" -> Players.command(getPlayer(), "/skymine pickup " + skyMine.getIndex());
+			case "HOME" -> Players.command(player, "/skymine home " + skyMine.getIndex());
+			case "RESET" -> Players.command(player, "/skymine reset " + skyMine.getIndex());
+			case "UPGRADES" -> Players.command(player, "/skymine upgrades " + skyMine.getIndex());
+			case "PICKUP" -> Players.command(player, "/skymine pickup " + skyMine.getIndex());
 		}
 	}
 
@@ -75,18 +75,18 @@ public class MainMenu extends Gui {
 	private void performAdminAction(@Nonnull String action) {
 		switch (action) {
 			case "HOME" -> {
-				getPlayer().teleport(skyMine.getHome().toLocation());
-				MineUtils.placeholders(Messages.ADMIN_SUCCESS_HOME, skyMine).send(getPlayer());
+				player.teleport(skyMine.getHome().toLocation());
+				MineUtils.placeholders(Messages.ADMIN_SUCCESS_HOME, skyMine).send(player);
 			}
-			case "RESET" -> skyMine.reset(ResetOptions.standard(getPlayer()));
+			case "RESET" -> skyMine.reset(ResetOptions.standard(player));
 			case "UPGRADES" -> {
 				if (skyMine.isEnabled()) {
-					new UpgradeMenu(getPlayer(), skyMine).open();
+					new UpgradeMenu(player, skyMine).open();
 				} else {
-					MineUtils.placeholders(Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER, skyMine).send(getPlayer());
+					MineUtils.placeholders(Messages.FAILURE_SKYMINE_INVALID_IDENTIFIER, skyMine).send(player);
 				}
 			}
-			case "PICKUP" -> skyMine.pickup(getPlayer());
+			case "PICKUP" -> skyMine.pickup(player);
 		}
 	}
 }
