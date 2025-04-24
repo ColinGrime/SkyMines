@@ -60,7 +60,7 @@ public class SkyMineStorage extends SqlStorage<SkyMine> {
 				plugin.getSkyMineManager().getSkyMines().forEach(SkyMine::save);
 				Logger.log(plugin, "All mines have been migrated!");
 			}
-			setVersion(connection, 2);
+			version = setVersion(connection, 2);
 		}
 
 		// Add support for named skymines.
