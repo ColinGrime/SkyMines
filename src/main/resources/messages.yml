@@ -78,7 +78,7 @@ usage:
     - "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   skymine-name:
     - "&eUsage: &a/sm name <id> <name>"
-    - "&a► &7Attach a name to the specified mine."
+    - "&a► &7Attaches a name to the specified mine."
   skymine-panel:
     - "&eUsage: &a/sm panel <id>"
     - "&a► &7Opens up the specified mine's main panel."

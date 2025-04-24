@@ -55,7 +55,7 @@ settings-menu:
       name: "&aNotifications &7({enabled}&7)"
       lore:
         - "&7Toggles mine notifications."
-      # Command to run. There are 4 special commands: NOTIFY, AUTO_RESET
+      # Command to run. There are 2 special commands: NOTIFY, AUTO_RESET
       command: NOTIFY
     15:
       type: NETHERITE_PICKAXE

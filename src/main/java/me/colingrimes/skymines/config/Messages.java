@@ -69,7 +69,7 @@ public interface Messages {
 	);
 	Message<?> USAGE_SKYMINE_NAME = message("usage.skymine-name",
 			"&eUsage: &a/sm name <id> <name>",
-			"&a► &7Attach a name to the specified mine."
+			"&a► &7Attaches a name to the specified mine."
 	);
 	Message<?> USAGE_SKYMINE_PANEL = message("usage.skymine-panel",
 			"&eUsage: &a/sm panel <id>",
