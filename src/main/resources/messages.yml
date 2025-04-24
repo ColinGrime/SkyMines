@@ -25,6 +25,7 @@ general:
     bottom: "&7&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   cooldown:
     reset-automatic: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been automatically reset."
+    reset-automatic-multiple: "&2&l✓ &aMultiple &eSkyMines &ahave been automatically reset."
     reset-finish: "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ais ready to be reset."
     pickup-finish: "&2&l✓ &aYou are free to place &eSkyMines &aagain."
 

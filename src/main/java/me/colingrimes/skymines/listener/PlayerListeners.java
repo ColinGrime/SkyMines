@@ -186,8 +186,18 @@ public class PlayerListeners implements Listener {
 	}
 
 	private void resetMines(@Nonnull Player player) {
-		if (plugin.getPlayerManager().getSettings(player).shouldAutoReset()) {
-			plugin.getSkyMineManager().getSkyMines(player).forEach(mine -> mine.reset(ResetOptions.automatic(player)));
+		if (!plugin.getPlayerManager().getSettings(player).shouldAutoReset()) {
+			return;
+		}
+
+		int totalReset = 0;
+		for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines(player)) {
+			totalReset += (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 ? 1 : 0);
+		}
+
+		// Send just 1 automatic reset message instead of multiple.
+		if (totalReset > 0) {
+			Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC_MULTIPLE.send(player);
 		}
 	}
 }

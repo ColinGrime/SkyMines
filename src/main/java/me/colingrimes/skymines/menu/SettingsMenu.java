@@ -8,6 +8,7 @@ import me.colingrimes.skymines.SkyMines;
 import me.colingrimes.skymines.config.Menus;
 import me.colingrimes.skymines.config.Messages;
 import me.colingrimes.skymines.player.PlayerSettings;
+import me.colingrimes.skymines.skymine.SkyMine;
 import me.colingrimes.skymines.skymine.option.ResetOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -51,7 +52,19 @@ public class SettingsMenu extends Gui {
 					case "NOTIFY" -> settings.setNotify(!settings.shouldNotify());
 					case "AUTO_RESET" -> {
 						settings.setAutoReset(!settings.shouldAutoReset());
-						plugin.getSkyMineManager().getSkyMines(getPlayer()).forEach(mine -> mine.reset(ResetOptions.create().cooldowns(true).build()));
+						if (!settings.shouldAutoReset()) {
+							break;
+						}
+
+						int totalReset = 0;
+						for (SkyMine skyMine : plugin.getSkyMineManager().getSkyMines(player)) {
+							totalReset += (skyMine.reset(ResetOptions.create().cooldowns(true).build()) > 0 ? 1 : 0);
+						}
+
+						// Send just 1 automatic reset message instead of multiple.
+						if (totalReset > 0) {
+							Messages.GENERAL_COOLDOWN_RESET_AUTOMATIC_MULTIPLE.send(player);
+						}
 					}
 				}
 				setItem(getSlot(i), item, command);

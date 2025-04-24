@@ -11,13 +11,14 @@ public interface Messages {
 	/**************************************************
 	 *                 General Messages               *
 	 **************************************************/
-	Message<?> GENERAL_SKYMINE_LIST_TOP             = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
-	Message<?> GENERAL_SKYMINE_LIST_REPEATING       = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
-	Message<?> GENERAL_SKYMINE_LIST_REPEATING_HOVER = message("general.skymine-list.repeating-hover", "&cClick to Teleport Home");
-	Message<?> GENERAL_SKYMINE_LIST_BOTTOM          = message("general.skymine-list.bottom");
-	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC     = message("general.cooldown.reset-automatic", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been automatically reset.");
-	Message<?> GENERAL_COOLDOWN_RESET_FINISH        = message("general.cooldown.reset-finish", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ais ready to be reset.");
-	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH       = message("general.cooldown.pickup-finish", "&2&l✓ &aYou are free to place &eSkyMines &aagain.");
+	Message<?> GENERAL_SKYMINE_LIST_TOP                  = message("general.skymine-list.top", "&7&l&m━━━━━━━━━━━━━━━━━━&7 &e&lSkyMine &aList &7&l&m━━━━━━━━━━━━━━━━━━");
+	Message<?> GENERAL_SKYMINE_LIST_REPEATING            = message("general.skymine-list.repeating", "&7→ [#{id}] &eClick to teleport home. &7(&a{x}x&7, &a{y}y&7, &a{z}z&7)");
+	Message<?> GENERAL_SKYMINE_LIST_REPEATING_HOVER      = message("general.skymine-list.repeating-hover", "&cClick to Teleport Home");
+	Message<?> GENERAL_SKYMINE_LIST_BOTTOM               = message("general.skymine-list.bottom");
+	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC          = message("general.cooldown.reset-automatic", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ahas been automatically reset.");
+	Message<?> GENERAL_COOLDOWN_RESET_AUTOMATIC_MULTIPLE = message("general.cooldown.reset-automatic-multiple", "&2&l✓ &aMultiple &eSkyMines &ahave been automatically reset.");
+	Message<?> GENERAL_COOLDOWN_RESET_FINISH             = message("general.cooldown.reset-finish", "&2&l✓ &aThe &eSkyMine &7(&e{label}&7) &ais ready to be reset.");
+	Message<?> GENERAL_COOLDOWN_PICKUP_FINISH            = message("general.cooldown.pickup-finish", "&2&l✓ &aYou are free to place &eSkyMines &aagain.");
 
 	/**************************************************
 	 *                 Success Messages               *
